@@ -5,10 +5,7 @@
 <%- include('nav') %>
 <main class="portal-page">
   <div class="portal-head">
-    <div>
-      <h1><%= t.dashboard %></h1>
-      <p><%= t.welcome %>, <%= email %>. <%= t.manage %></p>
-    </div>
+    <div><h1><%= t.dashboard %></h1><p><%= t.welcome %>, <%= email %>. <%= t.manage %></p></div>
     <form method="post" action="/logout"><button class="btn navy"><%= t.logout %></button></form>
   </div>
   <section class="modules">

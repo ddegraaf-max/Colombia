@@ -6,9 +6,7 @@
 <main class="portal-page">
   <h1><%= title %></h1>
   <form class="data-form" method="post" action="/<%= type %>">
-    <% fields.forEach(function(f){ %>
-      <input name="<%= f %>" placeholder="<%= f %>">
-    <% }) %>
+    <% fields.forEach(function(f){ %><input name="<%= f %>" placeholder="<%= f %>"><% }) %>
     <button class="btn gold"><%= t.add %></button>
   </form>
   <table>

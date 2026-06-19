@@ -1,7 +1,7 @@
 {
-  "name": "honor-care-international-poland-edition",
-  "version": "6.0.0",
-  "description": "Honor Care International Poland Edition - website and secure portal",
+  "name": "honor-care-screenshot-style-final",
+  "version": "7.0.0",
+  "description": "Honor Care International website in screenshot style for Polish market",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

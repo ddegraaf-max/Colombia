@@ -1,1 +1,1 @@
-console.log('Honor Care International Poland Edition loaded');
+console.log('Honor Care Screenshot Style Final v7 loaded');

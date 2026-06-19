@@ -1,15 +1,16 @@
-# Honor Care International Poland Edition v6
+# Honor Care Screenshot Style Final v7
 
-Definitieve versie in dezelfde huisstijl als de premium mockup:
-- navy/goud
-- grote topbar + logo
-- hero met artsen
+Deze versie is gebouwd in dezelfde huisstijl als het screenshot:
+- wit menu met groot logo
+- donkerblauwe topbar
+- navy/goud kleuren
+- hero met zorgprofessionals
 - specialisatiebalk
-- kaarten
+- vier kaarten
 - Polen/statistieken
 - partners
 - footer
 - PL/NL/ES
-- secure portal met 2FA en MongoDB
+- beveiligde portal met MongoDB en 2FA
 
-Upload de uitgepakte inhoud naar GitHub.
+Upload de uitgepakte inhoud naar GitHub en redeploy via Railway.

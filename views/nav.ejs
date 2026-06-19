@@ -1,12 +1,11 @@
 <div class="topbar">
   <div class="top-inner">
-    <span><%= t.top_city %></span>
-    <span>|</span>
-    <span><%= t.top_city2 %></span>
-    <span class="top-spacer"></span>
-    <span>+48 22 123 45 67</span>
-    <span>info@honorcare.pl</span>
-    <div class="lang">
+    <span>📍 <%= t.city1 %></span>
+    <span>📍 <%= t.city2 %></span>
+    <span class="push"></span>
+    <span>☎ +48 22 123 45 67</span>
+    <span>✉ info@honorcare.pl</span>
+    <div class="langs">
       <a class="<%= lang==='pl'?'active':'' %>" href="/lang/pl">PL</a>
       <a class="<%= lang==='nl'?'active':'' %>" href="/lang/nl">NL</a>
       <a class="<%= lang==='es'?'active':'' %>" href="/lang/es">ES</a>
@@ -16,25 +15,25 @@
 
 <header class="mainnav">
   <a class="logo" href="/">
-    <span class="logo-mark">
-      <span class="heart">♥</span>
-      <span class="people">●●●</span>
+    <span class="logo-emblem">
+      <span class="logo-heart">♥</span>
+      <span class="logo-people">● ● ●</span>
     </span>
-    <span class="logo-text">
+    <span class="logo-copy">
       <b>HONOR CARE</b>
       <em>INTERNATIONAL</em>
       <small><%= t.slogan %></small>
     </span>
   </a>
   <nav>
-    <a href="/"><%= t.nav_home %></a>
-    <a href="/about"><%= t.nav_about %></a>
-    <a href="/institutions-page"><%= t.nav_institutions %></a>
-    <a href="/professionals"><%= t.nav_professionals %></a>
-    <a href="/academy"><%= t.nav_academy %></a>
-    <a href="/housing"><%= t.nav_housing %></a>
-    <a href="/poland"><%= t.nav_poland %></a>
-    <a href="/contact"><%= t.nav_contact %></a>
-    <a class="portal-link" href="/login"><%= t.nav_portal %></a>
+    <a href="/"><%= t.home %></a>
+    <a href="/about"><%= t.about %></a>
+    <a href="/institutions-page"><%= t.inst %></a>
+    <a href="/professionals"><%= t.pro %></a>
+    <a href="/academy"><%= t.academy %></a>
+    <a href="/housing"><%= t.housing %></a>
+    <a href="/poland"><%= t.poland %></a>
+    <a href="/contact"><%= t.contact %></a>
+    <a class="portal" href="/login"><%= t.portal %></a>
   </nav>
 </header>

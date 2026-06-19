@@ -5,18 +5,15 @@
 <%- include('nav') %>
 <section class="subpage">
   <div>
-    <h1><%= page === 'about' ? t.nav_about : page === 'institutions-page' ? t.nav_institutions : page === 'professionals' ? t.nav_professionals : page === 'academy' ? t.nav_academy : page === 'housing' ? t.nav_housing : page === 'poland' ? t.nav_poland : t.nav_contact %></h1>
-    <p><%= t.hero_text %></p>
-    <div class="hero-actions">
-      <a class="btn gold" href="/login"><%= t.nav_portal %></a>
-      <a class="btn navy" href="/contact"><%= t.cta_meeting %></a>
-    </div>
+    <h1><%= page==='about'?t.about:page==='institutions-page'?t.inst:page==='professionals'?t.pro:page==='academy'?t.academy:page==='housing'?t.housing:page==='poland'?t.poland:t.contact %></h1>
+    <p><%= t.heroText %></p>
+    <div class="actions"><a class="btn gold" href="/login"><%= t.portal %></a><a class="btn navy" href="/contact"><%= t.cta3 %></a></div>
   </div>
 </section>
-<section class="main-cards page-grid">
-  <article><div class="card-img pro"></div><div class="card-body"><small><%= t.card1_k %></small><h3><%= t.card1_t %></h3><p><%= t.card_li_1.join(' • ') %></p></div></article>
-  <article><div class="card-img inst"></div><div class="card-body"><small><%= t.card2_k %></small><h3><%= t.card2_t %></h3><p><%= t.card_li_2.join(' • ') %></p></div></article>
-  <article><div class="card-img academy"></div><div class="card-body"><small><%= t.card3_k %></small><h3><%= t.card3_t %></h3><p><%= t.card_li_3.join(' • ') %></p></div></article>
+<section class="cards three">
+  <article><div class="card-img pro"></div><div class="card-body"><small><%= t.cardK[0] %></small><h3><%= t.cardT[0] %></h3><p><%= t.cardLi[0].join(' • ') %></p></div></article>
+  <article><div class="card-img inst"></div><div class="card-body"><small><%= t.cardK[1] %></small><h3><%= t.cardT[1] %></h3><p><%= t.cardLi[1].join(' • ') %></p></div></article>
+  <article><div class="card-img academy"></div><div class="card-body"><small><%= t.cardK[2] %></small><h3><%= t.cardT[2] %></h3><p><%= t.cardLi[2].join(' • ') %></p></div></article>
 </section>
 </body>
 </html>
