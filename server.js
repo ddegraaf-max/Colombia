@@ -96,7 +96,9 @@ app.get('/verify-2fa',(req,res)=>{ if(!req.session.userId) return res.redirect('
 app.post('/verify-2fa', async(req,res)=>{ const user=await User.findById(req.session.userId); const ok=speakeasy.totp.verify({secret:user.twoFASecret,encoding:'base32',token:req.body.token,window:1}); if(!ok) return res.render('verify-2fa',{error:'Code is ongeldig.'}); req.session.twoFAVerified=true; res.redirect('/portal'); });
 app.get('/portal', requireAuth, (req,res)=>res.render('portal',{email:req.session.email}));
 app.post('/logout',(req,res)=>req.session.destroy(()=>res.redirect('/')));
-
+app.get('/dashboard', requireAuth, (req, res) => {
+  res.redirect('/portal');
+});
 app.listen(PORT, () => {
   console.log(`Honor Care Poland draait op poort ${PORT}`);
 });
