@@ -1,1 +1,9 @@
-
+home.ejs
+page.ejs
+login.ejs
+setup-2fa.ejs
+verify-2fa.ejs
+dashboard.ejs
+list.ejs
+partials_head.ejs
+partials_nav.ejs
