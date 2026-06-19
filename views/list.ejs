@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="<%= lang %>">
+<head><%- include('partials_head') %></head>
+<body>
+<%- include('partials_nav') %>
+<main class="page">
+  <p class="eyebrow">Secure Portal</p>
+  <h1><%= title %></h1>
+  <form class="panel" method="post" action="/<%= type %>">
+    <div class="formgrid">
+      <% fields.forEach(function(field){ %>
+        <% if (field === 'notes' || field === 'demand') { %>
+          <textarea name="<%= field %>" placeholder="<%= field %>"></textarea>
+        <% } else { %>
+          <input name="<%= field %>" placeholder="<%= field %>">
+        <% } %>
+      <% }) %>
+    </div>
+    <button class="btn" type="submit">Toevoegen</button>
+  </form>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr>
+        <% fields.forEach(function(field){ %><th><%= field %></th><% }) %>
+        <th>actie</th>
+      </tr></thead>
+      <tbody>
+      <% items.forEach(function(item){ %>
+        <tr>
+          <% fields.forEach(function(field){ %><td><%= item[field] || '' %></td><% }) %>
+          <td>
+            <form method="post" action="/delete/<%= type %>/<%= item._id %>">
+              <button class="small danger" type="submit">Verwijderen</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <p><a class="btn ghost" href="/dashboard">Terug naar dashboard</a></p>
+</main>
+</body>
+</html>

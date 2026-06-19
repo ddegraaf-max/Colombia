@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="<%= lang %>">
+<head><%- include('partials_head') %></head>
+<body>
+<main class="auth wide">
+  <h1>Authenticator instellen</h1>
+  <p class="sub">Scan de QR-code met Google Authenticator, Microsoft Authenticator of 1Password.</p>
+  <% if (error) { %><div class="error"><%= error %></div><% } %>
+  <img class="qr" src="<%= qr %>" alt="2FA QR-code">
+  <p class="secret"><%= secret %></p>
+  <form method="post" action="/setup-2fa">
+    <input name="token" placeholder="6-cijferige code" required inputmode="numeric">
+    <button class="btn full" type="submit">Activeren</button>
+  </form>
+</main>
+</body>
+</html>

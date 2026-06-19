@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="<%= lang %>">
+<head><%- include('partials_head') %></head>
+<body>
+<%- include('partials_nav') %>
+<section class="hero">
+  <div>
+    <p class="eyebrow">Honor Care Poland</p>
+    <h1><%= t.hero_title %></h1>
+    <p class="lead"><%= t.hero_lead %></p>
+    <div class="actions">
+      <a class="btn" href="/login"><%= t.cta %></a>
+      <a class="btn ghost" href="/werkmaatschappij"><%= t.secondary %></a>
+    </div>
+  </div>
+  <div class="hero-card">
+    <strong>PL</strong>
+    <span>Colombia → Poland</span>
+    <p>Recruitment • Taal • Integratie • Documenten • Subsidies</p>
+  </div>
+</section>
+<section class="grid3">
+  <article><h3>Stichting</h3><p>Subsidies, taal, integratie en maatschappelijke begeleiding.</p></article>
+  <article><h3>Werkmaatschappij</h3><p>Recruitment, matching, CRM en contractmanagement.</p></article>
+  <article><h3>Beveiligde portal</h3><p>2FA, MongoDB, kandidaten, subsidies en documenten.</p></article>
+</section>
+<footer>© Honor Care Poland</footer>
+</body>
+</html>
