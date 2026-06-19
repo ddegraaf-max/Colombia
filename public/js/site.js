@@ -1,1 +1,1 @@
-console.log('Honor Care Poland premium loaded');
+console.log('Honor Care Poland Super Premium v4 loaded');

@@ -1,5 +1,80 @@
-<!doctype html><html lang="<%= lang %>"><head><%- include('partials_head') %></head><body><%- include('partials_nav') %>
-<section class="premium-hero"><div class="hero-copy"><p class="eyebrow">Colombia → Poland Healthcare Workforce</p><h1><%= t.hero_title %></h1><p class="lead"><%= t.hero_lead %></p><div class="actions"><a class="btn" href="/login"><%= t.cta %></a><a class="btn ghost" href="/werkmaatschappij"><%= t.secondary %></a></div><div class="trustbar"><span>Recruitment</span><span>Screening</span><span>Language</span><span>Integration</span><span>2FA Portal</span></div></div><div class="hero-photo"><div class="glass-stat top"><b>PL</b><span>Healthcare market</span></div><div class="glass-stat bottom"><b>CO</b><span>Qualified talent</span></div></div></section>
-<section class="section"><p class="eyebrow">Complete platform</p><h2>Alles professioneel geregeld vanuit één merk</h2><div class="feature-grid"><article><span>01</span><h3>Stichting</h3><p>Subsidies, opleiding, taal en integratie professioneel gescheiden van commerciële activiteiten.</p></article><article><span>02</span><h3>Werkmaatschappij</h3><p>Recruitment, plaatsing, contractbeheer en CRM voor zorginstellingen.</p></article><article><span>03</span><h3>Secure portal</h3><p>Authenticator login, kandidatenbeheer, subsidiebeheer en documentbeheer.</p></article></div></section>
-<section class="split-showcase"><div><p class="eyebrow">For institutions</p><h2>Zorgcapaciteit opbouwen met internationale kwaliteit</h2><p class="lead">Van eerste behoefte tot selectie, documenten, taaltraject en onboarding.</p></div><div class="photo-card photo-hospital"></div></section>
-<section class="section dark"><div class="metrics"><div><b>3</b><span>Talen</span></div><div><b>2FA</b><span>Beveiliging</span></div><div><b>4</b><span>Beheermodules</span></div><div><b>EU</b><span>Subsidieroutes</span></div></div></section><footer>© Honor Care Poland • Warszawa • Bogotá • Nederland</footer></body></html>
+<!doctype html>
+<html lang="<%= lang %>">
+<head><%- include('partials_head') %></head>
+<body>
+<%- include('partials_nav') %>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <p class="badge"><%= t.badge %></p>
+      <h1><%= t.hero_title %></h1>
+      <p class="lead"><%= t.hero_lead %></p>
+      <div class="actions">
+        <a class="btn primary" href="/login"><%= t.cta_primary %></a>
+        <a class="btn secondary" href="/werkmaatschappij"><%= t.cta_secondary %></a>
+      </div>
+      <div class="trust">
+        <span><%= t.trust_1 %></span>
+        <span><%= t.trust_2 %></span>
+        <span><%= t.trust_3 %></span>
+        <span><%= t.trust_4 %></span>
+        <span><%= t.trust_5 %></span>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="panel-photo"></div>
+      <div class="mini-card one"><b>CO</b><span>Qualified talent</span></div>
+      <div class="mini-card two"><b>PL</b><span>Healthcare market</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="intro">
+  <p class="eyebrow">Honor Care Poland</p>
+  <h2><%= t.section_platform_title %></h2>
+  <p><%= t.section_platform_text %></p>
+</section>
+
+<section class="cards">
+  <a href="/stichting" class="card">
+    <span>01</span>
+    <h3><%= t.foundation_title %></h3>
+    <p><%= t.foundation_text %></p>
+  </a>
+  <a href="/werkmaatschappij" class="card">
+    <span>02</span>
+    <h3><%= t.company_title %></h3>
+    <p><%= t.company_text %></p>
+  </a>
+  <a href="/login" class="card">
+    <span>03</span>
+    <h3><%= t.portal_title %></h3>
+    <p><%= t.portal_text %></p>
+  </a>
+</section>
+
+<section class="workflow">
+  <div class="workflow-photo"></div>
+  <div>
+    <p class="eyebrow">Process</p>
+    <h2><%= t.workflow_title %></h2>
+    <div class="steps">
+      <article><b>1</b><h3><%= t.workflow_1_title %></h3><p><%= t.workflow_1_text %></p></article>
+      <article><b>2</b><h3><%= t.workflow_2_title %></h3><p><%= t.workflow_2_text %></p></article>
+      <article><b>3</b><h3><%= t.workflow_3_title %></h3><p><%= t.workflow_3_text %></p></article>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div><b>3</b><span><%= t.stats_languages %></span></div>
+  <div><b>2FA</b><span><%= t.stats_security %></span></div>
+  <div><b>4</b><span><%= t.stats_modules %></span></div>
+  <div><b>EU</b><span><%= t.stats_routes %></span></div>
+</section>
+
+<footer>© Honor Care Poland • Warszawa • Bogotá • Nederland</footer>
+</body>
+</html>

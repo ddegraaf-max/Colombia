@@ -1,1 +1,23 @@
-<!doctype html><html lang="<%= lang %>"><head><%- include('partials_head') %></head><body><%- include('partials_nav') %><main class="portal-shell"><section class="portal-top"><div><p class="eyebrow">Secure Portal</p><h1>Dashboard</h1><p class="lead">Welkom, <%= email %>. Beheer kandidaten, zorginstellingen, subsidies en documenten.</p></div><form method="post" action="/logout"><button class="btn ghost">Uitloggen</button></form></section><div class="dashboard"><a href="/candidates"><article><strong><%= counts.candidates %></strong><h3>Kandidaten</h3><p>Pipeline Colombia → Polen.</p></article></a><a href="/institutions"><article><strong><%= counts.institutions %></strong><h3>Zorginstellingen</h3><p>CRM en plaatsingen.</p></article></a><a href="/subsidies"><article><strong><%= counts.subsidies %></strong><h3>Subsidies</h3><p>AMIF, ESF+, FERS.</p></article></a><a href="/documents"><article><strong><%= counts.documents %></strong><h3>Documenten</h3><p>Contracten en dossiers.</p></article></a></div></main></body></html>
+<!doctype html>
+<html lang="<%= lang %>">
+<head><%- include('partials_head') %></head>
+<body>
+<%- include('partials_nav') %>
+<main class="portal">
+  <section class="portal-head">
+    <div>
+      <p class="badge">Secure Portal</p>
+      <h1><%= t.dashboard %></h1>
+      <p class="lead"><%= t.welcome %>, <%= email %>. <%= t.manage_text %></p>
+    </div>
+    <form method="post" action="/logout"><button class="btn secondary"><%= t.logout %></button></form>
+  </section>
+  <section class="portal-grid">
+    <a class="module" href="/candidates"><b><%= counts.candidates %></b><h3><%= t.candidates %></h3><p>Colombia → Poland pipeline</p></a>
+    <a class="module" href="/institutions"><b><%= counts.institutions %></b><h3><%= t.institutions %></h3><p>CRM & partnerbeheer</p></a>
+    <a class="module" href="/subsidies"><b><%= counts.subsidies %></b><h3><%= t.subsidies %></h3><p>AMIF • ESF+ • FERS</p></a>
+    <a class="module" href="/documents"><b><%= counts.documents %></b><h3><%= t.documents %></h3><p>Contracten & dossiers</p></a>
+  </section>
+</main>
+</body>
+</html>

@@ -1,1 +1,15 @@
-<!doctype html><html lang="<%= lang %>"><head><%- include('partials_head') %></head><body class="login-bg"><main class="auth premium-auth"><h1>Authenticator code</h1><p class="sub">Vul je 6-cijferige code in.</p><% if (error) { %><div class="error"><%= error %></div><% } %><form method="post" action="/verify-2fa"><input name="token" placeholder="6-cijferige code" required inputmode="numeric"><button class="btn full" type="submit">Verifiëren</button></form></main></body></html>
+<!doctype html>
+<html lang="<%= lang %>">
+<head><%- include('partials_head') %></head>
+<body class="auth-bg">
+<main class="auth-card">
+  <h1><%= t.twofa_verify %></h1>
+  <p class="sub"><%= t.twofa_verify_text %></p>
+  <% if (error) { %><div class="error"><%= error %></div><% } %>
+  <form method="post" action="/verify-2fa">
+    <input name="token" placeholder="000000" required inputmode="numeric">
+    <button class="btn primary full" type="submit"><%= t.verify %></button>
+  </form>
+</main>
+</body>
+</html>

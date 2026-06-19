@@ -1,5 +1,6 @@
 <header class="nav">
-  <a class="logo" href="/"><span>Honor</span> Care Poland</a>
+  <a class="brand" href="/"><span class="brand-mark">H</span><span>Honor Care<br><em>Poland</em></span></a>
+  <button class="menu-btn" type="button" onclick="document.body.classList.toggle('menu-open')">☰</button>
   <nav>
     <a href="/"><%= t.nav_home %></a>
     <a href="/stichting"><%= t.nav_foundation %></a>
@@ -7,6 +8,7 @@
     <a href="/zorginstellingen"><%= t.nav_institutions %></a>
     <a href="/kandidaten-info"><%= t.nav_candidates %></a>
     <a href="/subsidies-info"><%= t.nav_subsidies %></a>
+    <a href="/contact"><%= t.nav_contact %></a>
     <a class="navbtn" href="/login"><%= t.nav_portal %></a>
     <div class="lang">
       <a class="<%= lang==='pl'?'active':'' %>" href="/lang/pl">PL</a>
