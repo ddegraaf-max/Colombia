@@ -1,7 +1,5 @@
 
 const express = require('express');
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
@@ -9,8 +7,15 @@ const bcrypt = require('bcryptjs');
 const speakeasy = require('speakeasy');
 const QRCode = require('qrcode');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 const PORT = process.env.PORT || 8080;
 const APP_NAME = process.env.APP_NAME || 'Honor Care Poland Secure Portal';
 const MONGODB_URI = process.env.MONGODB_URI;
