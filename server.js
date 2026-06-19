@@ -16,6 +16,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 const PORT = process.env.PORT || 8080;
 const APP_NAME = process.env.APP_NAME || 'Honor Care Poland Secure Portal';
 const MONGODB_URI = process.env.MONGODB_URI;
