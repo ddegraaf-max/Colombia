@@ -1,9 +1,25 @@
 {
+  {
   "name": "honorcare-polanka-complete-site",
   "version": "2.0.0",
   "description": "Honor Care Poland website + secure portal frontend",
   "main": "server.js",
-  "scripts": {"start": "node server.js", "dev": "node server.js"},
-  "dependencies": {"bcryptjs":"^2.4.3","connect-mongo":"^5.1.0","dotenv":"^16.4.7","ejs":"^3.1.10","express":"^4.21.2","express-session":"^1.18.1","mongoose":"^8.9.5","qrcode":"^1.5.4","speakeasy":"^2.0.0"},
-  "engines": {"node": ">=20 <25"}
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "mongoose": "^8.9.5",
+    "qrcode": "^1.5.4",
+    "speakeasy": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=20 <25"
+  }
 }
