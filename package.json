@@ -1,7 +1,6 @@
 {
-  "name": "honorcare-polanka-complete-site",
-  "version": "4.0.0",
-  "description": "Honor Care Poland super premium multilingual website and secure portal",
+  "name": "honorcare-poland-market-premium",
+  "version": "5.0.0",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
