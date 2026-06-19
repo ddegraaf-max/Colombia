@@ -10,7 +10,7 @@ const QRCode = require('qrcode');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const APP_NAME = process.env.APP_NAME || 'Honor Care Poland Secure Portal';
 const MONGODB_URI = process.env.MONGODB_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET || 'change-me';
@@ -98,5 +98,6 @@ app.post('/verify-2fa', async(req,res)=>{ const user=await User.findById(req.ses
 app.get('/portal', requireAuth, (req,res)=>res.render('portal',{email:req.session.email}));
 app.post('/logout',(req,res)=>req.session.destroy(()=>res.redirect('/')));
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT,()=>console.log(`Honor Care Poland draait op poort ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Honor Care Poland draait op poort ${PORT}`);
+});
