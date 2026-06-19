@@ -1,5 +1,7 @@
 
 const express = require('express');
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
