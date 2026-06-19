@@ -1,1 +1,1 @@
-document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('form.contact').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault(); alert('Demoformulier: koppel later e-mail of CRM.');}));});
+console.log('Honor Care Poland loaded');

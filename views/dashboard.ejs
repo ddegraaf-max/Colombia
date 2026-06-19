@@ -1,1 +1,19 @@
-<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard</title><%- include('partials_style') %></head><body><div class="wrap"><div class="top"><div><h1>Honor Care Poland</h1><div>Beveiligde documentenomgeving</div></div><form method="post" action="/logout"><button class="logout">Uitloggen</button></form></div><section class="panel"><h2>Documenten & websitebestanden</h2><p class="sub">Alle bestanden hieronder zijn alleen toegankelijk na wachtwoord + Authenticator-inlog.</p><div class="grid"><% files.forEach(function(file){ %><div class="file"><b><%= file.name %></b><small><%= file.path %> · <%= Math.round(file.size/1024) %> KB</small><br><a class="download" href="/download/<%= encodeURI(file.path) %>">Download</a></div><% }) %></div></section></div></body></html>
+<!doctype html>
+<html lang="<%= lang %>">
+<head><%- include('partials_head') %></head>
+<body>
+<%- include('partials_nav') %>
+<main class="page">
+  <p class="eyebrow">Secure Portal</p>
+  <h1>Dashboard</h1>
+  <p class="lead">Welkom, <%= email %>. Hier beheer je documenten, subsidies, partners en projectstappen.</p>
+  <div class="dashboard">
+    <a href="/candidates"><article><strong><%= counts.candidates %></strong><h3>Kandidaten</h3><p>Pipeline Colombia → Polen.</p></article></a>
+    <a href="/institutions"><article><strong><%= counts.institutions %></strong><h3>Zorginstellingen</h3><p>CRM en plaatsingen.</p></article></a>
+    <a href="/subsidies"><article><strong><%= counts.subsidies %></strong><h3>Subsidies</h3><p>AMIF, ESF+, FERS.</p></article></a>
+    <a href="/documents"><article><strong><%= counts.documents %></strong><h3>Documenten</h3><p>Contracten en dossiers.</p></article></a>
+  </div>
+  <form method="post" action="/logout"><button class="btn ghost">Uitloggen</button></form>
+</main>
+</body>
+</html>

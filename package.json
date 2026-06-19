@@ -1,7 +1,7 @@
 {
   "name": "honorcare-polanka-complete-site",
-  "version": "2.0.0",
-  "description": "Honor Care Poland website + secure portal frontend",
+  "version": "3.0.0",
+  "description": "Honor Care Poland complete website and secure portal",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

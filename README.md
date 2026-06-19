@@ -1,21 +1,34 @@
-# Honor Care Poland - Multilingual website + secure portal
+# Honor Care Poland
 
-Deze versie bevat taalkeuze voor Pools, Nederlands en Spaans.
-
-## Standaardtaal
-De standaardtaal is Pools (`pl`). Bezoekers kunnen wisselen met de knoppen PL / NL / ES rechtsboven. De keuze wordt opgeslagen in de sessie.
+Complete website + secure portal for Honor Care Poland.
 
 ## Railway variables
-Gebruik minimaal:
+
+Set these in Railway:
 
 ```env
-APP_NAME=Honor Care Poland
 NODE_ENV=production
 MONGODB_URI=${{MongoDB.MONGO_URL}}
-SESSION_SECRET=een-lange-veilige-code
+SESSION_SECRET=use-a-long-random-secret
 ADMIN_EMAIL=admin@honorcarepoland.eu
-ADMIN_PASSWORD=een-sterk-wachtwoord
+ADMIN_PASSWORD=your-strong-password
+APP_NAME=Honor Care Poland
 ```
 
 ## Deploy
-Upload alle bestanden naar GitHub en redeploy via Railway.
+
+1. Upload all files to GitHub.
+2. Connect GitHub repo to Railway.
+3. Add MongoDB service.
+4. Add `MONGODB_URI` as variable reference to MongoDB `MONGO_URL`.
+5. Redeploy.
+
+## URLs
+
+- `/` website
+- `/login` secure login
+- `/dashboard` admin dashboard
+- `/candidates` candidate management
+- `/institutions` institution CRM
+- `/subsidies` subsidy management
+- `/documents` document vault
