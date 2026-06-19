@@ -1,5 +1,4 @@
 {
-  {
   "name": "honorcare-polanka-complete-site",
   "version": "2.0.0",
   "description": "Honor Care Poland website + secure portal frontend",
@@ -20,6 +19,6 @@
     "speakeasy": "^2.0.0"
   },
   "engines": {
-    "node": ">=20 <25"
+    "node": "20.x"
   }
 }
