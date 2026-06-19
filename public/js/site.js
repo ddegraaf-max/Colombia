@@ -1,1 +1,1 @@
-console.log('Honor Care Polish market design loaded');
+console.log('Honor Care International Poland Edition loaded');

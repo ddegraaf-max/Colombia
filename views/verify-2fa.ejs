@@ -1,1 +1,15 @@
-<!doctype html><html lang="<%= lang %>"><head><%- include('head') %></head><body><main class="login"><h1><%= t.verify2fa %></h1><p><%= t.codeText %></p><% if(error){%><div class="error"><%= error %></div><%}%><form method="post" action="/verify-2fa"><input name="token" placeholder="000000" required><button class="btn gold full"><%= t.verify %></button></form></main></body></html>
+<!doctype html>
+<html lang="<%= lang %>">
+<head><%- include('head') %></head>
+<body class="login-bg">
+<main class="login-card">
+  <h1><%= t.verify2fa %></h1>
+  <p><%= t.codeText %></p>
+  <% if(error){ %><div class="error"><%= error %></div><% } %>
+  <form method="post" action="/verify-2fa">
+    <input name="token" placeholder="000000" required>
+    <button class="btn gold full"><%= t.verify %></button>
+  </form>
+</main>
+</body>
+</html>

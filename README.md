@@ -1,3 +1,15 @@
-# Honor Care International - Polish Market v5
+# Honor Care International Poland Edition v6
 
-Upload uitgepakte inhoud naar GitHub. Standaardtaal is Pools met NL/ES taalwissel.
+Definitieve versie in dezelfde huisstijl als de premium mockup:
+- navy/goud
+- grote topbar + logo
+- hero met artsen
+- specialisatiebalk
+- kaarten
+- Polen/statistieken
+- partners
+- footer
+- PL/NL/ES
+- secure portal met 2FA en MongoDB
+
+Upload de uitgepakte inhoud naar GitHub.

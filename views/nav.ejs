@@ -1,1 +1,40 @@
-<div class="topbar"><span><%= t.tag %></span><span>📞 +48 22 123 45 67</span><span>✉ info@honorcare.pl</span><span>📍 Warszawa, Polska</span><div class="lang"><a class="<%= lang==='pl'?'active':'' %>" href="/lang/pl">PL</a><a class="<%= lang==='nl'?'active':'' %>" href="/lang/nl">NL</a><a class="<%= lang==='es'?'active':'' %>" href="/lang/es">ES</a></div></div><header class="nav"><a class="logo" href="/"><span class="heart">♥</span><div><b>HONOR CARE</b><em>INTERNATIONAL</em><small>Opieka z sercem. Przyszłość z nami.</small></div></a><nav><a href="/"><%= t.navHome %></a><a href="/about"><%= t.navAbout %></a><a href="/institutions-page"><%= t.navInst %></a><a href="/professionals"><%= t.navPro %></a><a href="/academy"><%= t.navAcademy %></a><a href="/housing"><%= t.navHousing %></a><a href="/poland"><%= t.navPoland %></a><a href="/contact"><%= t.navContact %></a><a class="portal" href="/login"><%= t.navPortal %></a></nav></header>
+<div class="topbar">
+  <div class="top-inner">
+    <span><%= t.top_city %></span>
+    <span>|</span>
+    <span><%= t.top_city2 %></span>
+    <span class="top-spacer"></span>
+    <span>+48 22 123 45 67</span>
+    <span>info@honorcare.pl</span>
+    <div class="lang">
+      <a class="<%= lang==='pl'?'active':'' %>" href="/lang/pl">PL</a>
+      <a class="<%= lang==='nl'?'active':'' %>" href="/lang/nl">NL</a>
+      <a class="<%= lang==='es'?'active':'' %>" href="/lang/es">ES</a>
+    </div>
+  </div>
+</div>
+
+<header class="mainnav">
+  <a class="logo" href="/">
+    <span class="logo-mark">
+      <span class="heart">♥</span>
+      <span class="people">●●●</span>
+    </span>
+    <span class="logo-text">
+      <b>HONOR CARE</b>
+      <em>INTERNATIONAL</em>
+      <small><%= t.slogan %></small>
+    </span>
+  </a>
+  <nav>
+    <a href="/"><%= t.nav_home %></a>
+    <a href="/about"><%= t.nav_about %></a>
+    <a href="/institutions-page"><%= t.nav_institutions %></a>
+    <a href="/professionals"><%= t.nav_professionals %></a>
+    <a href="/academy"><%= t.nav_academy %></a>
+    <a href="/housing"><%= t.nav_housing %></a>
+    <a href="/poland"><%= t.nav_poland %></a>
+    <a href="/contact"><%= t.nav_contact %></a>
+    <a class="portal-link" href="/login"><%= t.nav_portal %></a>
+  </nav>
+</header>

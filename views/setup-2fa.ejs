@@ -1,1 +1,17 @@
-<!doctype html><html lang="<%= lang %>"><head><%- include('head') %></head><body><main class="login wide"><h1><%= t.setup2fa %></h1><p><%= t.codeText %></p><% if(error){%><div class="error"><%= error %></div><%}%><img class="qr" src="<%= qr %>"><p class="secret"><%= secret %></p><form method="post" action="/setup-2fa"><input name="token" placeholder="000000" required><button class="btn gold full"><%= t.activate %></button></form></main></body></html>
+<!doctype html>
+<html lang="<%= lang %>">
+<head><%- include('head') %></head>
+<body class="login-bg">
+<main class="login-card wide">
+  <h1><%= t.setup2fa %></h1>
+  <p><%= t.codeText %></p>
+  <% if(error){ %><div class="error"><%= error %></div><% } %>
+  <img class="qr" src="<%= qr %>" alt="QR">
+  <p class="secret"><%= secret %></p>
+  <form method="post" action="/setup-2fa">
+    <input name="token" placeholder="000000" required>
+    <button class="btn gold full"><%= t.activate %></button>
+  </form>
+</main>
+</body>
+</html>

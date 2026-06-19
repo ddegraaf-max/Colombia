@@ -1,6 +1,7 @@
 {
-  "name": "honorcare-poland-market-premium",
-  "version": "5.0.0",
+  "name": "honor-care-international-poland-edition",
+  "version": "6.0.0",
+  "description": "Honor Care International Poland Edition - website and secure portal",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
