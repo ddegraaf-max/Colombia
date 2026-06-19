@@ -1,17 +1,38 @@
-# Honor Care International
+# Honor Care Poland Secure Portal
 
-Statische website (NL/EN/ES) met een kleine Node/Express-server.
+Beveiligde webomgeving voor documenten, websitebestanden en projectdossier van Honor Care Poland.
 
-## Online zetten via GitHub + Railway
-1. Maak een nieuwe GitHub-repository.
-2. Add file -> Upload files -> sleep deze 3 bestanden erin: index.html, server.js, package.json. Commit.
-3. Railway: New Project -> Deploy from GitHub repo -> kies de repository.
-4. Railway draait automatisch `npm install` en `npm start`.
-5. Settings -> Networking -> Generate Domain voor een live-URL.
+## Beveiliging
+- Wachtwoord-login
+- Authenticator/TOTP via Google Authenticator, Microsoft Authenticator, Authy of 1Password
+- Sessies opgeslagen in MongoDB
+- Documenten staan niet in de publieke map
+- Downloads alleen na login + 2FA
 
-## Lokaal testen
+## Lokaal starten
+```bash
 npm install
+cp .env.example .env
 npm start
-# open http://localhost:3000
+```
+Open http://localhost:3000
 
-Contact: info@honorcare.com | WhatsApp +31 6 46 15 01 60
+## Deploy via GitHub + Railway
+1. Maak een nieuwe private GitHub repository.
+2. Upload alle bestanden uit deze map.
+3. Maak in Railway een nieuw project: Deploy from GitHub repo.
+4. Voeg een MongoDB database toe via Railway of gebruik MongoDB Atlas.
+5. Zet Variables:
+   - NODE_ENV=production
+   - SESSION_SECRET=een-lange-random-secret
+   - ADMIN_EMAIL=jouw@email.nl
+   - ADMIN_PASSWORD=een-sterk-wachtwoord
+   - MONGODB_URI=de MongoDB connection string
+   - APP_NAME=Honor Care Poland Secure Portal
+6. Deploy.
+7. Log voor de eerste keer in met ADMIN_EMAIL en ADMIN_PASSWORD.
+8. Scan de QR-code met je Authenticator app.
+
+## Belangrijk
+Wijzig direct na eerste livegang het admin-wachtwoord in Railway Variables en redeploy.
+Gebruik een private repository zolang documenten vertrouwelijk zijn.
