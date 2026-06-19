@@ -107,6 +107,13 @@ app.post('/logout',(req,res)=>req.session.destroy(()=>res.redirect('/')));
 app.get('/dashboard', requireAuth, (req, res) => {
   res.redirect('/portal');
 });
+app.get('/lang/:lang', (req, res) => {
+  const lang = req.params.lang;
+  if (['pl', 'nl', 'es'].includes(lang)) {
+    req.session.lang = lang;
+  }
+  res.redirect('back');
+});
 app.listen(PORT, () => {
   console.log(`Honor Care Poland draait op poort ${PORT}`);
 });
