@@ -1,17 +1,1 @@
-<!doctype html>
-<html lang="<%= lang %>">
-<head><%- include('partials_head') %></head>
-<body>
-<%- include('partials_nav') %>
-<main class="auth">
-  <h1><%= t.login_title %></h1>
-  <p class="sub">Voor documenten, subsidies, partners en management.</p>
-  <% if (error) { %><div class="error"><%= error %></div><% } %>
-  <form method="post" action="/login">
-    <input name="email" type="email" placeholder="E-mail" required autocomplete="username">
-    <input name="password" type="password" placeholder="Wachtwoord" required autocomplete="current-password">
-    <button class="btn full" type="submit">Inloggen</button>
-  </form>
-</main>
-</body>
-</html>
+<!doctype html><html lang="<%= lang %>"><head><%- include('partials_head') %></head><body class="login-bg"><%- include('partials_nav') %><main class="auth premium-auth"><p class="eyebrow">Secure access</p><h1><%= t.login_title %></h1><p class="sub">Voor kandidaten, subsidies, documenten en management.</p><% if (error) { %><div class="error"><%= error %></div><% } %><form method="post" action="/login"><input name="email" type="email" placeholder="E-mail" required autocomplete="username"><input name="password" type="password" placeholder="Wachtwoord" required autocomplete="current-password"><button class="btn full" type="submit">Inloggen</button></form></main></body></html>

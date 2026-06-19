@@ -1,18 +1,1 @@
-<!doctype html>
-<html lang="<%= lang %>">
-<head><%- include('partials_head') %></head>
-<body>
-<%- include('partials_nav') %>
-<main class="page">
-  <p class="eyebrow">Honor Care Poland</p>
-  <h1><%= title %></h1>
-  <p class="lead"><%= subtitle %></p>
-  <div class="cards">
-    <% cards.forEach(function(card){ %>
-      <article><h3><%= card %></h3><p>Onderdeel van het complete Honor Care Poland platform.</p></article>
-    <% }) %>
-  </div>
-</main>
-<footer>© Honor Care Poland</footer>
-</body>
-</html>
+<!doctype html><html lang="<%= lang %>"><head><%- include('partials_head') %></head><body><%- include('partials_nav') %><section class="page-hero <%= heroClass || '' %>"><div><p class="eyebrow"><%= eyebrow || 'Honor Care Poland' %></p><h1><%= title %></h1><p class="lead"><%= subtitle %></p></div></section><main class="section"><div class="feature-grid"><% cards.forEach(function(card){ %><article><span>•</span><h3><%= Array.isArray(card) ? card[0] : card %></h3><p><%= Array.isArray(card) ? card[1] : 'Onderdeel van het complete platform.' %></p></article><% }) %></div></main><footer>© Honor Care Poland</footer></body></html>

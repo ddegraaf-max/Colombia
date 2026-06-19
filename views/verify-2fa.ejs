@@ -1,15 +1,1 @@
-<!doctype html>
-<html lang="<%= lang %>">
-<head><%- include('partials_head') %></head>
-<body>
-<main class="auth">
-  <h1>Authenticator code</h1>
-  <p class="sub">Vul je 6-cijferige code in.</p>
-  <% if (error) { %><div class="error"><%= error %></div><% } %>
-  <form method="post" action="/verify-2fa">
-    <input name="token" placeholder="6-cijferige code" required inputmode="numeric">
-    <button class="btn full" type="submit">Verifiëren</button>
-  </form>
-</main>
-</body>
-</html>
+<!doctype html><html lang="<%= lang %>"><head><%- include('partials_head') %></head><body class="login-bg"><main class="auth premium-auth"><h1>Authenticator code</h1><p class="sub">Vul je 6-cijferige code in.</p><% if (error) { %><div class="error"><%= error %></div><% } %><form method="post" action="/verify-2fa"><input name="token" placeholder="6-cijferige code" required inputmode="numeric"><button class="btn full" type="submit">Verifiëren</button></form></main></body></html>
