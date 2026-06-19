@@ -11,6 +11,7 @@ const speakeasy = require('speakeasy');
 const QRCode = require('qrcode');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const APP_NAME = process.env.APP_NAME || 'Honor Care Poland Secure Portal';
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -50,8 +51,14 @@ app.use(session({
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', maxAge: 1000 * 60 * 60 * 8 },
-  store: MongoStore.create({ mongoUrl: MONGODB_URI || 'mongodb://127.0.0.1:27017/honorcare' })
+  proxy: true,
+  cookie: {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 1000 * 60 * 60 * 8
+  },
+  store: MongoStore.create({ mongoUrl: MONGODB_URI })
 }));
 
 function requireAuth(req, res, next) {
