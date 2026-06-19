@@ -1,1 +1,1 @@
-console.log('Honor Care Screenshot Style Final v7 loaded');
+console.log('Honor Care Final Expanded v8 loaded');

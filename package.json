@@ -1,7 +1,7 @@
 {
-  "name": "honor-care-screenshot-style-final",
-  "version": "7.0.0",
-  "description": "Honor Care International website in screenshot style for Polish market",
+  "name": "honor-care-final-polish-expanded",
+  "version": "8.0.0",
+  "description": "Honor Care International Poland website with multilingual portal and documents",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

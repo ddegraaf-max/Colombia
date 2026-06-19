@@ -1,19 +1,5 @@
-<!doctype html>
-<html lang="<%= lang %>">
-<head><%- include('head') %></head>
-<body>
-<%- include('nav') %>
-<section class="subpage">
-  <div>
-    <h1><%= page==='about'?t.about:page==='institutions-page'?t.inst:page==='professionals'?t.pro:page==='academy'?t.academy:page==='housing'?t.housing:page==='poland'?t.poland:t.contact %></h1>
-    <p><%= t.heroText %></p>
-    <div class="actions"><a class="btn gold" href="/login"><%= t.portal %></a><a class="btn navy" href="/contact"><%= t.cta3 %></a></div>
-  </div>
-</section>
-<section class="cards three">
-  <article><div class="card-img pro"></div><div class="card-body"><small><%= t.cardK[0] %></small><h3><%= t.cardT[0] %></h3><p><%= t.cardLi[0].join(' • ') %></p></div></article>
-  <article><div class="card-img inst"></div><div class="card-body"><small><%= t.cardK[1] %></small><h3><%= t.cardT[1] %></h3><p><%= t.cardLi[1].join(' • ') %></p></div></article>
-  <article><div class="card-img academy"></div><div class="card-body"><small><%= t.cardK[2] %></small><h3><%= t.cardT[2] %></h3><p><%= t.cardLi[2].join(' • ') %></p></div></article>
-</section>
-</body>
-</html>
+<!doctype html><html lang="<%= lang %>"><head><%- include('head') %></head><body><%- include('nav') %>
+<section class="pagehero"><h1><%= t.pageTitles[key] %></h1><p><%= t.pageTexts[key] %></p></section>
+<section class="info-grid"><% t.blocks.forEach(function(b){ %><article><h3><%= b %></h3><p><%= t.pageTexts[key] %></p></article><% }) %></section>
+<footer><div class="footbrand"><span class="emblem"><span>♥</span><i>●●●</i></span><b>HONOR CARE</b><em>INTERNATIONAL</em></div><p>Polska – Warszawa<br>info@honorcare.pl</p></footer>
+</body></html>

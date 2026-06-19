@@ -1,87 +1,26 @@
-<!doctype html>
-<html lang="<%= lang %>">
-<head><%- include('head') %></head>
-<body>
-<%- include('nav') %>
-
+<!doctype html><html lang="<%= lang %>"><head><%- include('head') %></head><body><%- include('nav') %>
 <section class="hero">
   <div class="hero-copy">
     <h1><span><%= t.hero1 %></span><span><%= t.hero2 %></span><strong><%= t.hero3 %></strong></h1>
     <p><%= t.heroText %></p>
-    <div class="checks">
-      <% t.b.forEach(function(x){ %><span>✓ <%= x %></span><% }) %>
+    <div class="features">
+      <% t.heroItems.forEach(function(x){ %><div><b>✓</b><span><%= x %></span></div><% }) %>
     </div>
-    <div class="actions">
-      <a class="btn navy" href="/institutions-page"><%= t.cta1 %></a>
-      <a class="btn gold" href="/professionals"><%= t.cta2 %></a>
-      <a class="btn light" href="/contact">▣ <%= t.cta3 %></a>
-    </div>
+    <div class="actions"><a class="btn navy" href="/institutions"><%= t.forInst %> →</a><a class="btn gold" href="/candidates-info"><%= t.forCandidates %> →</a></div>
   </div>
-  <div class="hero-image"></div>
+  <div class="hero-people"></div>
+  <aside class="hero-side"><div class="lineart">⌂</div><p><%= t.sideTitle %></p><h3><%= t.sideCity %></h3><ul><li><%= t.side1 %></li><li><%= t.side2 %></li><li><%= t.side3 %></li></ul></aside>
 </section>
-
-<section class="specialties">
-  <% t.specs.forEach(function(spec, i){ %>
-    <div>
-      <span><%= ['⚕','♡','♢','♙','Ψ','♿','▤','♡','⚕','＋'][i] %></span>
-      <small><%= spec %></small>
-    </div>
-  <% }) %>
-</section>
-
+<section class="discipline"><h3><%= t.disciplineTitle %></h3><% t.specs.forEach(function(s,i){ %><div><b><%= ['⚕','♢','☤','♙','♡','⚕','⚗','✚','Ψ','＋'][i] %></b><span><%= s %></span></div><% }) %></section>
 <section class="cards">
-  <% ['pro','inst','academy','housing'].forEach(function(cls, i){ %>
-    <article>
-      <div class="card-img <%= cls %>"></div>
-      <div class="card-body">
-        <small><%= t.cardK[i] %></small>
-        <h3><%= t.cardT[i] %></h3>
-        <ul>
-          <% t.cardLi[i].forEach(function(li){ %><li>✓ <%= li %></li><% }) %>
-        </ul>
-        <a class="btn <%= i % 2 === 0 ? 'navy' : 'gold' %>" href="<%= i===0?'/professionals':i===1?'/institutions-page':i===2?'/academy':'/housing' %>"><%= t.cardB[i] %></a>
-      </div>
-    </article>
+  <% t.cards.forEach(function(c,i){ %>
+    <article><div class="img img<%= i %>"></div><div class="body"><h3><%= c[0] %></h3><ul><li>✓ <%= c[1] %></li><li>✓ <%= c[2] %></li><li>✓ <%= c[3] %></li><li>✓ <%= c[4] %></li></ul><a href="<%= ['/colombia','/institutions','/candidates-info','/housing','/academy'][i] %>" class="btn navy"><%= c[5] %></a></div></article>
   <% }) %>
 </section>
-
-<section class="poland-band">
-  <div class="poland-copy">
-    <small><%= t.whyK %></small>
-    <h2><%= t.whyT %></h2>
-    <p><%= t.whyText %></p>
-    <a class="btn gold" href="/poland"><%= t.whyBtn %></a>
-  </div>
-  <div class="stats">
-    <div><b>100+</b><span><%= t.stats[0] %></span></div>
-    <div><b>30+</b><span><%= t.stats[1] %></span></div>
-    <div><b>10+</b><span><%= t.stats[2] %></span></div>
-    <div><b>2</b><span><%= t.stats[3] %></span></div>
-  </div>
+<section class="trust"><h4><%= t.partners %></h4><div><span>NFZ</span><span>MEDICOVER</span><span>LUXMED</span><span>PZU ZDROWIE</span><span>CM Damiana</span></div></section>
+<section class="bottom">
+  <div><b>100+</b><span><%= t.stat1 %></span></div><div><b>30+</b><span><%= t.stat2 %></span></div><div><b>10+</b><span><%= t.stat3 %></span></div><div><b>2</b><span><%= t.stat4 %></span></div>
+  <h2><%= t.footerMotto %></h2>
 </section>
-
-<section class="partners">
-  <h4><%= t.partners %></h4>
-  <div>
-    <span>NFZ</span>
-    <span>Medicover</span>
-    <span>LUX MED</span>
-    <span>PZU Zdrowie</span>
-    <span>CM Damiana</span>
-  </div>
-</section>
-
-<footer>
-  <div>
-    <a class="logo foot-logo" href="/">
-      <span class="logo-emblem small"><span class="logo-heart">♥</span><span class="logo-people">● ● ●</span></span>
-      <span class="logo-copy"><b>HONOR CARE</b><em>INTERNATIONAL</em></span>
-    </a>
-    <p><%= t.footer %></p>
-  </div>
-  <div><h5><%= t.home %></h5><a href="/about"><%= t.about %></a><a href="/institutions-page"><%= t.inst %></a><a href="/professionals"><%= t.pro %></a><a href="/contact"><%= t.contact %></a></div>
-  <div><h5>Polska</h5><p>Warszawa</p><p>+48 22 123 45 67</p><p>info@honorcare.pl</p></div>
-  <div><h5>Colombia</h5><p>Bogotá</p><p>+57 320 123 45 67</p><p>colombia@honorcareinternational.com</p></div>
-</footer>
-</body>
-</html>
+<footer><div class="footbrand"><span class="emblem"><span>♥</span><i>●●●</i></span><b>HONOR CARE</b><em>INTERNATIONAL</em></div><p>Polska – Warszawa<br>info@honorcare.pl<br>+48 22 123 45 67</p><p>Kolumbia – Bogotá<br>colombia@honorcare.co<br>+57 320 123 45 67</p></footer>
+</body></html>

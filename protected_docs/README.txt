@@ -1,1 +1,1 @@
-Beveiligde documenten.
+Beschermde documenten.
