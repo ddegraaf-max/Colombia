@@ -1,9 +1,10 @@
 {
-  "name": "honorcare-v10-docs-open",
-  "version": "10.0.0",
+  "name": "honorcare-launch-ready-v11",
+  "version": "11.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
