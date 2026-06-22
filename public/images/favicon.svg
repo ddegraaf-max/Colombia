@@ -1,9 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#002b55"/><stop offset=".7" stop-color="#063f70"/><stop offset="1" stop-color="#d09a2e"/></linearGradient></defs>
-<rect width="64" height="64" rx="12" fill="#002b55"/>
-<g transform="translate(7,9) scale(0.26)">
-<path d="M82 8C44 8 18 39 18 76c0 50 48 86 86 123 38-37 86-73 86-123 0-37-26-68-64-68-16 0-30 8-42 24C112 16 98 8 82 8z" fill="none" stroke="url(#g)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="70" cy="84" r="13" fill="#fff"/><circle cx="138" cy="84" r="13" fill="#fff"/><circle cx="104" cy="73" r="19" fill="#fff"/>
-<path d="M55 151c8-35 29-50 49-17 20-33 41-18 49 17" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+<rect width="100" height="100" rx="20" fill="#ffffff"/>
+<g transform="translate(50,50) scale(0.34) translate(-110,-100)">
+ <clipPath id="lc2"><rect x="0" y="0" width="110" height="200"/></clipPath>
+ <clipPath id="rc2"><rect x="110" y="0" width="110" height="200"/></clipPath>
+ <path d="M110 182 C 60 140, 22 104, 22 64 C 22 36, 44 18, 70 18 C 90 18, 104 32, 110 50 C 116 32, 130 18, 150 18 C 176 18, 198 36, 198 64 C 198 104, 160 140, 110 182 Z" fill="none" stroke="#002b55" stroke-width="28" stroke-linejoin="round" clip-path="url(#lc2)"/>
+ <path d="M110 182 C 60 140, 22 104, 22 64 C 22 36, 44 18, 70 18 C 90 18, 104 32, 110 50 C 116 32, 130 18, 150 18 C 176 18, 198 36, 198 64 C 198 104, 160 140, 110 182 Z" fill="none" stroke="#c8962f" stroke-width="28" stroke-linejoin="round" clip-path="url(#rc2)"/>
+ <circle cx="97" cy="68" r="16" fill="#002b55"/>
+ <path d="M73 134 C73 100 81 88 97 88 C113 88 121 100 121 134 Q97 144 73 134 Z" fill="#002b55"/>
+ <circle cx="128" cy="82" r="12" fill="#c8962f"/>
+ <path d="M111 134 C111 106 118 98 128 98 C138 98 145 106 145 134 Q128 142 111 134 Z" fill="#c8962f"/>
 </g>
 </svg>

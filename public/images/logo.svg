@@ -1,13 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="920" height="220" viewBox="0 0 920 220">
-<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#002b55"/><stop offset=".72" stop-color="#063f70"/><stop offset="1" stop-color="#d09a2e"/></linearGradient></defs>
-<rect width="920" height="220" fill="#fff"/>
-<g transform="translate(34,26)">
-<path d="M82 8C44 8 18 39 18 76c0 50 48 86 86 123 38-37 86-73 86-123 0-37-26-68-64-68-16 0-30 8-42 24C112 16 98 8 82 8z" fill="none" stroke="url(#g)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="70" cy="84" r="12" fill="#002b55"/><circle cx="138" cy="84" r="12" fill="#002b55"/><circle cx="104" cy="73" r="18" fill="#002b55"/>
-<path d="M55 151c8-35 29-50 49-17 20-33 41-18 49 17" fill="none" stroke="#002b55" stroke-width="15" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="220" viewBox="0 0 980 220">
+<g transform="translate(16,16) scale(0.93)">
+ <clipPath id="lc"><rect x="0" y="0" width="110" height="200"/></clipPath>
+ <clipPath id="rc"><rect x="110" y="0" width="110" height="200"/></clipPath>
+ <path d="M110 182 C 60 140, 22 104, 22 64 C 22 36, 44 18, 70 18 C 90 18, 104 32, 110 50 C 116 32, 130 18, 150 18 C 176 18, 198 36, 198 64 C 198 104, 160 140, 110 182 Z" fill="none" stroke="#002b55" stroke-width="26" stroke-linejoin="round" clip-path="url(#lc)"/>
+ <path d="M110 182 C 60 140, 22 104, 22 64 C 22 36, 44 18, 70 18 C 90 18, 104 32, 110 50 C 116 32, 130 18, 150 18 C 176 18, 198 36, 198 64 C 198 104, 160 140, 110 182 Z" fill="none" stroke="#c8962f" stroke-width="26" stroke-linejoin="round" clip-path="url(#rc)"/>
+ <circle cx="97" cy="68" r="15" fill="#002b55"/>
+ <path d="M75 132 C75 100 82 88 97 88 C112 88 119 100 119 132 Q97 142 75 132 Z" fill="#002b55"/>
+ <circle cx="127" cy="82" r="11" fill="#c8962f"/>
+ <path d="M111 132 C111 106 117 98 127 98 C137 98 143 106 143 132 Q127 140 111 132 Z" fill="#c8962f"/>
 </g>
-<text x="250" y="82" font-family="Georgia,serif" font-size="58" font-weight="700" fill="#002b55" letter-spacing="2">HONOR CARE</text>
-<text x="252" y="133" font-family="Georgia,serif" font-size="30" fill="#c8962f" letter-spacing="15">INTERNATIONAL</text>
-<line x1="252" y1="149" x2="765" y2="149" stroke="#c8962f" stroke-width="2"/>
-<text x="252" y="178" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="800" fill="#002b55">OPIEKA Z SERCEM. PRZYSZŁOŚĆ Z NAMI.</text>
+<text x="262" y="96" font-family="Playfair Display, Georgia, serif" font-size="62" font-weight="700" fill="#002b55" letter-spacing="3">HONOR CARE</text>
+<text x="264" y="146" font-family="Playfair Display, Georgia, serif" font-size="30" fill="#c8962f" letter-spacing="16">INTERNATIONAL</text>
+<line x1="264" y1="162" x2="812" y2="162" stroke="#c8962f" stroke-width="2"/>
+<text x="264" y="190" font-family="Poppins, Arial, sans-serif" font-size="15" font-weight="700" fill="#002b55" letter-spacing="1">OPIEKA Z SERCEM. PRZYSZŁOŚĆ Z NAMI.</text>
 </svg>
