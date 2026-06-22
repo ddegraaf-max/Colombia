@@ -88,9 +88,11 @@ function footer(lang = 'pl') {
 mongoose.set('strictQuery', true);
 const User = mongoose.model('User', new mongoose.Schema({ email: { type: String, unique: true, lowercase: true }, passwordHash: String, twoFASecret: { type: String, default: null }, createdAt: { type: Date, default: Date.now } }));
 const Document = mongoose.model('Document', new mongoose.Schema({ title: String, category: String, language: String, status: String, notes: String, content: String, createdAt: { type: Date, default: Date.now } }));
-const Candidate = mongoose.model('Candidate', new mongoose.Schema({ name: String, email: String, profession: String, country: String, status: String, notes: String, createdAt: { type: Date, default: Date.now } }));
-const Institution = mongoose.model('Institution', new mongoose.Schema({ name: String, contact: String, email: String, city: String, demand: String, status: String, createdAt: { type: Date, default: Date.now } }));
-const Subsidy = mongoose.model('Subsidy', new mongoose.Schema({ title: String, program: String, deadline: String, status: String, notes: String, createdAt: { type: Date, default: Date.now } }));
+const Candidate = mongoose.model('Candidate', new mongoose.Schema({ name: String, email: String, phone: String, profession: String, specialty: String, country: { type: String, default: 'Kolumbia' }, city: String, language: String, status: { type: String, default: 'Nieuw' }, notes: String, createdAt: { type: Date, default: Date.now } }));
+const Institution = mongoose.model('Institution', new mongoose.Schema({ name: String, contact: String, email: String, phone: String, city: String, type: String, demand: String, status: { type: String, default: 'Prospect' }, notes: String, createdAt: { type: Date, default: Date.now } }));
+const Placement = mongoose.model('Placement', new mongoose.Schema({ candidate: String, institution: String, role: String, startDate: String, status: { type: String, default: 'Voorgesteld' }, notes: String, createdAt: { type: Date, default: Date.now } }));
+const Housing = mongoose.model('Housing', new mongoose.Schema({ title: String, district: String, address: String, rooms: String, area: String, price: String, furnished: { type: Boolean, default: true }, status: { type: String, default: 'Beschikbaar' }, otodomUrl: String, assignedTo: String, notes: String, createdAt: { type: Date, default: Date.now } }));
+const Subsidy = mongoose.model('Subsidy', new mongoose.Schema({ title: String, program: String, deadline: String, status: { type: String, default: 'Concept' }, notes: String, createdAt: { type: Date, default: Date.now } }));
 const Newsletter = mongoose.model('Newsletter', new mongoose.Schema({ email: { type: String, lowercase: true }, lang: String, createdAt: { type: Date, default: Date.now } }));
 
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false, proxy: true, cookie: { httpOnly: true, sameSite: 'lax', secure: IS_PROD, maxAge: 1000 * 60 * 60 * 8 }, store: MongoStore.create({ mongoUrl: MONGO }) }));
@@ -107,10 +109,35 @@ const DOCS = require('./documents'); // [title,category,language,status,content,
 async function seed() {
   const existing = await User.findOne({ email: ADMIN_EMAIL });
   if (!existing) await User.create({ email: ADMIN_EMAIL, passwordHash: await bcrypt.hash(ADMIN_PASSWORD, 12) });
+  // Niet-destructief: bestaande documenten (incl. handmatige aanpassingen) worden NIET overschreven.
   for (const d of DOCS) {
-    await Document.updateOne({ title: d[0] }, { $set: { category: d[1], language: d[2], status: d[3], notes: d[5] || (d[1] + ' — Honor Care Poland'), content: d[4] }, $setOnInsert: { title: d[0], createdAt: new Date() } }, { upsert: true });
+    await Document.updateOne(
+      { title: d[0] },
+      { $setOnInsert: { title: d[0], category: d[1], language: d[2], status: d[3], notes: d[5] || (d[1] + ' — Honor Care Poland'), content: d[4], createdAt: new Date() } },
+      { upsert: true }
+    );
   }
-  console.log('Admin en documenten gecontroleerd/aangevuld');
+  await seedHousing();
+  console.log('Admin, documenten en woningen gecontroleerd (niet-destructief)');
+}
+
+// Voorbeeldwoningen regio Warschau (gebaseerd op actuele Otodom-marktdata; richtbedragen).
+const HOUSING_SEED = [
+  ['Kawalerka — Praga-Południe (Gocławek)', 'Praga-Południe', '1 kamer', '28 m²', '± 2.900 zł/mnd', 'Compacte studio, dicht bij tram/metro. Voorbeeld o.b.v. Otodom-marktdata.'],
+  ['2 kamers — Wola', 'Wola', '2 kamers', '42 m²', '± 4.500 zł/mnd', 'Modern appartement nabij Rondo Daszyńskiego. Voorbeeld.'],
+  ['2 kamers — Mokotów', 'Mokotów', '2 kamers', '48 m²', '± 5.200 zł/mnd', 'Geliefde wijk met veel werkgelegenheid. Voorbeeld.'],
+  ['Kawalerka — Ochota', 'Ochota', '1 kamer', '30 m²', '± 3.500 zł/mnd', 'Goede verbinding met het centrum. Voorbeeld.'],
+  ['3 kamers — Ursynów (gezin)', 'Ursynów', '3 kamers', '60 m²', '± 5.800 zł/mnd', 'Rustige, groene wijk, geschikt voor gezinnen. Voorbeeld.'],
+  ['2 kamers — Białołęka (Nowodwory)', 'Białołęka', '2 kamers', '45 m²', '± 3.400 zł/mnd', 'Voordeliger, nieuwbouw. Voorbeeld.'],
+  ['3 kamers — Praga-Północ', 'Praga-Północ', '3 kamers', '58 m²', '± 4.800 zł/mnd', 'Opkomende wijk, goede prijs-kwaliteit. Voorbeeld.'],
+  ['Studio — Wilanów', 'Wilanów', '1 kamer', '33 m²', '± 3.800 zł/mnd', 'Nieuwe bouw, populair bij expats. Voorbeeld.']
+];
+async function seedHousing() {
+  if (await Housing.countDocuments() > 0) return; // alleen seeden als leeg; gebruikersdata blijft intact
+  const otodom = 'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/mazowieckie/warszawa';
+  for (const h of HOUSING_SEED) {
+    await Housing.create({ title: h[0], district: h[1], rooms: h[2], area: h[3], price: h[4], notes: h[5], furnished: true, status: 'Beschikbaar', otodomUrl: otodom });
+  }
 }
 
 function docContent(doc) {
@@ -227,16 +254,44 @@ app.post('/verify-2fa', requireLogin, async (req, res) => {
 app.post('/logout', (req, res) => req.session.destroy(() => res.redirect('/')));
 
 // ---------- Portaal ----------
+const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/candidates', 'Kandidaten'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
+function portalNav(active) { return `<nav class="pnav" aria-label="Portaal">${PORTAL_LINKS.map(([h, l]) => `<a href="${h}" class="${active === h ? 'on' : ''}">${l}</a>`).join('')}</nav>`; }
+function portalShell(req, res, title, inner, active) {
+  const head = `<div class="page-head"><div><h1>${esc(title)}</h1></div><form method="post" action="/logout"><button class="btn navy small">Uitloggen</button></form></div>`;
+  res.send(layout(title, `<section class="page portal">${head}${portalNav(active)}<div class="pbody">${inner}</div></section>`, 'home', req.lang, req.path));
+}
+function badge(status) {
+  if (!status) return '';
+  const s = String(status).toLowerCase(); let cls = 'b-grey';
+  if (/nieuw|voorgesteld|beschikbaar|prospect|open|concept/.test(s)) cls = 'b-blue';
+  else if (/screening|taal|erken|visum|behandeling|geaccepteerd|toegewezen|ingediend|gesprek|voorbereiding|gereserveerd/.test(s)) cls = 'b-gold';
+  else if (/geplaatst|gestart|afgerond|bezet|actief|toegekend|klant|compleet/.test(s)) cls = 'b-green';
+  else if (/afgewezen|geannuleerd|vervallen|gestopt|hold/.test(s)) cls = 'b-red';
+  return `<span class="badge ${cls}">${esc(status)}</span>`;
+}
+
 app.get('/dashboard', requireAuth, async (req, res) => {
-  const docs = await Document.find().sort({ createdAt: -1 }).limit(12).lean();
-  const counts = { docs: await Document.countDocuments(), candidates: await Candidate.countDocuments(), institutions: await Institution.countDocuments(), subsidies: await Subsidy.countDocuments() };
-  res.send(layout('Dashboard', `<section class="page"><div class="page-head"><div><h1>Dashboard</h1><p>Welkom, ${esc(req.session.email)}.</p></div><form method="post" action="/logout"><button class="btn navy">Uitloggen</button></form></div><section class="modules"><a href="/documents"><b>${counts.docs}</b><span>Documenten</span></a><a href="/candidates"><b>${counts.candidates}</b><span>Kandidaten</span></a><a href="/institutions-list"><b>${counts.institutions}</b><span>Instellingen</span></a><a href="/subsidies"><b>${counts.subsidies}</b><span>Subsidies</span></a></section><h2>Documenten</h2><div class="grid">${docs.map(docCard).join('')}</div></section>`, 'home', req.lang, req.path));
+  const [docs, cand, inst, plac, hous, subs] = await Promise.all([
+    Document.countDocuments(), Candidate.countDocuments(), Institution.countDocuments(),
+    Placement.countDocuments(), Housing.countDocuments(), Subsidy.countDocuments()]);
+  const tiles = [['/candidates', 'Kandidaten', cand], ['/institutions-list', 'Instellingen', inst], ['/placements', 'Plaatsingen', plac], ['/housing-list', 'Woningen', hous], ['/documents', 'Documenten', docs], ['/subsidies', 'Subsidies', subs]];
+  const cands = await Candidate.find().lean();
+  const stages = ['Nieuw', 'Screening', 'Taalopleiding', 'Erkenning', 'Visum', 'Geplaatst'];
+  const pc = {}; stages.forEach(s => pc[s] = 0); cands.forEach(c => { if (pc[c.status] != null) pc[c.status]++; });
+  const inner = `<p class="welcome">Welkom, ${esc(req.session.email)}. Beheer hier het volledige traject — van werving tot plaatsing.</p>
+<section class="modules">${tiles.map(t => `<a href="${t[0]}"><b>${t[2]}</b><span>${t[1]}</span></a>`).join('')}</section>
+<h2>Kandidaten-pijplijn</h2><div class="pipeline">${stages.map(s => `<div class="pstage"><b>${pc[s]}</b><span>${s}</span></div>`).join('')}</div>
+<h2>Sneltoegang</h2><div class="quick"><a class="btn gold" href="/assistant">AI-assistent</a> <a class="btn navy" href="/backup">Back-up &amp; herstel</a> <a class="btn light" href="/housing-list">Woningen (Warschau)</a></div>`;
+  portalShell(req, res, 'Dashboard', inner, '/dashboard');
 });
 app.get('/portal', (req, res) => res.redirect('/dashboard'));
 
 app.get('/documents', requireAuth, async (req, res) => {
   const docs = await Document.find().sort({ createdAt: -1 }).lean();
-  res.send(layout('Documenten', `<section class="page"><h1>Documenten</h1><form class="formgrid" method="post" action="/documents"><input name="title" placeholder="Titel" aria-label="Titel"><input name="category" placeholder="Categorie" aria-label="Categorie"><input name="language" placeholder="Taal" aria-label="Taal"><input name="status" placeholder="Status" aria-label="Status"><textarea name="notes" placeholder="Notities" aria-label="Notities"></textarea><textarea name="content" placeholder="Documentinhoud" aria-label="Documentinhoud"></textarea><button class="btn gold">Toevoegen</button></form><div class="grid">${docs.map(docCard).join('')}</div><p><a class="btn navy" href="/dashboard">Terug</a></p></section>`, 'home', req.lang, req.path));
+  const addForm = `<details class="addbox"><summary>+ Nieuw document</summary><form class="rform" method="post" action="/documents"><div class="ff"><label>Titel</label><input name="title"></div><div class="ff"><label>Categorie</label><input name="category"></div><div class="ff"><label>Taal</label><input name="language"></div><div class="ff"><label>Status</label><input name="status"></div><div class="ff"><label>Notities</label><textarea name="notes" rows="2"></textarea></div><div class="ff"><label>Inhoud (HTML)</label><textarea name="content" rows="4"></textarea></div><div class="rform-actions"><button class="btn gold">Toevoegen</button></div></form></details>`;
+  const rows = docs.map(d => `<tr><td class="tname"><a href="/documents/${d._id}">${esc(d.title)}</a></td><td>${esc(d.category || '')}</td><td>${esc(d.language || '')}</td><td>${badge(d.status)}</td><td class="tact"><a class="btn navy small" href="/documents/${d._id}">Open</a></td></tr>`).join('');
+  const inner = `${addForm}<div class="tablewrap"><table class="rtable"><thead><tr><th>Titel</th><th>Categorie</th><th>Taal</th><th>Status</th><th></th></tr></thead><tbody>${rows || '<tr><td colspan="5" class="empty">Nog geen documenten.</td></tr>'}</tbody></table></div>`;
+  portalShell(req, res, 'Documenten', inner, '/documents');
 });
 
 if (ENABLE_TEST_DOCS) {
@@ -256,31 +311,135 @@ app.get('/documents/:id', requireAuth, async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect('/documents');
   const doc = await Document.findById(req.params.id).lean();
   if (!doc) return res.redirect('/documents');
-  res.send(layout(doc.title, `<section class="page"><a class="btn navy" href="/documents">Terug</a><article class="doc-content"><p class="meta">${esc(doc.category)} • ${esc(doc.language)} • ${esc(doc.status)}</p>${docContent(doc)}</article></section>`, 'home', req.lang, req.path));
+  const inner = `<p><a class="btn navy small" href="/documents">← Terug</a></p><article class="doc-content"><p class="meta">${esc(doc.category)} • ${esc(doc.language)} • ${esc(doc.status)}</p>${docContent(doc)}</article><form method="post" action="/documents/${doc._id}/delete" class="delform"><button class="btn danger small">Verwijderen</button></form>`;
+  portalShell(req, res, doc.title, inner, '/documents');
 });
+app.post('/documents/:id/delete', requireAuth, async (req, res) => { if (mongoose.Types.ObjectId.isValid(req.params.id)) { try { await Document.findByIdAndDelete(req.params.id); } catch (e) {} } res.redirect('/documents'); });
 app.post('/documents', requireAuth, async (req, res) => {
   const title = req.body.title || 'Nieuw document';
   await Document.create({ title, category: req.body.category, language: req.body.language, status: req.body.status, notes: req.body.notes, content: req.body.content || `<h1>${esc(title)}</h1><p>${esc(req.body.notes || '')}</p>` });
   res.redirect('/documents');
 });
 
-function crud(url, Model, title, fields) {
+// ---- Generiek modulesysteem (lijst + detail/bewerken/verwijderen) ----
+function resource(opts) {
+  const { path: url, Model, title, fields, titleField = 'name', columns = [], statusField, intro = '' } = opts;
+  const fmap = Object.fromEntries(fields.map(f => [f.name, f]));
+  async function fieldInput(f, val) {
+    val = (val == null) ? '' : val;
+    const lab = `<label for="f_${f.name}">${esc(f.label)}</label>`;
+    if (f.type === 'textarea') return `<div class="ff">${lab}<textarea id="f_${f.name}" name="${f.name}" rows="3">${esc(val)}</textarea></div>`;
+    if (f.type === 'checkbox') return `<div class="ff chkff"><label class="chk"><input type="checkbox" name="${f.name}" value="1" ${val ? 'checked' : ''}> ${esc(f.label)}</label></div>`;
+    if (f.type === 'select') {
+      let o = f.options || []; if (f.optionsFrom) { try { o = await f.optionsFrom(); } catch (e) { o = []; } }
+      const n = o.map(x => typeof x === 'string' ? { value: x, label: x } : x);
+      return `<div class="ff">${lab}<select id="f_${f.name}" name="${f.name}"><option value="">—</option>${n.map(x => `<option value="${esc(x.value)}" ${String(val) === String(x.value) ? 'selected' : ''}>${esc(x.label)}</option>`).join('')}</select></div>`;
+    }
+    return `<div class="ff">${lab}<input id="f_${f.name}" name="${f.name}" type="${f.type || 'text'}" value="${esc(val)}"></div>`;
+  }
+  async function buildForm(action, item, submitLabel) {
+    const ps = []; for (const f of fields) ps.push(await fieldInput(f, item ? item[f.name] : ''));
+    return `<form class="rform" method="post" action="${action}">${ps.join('')}<div class="rform-actions"><button class="btn gold">${submitLabel}</button></div></form>`;
+  }
+  function coerce(body) { const d = {}; for (const f of fields) { d[f.name] = (f.type === 'checkbox') ? !!body[f.name] : (body[f.name] != null ? String(body[f.name]) : ''); } return d; }
   app.get(url, requireAuth, async (req, res) => {
     const items = await Model.find().sort({ createdAt: -1 }).lean();
-    const form = `<form class="formgrid" method="post" action="${url}">${fields.map(f => `<input name="${f}" placeholder="${f}" aria-label="${f}">`).join('')}<button class="btn gold">Toevoegen</button></form>`;
-    const list = `<div class="grid">${items.map(i => `<article class="doc"><h3>${esc(i.name || i.title || i.email || 'Item')}</h3>${fields.map(f => `<p><b>${f}:</b> ${esc(i[f] || '')}</p>`).join('')}</article>`).join('')}</div>`;
-    res.send(layout(title, `<section class="page"><h1>${title}</h1>${form}${list}<p><a class="btn navy" href="/dashboard">Terug</a></p></section>`, 'home', req.lang, req.path));
+    const th = `<th>${esc(fmap[titleField] ? fmap[titleField].label : 'Naam')}</th>` + columns.map(c => `<th>${esc(fmap[c] ? fmap[c].label : c)}</th>`).join('') + (statusField ? '<th>Status</th>' : '') + '<th></th>';
+    const rows = items.map(it => {
+      const tds = columns.map(c => { const f = fmap[c]; let v = it[c]; if (f && f.type === 'checkbox') v = v ? 'Ja' : 'Nee'; if (f && f.type === 'url' && v) return `<td><a href="${esc(v)}" target="_blank" rel="noopener">↗</a></td>`; return `<td>${esc(v == null ? '' : v)}</td>`; }).join('');
+      return `<tr><td class="tname"><a href="${url}/${it._id}">${esc(it[titleField] || '(zonder naam)')}</a></td>${tds}${statusField ? `<td>${badge(it[statusField])}</td>` : ''}<td class="tact"><a class="btn navy small" href="${url}/${it._id}">Open</a></td></tr>`;
+    }).join('');
+    const colspan = columns.length + (statusField ? 3 : 2);
+    const inner = `${intro}<details class="addbox"><summary>+ Nieuw toevoegen</summary>${await buildForm(url, null, 'Toevoegen')}</details>
+<div class="tablewrap"><table class="rtable"><thead><tr>${th}</tr></thead><tbody>${rows || `<tr><td colspan="${colspan}" class="empty">Nog geen items. Voeg er een toe.</td></tr>`}</tbody></table></div>`;
+    portalShell(req, res, title, inner, url);
   });
-  app.post(url, requireAuth, async (req, res) => {
-    const data = {};
-    for (const f of fields) data[f] = req.body[f];
-    await Model.create(data);
-    res.redirect(url);
+  app.post(url, requireAuth, async (req, res) => { try { await Model.create(coerce(req.body)); } catch (e) {} res.redirect(url); });
+  app.get(url + '/:id', requireAuth, async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect(url);
+    const item = await Model.findById(req.params.id).lean(); if (!item) return res.redirect(url);
+    const inner = `<p><a class="btn navy small" href="${url}">← Terug</a></p><div class="rcard">${await buildForm(url + '/' + item._id, item, 'Opslaan')}</div>
+<form method="post" action="${url}/${item._id}/delete" class="delform"><button class="btn danger small">Verwijderen</button></form>`;
+    portalShell(req, res, item[titleField] || title, inner, url);
   });
+  app.post(url + '/:id', requireAuth, async (req, res) => { if (mongoose.Types.ObjectId.isValid(req.params.id)) { try { await Model.findByIdAndUpdate(req.params.id, coerce(req.body)); } catch (e) {} } res.redirect(url + '/' + req.params.id); });
+  app.post(url + '/:id/delete', requireAuth, async (req, res) => { if (mongoose.Types.ObjectId.isValid(req.params.id)) { try { await Model.findByIdAndDelete(req.params.id); } catch (e) {} } res.redirect(url); });
 }
-crud('/candidates', Candidate, 'Kandidaten', ['name', 'email', 'profession', 'country', 'status', 'notes']);
-crud('/institutions-list', Institution, 'Instellingen', ['name', 'contact', 'email', 'city', 'demand', 'status']);
-crud('/subsidies', Subsidy, 'Subsidies', ['title', 'program', 'deadline', 'status', 'notes']);
+
+const OTODOM_URL = 'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/mazowieckie/warszawa';
+resource({ path: '/candidates', Model: Candidate, title: 'Kandidaten', titleField: 'name', statusField: 'status', columns: ['profession', 'city', 'language'],
+  fields: [{ name: 'name', label: 'Naam' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'phone', label: 'Telefoon', type: 'tel' }, { name: 'profession', label: 'Beroep' }, { name: 'specialty', label: 'Specialisatie' }, { name: 'country', label: 'Land' }, { name: 'city', label: 'Stad' }, { name: 'language', label: 'Taalniveau Pools', type: 'select', options: ['Geen', 'A1', 'A2', 'B1', 'B2', 'C1'] }, { name: 'status', label: 'Status', type: 'select', options: ['Nieuw', 'Screening', 'Taalopleiding', 'Erkenning', 'Visum', 'Geplaatst', 'Afgewezen'] }, { name: 'notes', label: 'Notities', type: 'textarea' }] });
+resource({ path: '/institutions-list', Model: Institution, title: 'Instellingen', titleField: 'name', statusField: 'status', columns: ['city', 'type', 'demand'],
+  fields: [{ name: 'name', label: 'Naam' }, { name: 'contact', label: 'Contactpersoon' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'phone', label: 'Telefoon', type: 'tel' }, { name: 'city', label: 'Stad' }, { name: 'type', label: 'Type', type: 'select', options: ['Ziekenhuis', 'Kliniek', 'Verpleeghuis', 'Thuiszorg', 'Anders'] }, { name: 'demand', label: 'Behoefte (profiel/aantal)' }, { name: 'status', label: 'Status', type: 'select', options: ['Prospect', 'In gesprek', 'Klant', 'On hold', 'Gestopt'] }, { name: 'notes', label: 'Notities', type: 'textarea' }] });
+resource({ path: '/placements', Model: Placement, title: 'Plaatsingen', titleField: 'candidate', statusField: 'status', columns: ['institution', 'role', 'startDate'],
+  fields: [{ name: 'candidate', label: 'Kandidaat', type: 'select', optionsFrom: async () => (await Candidate.find().lean()).map(c => c.name).filter(Boolean) }, { name: 'institution', label: 'Instelling', type: 'select', optionsFrom: async () => (await Institution.find().lean()).map(i => i.name).filter(Boolean) }, { name: 'role', label: 'Functie' }, { name: 'startDate', label: 'Startdatum', type: 'date' }, { name: 'status', label: 'Status', type: 'select', options: ['Voorgesteld', 'Geaccepteerd', 'Gestart', 'Afgerond', 'Geannuleerd'] }, { name: 'notes', label: 'Notities', type: 'textarea' }] });
+resource({ path: '/housing-list', Model: Housing, title: 'Woningen', titleField: 'title', statusField: 'status', columns: ['district', 'rooms', 'area', 'price', 'otodomUrl'],
+  intro: `<p class="otodom"><a class="btn gold small" href="${OTODOM_URL}" target="_blank" rel="noopener">Zoek live op Otodom (Warschau, huur) ↗</a></p><p class="hint">De woningen hieronder zijn voorbeelden op basis van actuele Otodom-marktdata. Live aanbod mag niet automatisch worden overgenomen (voorwaarden + veroudering); voeg echte advertenties toe via "Nieuw toevoegen" en plak de Otodom-link per woning.</p>`,
+  fields: [{ name: 'title', label: 'Titel' }, { name: 'district', label: 'Wijk (Warschau)' }, { name: 'address', label: 'Adres' }, { name: 'rooms', label: 'Kamers' }, { name: 'area', label: 'Oppervlakte' }, { name: 'price', label: 'Prijs per maand' }, { name: 'furnished', label: 'Gemeubileerd', type: 'checkbox' }, { name: 'status', label: 'Status', type: 'select', options: ['Beschikbaar', 'Gereserveerd', 'Toegewezen', 'Bezet'] }, { name: 'assignedTo', label: 'Toegewezen aan (kandidaat)', type: 'select', optionsFrom: async () => (await Candidate.find().lean()).map(c => c.name).filter(Boolean) }, { name: 'otodomUrl', label: 'Otodom-link', type: 'url' }, { name: 'notes', label: 'Notities', type: 'textarea' }] });
+resource({ path: '/subsidies', Model: Subsidy, title: 'Subsidies', titleField: 'title', statusField: 'status', columns: ['program', 'deadline'],
+  fields: [{ name: 'title', label: 'Titel' }, { name: 'program', label: 'Programma', type: 'select', options: ['AMIF', 'FERS', 'ESF+', 'Anders'] }, { name: 'deadline', label: 'Deadline' }, { name: 'status', label: 'Status', type: 'select', options: ['Concept', 'In voorbereiding', 'Ingediend', 'Toegekend', 'Afgewezen'] }, { name: 'notes', label: 'Notities', type: 'textarea' }] });
+
+// ---- AI-assistent ----
+async function aiChat(messages) {
+  const key = process.env.ANTHROPIC_API_KEY;
+  if (!key) return { error: 'AI-assistent is nog niet geconfigureerd. Stel de variabele ANTHROPIC_API_KEY in (Railway → Variables) en herstart.' };
+  const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
+  const system = 'Je bent de interne AI-assistent van Honor Care International, een organisatie die zorgprofessionals uit Colombia werft, opleidt, legaliseert, huisvest en plaatst in Poolse zorginstellingen. Help het team praktisch: beantwoord vragen, vat samen, stel e-mails of teksten op, en denk mee over werving, planning, subsidies (AMIF/FERS/ESF+) en het Poolse erkennings- en verblijfsproces. Antwoord standaard in het Nederlands, beknopt en concreet. Geef bij juridische, fiscale of medische zaken aan dat verificatie met een gekwalificeerd adviseur nodig is.';
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' }, body: JSON.stringify({ model, max_tokens: 1024, system, messages }) });
+    if (!r.ok) { const t = await r.text().catch(() => ''); console.error('AI-fout', r.status, t.slice(0, 200)); return { error: 'De AI gaf een fout (' + r.status + '). Controleer de API-sleutel en het model.' }; }
+    const data = await r.json();
+    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
+    return { reply: text || '(geen antwoord ontvangen)' };
+  } catch (e) { console.error(e); return { error: 'Kon de AI-dienst niet bereiken.' }; }
+}
+app.get('/assistant', requireAuth, (req, res) => {
+  const warn = process.env.ANTHROPIC_API_KEY ? '' : '<p class="hint">Let op: stel eerst <code>ANTHROPIC_API_KEY</code> in (Railway → Variables) om de assistent te activeren. Optioneel: <code>ANTHROPIC_MODEL</code>.</p>';
+  const inner = `<p>Stel vragen over werving, planning of subsidies, of laat de assistent een e-mail of tekst opstellen.</p>${warn}
+<div id="chat" class="chat" aria-live="polite"></div>
+<form id="chatform" class="chatform"><input id="msg" type="text" placeholder="Typ je bericht…" autocomplete="off" aria-label="Bericht"><button class="btn gold" type="submit">Stuur</button></form>
+<script src="/js/assistant.js"></script>`;
+  portalShell(req, res, 'AI-assistent', inner, '/assistant');
+});
+app.post('/assistant/chat', requireAuth, async (req, res) => {
+  const raw = Array.isArray(req.body.messages) ? req.body.messages.slice(-20) : [];
+  const clean = raw.filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string').map(m => ({ role: m.role, content: m.content.slice(0, 4000) }));
+  if (!clean.length) return res.json({ error: 'Geen bericht ontvangen.' });
+  res.json(await aiChat(clean));
+});
+
+// ---- Back-up & herstel (databescherming) ----
+const COLLECTIONS = { documents: Document, candidates: Candidate, institutions: Institution, placements: Placement, housing: Housing, subsidies: Subsidy, newsletter: Newsletter };
+app.get('/backup', requireAuth, (req, res) => {
+  const inner = `<p>Bescherm je gegevens: download regelmatig een back-up. Zo ben je nooit data kwijt, ook niet bij een herinstallatie of migratie.</p>
+<p><a class="btn gold" href="/backup/download">Download volledige back-up (JSON)</a></p>
+<h2>Herstellen / importeren</h2><p class="hint">Plak hieronder de inhoud van een back-upbestand. Bestaande records (zelfde id) worden overgeslagen, alleen ontbrekende worden toegevoegd — er wordt niets verwijderd of overschreven.</p>
+<form method="post" action="/restore" class="rform"><div class="ff"><label for="json">Back-up-JSON</label><textarea id="json" name="json" rows="6" placeholder='{"candidates":[...],"housing":[...]}'></textarea></div><div class="rform-actions"><button class="btn navy">Importeren</button></div></form>
+<h2>Gegevens behouden bij Railway</h2><p class="hint">Gebruik een <b>persistente</b> database (bijv. MongoDB Atlas) en zet die connectiestring in <code>MONGODB_URI</code>. Dan blijft alle data bewaard bij elke nieuwe deploy. De seed is niet-destructief: bestaande documenten en woningen worden nooit overschreven.</p>`;
+  portalShell(req, res, 'Back-up & herstel', inner, '/backup');
+});
+app.get('/backup/download', requireAuth, async (req, res) => {
+  const out = { exportedAt: new Date().toISOString(), app: 'Honor Care Working Docs' };
+  for (const [k, M] of Object.entries(COLLECTIONS)) { try { out[k] = await M.find().lean(); } catch (e) { out[k] = []; } }
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="honorcare-backup-${new Date().toISOString().slice(0, 10)}.json"`);
+  res.send(JSON.stringify(out, null, 2));
+});
+app.post('/restore', requireAuth, async (req, res) => {
+  let data; try { data = JSON.parse(req.body.json || '{}'); } catch (e) { return portalShell(req, res, 'Back-up & herstel', '<p class="error">Ongeldige JSON. Controleer het bestand en probeer opnieuw.</p><p><a class="btn navy" href="/backup">Terug</a></p>', '/backup'); }
+  let added = 0, skipped = 0;
+  for (const [k, M] of Object.entries(COLLECTIONS)) {
+    if (!Array.isArray(data[k])) continue;
+    for (const rec of data[k]) {
+      try {
+        const copy = { ...rec }; delete copy.__v;
+        if (copy._id) { const ex = await M.findById(copy._id).lean().catch(() => null); if (ex) { skipped++; continue; } }
+        await M.create(copy); added++;
+      } catch (e) { skipped++; }
+    }
+  }
+  portalShell(req, res, 'Back-up & herstel', `<p class="ok">Import voltooid: ${added} toegevoegd, ${skipped} overgeslagen (bestonden al).</p><p><a class="btn navy" href="/backup">Terug</a> <a class="btn gold" href="/dashboard">Dashboard</a></p>`, '/backup');
+});
 
 app.get('/healthz', (req, res) => res.json({ status: 'ok', db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected' }));
 app.use((req, res) => { const tr = T[req.lang]; res.status(404).send(layout('404', `<section class="page"><h1>404</h1><p>${tr.notFound}</p><p><a class="btn navy" href="/">${tr.nav.home}</a></p></section>${footer(req.lang)}`, 'home', req.lang, '/')); });
@@ -288,5 +447,5 @@ app.use((req, res) => { const tr = T[req.lang]; res.status(404).send(layout('404
 mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
-  app.listen(PORT, () => console.log('HonorCare Working Docs v24 draait op poort ' + PORT));
+  app.listen(PORT, () => console.log('HonorCare Working Docs v25 draait op poort ' + PORT));
 }).catch(e => { console.error(e); process.exit(1); });

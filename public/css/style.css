@@ -232,3 +232,68 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .doctable th,.doctable td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
 .doctable th{background:var(--navy);color:#fff;font-weight:600}
 .doctable tr:nth-child(even) td{background:#f7f5f0}
+
+/* ===== Portaal ===== */
+.portal .page-head{align-items:center}
+.pnav{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 26px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.pnav a{padding:8px 14px;border-radius:7px;font-size:13px;font-weight:600;color:var(--navy);background:#fff;border:1px solid var(--line)}
+.pnav a:hover{border-color:var(--gold)}
+.pnav a.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.welcome{color:var(--muted);margin-top:0}
+.pipeline{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:30px}
+.pstage{background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:10px;padding:18px 10px;text-align:center}
+.pstage b{display:block;font-family:'Playfair Display',serif;font-size:30px;color:var(--navy)}
+.pstage span{font-size:12px;color:var(--muted)}
+.quick{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+
+/* tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+.rtable{border-collapse:collapse;width:100%;font-size:14px}
+.rtable th{background:var(--navy);color:#fff;text-align:left;padding:11px 14px;font-weight:600;white-space:nowrap}
+.rtable td{padding:10px 14px;border-top:1px solid var(--line);vertical-align:middle}
+.rtable tr:hover td{background:#faf8f3}
+.rtable .tname a{color:var(--navy);font-weight:600}
+.rtable .tname a:hover{color:var(--gold)}
+.rtable .tact{text-align:right;white-space:nowrap}
+.rtable .empty{color:var(--muted);text-align:center;padding:24px}
+
+/* badges */
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.b-blue{background:#e5eefb;color:#1d4ee7}
+.b-gold{background:#fbf0d8;color:#8a6516}
+.b-green{background:#e1f3e8;color:#1f7a4d}
+.b-grey{background:#eceff3;color:#5b6b7d}
+.b-red{background:#fde4e4;color:#a12626}
+
+/* forms */
+.addbox{margin-bottom:18px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 16px}
+.addbox summary{cursor:pointer;font-weight:600;color:var(--navy);padding:10px 0}
+.rform,.rcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px}
+.rcard{margin-bottom:14px}
+.rform{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;border:0;padding:14px 0}
+.addbox .rform,.rcard .rform{padding:6px 0}
+.ff{display:flex;flex-direction:column}
+.ff.chkff{justify-content:center}
+.ff label{font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.ff input,.ff select,.ff textarea{padding:10px;border:1px solid #cdd6e0;border-radius:6px;font-size:14px;font-family:'Poppins',sans-serif;width:100%}
+.chk{display:flex;align-items:center;gap:8px;font-weight:500;color:var(--text)}
+.chk input{width:auto}
+.rform-actions{grid-column:1/-1;display:flex;gap:10px;align-items:center}
+.delform{margin-top:14px}
+.btn.danger{background:#b3261e;color:#fff}
+.btn.danger:hover{background:#911d17}
+.otodom{margin:0 0 6px}
+.hint{font-size:13px;color:var(--muted);background:#f7f5f0;border-left:3px solid var(--gold);padding:10px 14px;border-radius:6px;margin:10px 0}
+.ok{background:#e1f3e8;color:#1f7a4d;padding:12px 16px;border-radius:8px}
+
+/* AI chat */
+.chat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;min-height:280px;max-height:460px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.bubble{max-width:78%;padding:11px 15px;border-radius:14px;font-size:14.5px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.bubble.user{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:4px}
+.bubble.assistant{align-self:flex-start;background:#f1f0eb;color:var(--text);border-bottom-left-radius:4px}
+.chatform{display:flex;gap:10px}
+.chatform input{flex:1;padding:13px 15px;border:1px solid #cdd6e0;border-radius:8px;font-size:15px;font-family:'Poppins',sans-serif}
+code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
+
+@media(max-width:860px){.pipeline{grid-template-columns:repeat(3,1fr)}.rform{grid-template-columns:1fr}}
+@media(max-width:560px){.pipeline{grid-template-columns:repeat(2,1fr)}.bubble{max-width:90%}}
