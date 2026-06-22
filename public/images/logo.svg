@@ -1,13 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="220" viewBox="0 0 920 220">
-<defs>
-<linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#002b55"/><stop offset=".65" stop-color="#06406f"/><stop offset="1" stop-color="#d3a039"/></linearGradient>
-</defs>
+<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#002b55"/><stop offset=".65" stop-color="#06406f"/><stop offset="1" stop-color="#d3a039"/></linearGradient></defs>
 <rect width="920" height="220" fill="#fff"/>
 <g transform="translate(34,24)">
 <path d="M82 12C43 12 18 42 18 78c0 51 48 87 86 124 38-37 86-73 86-124 0-36-25-66-64-66-16 0-30 8-42 23C112 20 98 12 82 12z" fill="none" stroke="url(#g)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="70" cy="83" r="12" fill="#002b55"/>
-<circle cx="138" cy="83" r="12" fill="#002b55"/>
-<circle cx="104" cy="75" r="18" fill="#002b55"/>
+<circle cx="70" cy="83" r="12" fill="#002b55"/><circle cx="138" cy="83" r="12" fill="#002b55"/><circle cx="104" cy="75" r="18" fill="#002b55"/>
 <path d="M55 151c8-33 29-49 49-17 20-32 41-16 49 17" fill="none" stroke="#002b55" stroke-width="15" stroke-linecap="round"/>
 </g>
 <text x="250" y="84" font-family="Georgia,serif" font-size="58" font-weight="700" fill="#002b55" letter-spacing="2">HONOR CARE</text>

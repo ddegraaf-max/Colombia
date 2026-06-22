@@ -1,3 +1,3 @@
-# Honor Care Definitive v13
+# HonorCare Final v14 Docs Fixed
 
-Geen EJS/views. Homepage werkt inline. Documenten openen via /documents/:id. Logo/favicons inbegrepen.
+Inline website zonder views. Documenten kunnen nooit leeg openen: als content ontbreekt, wordt automatisch documentinhoud opgebouwd uit metadata en notities.

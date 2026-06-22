@@ -1,7 +1,7 @@
 {
-  "name": "honorcare-definitive-v13",
-  "version": "13.0.0",
-  "description": "Honor Care International definitive inline production site with working document portal",
+  "name": "honorcare-final-v14-docs-fixed",
+  "version": "14.0.0",
+  "description": "Honor Care International final inline site with guaranteed document opening",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

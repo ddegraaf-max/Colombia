@@ -11,8 +11,8 @@ require('dotenv').config();
 
 const app = express();
 app.set('trust proxy', 1);
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: '5mb' }));
+app.use(express.json({ limit: '5mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 8080;
@@ -21,150 +21,83 @@ const SESSION_SECRET = process.env.SESSION_SECRET || 'change-this-secret-now';
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'admin@honorcarepoland.eu').toLowerCase();
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ChangeThisPassword123!';
 
-if (!MONGODB_URI) {
-  console.error('MONGODB_URI ontbreekt');
-  process.exit(1);
-}
+if (!MONGODB_URI) { console.error('MONGODB_URI ontbreekt'); process.exit(1); }
 
 const TX = {
-  pl: {
-    city:'Bogotá, Kolumbia | Warszawa, Polska', home:'HOME', about:'O NAS', services:'USŁUGI', institutions:'DLA INSTYTUCJI', candidates:'DLA KANDYDATÓW', colombia:'KOLUMBIA', news:'AKTUALNOŚCI', contact:'KONTAKT', meeting:'UMÓW SIĘ NA ROZMOWĘ', portal:'PORTAL',
-    hero:['Kompletne rozwiązanie','opieki zdrowotnej','między Kolumbią a Polską'],
-    heroText:'Honor Care International łączy wykwalifikowanych specjalistów ochrony zdrowia z Kolumbii z placówkami medycznymi w Polsce. Organizujemy cały proces: rekrutację, szkolenia, dokumenty, zakwaterowanie, integrację i stałą opiekę koordynatora.',
-    pillars:['Wszystkie specjalizacje','Język i szkolenia','Dokumenty i pozwolenia','Zakwaterowanie','Integracja i opieka'],
-    instBtn:'DLA INSTYTUCJI', candBtn:'DLA KANDYDATÓW', sideStart:'Rozpoczynamy w', sideCity:'Warszawie, Polska', sideItems:['Biuro główne Warszawa','Centrum rekrutacji Bogotá','Kraj możliwości, przyszłość talentów'],
-    disc:'WSZYSTKIE SPECJALIZACJE POD JEDNYM DACHEM',
-    specs:['Lekarze POZ','Specjaliści','Stomatolodzy','Pielęgniarki','Położne','Psycholodzy','Fizjoterapeuci','Farmaceuci','Opiekunowie','I więcej...'],
-    cards:[
-      ['Dlaczego Polska?','Stabilny i rozwijający się rynek ochrony zdrowia','Rosnące zapotrzebowanie na personel medyczny','Bezpieczne środowisko życia i pracy','Dobre perspektywy rozwoju zawodowego','Czytaj więcej'],
-      ['Dla instytucji','Selekcja i weryfikacja kandydatów','Wsparcie formalne i dokumentacyjne','Przygotowanie językowe i zawodowe','Stała koordynacja po przyjeździe','Więcej informacji'],
-      ['Dla kandydatów','Legalna ścieżka pracy w Polsce','Szkolenia i przygotowanie do pracy','Pomoc w zakwaterowaniu i integracji','Wsparcie dla profesjonalisty i rodziny','Rozpocznij'],
-      ['Mieszkanie i integracja','Bezpieczne mieszkania blisko pracy','Pomoc w formalnościach lokalnych','Wsparcie w pierwszych miesiącach','Integracja społeczna i rodzinna','Zobacz'],
-      ['Honor Care Academy','Język polski A1-B2','Terminologia medyczna','Kultura pracy w Polsce','Program online i stacjonarny','Academy']
-    ],
-    pageTitle:{about:'O nas',services:'Usługi',institutions:'Dla instytucji',candidates:'Dla kandydatów',colombia:'Kolumbia',news:'Aktualności',contact:'Kontakt'},
-    pageLead:{about:'Honor Care International buduje profesjonalny most pomiędzy Kolumbią i Polską. Łączymy rekrutację, edukację, legalizację, zakwaterowanie i integrację w jednym sprawnym procesie.',services:'Oferujemy pełną obsługę: rekrutację, selekcję, dokumenty, szkolenia językowe, relokację, mieszkania, onboarding i stałe wsparcie koordynatora.',institutions:'Pomagamy polskim placówkom medycznym rozwiązać braki kadrowe poprzez przygotowanych i zweryfikowanych specjalistów z Kolumbii.',candidates:'Dla kandydatów z Kolumbii tworzymy bezpieczną drogę do legalnej pracy w Polsce: od pierwszej rozmowy po mieszkanie i start w nowej pracy.',colombia:'Kolumbia ma duży potencjał medyczny, silną motywację i kulturę opieki. Budujemy lokalne centrum rekrutacji i przygotowania kandydatów.',news:'Aktualności o rekrutacji, partnerstwach, academy, dotacjach, nowych placówkach i rozwoju Honor Care International.',contact:'Skontaktuj się z nami w sprawie współpracy, kandydatów, instytucji, dotacji lub spotkania.'},
-    blocks:['Rekrutacja i selekcja','Legalizacja dokumentów','Honor Care Academy','Mieszkanie i relokacja','Integracja rodzinna','Stała koordynacja'],
-    partners:'ZAUFALI NAM', stats:['Specjalistów w procesie','Placówek partnerskich','Specjalizacji','Kraje'], motto:'Wszystka opieka. Jedno rozwiązanie.',
-    loginTitle:'Bezpieczne logowanie', loginSub:'Dostęp do dokumentów, kandydatów, instytucji, dotacji i projektu.', email:'E-mail', password:'Hasło', login:'Zaloguj',
-    dashboard:'Panel zarządzania', welcome:'Witaj', manage:'Zarządzaj dokumentami, kandydatami, instytucjami i dotacjami.', cand:'Kandydaci', inst:'Instytucje', subs:'Dotacje', docs:'Dokumenty', logout:'Wyloguj', add:'Dodaj', delete:'Usuń', back:'Powrót', open:'Otwórz',
-    setup2fa:'Konfiguracja Authenticatora', verify2fa:'Kod Authenticatora', codeText:'Wpisz 6-cyfrowy kod.', activate:'Aktywuj', verify:'Zweryfikuj', invalidUser:'Nie znaleziono użytkownika.', invalidPass:'Nieprawidłowe hasło.', invalidCode:'Nieprawidłowy kod.'
-  },
-  nl: {
-    city:'Bogotá, Colombia | Warschau, Polen', home:'HOME', about:'OVER ONS', services:'DIENSTEN', institutions:'VOOR ZORGINSTELLINGEN', candidates:'VOOR KANDIDATEN', colombia:'COLOMBIA', news:'NIEUWS', contact:'CONTACT', meeting:'PLAN EEN KENNISMAKING', portal:'PORTAL',
-    hero:['De complete zorgoplossing','tussen Colombia','en Polen'],
-    heroText:'Honor Care International verbindt hoogopgeleide zorgprofessionals uit Colombia met zorginstellingen in Polen. Wij regelen het volledige traject: werving, opleiding, toelating, huisvesting, integratie en vaste begeleiding.',
-    pillars:['Alle zorgdisciplines','Taal & opleiding','Visum & toelating','Huisvesting','Integratie & begeleiding'],
-    instBtn:'VOOR ZORGINSTELLINGEN', candBtn:'VOOR ZORGPROFESSIONALS', sideStart:'Wij starten in', sideCity:'Warschau, Polen', sideItems:['Hoofdkantoor Warschau','Recruitment Center Bogotá','Land van talent, toekomst en kansen'],
-    disc:'ALLE ZORGDISCIPLINES ONDER ÉÉN DAK',
-    specs:['Huisartsen','Tandartsen','Specialisten','Verpleegkundigen','Mondhygiënisten','Fysiotherapeuten','Apothekers','Verzorgenden','Psychologen','En meer...'],
-    cards:[
-      ['Waarom Polen?','Groeiende zorgmarkt met grote personeelsvraag','Sterke kansen voor internationale professionals','Veilige en centrale ligging in Europa','Ruimte voor carrière en gezin','Lees meer'],
-      ['Voor Zorginstellingen','Oplossing voor personeelstekorten','Geselecteerde en gescreende kandidaten','Totaalontzorging van A tot Z','Flexibele samenwerkingsmodellen','Meer informatie'],
-      ['Voor Zorgprofessionals','Werken in Polen met begeleiding','Taaltraining en voorbereiding','Wij regelen documenten en traject','Persoonlijke begeleiding voor jou en je gezin','Start jouw toekomst'],
-      ['Huisvesting & Welzijn','Comfortabele en veilige woningen','Dichtbij werk en voorzieningen','Ondersteuning bij integratie','Voor jou én je gezin','Bekijk woningen'],
-      ['Academy','Poolse taaltraining A1-B2','Medische terminologie','Voorbereiding op werk en toelating','Online en in Colombia','Naar Academy']
-    ],
-    pageTitle:{about:'Over ons',services:'Diensten',institutions:'Voor zorginstellingen',candidates:'Voor kandidaten',colombia:'Colombia',news:'Nieuws',contact:'Contact'},
-    pageLead:{about:'Honor Care International bouwt een professionele brug tussen Colombia en Polen. Recruitment, scholing, legalisatie, huisvesting en integratie komen samen in één zorgvuldig proces.',services:'Wij bieden een complete dienstverlening: werving, selectie, documenten, taaltraining, relocatie, huisvesting, onboarding en vaste coördinatie.',institutions:'Wij helpen zorginstellingen in Polen structureel personeelstekorten op te lossen met goed voorbereide en gescreende professionals uit Colombia.',candidates:'Voor kandidaten uit Colombia bieden wij een veilige route naar legaal werk in Polen, met hulp bij taal, documenten, huisvesting en familiebegeleiding.',colombia:'Colombia heeft een sterke bron van zorgtalent, motivatie en zorgzaamheid. Vanuit Bogotá bouwen wij selectie, voorbereiding en begeleiding op.',news:'Hier plaatsen wij nieuws over recruitment, de academy, subsidies, nieuwe partners, vacatures en de groei van Honor Care International.',contact:'Neem contact op voor samenwerking, kandidaten, zorginstellingen, subsidies of een kennismaking.'},
-    blocks:['Recruitment & selectie','Legalisatie & documenten','Honor Care Academy','Wonen & relocatie','Familie-integratie','Vaste coördinatie'],
-    partners:'ONZE PARTNERS', stats:['Zorgprofessionals','Zorginstellingen','Zorgdisciplines','Landen'], motto:'Alle zorg. Één oplossing. One complete care.',
-    loginTitle:'Beveiligde login', loginSub:'Toegang tot documenten, kandidaten, instellingen, subsidies en projectbeheer.', email:'E-mail', password:'Wachtwoord', login:'Inloggen',
-    dashboard:'Dashboard', welcome:'Welkom', manage:'Beheer documenten, kandidaten, instellingen en subsidies.', cand:'Kandidaten', inst:'Instellingen', subs:'Subsidies', docs:'Documenten', logout:'Uitloggen', add:'Toevoegen', delete:'Verwijderen', back:'Terug', open:'Openen',
-    setup2fa:'Authenticator instellen', verify2fa:'Authenticator-code', codeText:'Vul je 6-cijferige code in.', activate:'Activeren', verify:'Verifiëren', invalidUser:'Gebruiker niet gevonden.', invalidPass:'Wachtwoord onjuist.', invalidCode:'Authenticator-code is onjuist.'
-  },
-  es: {
-    city:'Bogotá, Colombia | Varsovia, Polonia', home:'INICIO', about:'SOBRE NOSOTROS', services:'SERVICIOS', institutions:'PARA INSTITUCIONES', candidates:'PARA CANDIDATOS', colombia:'COLOMBIA', news:'NOTICIAS', contact:'CONTACTO', meeting:'PLANEAR REUNIÓN', portal:'PORTAL',
-    hero:['La solución completa','de salud entre Colombia','y Polonia'], heroText:'Honor Care International conecta profesionales de salud de Colombia con instituciones médicas en Polonia. Gestionamos reclutamiento, formación, permisos, vivienda, integración y acompañamiento.',
-    pillars:['Todas las disciplinas','Idioma y formación','Permisos y documentos','Vivienda','Integración y apoyo'], instBtn:'PARA INSTITUCIONES', candBtn:'PARA PROFESIONALES', sideStart:'Comenzamos en', sideCity:'Varsovia, Polonia', sideItems:['Oficina principal Varsovia','Centro de reclutamiento Bogotá','País de talento y oportunidades'],
-    disc:'TODAS LAS DISCIPLINAS BAJO UN MISMO TECHO', specs:['Médicos','Dentistas','Especialistas','Enfermeros','Higienistas','Fisioterapeutas','Farmacéuticos','Cuidadores','Psicólogos','Y más...'],
-    cards:[['¿Por qué Polonia?','Mercado de salud en crecimiento','Demanda de profesionales','País seguro en Europa','Oportunidades de carrera','Leer más'],['Para Instituciones','Solución para escasez de personal','Candidatos seleccionados','Servicio integral','Modelos flexibles','Más información'],['Para Profesionales','Trabajo legal en Polonia','Formación y preparación','Documentos y acompañamiento','Apoyo para ti y tu familia','Comienza'],['Vivienda y Bienestar','Viviendas cómodas y seguras','Cerca del trabajo','Apoyo de integración','Para ti y tu familia','Ver viviendas'],['Academy','Idioma polaco A1-B2','Terminología médica','Preparación laboral','Online y en Colombia','Ir a Academy']],
-    pageTitle:{about:'Sobre nosotros',services:'Servicios',institutions:'Para instituciones',candidates:'Para candidatos',colombia:'Colombia',news:'Noticias',contact:'Contacto'},
-    pageLead:{about:'Construimos un puente profesional entre Colombia y Polonia.',services:'Servicio completo de reclutamiento, formación, documentos, vivienda e integración.',institutions:'Ayudamos a instituciones en Polonia con profesionales preparados.',candidates:'Ruta segura para trabajar legalmente en Polonia.',colombia:'Colombia es una fuente fuerte de talento sanitario.',news:'Noticias sobre recruitment, academy y colaboraciones.',contact:'Contáctanos para colaboración o candidatos.'},
-    blocks:['Reclutamiento','Documentos','Academy','Vivienda','Integración','Coordinación'], partners:'NUESTROS ALIADOS', stats:['Profesionales','Instituciones','Disciplinas','Países'], motto:'Todo el cuidado. Una solución completa.',
-    loginTitle:'Acceso seguro', loginSub:'Acceso a documentos y portal.', email:'Correo electrónico', password:'Contraseña', login:'Iniciar sesión', dashboard:'Panel de control', welcome:'Bienvenido', manage:'Gestiona documentos, candidatos, instituciones y subsidios.', cand:'Candidatos', inst:'Instituciones', subs:'Subsidios', docs:'Documentos', logout:'Cerrar sesión', add:'Añadir', delete:'Eliminar', back:'Volver', open:'Abrir', setup2fa:'Configurar Authenticator', verify2fa:'Código Authenticator', codeText:'Introduce el código de 6 dígitos.', activate:'Activar', verify:'Verificar', invalidUser:'Usuario no encontrado.', invalidPass:'Contraseña incorrecta.', invalidCode:'Código incorrecto.'
-  }
+  nl:{city:'Bogotá, Colombia | Warschau, Polen',home:'HOME',about:'OVER ONS',services:'DIENSTEN',institutions:'VOOR ZORGINSTELLINGEN',candidates:'VOOR KANDIDATEN',colombia:'COLOMBIA',news:'NIEUWS',contact:'CONTACT',meeting:'PLAN EEN KENNISMAKING',portal:'PORTAL',hero:['De complete zorgoplossing','tussen Colombia','en Polen'],heroText:'Honor Care International verbindt hoogopgeleide zorgprofessionals uit Colombia met zorginstellingen in Polen. Wij regelen het volledige traject: werving, opleiding, toelating, huisvesting, integratie en vaste begeleiding.',pillars:['Alle zorgdisciplines','Taal & opleiding','Visum & toelating','Huisvesting','Integratie & begeleiding'],instBtn:'VOOR ZORGINSTELLINGEN',candBtn:'VOOR ZORGPROFESSIONALS',sideStart:'Wij starten in',sideCity:'Warschau, Polen',sideItems:['Hoofdkantoor Warschau','Recruitment Center Bogotá','Land van talent, toekomst en kansen'],disc:'ALLE ZORGDISCIPLINES ONDER ÉÉN DAK',specs:['Huisartsen','Tandartsen','Specialisten','Verpleegkundigen','Mondhygiënisten','Fysiotherapeuten','Apothekers','Verzorgenden','Psychologen','En meer...'],cards:[['Waarom Polen?','Groeiende zorgmarkt met grote personeelsvraag','Sterke kansen voor internationale professionals','Veilige en centrale ligging in Europa','Ruimte voor carrière en gezin','Lees meer'],['Voor Zorginstellingen','Oplossing voor personeelstekorten','Geselecteerde en gescreende kandidaten','Totaalontzorging van A tot Z','Flexibele samenwerkingsmodellen','Meer informatie'],['Voor Zorgprofessionals','Werken in Polen met begeleiding','Taaltraining en voorbereiding','Wij regelen documenten en traject','Persoonlijke begeleiding voor jou en je gezin','Start jouw toekomst'],['Huisvesting & Welzijn','Comfortabele en veilige woningen','Dichtbij werk en voorzieningen','Ondersteuning bij integratie','Voor jou én je gezin','Bekijk woningen'],['Academy','Poolse taaltraining A1-B2','Medische terminologie','Voorbereiding op werk en toelating','Online en in Colombia','Naar Academy']],pageTitle:{about:'Over ons',services:'Diensten',institutions:'Voor zorginstellingen',candidates:'Voor kandidaten',colombia:'Colombia',news:'Nieuws',contact:'Contact'},pageLead:{about:'Honor Care International bouwt een professionele brug tussen Colombia en Polen. Recruitment, scholing, legalisatie, huisvesting en integratie komen samen in één zorgvuldig proces.',services:'Wij bieden een complete dienstverlening: werving, selectie, documenten, taaltraining, relocatie, huisvesting, onboarding en vaste coördinatie.',institutions:'Wij helpen zorginstellingen in Polen structureel personeelstekorten op te lossen met goed voorbereide en gescreende professionals uit Colombia.',candidates:'Voor kandidaten uit Colombia bieden wij een veilige route naar legaal werk in Polen, met hulp bij taal, documenten, huisvesting en familiebegeleiding.',colombia:'Colombia heeft een sterke bron van zorgtalent, motivatie en zorgzaamheid. Vanuit Bogotá bouwen wij selectie, voorbereiding en begeleiding op.',news:'Hier plaatsen wij nieuws over recruitment, de academy, subsidies, nieuwe partners, vacatures en de groei van Honor Care International.',contact:'Neem contact op voor samenwerking, kandidaten, zorginstellingen, subsidies of een kennismaking.'},blocks:['Recruitment & selectie','Legalisatie & documenten','Honor Care Academy','Wonen & relocatie','Familie-integratie','Vaste coördinatie'],partners:'ONZE PARTNERS',stats:['Zorgprofessionals','Zorginstellingen','Zorgdisciplines','Landen'],motto:'Alle zorg. Één oplossing. One complete care.',loginTitle:'Beveiligde login',loginSub:'Toegang tot documenten, kandidaten, instellingen, subsidies en projectbeheer.',email:'E-mail',password:'Wachtwoord',login:'Inloggen',dashboard:'Dashboard',welcome:'Welkom',manage:'Beheer documenten, kandidaten, instellingen en subsidies.',cand:'Kandidaten',inst:'Instellingen',subs:'Subsidies',docs:'Documenten',logout:'Uitloggen',add:'Toevoegen',delete:'Verwijderen',back:'Terug',open:'Openen',setup2fa:'Authenticator instellen',verify2fa:'Authenticator-code',codeText:'Vul je 6-cijferige code in.',activate:'Activeren',verify:'Verifiëren',invalidUser:'Gebruiker niet gevonden.',invalidPass:'Wachtwoord onjuist.',invalidCode:'Authenticator-code is onjuist.'},
+  pl:{city:'Bogotá, Kolumbia | Warszawa, Polska',home:'HOME',about:'O NAS',services:'USŁUGI',institutions:'DLA INSTYTUCJI',candidates:'DLA KANDYDATÓW',colombia:'KOLUMBIA',news:'AKTUALNOŚCI',contact:'KONTAKT',meeting:'UMÓW SIĘ NA ROZMOWĘ',portal:'PORTAL',hero:['Kompletne rozwiązanie','opieki zdrowotnej','między Kolumbią a Polską'],heroText:'Honor Care International łączy wykwalifikowanych specjalistów ochrony zdrowia z Kolumbii z placówkami medycznymi w Polsce. Organizujemy cały proces: rekrutację, szkolenia, dokumenty, zakwaterowanie, integrację i stałą opiekę koordynatora.',pillars:['Wszystkie specjalizacje','Język i szkolenia','Dokumenty i pozwolenia','Zakwaterowanie','Integracja i opieka'],instBtn:'DLA INSTYTUCJI',candBtn:'DLA KANDYDATÓW',sideStart:'Rozpoczynamy w',sideCity:'Warszawie, Polska',sideItems:['Biuro główne Warszawa','Centrum rekrutacji Bogotá','Kraj możliwości, przyszłość talentów'],disc:'WSZYSTKIE SPECJALIZACJE POD JEDNYM DACHEM',specs:['Lekarze POZ','Specjaliści','Stomatolodzy','Pielęgniarki','Położne','Psycholodzy','Fizjoterapeuci','Farmaceuci','Opiekunowie','I więcej...'],cards:[['Dlaczego Polska?','Stabilny i rozwijający się rynek ochrony zdrowia','Rosnące zapotrzebowanie na personel medyczny','Bezpieczne środowisko życia i pracy','Dobre perspektywy rozwoju zawodowego','Czytaj więcej'],['Dla instytucji','Selekcja i weryfikacja kandydatów','Wsparcie formalne i dokumentacyjne','Przygotowanie językowe i zawodowe','Stała koordynacja po przyjeździe','Więcej informacji'],['Dla kandydatów','Legalna ścieżka pracy w Polsce','Szkolenia i przygotowanie do pracy','Pomoc w zakwaterowaniu i integracji','Wsparcie dla profesjonalisty i rodziny','Rozpocznij'],['Mieszkanie i integracja','Bezpieczne mieszkania blisko pracy','Pomoc w formalnościach lokalnych','Wsparcie w pierwszych miesiącach','Integracja społeczna i rodzinna','Zobacz'],['Honor Care Academy','Język polski A1-B2','Terminologia medyczna','Kultura pracy w Polsce','Program online i stacjonarny','Academy']],pageTitle:{about:'O nas',services:'Usługi',institutions:'Dla instytucji',candidates:'Dla kandydatów',colombia:'Kolumbia',news:'Aktualności',contact:'Kontakt'},pageLead:{about:'Honor Care International buduje profesjonalny most pomiędzy Kolumbią i Polską.',services:'Oferujemy pełną obsługę: rekrutację, selekcję, dokumenty i szkolenia.',institutions:'Pomagamy polskim placówkom medycznym rozwiązać braki kadrowe.',candidates:'Dla kandydatów z Kolumbii tworzymy bezpieczną drogę do legalnej pracy w Polsce.',colombia:'Kolumbia ma duży potencjał medyczny i silną kulturę opieki.',news:'Aktualności o rekrutacji, partnerstwach, academy i dotacjach.',contact:'Skontaktuj się z nami.'},blocks:['Rekrutacja','Dokumenty','Academy','Mieszkanie','Integracja','Koordynacja'],partners:'ZAUFALI NAM',stats:['Specjalistów','Placówek','Specjalizacji','Kraje'],motto:'Wszystka opieka. Jedno rozwiązanie.',loginTitle:'Bezpieczne logowanie',loginSub:'Dostęp do dokumentów i portalu.',email:'E-mail',password:'Hasło',login:'Zaloguj',dashboard:'Panel zarządzania',welcome:'Witaj',manage:'Zarządzaj dokumentami.',cand:'Kandydaci',inst:'Instytucje',subs:'Dotacje',docs:'Dokumenty',logout:'Wyloguj',add:'Dodaj',delete:'Usuń',back:'Powrót',open:'Otwórz',setup2fa:'Konfiguracja Authenticatora',verify2fa:'Kod Authenticatora',codeText:'Wpisz 6-cyfrowy kod.',activate:'Aktywuj',verify:'Zweryfikuj',invalidUser:'Nie znaleziono użytkownika.',invalidPass:'Nieprawidłowe hasło.',invalidCode:'Nieprawidłowy kod.'},
+  es:{city:'Bogotá, Colombia | Varsovia, Polonia',home:'INICIO',about:'SOBRE NOSOTROS',services:'SERVICIOS',institutions:'PARA INSTITUCIONES',candidates:'PARA CANDIDATOS',colombia:'COLOMBIA',news:'NOTICIAS',contact:'CONTACTO',meeting:'PLANEAR REUNIÓN',portal:'PORTAL',hero:['La solución completa','de salud entre Colombia','y Polonia'],heroText:'Honor Care International conecta profesionales de salud de Colombia con instituciones médicas en Polonia.',pillars:['Todas las disciplinas','Idioma y formación','Permisos y documentos','Vivienda','Integración'],instBtn:'PARA INSTITUCIONES',candBtn:'PARA PROFESIONALES',sideStart:'Comenzamos en',sideCity:'Varsovia, Polonia',sideItems:['Oficina principal Varsovia','Centro de reclutamiento Bogotá','País de talento'],disc:'TODAS LAS DISCIPLINAS BAJO UN MISMO TECHO',specs:['Médicos','Dentistas','Especialistas','Enfermeros','Higienistas','Fisioterapeutas','Farmacéuticos','Cuidadores','Psicólogos','Y más...'],cards:[['¿Por qué Polonia?','Mercado de salud en crecimiento','Demanda de profesionales','País seguro','Oportunidades','Leer más'],['Para Instituciones','Escasez de personal','Candidatos seleccionados','Servicio integral','Modelos flexibles','Más información'],['Para Profesionales','Trabajo legal','Formación','Documentos','Apoyo familiar','Comienza'],['Vivienda','Viviendas seguras','Cerca del trabajo','Integración','Familia','Ver viviendas'],['Academy','Idioma polaco','Terminología médica','Preparación','Online','Ir a Academy']],pageTitle:{about:'Sobre nosotros',services:'Servicios',institutions:'Para instituciones',candidates:'Para candidatos',colombia:'Colombia',news:'Noticias',contact:'Contacto'},pageLead:{about:'Construimos un puente profesional entre Colombia y Polonia.',services:'Servicio completo de reclutamiento y formación.',institutions:'Ayudamos a instituciones en Polonia.',candidates:'Ruta segura para trabajar legalmente.',colombia:'Colombia es fuente de talento sanitario.',news:'Noticias sobre el proyecto.',contact:'Contáctanos.'},blocks:['Reclutamiento','Documentos','Academy','Vivienda','Integración','Coordinación'],partners:'ALIADOS',stats:['Profesionales','Instituciones','Disciplinas','Países'],motto:'Todo el cuidado. Una solución completa.',loginTitle:'Acceso seguro',loginSub:'Acceso a documentos.',email:'Correo electrónico',password:'Contraseña',login:'Iniciar sesión',dashboard:'Panel',welcome:'Bienvenido',manage:'Gestiona documentos.',cand:'Candidatos',inst:'Instituciones',subs:'Subsidios',docs:'Documentos',logout:'Cerrar sesión',add:'Añadir',delete:'Eliminar',back:'Volver',open:'Abrir',setup2fa:'Configurar Authenticator',verify2fa:'Código Authenticator',codeText:'Introduce el código.',activate:'Activar',verify:'Verificar',invalidUser:'Usuario no encontrado.',invalidPass:'Contraseña incorrecta.',invalidCode:'Código incorrecto.'}
 };
 
-function esc(x){ return String(x ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-function lang(req){ const l=req.session?.lang || 'pl'; return TX[l] ? l : 'pl'; }
-function t(req){ return TX[lang(req)]; }
+function esc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function lang(req){const l=req.session?.lang||'nl';return TX[l]?l:'nl'}
+function t(req){return TX[lang(req)]}
 
-function layout(req, title, body, cls=''){
-  const L=lang(req), T=t(req);
-  return `<!doctype html><html lang="${L}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title || 'Honor Care International')}</title><link rel="icon" type="image/svg+xml" href="/images/favicon.svg"><link rel="stylesheet" href="/css/style.css"><script defer src="/js/site.js"></script></head><body class="${cls}">
-  <div class="topbar"><div class="topbar-inner"><span>📍 ${esc(T.city)}</span><span class="push"></span><a class="${L==='pl'?'active':''}" href="/lang/pl">PL</a><a class="${L==='nl'?'active':''}" href="/lang/nl">NL</a><a class="${L==='es'?'active':''}" href="/lang/es">ES</a></div></div>
-  <header class="header"><a class="logo" href="/"><img src="/images/logo.svg" alt="Honor Care International"></a><nav class="menu"><a href="/">${esc(T.home)}</a><a href="/about">${esc(T.about)}</a><a href="/services">${esc(T.services)}</a><a href="/institutions">${esc(T.institutions)}</a><a href="/candidates-info">${esc(T.candidates)}</a><a href="/colombia">${esc(T.colombia)}</a><a href="/news">${esc(T.news)}</a><a href="/contact">${esc(T.contact)}</a><a class="meeting" href="/contact">▣ ${esc(T.meeting)}</a><a class="portal" href="/login">${esc(T.portal)}</a></nav></header>
-  ${body}</body></html>`;
+function layout(req,title,body,cls=''){
+ const L=lang(req),T=t(req);
+ return `<!doctype html><html lang="${L}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title||'Honor Care International')}</title><link rel="icon" type="image/svg+xml" href="/images/favicon.svg"><link rel="stylesheet" href="/css/style.css"><script defer src="/js/site.js"></script></head><body class="${cls}"><div class="topbar"><div class="topbar-inner"><span>📍 ${esc(T.city)}</span><span class="push"></span><a class="${L==='pl'?'active':''}" href="/lang/pl">PL</a><a class="${L==='nl'?'active':''}" href="/lang/nl">NL</a><a class="${L==='es'?'active':''}" href="/lang/es">ES</a></div></div><header class="header"><a class="logo" href="/"><img src="/images/logo.svg" alt="Honor Care International"></a><nav class="menu"><a href="/">${esc(T.home)}</a><a href="/about">${esc(T.about)}</a><a href="/services">${esc(T.services)}</a><a href="/institutions">${esc(T.institutions)}</a><a href="/candidates-info">${esc(T.candidates)}</a><a href="/colombia">${esc(T.colombia)}</a><a href="/news">${esc(T.news)}</a><a href="/contact">${esc(T.contact)}</a><a class="meeting" href="/contact">▣ ${esc(T.meeting)}</a><a class="portal" href="/login">${esc(T.portal)}</a></nav></header>${body}</body></html>`;
 }
-
-function footer(){
-  return `<footer class="footer"><div><img src="/images/logo.svg" alt="Honor Care International"></div><p>POLSKA – WARSZAWA<br>info@honorcare.pl<br>+48 22 307 02 70</p><p>KOLUMBIA – BOGOTÁ<br>info@honorcare.co<br>+57 601 390 82 20</p></footer>`;
-}
+function footer(){return `<footer class="footer"><div><img src="/images/logo.svg"></div><p>POLSKA – WARSZAWA<br>info@honorcare.pl<br>+48 22 307 02 70</p><p>KOLUMBIA – BOGOTÁ<br>info@honorcare.co<br>+57 601 390 82 20</p></footer>`}
 
 mongoose.set('strictQuery', true);
-const User = mongoose.model('User', new mongoose.Schema({ email:{type:String,unique:true,lowercase:true}, passwordHash:String, twoFASecret:{type:String,default:null}, createdAt:{type:Date,default:Date.now} }));
-const Candidate = mongoose.model('Candidate', new mongoose.Schema({ name:String,email:String,profession:String,country:String,status:String,notes:String,createdAt:{type:Date,default:Date.now} }));
-const Institution = mongoose.model('Institution', new mongoose.Schema({ name:String,contact:String,email:String,city:String,demand:String,status:String,createdAt:{type:Date,default:Date.now} }));
-const Subsidy = mongoose.model('Subsidy', new mongoose.Schema({ title:String,program:String,deadline:String,status:String,notes:String,createdAt:{type:Date,default:Date.now} }));
-const Document = mongoose.model('Document', new mongoose.Schema({ title:String,category:String,language:String,status:String,notes:String,content:String,createdAt:{type:Date,default:Date.now} }));
+const User=mongoose.model('User',new mongoose.Schema({email:{type:String,unique:true,lowercase:true},passwordHash:String,twoFASecret:{type:String,default:null},createdAt:{type:Date,default:Date.now}}));
+const Candidate=mongoose.model('Candidate',new mongoose.Schema({name:String,email:String,profession:String,country:String,status:String,notes:String,createdAt:{type:Date,default:Date.now}}));
+const Institution=mongoose.model('Institution',new mongoose.Schema({name:String,contact:String,email:String,city:String,demand:String,status:String,createdAt:{type:Date,default:Date.now}}));
+const Subsidy=mongoose.model('Subsidy',new mongoose.Schema({title:String,program:String,deadline:String,status:String,notes:String,createdAt:{type:Date,default:Date.now}}));
+const Document=mongoose.model('Document',new mongoose.Schema({title:String,category:String,language:String,status:String,notes:String,content:String,createdAt:{type:Date,default:Date.now}}));
 
-app.use(session({ secret:SESSION_SECRET, resave:false, saveUninitialized:false, proxy:true, cookie:{ httpOnly:true, sameSite:'lax', secure:process.env.NODE_ENV==='production', maxAge:1000*60*60*8 }, store:MongoStore.create({ mongoUrl:MONGODB_URI }) }));
+app.use(session({secret:SESSION_SECRET,resave:false,saveUninitialized:false,proxy:true,cookie:{httpOnly:true,sameSite:'lax',secure:process.env.NODE_ENV==='production',maxAge:1000*60*60*8},store:MongoStore.create({mongoUrl:MONGODB_URI})}));
+const requireLogin=(req,res,next)=>req.session?.userId?next():res.redirect('/login');
+const requireAuth=(req,res,next)=>req.session?.userId&&req.session?.totpPassed?next():req.session?.userId?res.redirect('/verify-2fa'):res.redirect('/login');
 
-const requireLogin = (req,res,next)=>req.session?.userId ? next() : res.redirect('/login');
-const requireAuth = (req,res,next)=>req.session?.userId && req.session?.totpPassed ? next() : req.session?.userId ? res.redirect('/verify-2fa') : res.redirect('/login');
-
-const seedDocs = [
- ['Businessplan Honor Care International Poland','Businessplan','NL/PL/ES','compleet','Compleet projectplan voor Colombia → Polen.','<h2>Businessplan Honor Care International Poland</h2><p>Honor Care International bouwt een professioneel recruitment- en integratieplatform tussen Colombia en Polen.</p><h3>Missie</h3><p>Het oplossen van personeelstekorten in de Poolse zorg door gekwalificeerde Colombiaanse zorgprofessionals te werven, op te leiden en duurzaam te begeleiden.</p><h3>Onderdelen</h3><ul><li>Recruitment en selectie in Colombia</li><li>Poolse taalopleiding en medische terminologie</li><li>Documentcontrole en legalisatie</li><li>Huisvesting en integratie</li><li>Partnercontracten met zorginstellingen</li><li>Subsidie- en impactprojecten via de stichting</li></ul>'],
- ['Subsidie Roadmap Polen / EU','Subsidies','NL/PL','concept','AMIF, ESF+, FERS en regionale fondsen.','<h2>Subsidie Roadmap Polen / EU</h2><p>Roadmap voor integratie, taal, arbeidsmarkttoeleiding en zorgcapaciteit.</p><ul><li>AMIF – integratie en migratie</li><li>ESF+ – arbeidsmarkt, opleiding en inclusie</li><li>FERS – ontwikkeling en sociale innovatie in Polen</li><li>Regionale fondsen voor opleiding en integratie</li></ul>'],
- ['Stichting Honor Care Poland dossier','Stichting','NL/PL','concept','Stichting, integratie en subsidieprojecten.','<h2>Stichting Honor Care Poland</h2><p>De stichting richt zich op maatschappelijke begeleiding, taal, integratie, familieondersteuning en subsidieprojecten.</p><ul><li>Integratieprogramma’s</li><li>Taalonderwijs</li><li>Maatschappelijke begeleiding</li><li>Subsidieaanvragen</li></ul>'],
- ['Werkmaatschappij procesplan','Werkmaatschappij','NL/PL','concept','Recruitment, matching, CRM en contracten.','<h2>Werkmaatschappij Procesplan</h2><p>De werkmaatschappij beheert de commerciële uitvoering: recruitment, matching, zorginstellingen, CRM, contracten en facturatie.</p>'],
- ['Kandidaten intakeformulier Colombia','Kandidaten','ES/PL','template','Registratieformulier kandidaten.','<h2>Kandidaten Intakeformulier Colombia</h2><ul><li>Persoonlijke gegevens</li><li>Diploma’s en beroepsregistratie</li><li>Werkervaring</li><li>Taalniveau</li><li>Beschikbaarheid</li><li>Gezinssituatie en relocatiebehoefte</li></ul>'],
- ['Zorginstellingen partnerformulier','Instellingen','PL/NL','template','Behoefteanalyse instellingen.','<h2>Zorginstellingen Partnerformulier</h2><ul><li>Type instelling</li><li>Aantal openstaande functies</li><li>Vereiste kwalificaties</li><li>Locatie en huisvestingsmogelijkheden</li><li>Startdatum en contractvorm</li></ul>'],
- ['Contracttemplate kandidaat','Contracten','ES/PL','template','Basisdocument kandidaatbegeleiding.','<h2>Contracttemplate kandidaat</h2><p>Template voor intake, begeleiding, gegevensverwerking en trajectafspraken.</p>'],
- ['Contracttemplate zorginstelling','Contracten','PL/NL','template','Samenwerkingsovereenkomst zorginstelling.','<h2>Contracttemplate zorginstelling</h2><p>Template voor samenwerking met zorginstellingen, plaatsingsproces en service scope.</p>'],
- ['Academy curriculum Pools medisch','Academy','PL/ES','concept','Taaltraining A1-B2 en medische terminologie.','<h2>Academy Curriculum Pools Medisch</h2><p>Taaltraining A1-B2, medische terminologie, werkcultuur en voorbereiding op Polen.</p>'],
- ['Huisvesting en integratie plan','Huisvesting','PL/ES/NL','concept','Woningen, relocatie en onboarding.','<h2>Huisvesting en Integratie Plan</h2><p>Woningen, relocatie, onboarding, familiebegeleiding en lokale ondersteuning.</p>'],
- ['Projectplanning eerste 12 maanden','Planning','NL/PL','concept','Roadmap eerste jaar.','<h2>Projectplanning eerste 12 maanden</h2><ol><li>Juridische structuur en partners</li><li>Recruitment Colombia en academy starten</li><li>Kandidaten screenen en documenten verzamelen</li><li>Zorginstellingen contracteren</li><li>Vergunningen, huisvesting en onboarding</li><li>Eerste plaatsingen en rapportage</li></ol>']
+const seedDocs=[
+['Businessplan Honor Care International Poland','Businessplan','NL/PL/ES','compleet','Compleet projectplan voor Colombia → Polen.','<h1>Businessplan Honor Care International Poland</h1><p>Honor Care International bouwt een professioneel recruitment- en integratieplatform tussen Colombia en Polen.</p><h3>Missie</h3><p>Het oplossen van personeelstekorten in de Poolse zorg door gekwalificeerde Colombiaanse zorgprofessionals te werven, op te leiden en duurzaam te begeleiden.</p><h3>Onderdelen</h3><ul><li>Recruitment en selectie in Colombia</li><li>Poolse taalopleiding en medische terminologie</li><li>Documentcontrole en legalisatie</li><li>Huisvesting en integratie</li><li>Partnercontracten met zorginstellingen</li></ul>'],
+['Subsidie Roadmap Polen / EU','Subsidies','NL/PL','concept','AMIF, ESF+, FERS en regionale fondsen.','<h1>Subsidie Roadmap Polen / EU</h1><p>Roadmap voor integratie, taal, arbeidsmarkttoeleiding en zorgcapaciteit.</p><ul><li>AMIF</li><li>ESF+</li><li>FERS</li><li>Regionale fondsen</li></ul>'],
+['Stichting Honor Care Poland dossier','Stichting','NL/PL','concept','Stichting, integratie en subsidieprojecten.','<h1>Stichting Honor Care Poland</h1><p>De stichting richt zich op maatschappelijke begeleiding, taal, integratie, familieondersteuning en subsidieprojecten.</p>'],
+['Werkmaatschappij procesplan','Werkmaatschappij','NL/PL','concept','Recruitment, matching, CRM en contracten.','<h1>Werkmaatschappij Procesplan</h1><p>De werkmaatschappij beheert recruitment, matching, zorginstellingen, CRM, contracten en facturatie.</p>'],
+['Kandidaten intakeformulier Colombia','Kandidaten','ES/PL','template','Registratieformulier kandidaten.','<h1>Kandidaten Intakeformulier Colombia</h1><ul><li>Persoonlijke gegevens</li><li>Diploma’s en beroepsregistratie</li><li>Werkervaring</li><li>Taalniveau</li><li>Beschikbaarheid</li></ul>'],
+['Zorginstellingen partnerformulier','Instellingen','PL/NL','template','Behoefteanalyse instellingen.','<h1>Zorginstellingen Partnerformulier</h1><ul><li>Type instelling</li><li>Aantal openstaande functies</li><li>Vereiste kwalificaties</li><li>Locatie</li><li>Contractvorm</li></ul>'],
+['Contracttemplate kandidaat','Contracten','ES/PL','template','Basisdocument kandidaatbegeleiding.','<h1>Contracttemplate Kandidaat</h1><p>Template voor intake, begeleiding, gegevensverwerking en trajectafspraken.</p>'],
+['Contracttemplate zorginstelling','Contracten','PL/NL','template','Samenwerkingsovereenkomst zorginstelling.','<h1>Contracttemplate Zorginstelling</h1><p>Template voor samenwerking, plaatsingsproces, service scope en verantwoordelijkheden.</p>'],
+['Academy curriculum Pools medisch','Academy','PL/ES','concept','Taaltraining A1-B2 en medische terminologie.','<h1>Academy Curriculum Pools Medisch</h1><p>Taaltraining A1-B2, medische terminologie, werkcultuur en voorbereiding op Polen.</p>'],
+['Huisvesting en integratie plan','Huisvesting','PL/ES/NL','concept','Woningen, relocatie en onboarding.','<h1>Huisvesting en Integratie Plan</h1><p>Woningen, relocatie, onboarding, familiebegeleiding en lokale ondersteuning.</p>'],
+['Projectplanning eerste 12 maanden','Planning','NL/PL','concept','Roadmap eerste jaar.','<h1>Projectplanning Eerste 12 Maanden</h1><ol><li>Juridische structuur en partners</li><li>Recruitment Colombia en academy starten</li><li>Kandidaten screenen en documenten verzamelen</li><li>Zorginstellingen contracteren</li><li>Eerste plaatsingen en rapportage</li></ol>'],
+['Marketing brochure instellingen','Marketing','PL/NL','concept','Brochure voor zorginstellingen.','<h1>Marketing Brochure Instellingen</h1><p>Honor Care International helpt zorginstellingen in Polen met duurzame oplossingen voor personeelstekorten via goed voorbereide professionals uit Colombia.</p>'],
+['Marketing brochure kandidaten','Marketing','ES/PL','concept','Brochure voor kandidaten.','<h1>Marketing Brochure Kandidaten</h1><p>Voor Colombiaanse zorgprofessionals die een veilige en begeleide route zoeken naar werk en toekomst in Polen.</p>'],
+['Website content PL/NL/ES','Website','PL/NL/ES','compleet','Meertalige websitecontent.','<h1>Website Content PL/NL/ES</h1><p>Teksten voor home, over ons, diensten, instellingen, kandidaten, Colombia, nieuws en contact.</p>']
 ];
 
-async function seedAdmin(){
-  const existing = await User.findOne({email:ADMIN_EMAIL});
-  if(!existing){
-    await User.create({email:ADMIN_EMAIL,passwordHash:await bcrypt.hash(ADMIN_PASSWORD,12)});
-    console.log('Admin aangemaakt: '+ADMIN_EMAIL);
-  } else console.log('Admin bestaat al: '+ADMIN_EMAIL);
+function buildDocumentContent(doc){
+ const title=esc(doc.title||'Document');
+ const category=esc(doc.category||'Algemeen');
+ const language=esc(doc.language||'');
+ const status=esc(doc.status||'');
+ const notes=esc(doc.notes||'');
+ const raw=String(doc.content||'').trim();
+ if(raw.length>20) return raw;
+ return `<h1>${title}</h1><div class="fallbackbox"><p><strong>Categorie:</strong> ${category}</p><p><strong>Taal:</strong> ${language}</p><p><strong>Status:</strong> ${status}</p></div><h3>Documentomschrijving</h3><p>${notes || 'Dit document is aangemaakt in de portal. Voeg bij Documenten extra inhoud toe via het veld content / documenttekst.'}</p><h3>Werkdocument</h3><p>Gebruik dit document als basis voor de verdere uitwerking van Honor Care International. De inhoud kan later worden uitgebreid met contractteksten, stappenplannen, formulieren en bijlagen.</p>`;
 }
+
+async function seedAdmin(){const existing=await User.findOne({email:ADMIN_EMAIL});if(!existing){await User.create({email:ADMIN_EMAIL,passwordHash:await bcrypt.hash(ADMIN_PASSWORD,12)});console.log('Admin aangemaakt: '+ADMIN_EMAIL)}else console.log('Admin bestaat al: '+ADMIN_EMAIL)}
 async function seedDocuments(){
-  for(const d of seedDocs){
-    await Document.updateOne(
-      {title:d[0]},
-      {$set:{content:d[5],category:d[1],language:d[2],status:d[3],notes:d[4]}, $setOnInsert:{title:d[0],createdAt:new Date()}},
-      {upsert:true}
-    );
-  }
-  console.log('Documenten gecontroleerd/aangevuld');
+ for(const d of seedDocs){
+  await Document.updateOne({title:d[0]},{$set:{category:d[1],language:d[2],status:d[3],notes:d[4],content:d[5]},$setOnInsert:{title:d[0],createdAt:new Date()}},{upsert:true});
+ }
+ await Document.updateMany({$or:[{content:{$exists:false}},{content:''},{content:null}]},[{$set:{content:{$concat:['<h1>',{$ifNull:['$title','Document']},'</h1><p>',{$ifNull:['$notes','Nog geen inhoud toegevoegd.']},'</p>']}}}]);
+ console.log('Documenten gecontroleerd/aangevuld');
 }
 
 app.get('/health',(req,res)=>res.send('OK'));
-app.get('/lang/:l',(req,res)=>{ if(TX[req.params.l]) req.session.lang=req.params.l; res.redirect(req.get('Referrer') || '/'); });
+app.get('/lang/:l',(req,res)=>{if(TX[req.params.l])req.session.lang=req.params.l;res.redirect(req.get('Referrer')||'/')});
 
 app.get('/',(req,res)=>{
-  const T=t(req);
-  const cards = T.cards.map((c,i)=>`<article><div class="img img${i}"></div><div class="body"><h3>${esc(c[0])}</h3><ul><li>✓ ${esc(c[1])}</li><li>✓ ${esc(c[2])}</li><li>✓ ${esc(c[3])}</li><li>✓ ${esc(c[4])}</li></ul><a class="btn navy" href="${['/colombia','/institutions','/candidates-info','/housing','/academy'][i]}">${esc(c[5])}</a></div></article>`).join('');
-  const body = `<section class="hero"><div class="hero-copy"><h1><span>${esc(T.hero[0])}</span><span>${esc(T.hero[1])}</span><strong>${esc(T.hero[2])}</strong></h1><p>${esc(T.heroText)}</p><div class="pillars">${T.pillars.map(x=>`<div><b>✓</b><strong>${esc(x)}</strong></div>`).join('')}</div><div class="actions"><a class="btn navy" href="/institutions">${esc(T.instBtn)} →</a><a class="btn gold" href="/candidates-info">${esc(T.candBtn)} →</a></div></div><div class="hero-people"></div><aside class="hero-side"><div class="icon">⌂</div><p>${esc(T.sideStart)}</p><h3>${esc(T.sideCity)}</h3><ul>${T.sideItems.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></aside></section>
-  <section class="discipline"><h3>${esc(T.disc)}</h3>${T.specs.map(s=>`<div><b>⚕</b><span>${esc(s)}</span></div>`).join('')}</section>
-  <section class="cards">${cards}</section>
-  <section class="partners"><h4>${esc(T.partners)}</h4><div><span>NFZ</span><span>MEDICOVER</span><span>LUXMED</span><span>PZU ZDROWIE</span><span>CM DAMIANA</span></div></section>
-  <section class="bottom"><div><b>100+</b><span>${esc(T.stats[0])}</span></div><div><b>30+</b><span>${esc(T.stats[1])}</span></div><div><b>10+</b><span>${esc(T.stats[2])}</span></div><div><b>2</b><span>${esc(T.stats[3])}</span></div><h2>${esc(T.motto)}</h2></section>${footer()}`;
-  res.send(layout(req,'Honor Care International',body));
+ const T=t(req);
+ const cards=T.cards.map((c,i)=>`<article><div class="img img${i}"></div><div class="body"><h3>${esc(c[0])}</h3><ul><li>✓ ${esc(c[1])}</li><li>✓ ${esc(c[2])}</li><li>✓ ${esc(c[3])}</li><li>✓ ${esc(c[4])}</li></ul><a class="btn navy" href="${['/colombia','/institutions','/candidates-info','/housing','/academy'][i]}">${esc(c[5])}</a></div></article>`).join('');
+ const body=`<section class="hero"><div class="hero-copy"><h1><span>${esc(T.hero[0])}</span><span>${esc(T.hero[1])}</span><strong>${esc(T.hero[2])}</strong></h1><p>${esc(T.heroText)}</p><div class="pillars">${T.pillars.map(x=>`<div><b>✓</b><strong>${esc(x)}</strong></div>`).join('')}</div><div class="actions"><a class="btn navy" href="/institutions">${esc(T.instBtn)} →</a><a class="btn gold" href="/candidates-info">${esc(T.candBtn)} →</a></div></div><div class="hero-people"></div><aside class="hero-side"><div class="icon">⌂</div><p>${esc(T.sideStart)}</p><h3>${esc(T.sideCity)}</h3><ul>${T.sideItems.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></aside></section><section class="discipline"><h3>${esc(T.disc)}</h3>${T.specs.map(s=>`<div><b>⚕</b><span>${esc(s)}</span></div>`).join('')}</section><section class="cards">${cards}</section><section class="partners"><h4>${esc(T.partners)}</h4><div><span>NFZ</span><span>MEDICOVER</span><span>LUXMED</span><span>PZU ZDROWIE</span><span>CM DAMIANA</span></div></section><section class="bottom"><div><b>100+</b><span>${esc(T.stats[0])}</span></div><div><b>30+</b><span>${esc(T.stats[1])}</span></div><div><b>10+</b><span>${esc(T.stats[2])}</span></div><div><b>2</b><span>${esc(T.stats[3])}</span></div><h2>${esc(T.motto)}</h2></section>${footer()}`;
+ res.send(layout(req,'Honor Care International',body));
 });
 
-function page(req,key){
-  const T=t(req);
-  const body = `<section class="pagehero"><h1>${esc(T.pageTitle[key])}</h1><p>${esc(T.pageLead[key])}</p></section><section class="info-grid">${T.blocks.map(x=>`<article><h3>${esc(x)}</h3><p>${esc(T.pageLead[key])}</p></article>`).join('')}</section>${footer()}`;
-  return layout(req,T.pageTitle[key],body);
-}
+function page(req,key){const T=t(req);return layout(req,T.pageTitle[key],`<section class="pagehero"><h1>${esc(T.pageTitle[key])}</h1><p>${esc(T.pageLead[key])}</p></section><section class="info-grid">${T.blocks.map(x=>`<article><h3>${esc(x)}</h3><p>${esc(T.pageLead[key])}</p></article>`).join('')}</section>${footer()}`)}
 ['about','services','institutions','colombia','news','contact'].forEach(k=>app.get('/'+k,(req,res)=>res.send(page(req,k))));
 app.get('/candidates-info',(req,res)=>res.send(page(req,'candidates')));
 app.get('/professionals',(req,res)=>res.redirect('/candidates-info'));
@@ -172,110 +105,30 @@ app.get('/institutions-page',(req,res)=>res.redirect('/institutions'));
 app.get('/academy',(req,res)=>res.send(page(req,'services')));
 app.get('/housing',(req,res)=>res.send(page(req,'services')));
 
-app.get('/login',(req,res)=>{
-  const T=t(req);
-  const error = req.query.error ? `<div class="error">${esc(req.query.error)}</div>` : '';
-  const body = `<main class="login"><h1>${esc(T.loginTitle)}</h1><p>${esc(T.loginSub)}</p>${error}<form method="post" action="/login"><input name="email" type="email" placeholder="${esc(T.email)}" required><input name="password" type="password" placeholder="${esc(T.password)}" required><button class="btn gold full">${esc(T.login)}</button></form></main>`;
-  res.send(layout(req,T.loginTitle,body,'authbg'));
-});
-app.post('/login',async(req,res)=>{
-  const T=t(req);
-  const user=await User.findOne({email:String(req.body.email||'').toLowerCase().trim()});
-  if(!user) return res.redirect('/login?error='+encodeURIComponent(T.invalidUser));
-  if(!await bcrypt.compare(String(req.body.password||''),user.passwordHash)) return res.redirect('/login?error='+encodeURIComponent(T.invalidPass));
-  req.session.userId=user._id.toString(); req.session.email=user.email; req.session.totpPassed=false;
-  if(!user.twoFASecret) return res.redirect('/setup-2fa');
-  res.redirect('/verify-2fa');
-});
-
-app.get('/setup-2fa',requireLogin,async(req,res)=>{
-  const T=t(req), user=await User.findById(req.session.userId);
-  const secret=speakeasy.generateSecret({name:`Honor Care (${user.email})`});
-  req.session.pendingTwoFASecret=secret.base32;
-  const qr=await QRCode.toDataURL(secret.otpauth_url);
-  const body=`<main class="login wide"><h1>${esc(T.setup2fa)}</h1><p>${esc(T.codeText)}</p><img class="qr" src="${qr}"><p class="secret">${esc(secret.base32)}</p><form method="post" action="/setup-2fa"><input name="token" placeholder="000000" required><button class="btn gold full">${esc(T.activate)}</button></form></main>`;
-  res.send(layout(req,T.setup2fa,body,'authbg'));
-});
-app.post('/setup-2fa',requireLogin,async(req,res)=>{
-  const T=t(req), secret=req.session.pendingTwoFASecret, token=String(req.body.token||'').replace(/\s/g,'');
-  if(!speakeasy.totp.verify({secret,encoding:'base32',token,window:1})) return res.send(layout(req,T.setup2fa,`<main class="login"><div class="error">${esc(T.invalidCode)}</div><a class="btn navy" href="/setup-2fa">${esc(T.back)}</a></main>`,'authbg'));
-  await User.findByIdAndUpdate(req.session.userId,{twoFASecret:secret});
-  req.session.totpPassed=true; delete req.session.pendingTwoFASecret; res.redirect('/dashboard');
-});
-app.get('/verify-2fa',requireLogin,(req,res)=>{
-  const T=t(req);
-  const body=`<main class="login"><h1>${esc(T.verify2fa)}</h1><p>${esc(T.codeText)}</p><form method="post" action="/verify-2fa"><input name="token" placeholder="000000" required><button class="btn gold full">${esc(T.verify)}</button></form></main>`;
-  res.send(layout(req,T.verify2fa,body,'authbg'));
-});
-app.post('/verify-2fa',requireLogin,async(req,res)=>{
-  const T=t(req), user=await User.findById(req.session.userId), token=String(req.body.token||'').replace(/\s/g,'');
-  if(!speakeasy.totp.verify({secret:user.twoFASecret,encoding:'base32',token,window:1})) return res.send(layout(req,T.verify2fa,`<main class="login"><div class="error">${esc(T.invalidCode)}</div><a class="btn navy" href="/verify-2fa">${esc(T.back)}</a></main>`,'authbg'));
-  req.session.totpPassed=true; res.redirect('/dashboard');
-});
+app.get('/login',(req,res)=>{const T=t(req),error=req.query.error?`<div class="error">${esc(req.query.error)}</div>`:'';res.send(layout(req,T.loginTitle,`<main class="login"><h1>${esc(T.loginTitle)}</h1><p>${esc(T.loginSub)}</p>${error}<form method="post" action="/login"><input name="email" type="email" placeholder="${esc(T.email)}" required><input name="password" type="password" placeholder="${esc(T.password)}" required><button class="btn gold full">${esc(T.login)}</button></form></main>`,'authbg'))});
+app.post('/login',async(req,res)=>{const T=t(req),user=await User.findOne({email:String(req.body.email||'').toLowerCase().trim()});if(!user)return res.redirect('/login?error='+encodeURIComponent(T.invalidUser));if(!await bcrypt.compare(String(req.body.password||''),user.passwordHash))return res.redirect('/login?error='+encodeURIComponent(T.invalidPass));req.session.userId=user._id.toString();req.session.email=user.email;req.session.totpPassed=false;if(!user.twoFASecret)return res.redirect('/setup-2fa');res.redirect('/verify-2fa')});
+app.get('/setup-2fa',requireLogin,async(req,res)=>{const T=t(req),user=await User.findById(req.session.userId),secret=speakeasy.generateSecret({name:`Honor Care (${user.email})`});req.session.pendingTwoFASecret=secret.base32;const qr=await QRCode.toDataURL(secret.otpauth_url);res.send(layout(req,T.setup2fa,`<main class="login wide"><h1>${esc(T.setup2fa)}</h1><p>${esc(T.codeText)}</p><img class="qr" src="${qr}"><p class="secret">${esc(secret.base32)}</p><form method="post" action="/setup-2fa"><input name="token" placeholder="000000" required><button class="btn gold full">${esc(T.activate)}</button></form></main>`,'authbg'))});
+app.post('/setup-2fa',requireLogin,async(req,res)=>{const T=t(req),secret=req.session.pendingTwoFASecret,token=String(req.body.token||'').replace(/\s/g,'');if(!speakeasy.totp.verify({secret,encoding:'base32',token,window:1}))return res.send(layout(req,T.setup2fa,`<main class="login"><div class="error">${esc(T.invalidCode)}</div><a class="btn navy" href="/setup-2fa">${esc(T.back)}</a></main>`,'authbg'));await User.findByIdAndUpdate(req.session.userId,{twoFASecret:secret});req.session.totpPassed=true;delete req.session.pendingTwoFASecret;res.redirect('/dashboard')});
+app.get('/verify-2fa',requireLogin,(req,res)=>{const T=t(req);res.send(layout(req,T.verify2fa,`<main class="login"><h1>${esc(T.verify2fa)}</h1><p>${esc(T.codeText)}</p><form method="post" action="/verify-2fa"><input name="token" placeholder="000000" required><button class="btn gold full">${esc(T.verify)}</button></form></main>`,'authbg'))});
+app.post('/verify-2fa',requireLogin,async(req,res)=>{const T=t(req),user=await User.findById(req.session.userId),token=String(req.body.token||'').replace(/\s/g,'');if(!speakeasy.totp.verify({secret:user.twoFASecret,encoding:'base32',token,window:1}))return res.send(layout(req,T.verify2fa,`<main class="login"><div class="error">${esc(T.invalidCode)}</div><a class="btn navy" href="/verify-2fa">${esc(T.back)}</a></main>`,'authbg'));req.session.totpPassed=true;res.redirect('/dashboard')});
 app.post('/logout',(req,res)=>req.session.destroy(()=>res.redirect('/')));
 
-app.get('/dashboard',requireAuth,async(req,res)=>{
-  const T=t(req);
-  const counts={candidates:await Candidate.countDocuments(),institutions:await Institution.countDocuments(),subsidies:await Subsidy.countDocuments(),documents:await Document.countDocuments()};
-  const docs=await Document.find().sort({createdAt:-1}).limit(12).lean();
-  const body=`<main class="portalpage"><div class="portalhead"><div><h1>${esc(T.dashboard)}</h1><p>${esc(T.welcome)}, ${esc(req.session.email)}. ${esc(T.manage)}</p></div><form method="post" action="/logout"><button class="btn navy">${esc(T.logout)}</button></form></div><section class="modules"><a href="/candidates"><b>${counts.candidates}</b><span>${esc(T.cand)}</span></a><a href="/institutions-list"><b>${counts.institutions}</b><span>${esc(T.inst)}</span></a><a href="/subsidies"><b>${counts.subsidies}</b><span>${esc(T.subs)}</span></a><a href="/documents"><b>${counts.documents}</b><span>${esc(T.docs)}</span></a></section><section class="docgrid"><h2>${esc(T.docs)}</h2>${docs.map(d=>docCard(req,d)).join('')}</section></main>`;
-  res.send(layout(req,T.dashboard,body,'portalpage'));
-});
+app.get('/dashboard',requireAuth,async(req,res)=>{const T=t(req),counts={candidates:await Candidate.countDocuments(),institutions:await Institution.countDocuments(),subsidies:await Subsidy.countDocuments(),documents:await Document.countDocuments()},docs=await Document.find().sort({createdAt:-1}).limit(12).lean();res.send(layout(req,T.dashboard,`<main class="portalpage"><div class="portalhead"><div><h1>${esc(T.dashboard)}</h1><p>${esc(T.welcome)}, ${esc(req.session.email)}. ${esc(T.manage)}</p></div><form method="post" action="/logout"><button class="btn navy">${esc(T.logout)}</button></form></div><section class="modules"><a href="/candidates"><b>${counts.candidates}</b><span>${esc(T.cand)}</span></a><a href="/institutions-list"><b>${counts.institutions}</b><span>${esc(T.inst)}</span></a><a href="/subsidies"><b>${counts.subsidies}</b><span>${esc(T.subs)}</span></a><a href="/documents"><b>${counts.documents}</b><span>${esc(T.docs)}</span></a></section><section class="docgrid"><h2>${esc(T.docs)}</h2>${docs.map(d=>docCard(req,d)).join('')}</section></main>`,'portalpage'))});
 app.get('/portal',(req,res)=>res.redirect('/dashboard'));
 
-function docCard(req,d){
-  const T=t(req);
-  return `<article class="doc-card"><h3>${esc(d.title)}</h3><p><b>${esc(d.category)}</b> • ${esc(d.language)} • ${esc(d.status)}</p><p>${esc(d.notes)}</p><a class="btn navy smallbtn" href="/documents/${d._id}">${esc(T.open)}</a></article>`;
-}
-app.get('/documents',requireAuth,async(req,res)=>{
-  const T=t(req), docs=await Document.find().sort({createdAt:-1}).lean();
-  const form=`<form class="dataform" method="post" action="/documents"><input name="title" placeholder="title"><input name="category" placeholder="category"><input name="language" placeholder="language"><input name="status" placeholder="status"><textarea name="notes" placeholder="notes"></textarea><textarea name="content" placeholder="content / documenttekst"></textarea><button class="btn gold">${esc(T.add)}</button></form>`;
-  const body=`<main class="portalpage"><h1>${esc(T.docs)}</h1>${form}<section class="docgrid">${docs.map(d=>docCard(req,d)).join('')}</section><p><a class="btn navy" href="/dashboard">${esc(T.back)}</a></p></main>`;
-  res.send(layout(req,T.docs,body,'portalpage'));
-});
-app.get('/documents/:id',requireAuth,async(req,res)=>{
-  const T=t(req);
-  const doc=await Document.findById(req.params.id).lean();
-  if(!doc) return res.redirect('/documents');
-  const content=doc.content || `<h2>${esc(doc.title)}</h2><p>${esc(doc.notes || '')}</p>`;
-  const body=`<main class="portalpage"><a class="btn navy" href="/documents">${esc(T.back)}</a><section class="document-open"><p class="docmeta">${esc(doc.category)} • ${esc(doc.language)} • ${esc(doc.status)}</p>${content}</section></main>`;
-  res.send(layout(req,doc.title,body,'portalpage'));
-});
-app.post('/documents',requireAuth,async(req,res)=>{
-  const title=req.body.title || 'Nieuw document';
-  await Document.create({title,category:req.body.category,language:req.body.language,status:req.body.status,notes:req.body.notes,content:req.body.content || `<h2>${esc(title)}</h2><p>${esc(req.body.notes||'')}</p>`});
-  res.redirect('/documents');
-});
+function docCard(req,d){const T=t(req);return `<article class="doc-card"><h3>${esc(d.title)}</h3><p><b>${esc(d.category)}</b> • ${esc(d.language)} • ${esc(d.status)}</p><p>${esc(d.notes)}</p><a class="btn navy smallbtn" href="/documents/${d._id}">${esc(T.open)}</a></article>`}
 
-function listPage(req,title,type,fields,items){
-  const T=t(req);
-  const form=`<form class="dataform" method="post" action="/${type}">${fields.map(f=>`<input name="${f}" placeholder="${f}">`).join('')}<button class="btn gold">${esc(T.add)}</button></form>`;
-  const rows=items.map(item=>`<tr>${fields.map(f=>`<td>${esc(item[f]||'')}</td>`).join('')}<td><form method="post" action="/delete/${type}/${item._id}"><button class="danger">${esc(T.delete)}</button></form></td></tr>`).join('');
-  return layout(req,title,`<main class="portalpage"><h1>${esc(title)}</h1>${form}<table><thead><tr>${fields.map(f=>`<th>${f}</th>`).join('')}<th></th></tr></thead><tbody>${rows}</tbody></table><a class="btn navy" href="/dashboard">${esc(T.back)}</a></main>`,'portalpage');
-}
-function crud(url,Model,key,type,fields){
-  app.get(url,requireAuth,async(req,res)=>res.send(listPage(req,t(req)[key],type,fields,await Model.find().sort({createdAt:-1}).lean())));
-  app.post(url,requireAuth,async(req,res)=>{ await Model.create(req.body); res.redirect(url); });
-}
+app.get('/documents',requireAuth,async(req,res)=>{const T=t(req),docs=await Document.find().sort({createdAt:-1}).lean();const form=`<form class="dataform" method="post" action="/documents"><input name="title" placeholder="title"><input name="category" placeholder="category"><input name="language" placeholder="language"><input name="status" placeholder="status"><textarea name="notes" placeholder="notes"></textarea><textarea name="content" placeholder="content / documenttekst"></textarea><button class="btn gold">${esc(T.add)}</button></form>`;res.send(layout(req,T.docs,`<main class="portalpage"><h1>${esc(T.docs)}</h1>${form}<section class="docgrid">${docs.map(d=>docCard(req,d)).join('')}</section><p><a class="btn navy" href="/dashboard">${esc(T.back)}</a></p></main>`,'portalpage'))});
+app.get('/documents/:id',requireAuth,async(req,res)=>{const T=t(req);if(!mongoose.Types.ObjectId.isValid(req.params.id))return res.redirect('/documents');const doc=await Document.findById(req.params.id).lean();if(!doc)return res.redirect('/documents');const content=buildDocumentContent(doc);res.send(layout(req,doc.title,`<main class="portalpage"><a class="btn navy" href="/documents">${esc(T.back)}</a><section class="document-open"><p class="docmeta">${esc(doc.category)} • ${esc(doc.language)} • ${esc(doc.status)}</p>${content}</section></main>`,'portalpage'))});
+app.post('/documents',requireAuth,async(req,res)=>{const title=req.body.title||'Nieuw document';await Document.create({title,category:req.body.category,language:req.body.language,status:req.body.status,notes:req.body.notes,content:req.body.content||`<h1>${esc(title)}</h1><p>${esc(req.body.notes||'')}</p>`});res.redirect('/documents')});
+
+function listPage(req,title,type,fields,items){const T=t(req),form=`<form class="dataform" method="post" action="/${type}">${fields.map(f=>`<input name="${f}" placeholder="${f}">`).join('')}<button class="btn gold">${esc(T.add)}</button></form>`,rows=items.map(item=>`<tr>${fields.map(f=>`<td>${esc(item[f]||'')}</td>`).join('')}<td><form method="post" action="/delete/${type}/${item._id}"><button class="danger">${esc(T.delete)}</button></form></td></tr>`).join('');return layout(req,title,`<main class="portalpage"><h1>${esc(title)}</h1>${form}<table><thead><tr>${fields.map(f=>`<th>${f}</th>`).join('')}<th></th></tr></thead><tbody>${rows}</tbody></table><a class="btn navy" href="/dashboard">${esc(T.back)}</a></main>`,'portalpage')}
+function crud(url,Model,key,type,fields){app.get(url,requireAuth,async(req,res)=>res.send(listPage(req,t(req)[key],type,fields,await Model.find().sort({createdAt:-1}).lean())));app.post(url,requireAuth,async(req,res)=>{await Model.create(req.body);res.redirect(url)})}
 crud('/candidates',Candidate,'cand','candidates',['name','email','profession','country','status','notes']);
 crud('/institutions-list',Institution,'inst','institutions-list',['name','contact','email','city','demand','status']);
 crud('/subsidies',Subsidy,'subs','subsidies',['title','program','deadline','status','notes']);
+app.post('/delete/:type/:id',requireAuth,async(req,res)=>{const map={documents:Document,candidates:Candidate,'institutions-list':Institution,subsidies:Subsidy};const M=map[req.params.type];if(M&&mongoose.Types.ObjectId.isValid(req.params.id))await M.findByIdAndDelete(req.params.id);res.redirect('/'+req.params.type)});
 
-app.post('/delete/:type/:id',requireAuth,async(req,res)=>{
-  const map={documents:Document,candidates:Candidate,'institutions-list':Institution,subsidies:Subsidy};
-  const M=map[req.params.type];
-  if(M) await M.findByIdAndDelete(req.params.id);
-  res.redirect('/'+req.params.type);
-});
+app.use((err,req,res,next)=>{console.error(err);res.status(500).send('<pre>Internal Server Error\\n\\n'+esc(err.message||err)+'</pre>')});
 
-app.use((err,req,res,next)=>{
-  console.error(err);
-  res.status(500).send('<pre>Internal Server Error\n\n'+esc(err.message||err)+'</pre>');
-});
-
-mongoose.connect(MONGODB_URI).then(async()=>{
-  console.log('MongoDB verbonden');
-  await seedAdmin();
-  await seedDocuments();
-  app.listen(PORT,()=>console.log('Honor Care Definitive v13 draait op poort '+PORT));
-}).catch(e=>{console.error(e);process.exit(1)});
+mongoose.connect(MONGODB_URI).then(async()=>{console.log('MongoDB verbonden');await seedAdmin();await seedDocuments();app.listen(PORT,()=>console.log('Honor Care Final v14 draait op poort '+PORT))}).catch(e=>{console.error(e);process.exit(1)});
