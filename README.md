@@ -1,3 +1,3 @@
-# HonorCare Final v14 Docs Fixed
+# HonorCare Poland Exact Style v15
 
-Inline website zonder views. Documenten kunnen nooit leeg openen: als content ontbreekt, wordt automatisch documentinhoud opgebouwd uit metadata en notities.
+Stijl gebaseerd op het aangeleverde screenshot. Inclusief werkende portal en uitgebreid projectdossier met documenten die openen via /documents/:id.

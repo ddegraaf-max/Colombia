@@ -1,7 +1,6 @@
 {
-  "name": "honorcare-final-v14-docs-fixed",
-  "version": "14.0.0",
-  "description": "Honor Care International final inline site with guaranteed document opening",
+  "name": "honorcare-poland-exact-style-v15",
+  "version": "15.0.0",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
