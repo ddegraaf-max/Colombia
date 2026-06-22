@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="920" height="220" viewBox="0 0 920 220"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#002b55"/><stop offset=".72" stop-color="#063f70"/><stop offset="1" stop-color="#d09a2e"/></linearGradient></defs><rect width="920" height="220" fill="#fff"/><g transform="translate(34,26)"><path d="M82 8C44 8 18 39 18 76c0 50 48 86 86 123 38-37 86-73 86-123 0-37-26-68-64-68-16 0-30 8-42 24C112 16 98 8 82 8z" fill="none" stroke="url(#g)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/><circle cx="70" cy="84" r="12" fill="#002b55"/><circle cx="138" cy="84" r="12" fill="#002b55"/><circle cx="104" cy="73" r="18" fill="#002b55"/><path d="M55 151c8-35 29-50 49-17 20-33 41-18 49 17" fill="none" stroke="#002b55" stroke-width="15" stroke-linecap="round"/></g><text x="250" y="82" font-family="Georgia,serif" font-size="58" font-weight="700" fill="#002b55" letter-spacing="2">HONOR CARE</text><text x="252" y="133" font-family="Georgia,serif" font-size="30" fill="#c8962f" letter-spacing="15">INTERNATIONAL</text><line x1="252" y1="149" x2="765" y2="149" stroke="#c8962f" stroke-width="2"/><text x="252" y="178" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="800" fill="#002b55">OPIEKA Z SERCEM. PRZYSZŁOŚĆ Z NAMI.</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="220" viewBox="0 0 920 220">
+<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#002b55"/><stop offset=".72" stop-color="#063f70"/><stop offset="1" stop-color="#d09a2e"/></linearGradient></defs>
+<rect width="920" height="220" fill="#fff"/>
+<g transform="translate(34,26)">
+<path d="M82 8C44 8 18 39 18 76c0 50 48 86 86 123 38-37 86-73 86-123 0-37-26-68-64-68-16 0-30 8-42 24C112 16 98 8 82 8z" fill="none" stroke="url(#g)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="70" cy="84" r="12" fill="#002b55"/><circle cx="138" cy="84" r="12" fill="#002b55"/><circle cx="104" cy="73" r="18" fill="#002b55"/>
+<path d="M55 151c8-35 29-50 49-17 20-33 41-18 49 17" fill="none" stroke="#002b55" stroke-width="15" stroke-linecap="round"/>
+</g>
+<text x="250" y="82" font-family="Georgia,serif" font-size="58" font-weight="700" fill="#002b55" letter-spacing="2">HONOR CARE</text>
+<text x="252" y="133" font-family="Georgia,serif" font-size="30" fill="#c8962f" letter-spacing="15">INTERNATIONAL</text>
+<line x1="252" y1="149" x2="765" y2="149" stroke="#c8962f" stroke-width="2"/>
+<text x="252" y="178" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="800" fill="#002b55">OPIEKA Z SERCEM. PRZYSZŁOŚĆ Z NAMI.</text>
+</svg>

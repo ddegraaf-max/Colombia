@@ -1,10 +1,9 @@
 {
-  "name": "honorcare-poland-exact-style-v15",
-  "version": "15.0.0",
+  "name": "honorcare-working-docs-v16",
+  "version": "16.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

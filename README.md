@@ -1,3 +1,7 @@
-# HonorCare Poland Exact Style v15
+# HonorCare Working Docs v16
 
-Stijl gebaseerd op het aangeleverde screenshot. Inclusief werkende portal en uitgebreid projectdossier met documenten die openen via /documents/:id.
+Belangrijk:
+- /documents werkt na login
+- /documents/:id opent echte inhoud
+- /test-documents werkt zonder login om direct te testen of MongoDB-documenten bestaan
+- Homepage in stijl van aangeleverde screenshot
