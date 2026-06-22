@@ -1,3 +1,3 @@
-# Honor Care Final Expanded v8
+# Honor Care Correct Screenshot Style v9
 
-Screenshot-stijl, uitgebreide pagina's, PL/NL/ES, portal met automatisch gevulde documenten.
+Frontend in screenshot-stijl, logo + favicon, PL/NL/ES en portal met alle basisdocumenten. Bestaande MongoDB-documenten worden niet verwijderd; ontbrekende basisdocumenten worden aangevuld.
