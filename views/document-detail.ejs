@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="<%= lang %>">
+<head><%- include('head') %></head>
+<body>
+<%- include('nav') %>
+<main class="portalpage">
+  <a class="btn navy" href="/documents"><%= p.back %></a>
+  <section class="document-open">
+    <p class="docmeta"><%= doc.category %> • <%= doc.language %> • <%= doc.status %></p>
+    <%- content %>
+  </section>
+</main>
+</body>
+</html>
