@@ -68,7 +68,7 @@ function layout(title, body, active = 'home', lang = 'pl', curPath = '/') {
 <header class="header"><a class="logo" href="/"><img src="/images/logo.svg" alt="Honor Care International" width="290" height="65"></a>
 <input type="checkbox" id="navtoggle" class="navtoggle">
 <label for="navtoggle" class="burger" aria-label="Menu"><span></span><span></span><span></span></label>
-<nav class="menu" aria-label="Menu">${nav}<a class="portal" href="/login">${tr.nav.portal}</a></nav></header>
+<nav class="menu" aria-label="Menu">${nav}<a class="portal" href="/portal">${tr.nav.portal}</a></nav></header>
 <main id="main">${body}</main></body></html>`;
 }
 
@@ -82,7 +82,7 @@ function footer(lang = 'pl') {
 <div class="fcol"><h4>${f.officeNL}</h4><p>📍 ul. Prosta 69, 00-838<br>Warszawa, ${tr.nav.poland}</p><p>☎ <a href="tel:+48221234567">+48 22 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p></div>
 <div class="fcol"><h4>${f.officeCO}</h4><p>📍 Carrera 13 # 97-76, Oficina 501<br>Bogotá, Colombia</p><p>☎ <a href="tel:+573201234567">+57 320 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursCO}</p></div>
 <div class="fcol newsletter"><h4>${f.newsletter}</h4><p>${f.newsletterText}</p><form method="post" action="/newsletter"><div class="nl-row"><input type="email" name="email" placeholder="${f.newsletterPh}" aria-label="${f.newsletterPh}" required><button class="nl-btn" aria-label="OK">→</button></div></form></div>
-</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International. ${f.rights}</span><span><a href="/poland">${f.privacy}</a> &nbsp;|&nbsp; <a href="/about">${f.terms}</a></span></div></footer>`;
+</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International. ${f.rights}</span><span><a href="/poland">${f.privacy}</a> &nbsp;|&nbsp; <a href="/about">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
 }
 
 mongoose.set('strictQuery', true);
@@ -94,6 +94,8 @@ const Placement = mongoose.model('Placement', new mongoose.Schema({ candidate: S
 const Housing = mongoose.model('Housing', new mongoose.Schema({ title: String, district: String, address: String, rooms: String, area: String, price: String, furnished: { type: Boolean, default: true }, status: { type: String, default: 'Beschikbaar' }, otodomUrl: String, assignedTo: String, notes: String, createdAt: { type: Date, default: Date.now } }));
 const Subsidy = mongoose.model('Subsidy', new mongoose.Schema({ title: String, program: String, deadline: String, status: { type: String, default: 'Concept' }, notes: String, createdAt: { type: Date, default: Date.now } }));
 const Newsletter = mongoose.model('Newsletter', new mongoose.Schema({ email: { type: String, lowercase: true }, lang: String, createdAt: { type: Date, default: Date.now } }));
+const PortalUser = mongoose.model('PortalUser', new mongoose.Schema({ name: String, email: { type: String, unique: true, lowercase: true }, passwordHash: String, role: { type: String, default: 'Zorgprofessional' }, language: { type: String, default: 'pl' }, twoFASecret: { type: String, default: null }, twoFAEnabled: { type: Boolean, default: false }, createdAt: { type: Date, default: Date.now }, lastLogin: Date }));
+const Appointment = mongoose.model('Appointment', new mongoose.Schema({ name: String, email: String, portalUserId: { type: String, default: null }, date: String, time: String, topic: String, channel: { type: String, default: 'Videogesprek' }, status: { type: String, default: 'Aangevraagd' }, notes: String, createdAt: { type: Date, default: Date.now } }));
 
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false, proxy: true, cookie: { httpOnly: true, sameSite: 'lax', secure: IS_PROD, maxAge: 1000 * 60 * 60 * 8 }, store: MongoStore.create({ mongoUrl: MONGO }) }));
 
@@ -103,6 +105,54 @@ const requireAuth = (req, res, next) => {
   if (!req.session?.userId) return res.redirect('/login');
   return res.redirect(req.session?.twoFAConfigured ? '/verify-2fa' : '/setup-2fa');
 };
+
+// Extra beveiliging: inlogbegrenzing tegen brute force (in-memory, per IP + soort).
+const loginAttempts = new Map();
+function throttleKey(req, scope) { return scope + ':' + (req.ip || (req.headers['x-forwarded-for'] || '').split(',')[0] || 'x'); }
+function isLocked(key) { const a = loginAttempts.get(key); return !!(a && a.until && a.until > Date.now()); }
+function recordFail(key) { const a = loginAttempts.get(key) || { count: 0, until: 0 }; a.count++; if (a.count >= 5) { a.until = Date.now() + 15 * 60 * 1000; a.count = 0; } loginAttempts.set(key, a); }
+function clearFails(key) { loginAttempts.delete(key); }
+function setLangCookie(res, lang) { res.setHeader('Set-Cookie', `lang=${lang}; Path=/; Max-Age=31536000; SameSite=Lax`); }
+
+// Gebruikers-toegang (los van admin): pas door als ingelogd én 2FA (indien aan) voltooid.
+const requireUser = (req, res, next) => {
+  if (!req.session?.portalUserId) return res.redirect('/portal');
+  if (req.session?.userPending2FA) return res.redirect('/portal/2fa');
+  if (!req.session?.user2FAEnabled && req.path !== '/portal/security/2fa-setup') return res.redirect('/portal/security/2fa-setup');
+  return next();
+};
+
+// Meertalige teksten voor de gebruikersomgeving.
+const ACC = {
+  pl: { title: 'Portal', sub: 'Zaloguj się lub załóż konto, aby uzyskać dostęp do swojego panelu.', login: 'Logowanie', register: 'Rejestracja', name: 'Imię i nazwisko', email: 'E-mail', password: 'Hasło', type: 'Jestem', prof: 'Pracownik medyczny', inst: 'Placówka medyczna', lang: 'Preferowany język', btnLogin: 'Zaloguj się', btnRegister: 'Załóż konto', account: 'Moje konto', hello: 'Witaj', logout: 'Wyloguj', profile: 'Profil', save: 'Zapisz', security: 'Bezpieczeństwo', twofaOn: 'Weryfikacja dwuetapowa jest włączona.', twofaOff: 'Weryfikacja dwuetapowa jest wyłączona. Zalecamy włączenie.', enable2fa: 'Włącz 2FA', disable2fa: 'Wyłącz 2FA', scan: 'Zeskanuj w aplikacji authenticator i wpisz kod.', code: 'Kod', verify: 'Zweryfikuj', twoFAtitle: 'Weryfikacja dwuetapowa', badCred: 'Nieprawidłowy e-mail lub hasło.', weak: 'Hasło musi mieć co najmniej 8 znaków.', exists: 'Konto z tym adresem e-mail już istnieje.', locked: 'Zbyt wiele prób. Spróbuj ponownie za 15 minut.', secNote: 'Twoje dane są szyfrowane i chronione.' },
+  en: { title: 'Portal', sub: 'Log in or create an account to access your dashboard.', login: 'Log in', register: 'Register', name: 'Full name', email: 'Email', password: 'Password', type: 'I am a', prof: 'Healthcare professional', inst: 'Healthcare institution', lang: 'Preferred language', btnLogin: 'Log in', btnRegister: 'Create account', account: 'My account', hello: 'Welcome', logout: 'Log out', profile: 'Profile', save: 'Save', security: 'Security', twofaOn: 'Two-factor authentication is enabled.', twofaOff: 'Two-factor authentication is disabled. Strongly recommended.', enable2fa: 'Enable 2FA', disable2fa: 'Disable 2FA', scan: 'Scan with your authenticator app and enter the code.', code: 'Code', verify: 'Verify', twoFAtitle: 'Two-factor authentication', badCred: 'Incorrect email or password.', weak: 'Password must be at least 8 characters.', exists: 'An account with this email already exists.', locked: 'Too many attempts. Try again in 15 minutes.', secNote: 'Your data is stored encrypted and protected.' },
+  nl: { title: 'Portaal', sub: 'Log in of maak een account aan voor toegang tot je omgeving.', login: 'Inloggen', register: 'Registreren', name: 'Naam', email: 'E-mail', password: 'Wachtwoord', type: 'Ik ben', prof: 'Zorgprofessional', inst: 'Zorginstelling', lang: 'Voorkeurstaal', btnLogin: 'Inloggen', btnRegister: 'Account aanmaken', account: 'Mijn account', hello: 'Welkom', logout: 'Uitloggen', profile: 'Profiel', save: 'Opslaan', security: 'Beveiliging', twofaOn: 'Tweestapsverificatie is ingeschakeld.', twofaOff: 'Tweestapsverificatie staat uit. Sterk aangeraden.', enable2fa: '2FA inschakelen', disable2fa: '2FA uitschakelen', scan: 'Scan met je authenticator-app en voer de code in.', code: 'Code', verify: 'Verifiëren', twoFAtitle: 'Tweestapsverificatie', badCred: 'E-mail of wachtwoord onjuist.', weak: 'Wachtwoord moet minstens 8 tekens bevatten.', exists: 'Er bestaat al een account met dit e-mailadres.', locked: 'Te veel pogingen. Probeer het over 15 minuten opnieuw.', secNote: 'Je gegevens worden versleuteld opgeslagen en beschermd.' },
+  es: { title: 'Portal', sub: 'Inicia sesión o crea una cuenta para acceder a tu panel.', login: 'Iniciar sesión', register: 'Registrarse', name: 'Nombre completo', email: 'Correo', password: 'Contraseña', type: 'Soy', prof: 'Profesional sanitario', inst: 'Institución sanitaria', lang: 'Idioma preferido', btnLogin: 'Iniciar sesión', btnRegister: 'Crear cuenta', account: 'Mi cuenta', hello: 'Bienvenido', logout: 'Cerrar sesión', profile: 'Perfil', save: 'Guardar', security: 'Seguridad', twofaOn: 'La verificación en dos pasos está activada.', twofaOff: 'La verificación en dos pasos está desactivada. Muy recomendada.', enable2fa: 'Activar 2FA', disable2fa: 'Desactivar 2FA', scan: 'Escanea con tu app de autenticación e introduce el código.', code: 'Código', verify: 'Verificar', twoFAtitle: 'Verificación en dos pasos', badCred: 'Correo o contraseña incorrectos.', weak: 'La contraseña debe tener al menos 8 caracteres.', exists: 'Ya existe una cuenta con este correo.', locked: 'Demasiados intentos. Inténtalo de nuevo en 15 minutos.', secNote: 'Tus datos se guardan cifrados y protegidos.' }
+};
+function acc(req) { return ACC[req.lang] || ACC.pl; }
+
+// Planning / agenda
+const BOOK = {
+  pl: { title: 'Umów rozmowę', sub: 'Wybierz dogodny termin — odezwiemy się, aby potwierdzić.', date: 'Data', time: 'Godzina', name: 'Imię i nazwisko', email: 'E-mail', topic: 'Temat', channel: 'Forma', video: 'Wideorozmowa', phone: 'Telefon', onsite: 'Na miejscu', send: 'Wyślij prośbę', thanks: 'Dziękujemy! Twoja prośba została wysłana. Skontaktujemy się, aby potwierdzić termin.', back: 'Strona główna' },
+  en: { title: 'Schedule a call', sub: 'Pick a time that suits you — we will confirm shortly.', date: 'Date', time: 'Time', name: 'Full name', email: 'Email', topic: 'Topic', channel: 'Format', video: 'Video call', phone: 'Phone', onsite: 'On site', send: 'Send request', thanks: 'Thank you! Your request has been sent. We will contact you to confirm.', back: 'Home' },
+  nl: { title: 'Plan een gesprek', sub: 'Kies een moment dat jou uitkomt — we bevestigen zo snel mogelijk.', date: 'Datum', time: 'Tijd', name: 'Naam', email: 'E-mail', topic: 'Onderwerp', channel: 'Vorm', video: 'Videogesprek', phone: 'Telefoon', onsite: 'Op locatie', send: 'Aanvraag versturen', thanks: 'Bedankt! Je gespreksaanvraag is verstuurd. We nemen contact op om te bevestigen.', back: 'Home' },
+  es: { title: 'Agenda una charla', sub: 'Elige el momento que mejor te venga — confirmaremos en breve.', date: 'Fecha', time: 'Hora', name: 'Nombre completo', email: 'Correo', topic: 'Tema', channel: 'Formato', video: 'Videollamada', phone: 'Teléfono', onsite: 'Presencial', send: 'Enviar solicitud', thanks: '¡Gracias! Tu solicitud se ha enviado. Te contactaremos para confirmar.', back: 'Inicio' }
+};
+function book(req) { return BOOK[req.lang] || BOOK.pl; }
+const TIMES = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
+const DMONTHS = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
+function shiftMonth(ym, delta) { let [Y, M] = ym.split('-').map(Number); M += delta; while (M < 1) { M += 12; Y--; } while (M > 12) { M -= 12; Y++; } return `${Y}-${String(M).padStart(2, '0')}`; }
+function monthCalendar(ym, appts) {
+  const [Y, M] = ym.split('-').map(Number);
+  const startWd = (new Date(Y, M - 1, 1).getDay() + 6) % 7;
+  const days = new Date(Y, M, 0).getDate();
+  const byDay = {}; appts.forEach(a => { if (a.date && a.date.startsWith(ym)) { const d = Number(a.date.slice(8, 10)); (byDay[d] = byDay[d] || []).push(a); } });
+  const t = new Date(); const today = `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+  let cells = ''; for (let i = 0; i < startWd; i++) cells += '<div class="cal-cell empty"></div>';
+  for (let d = 1; d <= days; d++) { const ds = `${ym}-${String(d).padStart(2, '0')}`; const ev = (byDay[d] || []).sort((a, b) => (a.time || '').localeCompare(b.time || '')).map(a => `<a class="cal-ev" href="/appointments/${a._id}" title="${esc(a.name || '')}">${esc(a.time || '')} ${esc((a.name || '').split(' ')[0])}</a>`).join(''); cells += `<div class="cal-cell${ds === today ? ' today' : ''}"><span class="cal-d">${d}</span>${ev}</div>`; }
+  const wd = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
+  return `<div class="cal-head"><a class="btn navy small" href="/agenda?m=${shiftMonth(ym, -1)}">←</a><h2>${DMONTHS[M - 1]} ${Y}</h2><a class="btn navy small" href="/agenda?m=${shiftMonth(ym, 1)}">→</a></div><div class="cal-grid">${wd.map(w => `<div class="cal-wd">${w}</div>`).join('')}${cells}</div>`;
+}
 
 const DOCS = require('./documents'); // [title,category,language,status,content,notes]
 
@@ -175,7 +225,7 @@ app.get('/', (req, res) => {
   const toast = req.query.sub === 'ok' ? `<div class="toast">${tr.toast}</div>` : '';
   const heart = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>';
   const body = `${toast}
-<section class="hero"><div class="hero-inner"><h1>${tr.hero.h1[0]}<br>${tr.hero.h1[1]}<br><strong>${tr.hero.h1[2]}</strong></h1><p>${tr.hero.p}</p><div class="bullets">${tr.hero.bullets.map(x => `<div><b>✓</b>${x}</div>`).join('')}</div><div class="hero-cta"><a class="btn navy" href="/institutions">${tr.hero.btnInst}</a><a class="btn gold" href="/candidates-info">${tr.hero.btnProf}</a><a class="btn light" href="/contact">${tr.hero.btnMeet}</a></div></div><div class="hero-badge">${heart}<span>${tr.hero.badge}</span></div></section>
+<section class="hero"><div class="hero-inner"><h1>${tr.hero.h1[0]}<br>${tr.hero.h1[1]}<br><strong>${tr.hero.h1[2]}</strong></h1><p>${tr.hero.p}</p><div class="bullets">${tr.hero.bullets.map(x => `<div><b>✓</b>${x}</div>`).join('')}</div><div class="hero-cta"><a class="btn navy" href="/institutions">${tr.hero.btnInst}</a><a class="btn gold" href="/candidates-info">${tr.hero.btnProf}</a><a class="btn light" href="/plan">${tr.hero.btnMeet}</a></div></div><div class="hero-badge">${heart}<span>${tr.hero.badge}</span></div></section>
 <section class="specs">${tr.specs.map((label, i) => `<div class="spec"><span class="spec-ic">${icon(SPEC_ICONS[i])}</span><span>${label}</span></div>`).join('')}</section>
 <section class="cards-wrap"><div class="cards">${tr.cards.map((c, i) => `<article class="card"><div class="card-img ${CARD_META[i][0]}" role="img" aria-label="${esc(c.h)}"></div><div class="card-body"><span class="tag">${c.tag}</span><h3>${c.h}</h3><ul>${c.items.map(li => `<li>${li}</li>`).join('')}</ul><a class="btn ${CARD_META[i][2]} full" href="${CARD_META[i][1]}">${c.btn}</a></div></article>`).join('')}</div></section>
 <section class="why"><div class="why-card"><span class="eyebrow">${icon('<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>')} ${tr.why.eyebrow}</span><h2>${tr.why.h2[0]}<br>${tr.why.h2[1]}</h2><p>${tr.why.p}</p><a class="btn gold" href="/poland">${tr.why.btn}</a></div><div class="why-stats">${tr.why.stats.map((s, i) => `<div class="stat"><span class="stat-ic">${icon(STAT_ICONS[i])}</span><b>${s[0]}</b><span class="stat-label">${s[1]}</span></div>`).join('')}</div></section>
@@ -213,15 +263,44 @@ app.get('/contact', (req, res) => {
   res.send(layout(tr.nav.contact, body, 'contact', lang, req.path));
 });
 
+// ---------- Plan een gesprek (publiek) ----------
+app.get('/plan', (req, res) => {
+  const b = book(req), a = acc(req);
+  const done = req.query.ok ? `<div class="ok">${esc(b.thanks)}</div>` : '';
+  const today = new Date().toISOString().slice(0, 10);
+  const inner = `<section class="page"><main class="authwrap">
+<h1>${esc(b.title)}</h1><p class="authsub">${esc(b.sub)}</p>${done}
+<form class="authform" method="post" action="/plan">
+<label>${esc(b.name)}<input name="name" autocomplete="name" required></label>
+<label>${esc(b.email)}<input type="email" name="email" autocomplete="email" required></label>
+<label>${esc(b.date)}<input type="date" name="date" min="${today}" required></label>
+<label>${esc(b.time)}<select name="time">${TIMES.map(x => `<option>${x}</option>`).join('')}</select></label>
+<label>${esc(b.channel)}<select name="channel"><option value="Videogesprek">${esc(b.video)}</option><option value="Telefoon">${esc(b.phone)}</option><option value="Op locatie">${esc(b.onsite)}</option></select></label>
+<label>${esc(b.topic)}<input name="topic"></label>
+<button class="btn gold full">${esc(b.send)}</button>
+</form>
+<p class="authnote">🔒 ${esc(a.secNote)}</p>
+</main></section>${footer(req.lang)}`;
+  res.send(layout(b.title, inner, 'home', req.lang, req.path));
+});
+app.post('/plan', async (req, res) => {
+  const name = String(req.body.name || '').trim(), email = String(req.body.email || '').toLowerCase().trim();
+  const date = String(req.body.date || ''), time = String(req.body.time || '');
+  if (name && email && date) { try { await Appointment.create({ name, email, date, time, topic: String(req.body.topic || ''), channel: String(req.body.channel || 'Videogesprek'), status: 'Aangevraagd' }); } catch (e) {} }
+  res.redirect('/plan?ok=1');
+});
+
 // ---------- Auth (portaal blijft Nederlands) ----------
 app.get('/login', (req, res) => {
   const error = req.query.error ? `<div class="error">${esc(req.query.error)}</div>` : '';
-  res.send(layout('Login', `<section class="page"><main class="login"><h1>Beveiligde login</h1><p>Toegang tot documenten en portaal.</p>${error}<form method="post" action="/login"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="E-mail" required><label for="password">Wachtwoord</label><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Wachtwoord" required><button class="btn gold full">Inloggen</button></form></main></section>`, 'home', req.lang, req.path));
+  res.send(layout('Beheer', `<section class="page"><main class="login"><h1>Beheerderslogin</h1><p>Alleen voor beheerders. Gebruikers gaan naar het <a href="/portal">portaal</a>.</p>${error}<form method="post" action="/login"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="E-mail" required><label for="password">Wachtwoord</label><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Wachtwoord" required><button class="btn gold full">Inloggen</button></form></main></section>`, 'home', req.lang, req.path));
 });
 app.post('/login', async (req, res) => {
+  const key = throttleKey(req, 'admin');
+  if (isLocked(key)) return res.redirect('/login?error=Te veel pogingen. Probeer het over 15 minuten opnieuw.');
   const user = await User.findOne({ email: String(req.body.email || '').toLowerCase().trim() });
-  if (!user) return res.redirect('/login?error=Gebruiker niet gevonden');
-  if (!await bcrypt.compare(String(req.body.password || ''), user.passwordHash)) return res.redirect('/login?error=Wachtwoord onjuist');
+  if (!user || !await bcrypt.compare(String(req.body.password || ''), user.passwordHash || '')) { recordFail(key); return res.redirect('/login?error=E-mail of wachtwoord onjuist'); }
+  clearFails(key);
   req.session.userId = user._id.toString();
   req.session.email = user.email;
   req.session.totpPassed = false;
@@ -254,7 +333,7 @@ app.post('/verify-2fa', requireLogin, async (req, res) => {
 app.post('/logout', (req, res) => req.session.destroy(() => res.redirect('/')));
 
 // ---------- Portaal ----------
-const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/candidates', 'Kandidaten'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
+const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
 function portalNav(active) { return `<nav class="pnav" aria-label="Portaal">${PORTAL_LINKS.map(([h, l]) => `<a href="${h}" class="${active === h ? 'on' : ''}">${l}</a>`).join('')}</nav>`; }
 function portalShell(req, res, title, inner, active) {
   const head = `<div class="page-head"><div><h1>${esc(title)}</h1></div><form method="post" action="/logout"><button class="btn navy small">Uitloggen</button></form></div>`;
@@ -274,7 +353,8 @@ app.get('/dashboard', requireAuth, async (req, res) => {
   const [docs, cand, inst, plac, hous, subs] = await Promise.all([
     Document.countDocuments(), Candidate.countDocuments(), Institution.countDocuments(),
     Placement.countDocuments(), Housing.countDocuments(), Subsidy.countDocuments()]);
-  const tiles = [['/candidates', 'Kandidaten', cand], ['/institutions-list', 'Instellingen', inst], ['/placements', 'Plaatsingen', plac], ['/housing-list', 'Woningen', hous], ['/documents', 'Documenten', docs], ['/subsidies', 'Subsidies', subs]];
+  const appt = await Appointment.countDocuments();
+  const tiles = [['/agenda', 'Agenda', appt], ['/candidates', 'Kandidaten', cand], ['/institutions-list', 'Instellingen', inst], ['/placements', 'Plaatsingen', plac], ['/housing-list', 'Woningen', hous], ['/documents', 'Documenten', docs], ['/subsidies', 'Subsidies', subs]];
   const cands = await Candidate.find().lean();
   const stages = ['Nieuw', 'Screening', 'Taalopleiding', 'Erkenning', 'Visum', 'Geplaatst'];
   const pc = {}; stages.forEach(s => pc[s] = 0); cands.forEach(c => { if (pc[c.status] != null) pc[c.status]++; });
@@ -284,7 +364,139 @@ app.get('/dashboard', requireAuth, async (req, res) => {
 <h2>Sneltoegang</h2><div class="quick"><a class="btn gold" href="/assistant">AI-assistent</a> <a class="btn navy" href="/backup">Back-up &amp; herstel</a> <a class="btn light" href="/housing-list">Woningen (Warschau)</a></div>`;
   portalShell(req, res, 'Dashboard', inner, '/dashboard');
 });
-app.get('/portal', (req, res) => res.redirect('/dashboard'));
+// ---------- Gebruikersomgeving (/portal) ----------
+function portalAuthPage(req, res, opts = {}) {
+  const a = acc(req);
+  const err = opts.error ? `<div class="error">${esc(opts.error)}</div>` : '';
+  const info = opts.info ? `<div class="ok">${esc(opts.info)}</div>` : '';
+  const chips = LANGS.map(l => `<a href="/setlang/${l}?r=%2Fportal" class="lchip ${l === req.lang ? 'on' : ''}">${LANGMETA[l].flag} ${LANGMETA[l].name}</a>`).join('');
+  const langOpts = LANGS.map(l => `<option value="${l}" ${l === req.lang ? 'selected' : ''}>${LANGMETA[l].name}</option>`).join('');
+  const reg = opts.tab === 'register';
+  const inner = `<section class="page"><main class="authwrap">
+<h1>${esc(a.title)}</h1><p class="authsub">${esc(a.sub)}</p>
+<div class="langpick">${chips}</div>${err}${info}
+<div class="authtabs">
+<input type="radio" name="atab" id="tab-login" ${reg ? '' : 'checked'}><label for="tab-login">${esc(a.login)}</label>
+<input type="radio" name="atab" id="tab-register" ${reg ? 'checked' : ''}><label for="tab-register">${esc(a.register)}</label>
+<div class="tabpane pane-login"><form method="post" action="/portal/login" class="authform">
+<label>${esc(a.email)}<input type="email" name="email" autocomplete="email" required></label>
+<label>${esc(a.password)}<input type="password" name="password" autocomplete="current-password" required></label>
+<button class="btn gold full">${esc(a.btnLogin)}</button></form></div>
+<div class="tabpane pane-register"><form method="post" action="/portal/register" class="authform">
+<label>${esc(a.name)}<input name="name" autocomplete="name" required></label>
+<label>${esc(a.email)}<input type="email" name="email" autocomplete="email" required></label>
+<label>${esc(a.password)}<input type="password" name="password" autocomplete="new-password" minlength="8" required></label>
+<label>${esc(a.type)}<select name="role"><option value="prof">${esc(a.prof)}</option><option value="inst">${esc(a.inst)}</option></select></label>
+<label>${esc(a.lang)}<select name="language">${langOpts}</select></label>
+<button class="btn gold full">${esc(a.btnRegister)}</button></form></div>
+</div>
+<p class="authnote">🔒 ${esc(a.secNote)}</p>
+</main></section>`;
+  res.send(layout(a.title, inner, 'home', req.lang, req.path));
+}
+app.get('/portal', (req, res) => {
+  if (req.session?.portalUserId && !req.session?.userPending2FA) return res.redirect('/portal/account');
+  if (req.session?.portalUserId && req.session?.userPending2FA) return res.redirect('/portal/2fa');
+  portalAuthPage(req, res, { tab: req.query.tab === 'register' ? 'register' : 'login' });
+});
+app.post('/portal/register', async (req, res) => {
+  const a = acc(req);
+  const name = String(req.body.name || '').trim();
+  const email = String(req.body.email || '').toLowerCase().trim();
+  const pw = String(req.body.password || '');
+  const role = req.body.role === 'inst' ? 'Zorginstelling' : 'Zorgprofessional';
+  const language = LANGS.includes(req.body.language) ? req.body.language : req.lang;
+  if (!name || !email) return portalAuthPage(req, res, { tab: 'register', error: a.badCred });
+  if (pw.length < 8) return portalAuthPage(req, res, { tab: 'register', error: a.weak });
+  if (await PortalUser.findOne({ email })) return portalAuthPage(req, res, { tab: 'register', error: a.exists });
+  let u; try { u = await PortalUser.create({ name, email, passwordHash: await bcrypt.hash(pw, 12), role, language }); } catch (e) { return portalAuthPage(req, res, { tab: 'register', error: a.exists }); }
+  req.session.portalUserId = u._id.toString(); req.session.portalEmail = email; req.session.userPending2FA = false; req.session.user2FAEnabled = false;
+  setLangCookie(res, language);
+  res.redirect('/portal/security/2fa-setup');
+});
+app.post('/portal/login', async (req, res) => {
+  const a = acc(req);
+  const key = throttleKey(req, 'user');
+  if (isLocked(key)) return portalAuthPage(req, res, { tab: 'login', error: a.locked });
+  const email = String(req.body.email || '').toLowerCase().trim();
+  const u = await PortalUser.findOne({ email });
+  if (!u || !await bcrypt.compare(String(req.body.password || ''), u.passwordHash || '')) { recordFail(key); return portalAuthPage(req, res, { tab: 'login', error: a.badCred }); }
+  clearFails(key);
+  req.session.portalUserId = u._id.toString(); req.session.portalEmail = email;
+  if (u.twoFAEnabled && u.twoFASecret) { req.session.userPending2FA = true; return res.redirect('/portal/2fa'); }
+  req.session.userPending2FA = false; req.session.user2FAEnabled = false;
+  await PortalUser.findByIdAndUpdate(u._id, { lastLogin: new Date() });
+  if (u.language) setLangCookie(res, u.language);
+  res.redirect('/portal/account');
+});
+app.get('/portal/2fa', (req, res) => {
+  if (!req.session?.portalUserId || !req.session?.userPending2FA) return res.redirect('/portal');
+  const a = acc(req);
+  res.send(layout(a.twoFAtitle, `<section class="page"><main class="login"><h1>${esc(a.twoFAtitle)}</h1><form method="post" action="/portal/2fa"><label for="token">${esc(a.code)}</label><input id="token" name="token" inputmode="numeric" autocomplete="one-time-code" placeholder="000000" required><button class="btn gold full">${esc(a.verify)}</button></form></main></section>`, 'home', req.lang, req.path));
+});
+app.post('/portal/2fa', async (req, res) => {
+  if (!req.session?.portalUserId || !req.session?.userPending2FA) return res.redirect('/portal');
+  const u = await PortalUser.findById(req.session.portalUserId);
+  const token = String(req.body.token || '').replace(/\s/g, '');
+  if (!u || !u.twoFASecret || !speakeasy.totp.verify({ secret: u.twoFASecret, encoding: 'base32', token, window: 1 })) return res.redirect('/portal/2fa');
+  req.session.userPending2FA = false; req.session.user2FAEnabled = true;
+  await PortalUser.findByIdAndUpdate(u._id, { lastLogin: new Date() });
+  if (u.language) setLangCookie(res, u.language);
+  res.redirect('/portal/account');
+});
+app.get('/portal/account', requireUser, async (req, res) => {
+  const a = acc(req), b = book(req);
+  const u = await PortalUser.findById(req.session.portalUserId).lean();
+  if (!u) return res.redirect('/portal');
+  const langOpts = LANGS.map(l => `<option value="${l}" ${l === u.language ? 'selected' : ''}>${LANGMETA[l].name}</option>`).join('');
+  const roleOpts = `<option value="prof" ${u.role !== 'Zorginstelling' ? 'selected' : ''}>${esc(a.prof)}</option><option value="inst" ${u.role === 'Zorginstelling' ? 'selected' : ''}>${esc(a.inst)}</option>`;
+  const today = new Date().toISOString().slice(0, 10);
+  const mine = (await Appointment.find().lean()).filter(x => String(x.portalUserId) === String(u._id)).sort((x, y) => ((x.date || '') + (x.time || '')).localeCompare((y.date || '') + (y.time || '')));
+  const myList = mine.length ? `<div class="tablewrap" style="margin-top:14px"><table class="rtable"><thead><tr><th>${esc(b.date)}</th><th>${esc(b.time)}</th><th>${esc(b.topic)}</th><th>Status</th></tr></thead><tbody>${mine.map(m => `<tr><td>${esc(m.date || '')}</td><td>${esc(m.time || '')}</td><td>${esc(m.topic || '')}</td><td>${badge(m.status)}</td></tr>`).join('')}</tbody></table></div>` : '';
+  const inner = `<section class="page portal"><div class="page-head"><div><h1>${esc(a.account)}</h1><p>${esc(a.hello)}, ${esc(u.name)} · ${esc(u.role)}</p></div><form method="post" action="/portal/logout"><button class="btn navy small">${esc(a.logout)}</button></form></div>
+<div class="rcard"><h2>${esc(a.profile)}</h2><form class="rform" method="post" action="/portal/account"><div class="ff"><label>${esc(a.name)}</label><input name="name" value="${esc(u.name)}"></div><div class="ff"><label>${esc(a.type)}</label><select name="role">${roleOpts}</select></div><div class="ff"><label>${esc(a.lang)}</label><select name="language">${langOpts}</select></div><div class="rform-actions"><button class="btn gold">${esc(a.save)}</button></div></form></div>
+<div class="rcard"><h2>${esc(b.title)}</h2><form class="rform" method="post" action="/portal/appointment"><div class="ff"><label>${esc(b.date)}</label><input type="date" name="date" min="${today}" required></div><div class="ff"><label>${esc(b.time)}</label><select name="time">${TIMES.map(x => `<option>${x}</option>`).join('')}</select></div><div class="ff"><label>${esc(b.channel)}</label><select name="channel"><option value="Videogesprek">${esc(b.video)}</option><option value="Telefoon">${esc(b.phone)}</option><option value="Op locatie">${esc(b.onsite)}</option></select></div><div class="ff"><label>${esc(b.topic)}</label><input name="topic"></div><div class="rform-actions"><button class="btn gold">${esc(b.send)}</button></div></form>${myList}</div>
+<div class="rcard"><h2>${esc(a.security)}</h2><p class="ok">✓ ${esc(a.twofaOn)}</p><p class="hint">🔒 ${esc(a.secNote)}</p></div>
+</section>`;
+  res.send(layout(a.account, inner, 'home', req.lang, req.path));
+});
+app.post('/portal/appointment', requireUser, async (req, res) => {
+  const u = await PortalUser.findById(req.session.portalUserId).lean();
+  const date = String(req.body.date || ''), time = String(req.body.time || '');
+  if (u && date) { try { await Appointment.create({ name: u.name, email: u.email, portalUserId: String(u._id), date, time, topic: String(req.body.topic || ''), channel: String(req.body.channel || 'Videogesprek'), status: 'Aangevraagd' }); } catch (e) {} }
+  res.redirect('/portal/account');
+});
+app.post('/portal/account', requireUser, async (req, res) => {
+  const role = req.body.role === 'inst' ? 'Zorginstelling' : 'Zorgprofessional';
+  const language = LANGS.includes(req.body.language) ? req.body.language : null;
+  const upd = { name: String(req.body.name || '').trim(), role };
+  if (language) upd.language = language;
+  await PortalUser.findByIdAndUpdate(req.session.portalUserId, upd);
+  if (language) setLangCookie(res, language);
+  res.redirect('/portal/account');
+});
+app.get('/portal/security/2fa-setup', requireUser, async (req, res) => {
+  const a = acc(req);
+  const u = await PortalUser.findById(req.session.portalUserId);
+  const secret = speakeasy.generateSecret({ name: `Honor Care Portal (${u.email})` });
+  req.session.userPending2FASecret = secret.base32;
+  const qr = await QRCode.toDataURL(secret.otpauth_url);
+  res.send(layout(a.twoFAtitle, `<section class="page"><main class="login"><h1>${esc(a.twoFAtitle)}</h1><p>${esc(a.scan)}</p><img style="max-width:240px" src="${qr}" alt="QR"><p class="mono">${esc(secret.base32)}</p><form method="post" action="/portal/security/2fa-setup"><label for="token">${esc(a.code)}</label><input id="token" name="token" inputmode="numeric" autocomplete="one-time-code" placeholder="000000" required><button class="btn gold full">${esc(a.verify)}</button></form></main></section>`, 'home', req.lang, req.path));
+});
+app.post('/portal/security/2fa-setup', requireUser, async (req, res) => {
+  const secret = req.session.userPending2FASecret;
+  const token = String(req.body.token || '').replace(/\s/g, '');
+  if (secret && speakeasy.totp.verify({ secret, encoding: 'base32', token, window: 1 })) {
+    await PortalUser.findByIdAndUpdate(req.session.portalUserId, { twoFASecret: secret, twoFAEnabled: true });
+    req.session.userPending2FASecret = null; req.session.user2FAEnabled = true;
+  }
+  res.redirect('/portal/account');
+});
+app.post('/portal/security/2fa-disable', requireUser, async (req, res) => {
+  await PortalUser.findByIdAndUpdate(req.session.portalUserId, { twoFASecret: null, twoFAEnabled: false });
+  res.redirect('/portal/account');
+});
+app.post('/portal/logout', (req, res) => { req.session.portalUserId = null; req.session.userPending2FA = null; req.session.portalEmail = null; req.session.userPending2FASecret = null; res.redirect('/portal'); });
 
 app.get('/documents', requireAuth, async (req, res) => {
   const docs = await Document.find().sort({ createdAt: -1 }).lean();
@@ -379,6 +591,22 @@ resource({ path: '/housing-list', Model: Housing, title: 'Woningen', titleField:
 resource({ path: '/subsidies', Model: Subsidy, title: 'Subsidies', titleField: 'title', statusField: 'status', columns: ['program', 'deadline'],
   fields: [{ name: 'title', label: 'Titel' }, { name: 'program', label: 'Programma', type: 'select', options: ['AMIF', 'FERS', 'ESF+', 'Anders'] }, { name: 'deadline', label: 'Deadline' }, { name: 'status', label: 'Status', type: 'select', options: ['Concept', 'In voorbereiding', 'Ingediend', 'Toegekend', 'Afgewezen'] }, { name: 'notes', label: 'Notities', type: 'textarea' }] });
 
+// ---- Agenda (afspraken) ----
+app.get('/agenda', requireAuth, async (req, res) => {
+  const ym = /^\d{4}-\d{2}$/.test(req.query.m || '') ? req.query.m : new Date().toISOString().slice(0, 7);
+  const appts = await Appointment.find().lean();
+  const cal = monthCalendar(ym, appts);
+  const upcoming = appts.filter(a => a.date).sort((a, b) => ((a.date || '') + (a.time || '')).localeCompare((b.date || '') + (b.time || ''))).slice(0, 40);
+  const rows = upcoming.map(a => `<tr><td>${esc(a.date || '')} ${esc(a.time || '')}</td><td class="tname"><a href="/appointments/${a._id}">${esc(a.name || '')}</a></td><td>${esc(a.topic || '')}</td><td>${esc(a.channel || '')}</td><td>${badge(a.status)}</td></tr>`).join('');
+  const inner = `<p class="otodom"><a class="btn navy small" href="/appointments">Alle afspraken (tabel) →</a></p>${cal}
+<h2>Komende afspraken</h2><div class="tablewrap"><table class="rtable"><thead><tr><th>Wanneer</th><th>Naam</th><th>Onderwerp</th><th>Kanaal</th><th>Status</th></tr></thead><tbody>${rows || '<tr><td colspan="5" class="empty">Nog geen afspraken.</td></tr>'}</tbody></table></div>`;
+  portalShell(req, res, 'Agenda', inner, '/agenda');
+});
+resource({
+  path: '/appointments', Model: Appointment, title: 'Afspraken', titleField: 'name', statusField: 'status', columns: ['date', 'time', 'topic', 'channel'],
+  fields: [{ name: 'name', label: 'Naam' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'date', label: 'Datum', type: 'date' }, { name: 'time', label: 'Tijd', type: 'select', options: TIMES }, { name: 'topic', label: 'Onderwerp' }, { name: 'channel', label: 'Kanaal', type: 'select', options: ['Videogesprek', 'Telefoon', 'Op locatie'] }, { name: 'status', label: 'Status', type: 'select', options: ['Aangevraagd', 'Bevestigd', 'Afgerond', 'Geannuleerd'] }, { name: 'notes', label: 'Notities', type: 'textarea' }]
+});
+
 // ---- AI-assistent ----
 async function aiChat(messages) {
   const key = process.env.ANTHROPIC_API_KEY;
@@ -409,7 +637,7 @@ app.post('/assistant/chat', requireAuth, async (req, res) => {
 });
 
 // ---- Back-up & herstel (databescherming) ----
-const COLLECTIONS = { documents: Document, candidates: Candidate, institutions: Institution, placements: Placement, housing: Housing, subsidies: Subsidy, newsletter: Newsletter };
+const COLLECTIONS = { documents: Document, candidates: Candidate, institutions: Institution, placements: Placement, housing: Housing, subsidies: Subsidy, appointments: Appointment, newsletter: Newsletter, portalusers: PortalUser };
 app.get('/backup', requireAuth, (req, res) => {
   const inner = `<p>Bescherm je gegevens: download regelmatig een back-up. Zo ben je nooit data kwijt, ook niet bij een herinstallatie of migratie.</p>
 <p><a class="btn gold" href="/backup/download">Download volledige back-up (JSON)</a></p>
@@ -447,5 +675,5 @@ app.use((req, res) => { const tr = T[req.lang]; res.status(404).send(layout('404
 mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
-  app.listen(PORT, () => console.log('HonorCare Working Docs v25 draait op poort ' + PORT));
+  app.listen(PORT, () => console.log('HonorCare Working Docs v28 draait op poort ' + PORT));
 }).catch(e => { console.error(e); process.exit(1); });
