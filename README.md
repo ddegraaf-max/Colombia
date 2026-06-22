@@ -1,30 +1,33 @@
-# HonorCare Working Docs v18
+# HonorCare Working Docs v20
 
 Node.js/Express + MongoDB, deploybaar op Railway (NIXPACKS, `npm start`).
 
-## Nieuw in v18 — volledige redesign van de voorkant
-- **Nieuw logo + favicon** (twee-kleurig hart met volwassene + kind), als SVG.
-- **Lettertypes**: Playfair Display (koppen) + Poppins (tekst) via Google Fonts.
-- **Hero** met full-width foto + lichte overlay, opsommingen en goud "Z miłości do ludzi"-badge.
-- **Specjalizacje medyczne**: balk met 10 specialisaties en goud-lijn iconen.
-- **4 kaarten** (Profesjonaliści / Instytucje / Akademia / Mieszkania) met foto, lijst en knop.
-- **"Dlaczego Polska?"** sectie met 4 statistieken (1000+, 200+, 10+, 2).
-- **Partners** (NFZ, PZWL, NIPiP, PARPA, OZZL, Medicover) als nette tekstbadges.
-- **Uitgebreide footer**: 5 kolommen, social, contact NL + Kolumbia, en een **werkende nieuwsbrief** (slaat e-mails op in de `Newsletter`-collectie).
+## Nieuw in v20 — mooie, vrij te gebruiken foto's door de hele site
+Alle beelden komen van **Unsplash** (Unsplash-licentie: gratis voor commercieel
+gebruik, geen naamsvermelding vereist).
+- **Hero**: echte foto van een medisch team (i.p.v. de generieke close-up).
+- **"Dlaczego Polska?"**: skyline van Warschau bij avond.
+- **Elke subpagina** (O nas, Dla instytucji, Dla profesjonalistów, Akademia,
+  Mieszkania, Polska, Kontakt) heeft nu een eigen **fotobanner** met passend beeld
+  en de paginatitel eroverheen — zo is de hele site beeldrijk en samenhangend.
+- De vier homepage-kaarten houden hun passende foto's (arts, instelling, opleiding, woning).
 
-## Behouden uit v17
-Security headers (CSP incl. Google Fonts), toegankelijkheid (alt, labels, skip-link, focus),
-mobiel hamburgermenu, juiste `lang` per pagina, `/healthz`, 404-pagina, 2FA-fix,
-mass-assignment-fix, en `/test-documents` dat standaard UIT staat in productie.
+### Foto's wisselen
+Alle foto-URL's staan in `public/css/style.css`:
+- Hero: `.hero { background: url('...') }`
+- Skyline: `.why-card { background: url('...') }`
+- Subpagina-banners: de klassen `.ph-about`, `.ph-institutions`, `.ph-candidates`,
+  `.ph-academy`, `.ph-housing`, `.ph-poland`, `.ph-contact`
+- Kaarten: `.img1` t/m `.img4`
+Vervang de Unsplash-URL door een andere `https://images.unsplash.com/...`-URL
+(of je eigen foto in `public/images/`) om een beeld te wisselen.
 
-## Eigen assets / foto's vervangen
-- **Logo/favicon**: heb je de officiële bestanden? Zet ze als `public/images/logo.svg` en
-  `public/images/favicon.svg` (of pas de `<img src>` in de header aan); de rest werkt direct.
-- **Hero-foto**: nu een betrouwbare medische foto. Voor de teamfoto uit de mockup:
-  pas de URL aan bij `.hero{background:url('...')}` in `public/css/style.css`.
-- **Partnerlogo's**: nu tekstbadges (de echte org-logo's zijn auteursrechtelijk beschermd);
-  vervang door officiële logo's als je daar licentie/toestemming voor hebt.
+## Behouden
+Meertaligheid PL/EN/NL/ES met taalkiezer (`i18n.js`), nieuw logo + favicon (SVG),
+Playfair Display + Poppins, specialisatiebalk, statistieksectie, partners,
+uitgebreide footer met werkende nieuwsbrief, security headers (CSP staat
+`images.unsplash.com` + Google Fonts toe), toegankelijkheid, mobiel menu,
+`/healthz`, 404, 2FA-fix. Admin-portaal blijft Nederlands.
 
-## Let op
-- Telefoonnummers zijn placeholders — vervang door echte nummers.
-- Stel `SESSION_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` in via Railway Variables.
+## Variabelen (Railway)
+`MONGODB_URI`, `SESSION_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `NODE_ENV=production`.
