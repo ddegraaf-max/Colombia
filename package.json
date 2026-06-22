@@ -1,11 +1,9 @@
 {
-  "name": "honor-care-correct-screenshot-style",
-  "version": "9.0.0",
-  "description": "Honor Care International Poland website matching screenshot style with secure portal documents",
+  "name": "honorcare-v10-docs-open",
+  "version": "10.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

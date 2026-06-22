@@ -1,1 +1,1 @@
-console.log('Honor Care Correct Screenshot Style v9 loaded');
+console.log('HonorCare v10 OK');
