@@ -1,6 +1,6 @@
 {
-  "name": "honorcare-working-docs-v16",
-  "version": "16.0.0",
+  "name": "honorcare-working-docs-v17",
+  "version": "17.0.0",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -11,6 +11,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
+    "mongodb-memory-server": "^11.2.0",
     "mongoose": "^8.9.5",
     "qrcode": "^1.5.4",
     "speakeasy": "^2.0.0"
