@@ -288,5 +288,5 @@ app.use((req, res) => { const tr = T[req.lang]; res.status(404).send(layout('404
 mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
-  app.listen(PORT, () => console.log('HonorCare Working Docs v23 draait op poort ' + PORT));
+  app.listen(PORT, () => console.log('HonorCare Working Docs v24 draait op poort ' + PORT));
 }).catch(e => { console.error(e); process.exit(1); });

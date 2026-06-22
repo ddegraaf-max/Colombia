@@ -4,10 +4,10 @@
  <clipPath id="rc"><rect x="110" y="0" width="110" height="200"/></clipPath>
  <path d="M110 182 C 60 140, 22 104, 22 64 C 22 36, 44 18, 70 18 C 90 18, 104 32, 110 50 C 116 32, 130 18, 150 18 C 176 18, 198 36, 198 64 C 198 104, 160 140, 110 182 Z" fill="none" stroke="#002b55" stroke-width="26" stroke-linejoin="round" clip-path="url(#lc)"/>
  <path d="M110 182 C 60 140, 22 104, 22 64 C 22 36, 44 18, 70 18 C 90 18, 104 32, 110 50 C 116 32, 130 18, 150 18 C 176 18, 198 36, 198 64 C 198 104, 160 140, 110 182 Z" fill="none" stroke="#c8962f" stroke-width="26" stroke-linejoin="round" clip-path="url(#rc)"/>
- <circle cx="97" cy="68" r="15" fill="#002b55"/>
- <path d="M75 132 C75 100 82 88 97 88 C112 88 119 100 119 132 Q97 142 75 132 Z" fill="#002b55"/>
- <circle cx="127" cy="82" r="11" fill="#c8962f"/>
- <path d="M111 132 C111 106 117 98 127 98 C137 98 143 106 143 132 Q127 140 111 132 Z" fill="#c8962f"/>
+ <circle cx="97" cy="68" r="15" fill="#c8962f"/>
+ <path d="M75 132 C75 100 82 88 97 88 C112 88 119 100 119 132 Q97 142 75 132 Z" fill="#c8962f"/>
+ <circle cx="127" cy="82" r="11" fill="#002b55"/>
+ <path d="M111 132 C111 106 117 98 127 98 C137 98 143 106 143 132 Q127 140 111 132 Z" fill="#002b55"/>
 </g>
 <text x="262" y="96" font-family="Playfair Display, Georgia, serif" font-size="62" font-weight="700" fill="#002b55" letter-spacing="3">HONOR CARE</text>
 <text x="264" y="146" font-family="Playfair Display, Georgia, serif" font-size="30" fill="#c8962f" letter-spacing="16">INTERNATIONAL</text>

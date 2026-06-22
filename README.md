@@ -1,23 +1,24 @@
-# HonorCare Working Docs v23
+# HonorCare Working Docs v24
 
 Node.js/Express + MongoDB, deploybaar op Railway (NIXPACKS, `npm start`).
 
-## Nieuw in v23 — eerlijke presentatie van een nieuw concept
-- **Geen verzonnen cijfers meer.** De statistieken "1000+ / 200+ / 10+" zijn vervangen
-  door eerlijke waardepunten over de aanpak (volledige begeleiding, ethische werving,
-  één partner voor instellingen, twee landen één doel) — in alle vier de talen.
-- **Partnersectie verwijderd.** Er worden geen partners meer getoond, omdat er nog
-  geen partners zijn (logisch bij een nieuw concept). Bekende namen tonen zou onterecht zijn.
-- **Eén consistent e-mailadres** overal op de publieke site: `info@honorcareinternational.com`
-  (top bar, footer, contactpagina — beide kantoren). Het afwijkende Colombia-adres is verwijderd.
+## Nieuw in v24
+- **Logo & favicon:** de kleuren van de twee figuren in het hart zijn omgewisseld —
+  de volwassene is nu goud (op de blauwe harthelft) en het kind navy (op de gouden helft),
+  zodat ze contrasteren en beter opvallen.
+- **Hero-foto:** vervangen door een vrij te gebruiken foto van een divers medisch team
+  dat naar de camera kijkt (National Cancer Institute, Unsplash). De lichtoverlay is
+  iets verlaagd zodat de foto niet meer verbleekt.
 
-> Het admin-login-adres (standaard `admin@honorcarepoland.eu`) staat los van het publieke
-> contactadres en stel je in via de Railway-variabele `ADMIN_EMAIL`.
+> De mooiste naar-voren-kijkende teamportretten op Unsplash bleken Unsplash+ (betaald);
+> binnen de gratis foto's is dit de beste teamfoto. Heb je een eigen (Colombiaanse) teamfoto?
+> Zet 'm in `public/images/` en pas `.hero{background:url('...')}` in `public/css/style.css`
+> aan — of stuur 'm, dan zet ik 'm erin.
 
 ## Behouden
-Volledige plandocumenten in het portaal (`documents.js`), mooie foto's door de hele site,
-meertaligheid PL/EN/NL/ES (`i18n.js`), logo + favicon, Playfair/Poppins, werkende
-nieuwsbrief, security headers, toegankelijkheid, mobiel menu, 2FA, `/healthz`, 404.
+Eerlijke waardepunten (geen nepcijfers), geen partnersectie, één e-mailadres
+`info@honorcareinternational.com`, volledige plandocumenten in het portaal, foto's op
+elke subpagina, meertaligheid PL/EN/NL/ES, Playfair/Poppins, nieuwsbrief, 2FA, security headers.
 
 ## Variabelen (Railway)
 `MONGODB_URI`, `SESSION_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `NODE_ENV=production`.

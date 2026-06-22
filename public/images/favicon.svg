@@ -5,9 +5,9 @@
  <clipPath id="rc2"><rect x="110" y="0" width="110" height="200"/></clipPath>
  <path d="M110 182 C 60 140, 22 104, 22 64 C 22 36, 44 18, 70 18 C 90 18, 104 32, 110 50 C 116 32, 130 18, 150 18 C 176 18, 198 36, 198 64 C 198 104, 160 140, 110 182 Z" fill="none" stroke="#002b55" stroke-width="28" stroke-linejoin="round" clip-path="url(#lc2)"/>
  <path d="M110 182 C 60 140, 22 104, 22 64 C 22 36, 44 18, 70 18 C 90 18, 104 32, 110 50 C 116 32, 130 18, 150 18 C 176 18, 198 36, 198 64 C 198 104, 160 140, 110 182 Z" fill="none" stroke="#c8962f" stroke-width="28" stroke-linejoin="round" clip-path="url(#rc2)"/>
- <circle cx="97" cy="68" r="16" fill="#002b55"/>
- <path d="M73 134 C73 100 81 88 97 88 C113 88 121 100 121 134 Q97 144 73 134 Z" fill="#002b55"/>
- <circle cx="128" cy="82" r="12" fill="#c8962f"/>
- <path d="M111 134 C111 106 118 98 128 98 C138 98 145 106 145 134 Q128 142 111 134 Z" fill="#c8962f"/>
+ <circle cx="97" cy="68" r="16" fill="#c8962f"/>
+ <path d="M73 134 C73 100 81 88 97 88 C113 88 121 100 121 134 Q97 144 73 134 Z" fill="#c8962f"/>
+ <circle cx="128" cy="82" r="12" fill="#002b55"/>
+ <path d="M111 134 C111 106 118 98 128 98 C138 98 145 106 145 134 Q128 142 111 134 Z" fill="#002b55"/>
 </g>
 </svg>
