@@ -1,34 +1,25 @@
-# HonorCare Working Docs v28
+# HonorCare Working Docs v29
 
 Node.js/Express + MongoDB, deploybaar op Railway (NIXPACKS, `npm start`, poort 8080).
 
-## Nieuw in v28
+## Nieuw in v29 — volledig mobiel geoptimaliseerd
+Alle onderdelen (ook de nieuwe) zijn nagelopen voor telefoon/tablet:
+- **Topbalk**: locatie klapt weg op smal scherm, e-mail breekt netjes af, alles gecentreerd.
+- **Hero**: knoppen worden vol breed en goed aantikbaar; foto met leesbare overlay.
+- **Dashboardtegels**: 4 → 3 → 2 → 1 kolom naar schermbreedte.
+- **Portalnavigatie**: één horizontaal scrollbare balk i.p.v. een hoge wikkel.
+- **Agenda-kalender**: op kleine schermen tonen dagen een gekleurde stip; de lijst
+  "Komende afspraken" eronder geeft de details — zo blijft de maandweergave bruikbaar.
+- **Tabellen** (kandidaten, afspraken, woningen): horizontaal scrollbaar met touch.
+- **Formulieren & gebruikersomgeving**: één kolom, ruimere velden, compacte marges.
+- **Pijplijn, kaarten, specs, footer**: stapelen netjes op smalle schermen.
 
-### Eigen foto's verwerkt
-Acht gelicentieerde Shutterstock-foto's zijn webgeoptimaliseerd (van ~100 MB naar < 1 MB
-totaal) en op passende plekken geplaatst:
-- **Hero**: divers zorgteam (corridor) · **Over ons**: teamhanden ·
-- **Voor instellingen**: Szpital-gevel · **Academie**: hersen-MRI / OK ·
-- **Kaarten**: verpleegkundige, MRI-scanner, OK · **Contact**: ziekenhuisgang.
-
-### "Plan een gesprek" → echte agenda
-- **Publieke planpagina** (`/plan`, meertalig): bezoekers kiezen datum + tijdslot en sturen
-  een aanvraag — geen account nodig. De hero-knop "Plan een gesprek" leidt hierheen.
-- **Gekoppeld aan account**: ingelogde gebruikers plannen vanuit "Mijn account"; hun
-  afspraken zijn aan hun account gekoppeld en zichtbaar in hun overzicht.
-- **Beheer-agenda** (`/agenda`): maandkalender met alle afspraken per dag + komende-lijst,
-  plus volledig afsprakenbeheer (`/appointments`: bevestigen, bewerken, verwijderen).
-
-### 2FA direct verplicht voor gebruikers
-Na registratie wordt **tweestapsverificatie meteen afgedwongen**: een gebruiker komt pas in
-"Mijn account" nadat 2FA is ingesteld (authenticator-app). Geldt ook voor bestaande accounts
-zonder 2FA bij de eerstvolgende login. Beheerders houden hun eigen verplichte 2FA.
-
-## Behouden
-Gescheiden toegang (gebruikersportaal vooraan, beheer discreet in de footer), gehashte
-wachtwoorden, inlogbegrenzing, volledig beheerportaal met modules, AI-assistent
-(`ANTHROPIC_API_KEY`), back-up/herstel (incl. afspraken & gebruikers), Warschau-woningen,
-meertalige site PL/EN/NL/ES, zandkleurige navigatie.
+## Eerder toegevoegd (behouden)
+Eigen Shutterstock-foto's (webgeoptimaliseerd) op hero, banners en kaarten; "Plan een
+gesprek" als echte agenda (publieke planpagina + accountkoppeling + beheer-maandkalender);
+2FA direct verplicht na registratie; gescheiden gebruikers-/beheerderstoegang; gehashte
+wachtwoorden + inlogbegrenzing; beheerportaal met modules; AI-assistent (`ANTHROPIC_API_KEY`);
+back-up/herstel; Warschau-woningen; meertalige site PL/EN/NL/ES.
 
 ## Variabelen (Railway → Variables)
 `MONGODB_URI` (persistent!), `SESSION_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`,

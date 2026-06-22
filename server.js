@@ -64,7 +64,7 @@ function layout(title, body, active = 'home', lang = 'pl', curPath = '/') {
     .map(([k, href]) => `<a class="${active === k ? 'active' : ''}" href="${href}">${tr.nav[k]}</a>`).join('');
   return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><meta name="description" content="Honor Care International — ${esc(tr.hero.p).slice(0, 140)}"><link rel="icon" href="/images/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"></head><body>
 <a class="skip" href="#main">→</a>
-<div class="top"><span class="ttag">${tr.topTagline}</span><span class="right"><a href="tel:+48221234567">☎ +48 22 123 45 67</a> <i>|</i> <a href="mailto:info@honorcareinternational.com">✉ info@honorcareinternational.com</a> <i>|</i> 📍 ${tr.location} <i>|</i> ${langSwitcher(lang, curPath)}</span></div>
+<div class="top"><span class="ttag">${tr.topTagline}</span><span class="right"><a href="tel:+48221234567">☎ +48 22 123 45 67</a> <i class="t-loc">|</i> <a class="t-mail" href="mailto:info@honorcareinternational.com">✉ info@honorcareinternational.com</a> <i class="t-loc">|</i> <span class="t-loc">📍 ${tr.location}</span> <i>|</i> ${langSwitcher(lang, curPath)}</span></div>
 <header class="header"><a class="logo" href="/"><img src="/images/logo.svg" alt="Honor Care International" width="290" height="65"></a>
 <input type="checkbox" id="navtoggle" class="navtoggle">
 <label for="navtoggle" class="burger" aria-label="Menu"><span></span><span></span><span></span></label>
@@ -675,5 +675,5 @@ app.use((req, res) => { const tr = T[req.lang]; res.status(404).send(layout('404
 mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
-  app.listen(PORT, () => console.log('HonorCare Working Docs v28 draait op poort ' + PORT));
+  app.listen(PORT, () => console.log('HonorCare Working Docs v29 draait op poort ' + PORT));
 }).catch(e => { console.error(e); process.exit(1); });
