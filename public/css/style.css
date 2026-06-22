@@ -95,8 +95,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .stat{padding:38px 36px;border-bottom:1px solid rgba(255,255,255,.12);border-right:1px solid rgba(255,255,255,.12)}
 .why-stats .stat:nth-child(odd){border-left:0}
 .stat-ic{color:var(--gold2);font-size:34px;display:flex;margin-bottom:12px}
-.stat b{font-family:'Playfair Display',serif;color:var(--gold2);font-size:46px;display:block;line-height:1}
-.stat-label{display:block;color:#cfdbe8;font-size:13.5px;margin-top:8px;max-width:210px}
+.stat b{font-family:'Playfair Display',serif;color:var(--gold2);font-size:23px;display:block;line-height:1.2;margin-bottom:5px}
+.stat-label{display:block;color:#cfdbe8;font-size:13.5px;margin-top:2px;max-width:260px}
 
 /* Partners */
 .partners{text-align:center;padding:46px 5vw;background:#fff}
@@ -220,3 +220,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .ph-poland{background-image:url('https://images.unsplash.com/photo-1651062108412-36a68f3748dd?auto=format&fit=crop&w=1600&q=80')}
 .ph-contact{background-image:url('https://images.unsplash.com/photo-1651062108412-36a68f3748dd?auto=format&fit=crop&w=1600&q=80')}
 .page.has-hero{padding-top:50px}
+
+/* Document content (portaal) */
+.doc-content h1{font-size:30px;margin:0 0 6px}
+.doc-content h2{font-size:21px;margin:26px 0 8px;color:var(--navy)}
+.doc-content h3{font-size:17px;margin:18px 0 6px;color:var(--navy2)}
+.doc-content ul,.doc-content ol{margin:8px 0 8px 4px;padding-left:22px}
+.doc-content li{margin-bottom:6px}
+.doc-content .docnote{background:#fff7e8;border-left:4px solid var(--gold);padding:12px 16px;border-radius:6px;font-size:14px;color:#6b5a2e;margin:16px 0}
+.doctable{border-collapse:collapse;width:100%;margin:14px 0;font-size:14.5px}
+.doctable th,.doctable td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+.doctable th{background:var(--navy);color:#fff;font-weight:600}
+.doctable tr:nth-child(even) td{background:#f7f5f0}

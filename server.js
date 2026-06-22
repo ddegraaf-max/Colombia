@@ -64,7 +64,7 @@ function layout(title, body, active = 'home', lang = 'pl', curPath = '/') {
     .map(([k, href]) => `<a class="${active === k ? 'active' : ''}" href="${href}">${tr.nav[k]}</a>`).join('');
   return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><meta name="description" content="Honor Care International — ${esc(tr.hero.p).slice(0, 140)}"><link rel="icon" href="/images/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"></head><body>
 <a class="skip" href="#main">→</a>
-<div class="top"><span class="ttag">${tr.topTagline}</span><span class="right"><a href="tel:+48221234567">☎ +48 22 123 45 67</a> <i>|</i> <a href="mailto:info@honorcare.pl">✉ info@honorcare.pl</a> <i>|</i> 📍 ${tr.location} <i>|</i> ${langSwitcher(lang, curPath)}</span></div>
+<div class="top"><span class="ttag">${tr.topTagline}</span><span class="right"><a href="tel:+48221234567">☎ +48 22 123 45 67</a> <i>|</i> <a href="mailto:info@honorcareinternational.com">✉ info@honorcareinternational.com</a> <i>|</i> 📍 ${tr.location} <i>|</i> ${langSwitcher(lang, curPath)}</span></div>
 <header class="header"><a class="logo" href="/"><img src="/images/logo.svg" alt="Honor Care International" width="290" height="65"></a>
 <input type="checkbox" id="navtoggle" class="navtoggle">
 <label for="navtoggle" class="burger" aria-label="Menu"><span></span><span></span><span></span></label>
@@ -79,8 +79,8 @@ function footer(lang = 'pl') {
   return `<footer class="footer"><div class="footer-main">
 <div class="fcol"><img class="flogo" src="/images/logo.svg" alt="Honor Care International" width="230" height="52"><p>${f.tagline}</p><div class="social"><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 8H6v4h3v12h5V12h3.6l.4-4h-4V6.3c0-1 .2-1.3 1.2-1.3H18V0h-3.6C10.8 0 9 1.6 9 4.6V8z"/></svg></a><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.5 3 5.5 7V24h-5v-7c0-1.7 0-3.8-2.3-3.8s-2.7 1.8-2.7 3.7V24h-5V8z"/></svg></a><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.5-.1 4.8c-.1 3.2-1.6 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.5.1-4.8C2.4 4 3.9 2.4 7.1 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 12 18.6 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 12 7.7a4.3 4.3 0 0 1 0 8.6zm6.8-11.1a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></a></div></div>
 <div class="fcol"><h4>${f.quick}</h4><ul>${links}</ul></div>
-<div class="fcol"><h4>${f.officeNL}</h4><p>📍 ul. Prosta 69, 00-838<br>Warszawa, ${tr.nav.poland}</p><p>☎ <a href="tel:+48221234567">+48 22 123 45 67</a></p><p>✉ <a href="mailto:info@honorcare.pl">info@honorcare.pl</a></p><p>🕘 ${f.hoursNL}</p></div>
-<div class="fcol"><h4>${f.officeCO}</h4><p>📍 Carrera 13 # 97-76, Oficina 501<br>Bogotá, Colombia</p><p>☎ <a href="tel:+573201234567">+57 320 123 45 67</a></p><p>✉ <a href="mailto:colombia@honorcareinternational.com">colombia@honorcareinternational.com</a></p><p>🕘 ${f.hoursCO}</p></div>
+<div class="fcol"><h4>${f.officeNL}</h4><p>📍 ul. Prosta 69, 00-838<br>Warszawa, ${tr.nav.poland}</p><p>☎ <a href="tel:+48221234567">+48 22 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p></div>
+<div class="fcol"><h4>${f.officeCO}</h4><p>📍 Carrera 13 # 97-76, Oficina 501<br>Bogotá, Colombia</p><p>☎ <a href="tel:+573201234567">+57 320 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursCO}</p></div>
 <div class="fcol newsletter"><h4>${f.newsletter}</h4><p>${f.newsletterText}</p><form method="post" action="/newsletter"><div class="nl-row"><input type="email" name="email" placeholder="${f.newsletterPh}" aria-label="${f.newsletterPh}" required><button class="nl-btn" aria-label="OK">→</button></div></form></div>
 </div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International. ${f.rights}</span><span><a href="/poland">${f.privacy}</a> &nbsp;|&nbsp; <a href="/about">${f.terms}</a></span></div></footer>`;
 }
@@ -102,25 +102,13 @@ const requireAuth = (req, res, next) => {
   return res.redirect(req.session?.twoFAConfigured ? '/verify-2fa' : '/setup-2fa');
 };
 
-const DOCS = [
-['Volledig Projectdossier Honor Care Poland','Projectdossier','NL','compleet',`<h1>HONOR CARE POLAND</h1><h2>VOLLEDIG PROJECTDOSSIER</h2><h3>DEEL 1 – BUSINESSPLAN</h3><ol><li>Executive Summary</li><li>Marktanalyse Polen</li><li>Tekort aan zorgpersoneel</li><li>Colombia als wervingsmarkt</li><li>Juridische structuur</li><li>Stichting versus werkmaatschappij</li><li>Verdienmodel</li><li>Financieel model 5 jaar</li><li>Risicoanalyse</li><li>Exit- en groeistrategie</li></ol><h3>DEEL 2 – STICHTING</h3><p><strong>Fundacja Honor Care Poland</strong></p><ul><li>Concept statuten</li><li>Doelstellingen</li><li>Bestuursstructuur</li><li>Subsidiestrategie</li><li>Jaarplan</li><li>Begroting</li></ul><h3>DEEL 3 – WERKMAATSCHAPPIJ</h3><p><strong>Honor Care International Sp. z o.o.</strong></p><ul><li>Oprichtingsplan</li><li>Activiteitenomschrijving</li><li>Contractstructuur</li><li>Recruitmentproces</li><li>Huisvestingsmodel</li><li>Payrollmodel</li></ul><h3>DEEL 4 – COLOMBIA</h3><p><strong>Honor Care Colombia SAS</strong></p><ul><li>Lokale structuur</li><li>Samenwerking universiteiten</li><li>Werving verpleegkundigen</li><li>Screeningprocedure</li><li>Diploma verificatie</li><li>Selectieprocedure</li></ul><h3>DEEL 5 – SUBSIDIES</h3><p>AMIF, FERS en ESF+ met voorwaarden, subsidiepercentage, documenten, aanvraagroute en planning.</p><h3>DEEL 6 – WEBSITE STICHTING</h3><p>HonorCareFoundation.eu: Home, Missie, Projecten, Subsidies, Partners, Nieuws en Contact in Nederlands en Spaans.</p><h3>DEEL 7 – WEBSITE BEDRIJF</h3><p>HonorCarePoland.eu: Home, Voor zorginstellingen, Voor kandidaten, Werken in Polen, Recruitment, Huisvesting, Over ons en Contact in Nederlands en Spaans.</p><h3>DEEL 8 – INVESTEERDERSMEMORANDUM</h3><ul><li>Investeringspropositie</li><li>Markt</li><li>Financiële prognose</li><li>Rendement</li><li>Risico's</li><li>Exitstrategie</li></ul><h3>DEEL 9 – CONTRACTEN</h3><ul><li>Zorginstelling overeenkomst</li><li>Recruitment overeenkomst</li><li>Kandidaten overeenkomst</li><li>Huisvestingsovereenkomst</li><li>Privacydocumenten AVG/GDPR</li></ul><h3>DEEL 10 – STAPPENPLAN</h3><p>Week 1-4: stichting en Sp. z o.o. oprichten. Week 5-8: KRAZ registratie en website live. Week 9-12: eerste zorginstellingen. Week 13-20: subsidieaanvragen. Week 20-52: eerste pilot Colombia → Polen.</p>`],
-['Businessplan Honor Care Poland','Businessplan','NL','compleet',`<h1>Businessplan Honor Care Poland</h1><h2>Executive Summary</h2><p>Honor Care Poland is een geïntegreerde recruitment- en integratieorganisatie voor zorgprofessionals uit Colombia die in Polen willen werken.</p><h2>Marktanalyse Polen</h2><p>De Poolse zorgmarkt kent structurele personeelstekorten. Honor Care biedt een compleet traject van selectie tot integratie.</p><h2>Verdienmodel</h2><p>Inkomsten komen uit recruitmentfees, partnercontracten, academy-trajecten, huisvestingscoördinatie en projectfinanciering.</p>`],
-['Fundacja Honor Care Poland','Stichting','NL/PL','concept',`<h1>Fundacja Honor Care Poland</h1><p>De stichting richt zich op maatschappelijke begeleiding, taal, integratie, familieondersteuning en subsidieprojecten.</p>`],
-['Honor Care International Sp. z o.o.','Werkmaatschappij','NL/PL','concept',`<h1>Honor Care International Sp. z o.o.</h1><p>De werkmaatschappij voert recruitment, matching, contractbeheer, CRM, huisvesting en operationele begeleiding uit.</p>`],
-['Honor Care Colombia SAS','Colombia','ES/NL','concept',`<h1>Honor Care Colombia SAS</h1><p>Lokale structuur voor werving, screening, diplomaverificatie en voorbereiding van kandidaten in Colombia.</p>`],
-['Subsidiedossier AMIF','Subsidies','NL/PL','concept',`<h1>Subsidiedossier AMIF</h1><p>AMIF is relevant voor integratie, begeleiding en maatschappelijke ondersteuning van migranten en internationale professionals.</p>`],
-['Subsidiedossier FERS','Subsidies','NL/PL','concept',`<h1>Subsidiedossier FERS</h1><p>FERS richt zich op sociale ontwikkeling, arbeidsmarkt en innovatie.</p>`],
-['Subsidiedossier ESF+','Subsidies','NL/PL','concept',`<h1>Subsidiedossier ESF+</h1><p>ESF+ biedt kansen voor arbeidsmarkttoeleiding, scholing, inclusie en professionele ontwikkeling.</p>`],
-['Investeerdersmemorandum','Investeerders','NL','concept',`<h1>Investeerdersmemorandum</h1><ul><li>Investeringspropositie</li><li>Markt</li><li>Financiële prognose</li><li>Rendement</li><li>Risico's</li><li>Exitstrategie</li></ul>`],
-['Contractenpakket','Contracten','NL/PL/ES','concept',`<h1>Contractenpakket</h1><ul><li>Zorginstelling overeenkomst</li><li>Recruitment overeenkomst</li><li>Kandidaten overeenkomst</li><li>Huisvestingsovereenkomst</li><li>Privacydocumenten AVG/GDPR</li></ul>`],
-['Implementatieplan 52 weken','Planning','NL/PL','concept',`<h1>Implementatieplan 52 weken</h1><h2>Week 1-4</h2><ul><li>Stichting oprichten</li><li>Sp. z o.o. oprichten</li></ul><h2>Week 5-8</h2><ul><li>KRAZ registratie</li><li>Website live</li></ul><h2>Week 9-52</h2><p>Eerste instellingen, subsidieaanvragen en pilot Colombia → Polen.</p>`]
-];
+const DOCS = require('./documents'); // [title,category,language,status,content,notes]
 
 async function seed() {
   const existing = await User.findOne({ email: ADMIN_EMAIL });
   if (!existing) await User.create({ email: ADMIN_EMAIL, passwordHash: await bcrypt.hash(ADMIN_PASSWORD, 12) });
   for (const d of DOCS) {
-    await Document.updateOne({ title: d[0] }, { $set: { category: d[1], language: d[2], status: d[3], notes: `${d[1]} dossier voor Honor Care Poland`, content: d[4] }, $setOnInsert: { title: d[0], createdAt: new Date() } }, { upsert: true });
+    await Document.updateOne({ title: d[0] }, { $set: { category: d[1], language: d[2], status: d[3], notes: d[5] || (d[1] + ' — Honor Care Poland'), content: d[4] }, $setOnInsert: { title: d[0], createdAt: new Date() } }, { upsert: true });
   }
   console.log('Admin en documenten gecontroleerd/aangevuld');
 }
@@ -148,13 +136,12 @@ const SPEC_ICONS = [
   '<path d="M12 5v14M5 12h14"/>'
 ];
 const CARD_META = [['img1', '/candidates-info', 'navy'], ['img2', '/institutions', 'gold'], ['img3', '/academy', 'navy'], ['img4', '/housing', 'gold']];
-const STAT_META = [
-  ['<circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5"/><circle cx="17.5" cy="9" r="2.2"/><path d="M16 14.2c2.8.2 5 1.9 5 4.8"/>', '1000+'],
-  ['<rect x="5" y="4" width="14" height="16" rx="1.5"/><path d="M9 20v-4h6v4M12 7v4M10 9h4M8.5 13h7"/>', '200+'],
-  ['<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>', '10+'],
-  ['<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>', '2']
+const STAT_ICONS = [
+  '<circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5"/><circle cx="17.5" cy="9" r="2.2"/><path d="M16 14.2c2.8.2 5 1.9 5 4.8"/>',
+  '<rect x="5" y="4" width="14" height="16" rx="1.5"/><path d="M9 20v-4h6v4M12 7v4M10 9h4M8.5 13h7"/>',
+  '<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>',
+  '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>'
 ];
-const PARTNERS = [['NFZ', 'Narodowy Fundusz Zdrowia'], ['PZWL', 'Wydawnictwo Lekarskie'], ['NIPiP', 'Naczelna Izba Pielęgniarek'], ['PARPA', 'Państwowa Agencja'], ['OZZL', 'Związek Zawodowy Lekarzy'], ['Medicover', 'Szpitale']];
 
 app.get('/', (req, res) => {
   const lang = req.lang, tr = T[lang];
@@ -164,8 +151,7 @@ app.get('/', (req, res) => {
 <section class="hero"><div class="hero-inner"><h1>${tr.hero.h1[0]}<br>${tr.hero.h1[1]}<br><strong>${tr.hero.h1[2]}</strong></h1><p>${tr.hero.p}</p><div class="bullets">${tr.hero.bullets.map(x => `<div><b>✓</b>${x}</div>`).join('')}</div><div class="hero-cta"><a class="btn navy" href="/institutions">${tr.hero.btnInst}</a><a class="btn gold" href="/candidates-info">${tr.hero.btnProf}</a><a class="btn light" href="/contact">${tr.hero.btnMeet}</a></div></div><div class="hero-badge">${heart}<span>${tr.hero.badge}</span></div></section>
 <section class="specs">${tr.specs.map((label, i) => `<div class="spec"><span class="spec-ic">${icon(SPEC_ICONS[i])}</span><span>${label}</span></div>`).join('')}</section>
 <section class="cards-wrap"><div class="cards">${tr.cards.map((c, i) => `<article class="card"><div class="card-img ${CARD_META[i][0]}" role="img" aria-label="${esc(c.h)}"></div><div class="card-body"><span class="tag">${c.tag}</span><h3>${c.h}</h3><ul>${c.items.map(li => `<li>${li}</li>`).join('')}</ul><a class="btn ${CARD_META[i][2]} full" href="${CARD_META[i][1]}">${c.btn}</a></div></article>`).join('')}</div></section>
-<section class="why"><div class="why-card"><span class="eyebrow">${icon('<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>')} ${tr.why.eyebrow}</span><h2>${tr.why.h2[0]}<br>${tr.why.h2[1]}</h2><p>${tr.why.p}</p><a class="btn gold" href="/poland">${tr.why.btn}</a></div><div class="why-stats">${tr.why.stats.map((label, i) => `<div class="stat"><span class="stat-ic">${icon(STAT_META[i][0])}</span><b>${STAT_META[i][1]}</b><span class="stat-label">${label}</span></div>`).join('')}</div></section>
-<section class="partners"><h4>${tr.partnersTitle}</h4><div class="partner-row">${PARTNERS.map(p => `<div class="partner"><span class="pmark">${p[0]}</span><span class="psub">${p[1]}</span></div>`).join('')}</div></section>
+<section class="why"><div class="why-card"><span class="eyebrow">${icon('<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>')} ${tr.why.eyebrow}</span><h2>${tr.why.h2[0]}<br>${tr.why.h2[1]}</h2><p>${tr.why.p}</p><a class="btn gold" href="/poland">${tr.why.btn}</a></div><div class="why-stats">${tr.why.stats.map((s, i) => `<div class="stat"><span class="stat-ic">${icon(STAT_ICONS[i])}</span><b>${s[0]}</b><span class="stat-label">${s[1]}</span></div>`).join('')}</div></section>
 ${footer(lang)}`;
   res.send(layout('Honor Care International', body, 'home', lang, req.path));
 });
@@ -194,8 +180,8 @@ app.get('/poland', (req, res) => contentPage(req, res, 'poland'));
 app.get('/contact', (req, res) => {
   const lang = req.lang, tr = T[lang], f = tr.footer;
   const body = `<section class="page-hero ph-contact"><div class="page-hero-inner"><h1>${tr.nav.contact}</h1><p>${tr.contactIntro}</p></div></section><section class="page has-hero"><div class="grid two">
-<article class="panel"><h3>${f.officeNL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p><p><a href="mailto:info@honorcare.pl">info@honorcare.pl</a></p><p>${f.hoursNL}</p></article>
-<article class="panel"><h3>${f.officeCO}</h3><p>Carrera 13 # 97-76, Oficina 501, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p><p><a href="mailto:colombia@honorcareinternational.com">colombia@honorcareinternational.com</a></p><p>${f.hoursCO}</p></article>
+<article class="panel"><h3>${f.officeNL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>${f.hoursNL}</p></article>
+<article class="panel"><h3>${f.officeCO}</h3><p>Carrera 13 # 97-76, Oficina 501, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>${f.hoursCO}</p></article>
 </div></section>${footer(lang)}`;
   res.send(layout(tr.nav.contact, body, 'contact', lang, req.path));
 });
@@ -302,5 +288,5 @@ app.use((req, res) => { const tr = T[req.lang]; res.status(404).send(layout('404
 mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
-  app.listen(PORT, () => console.log('HonorCare Working Docs v20 draait op poort ' + PORT));
+  app.listen(PORT, () => console.log('HonorCare Working Docs v23 draait op poort ' + PORT));
 }).catch(e => { console.error(e); process.exit(1); });

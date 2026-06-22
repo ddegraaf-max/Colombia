@@ -1,33 +1,23 @@
-# HonorCare Working Docs v20
+# HonorCare Working Docs v23
 
 Node.js/Express + MongoDB, deploybaar op Railway (NIXPACKS, `npm start`).
 
-## Nieuw in v20 — mooie, vrij te gebruiken foto's door de hele site
-Alle beelden komen van **Unsplash** (Unsplash-licentie: gratis voor commercieel
-gebruik, geen naamsvermelding vereist).
-- **Hero**: echte foto van een medisch team (i.p.v. de generieke close-up).
-- **"Dlaczego Polska?"**: skyline van Warschau bij avond.
-- **Elke subpagina** (O nas, Dla instytucji, Dla profesjonalistów, Akademia,
-  Mieszkania, Polska, Kontakt) heeft nu een eigen **fotobanner** met passend beeld
-  en de paginatitel eroverheen — zo is de hele site beeldrijk en samenhangend.
-- De vier homepage-kaarten houden hun passende foto's (arts, instelling, opleiding, woning).
+## Nieuw in v23 — eerlijke presentatie van een nieuw concept
+- **Geen verzonnen cijfers meer.** De statistieken "1000+ / 200+ / 10+" zijn vervangen
+  door eerlijke waardepunten over de aanpak (volledige begeleiding, ethische werving,
+  één partner voor instellingen, twee landen één doel) — in alle vier de talen.
+- **Partnersectie verwijderd.** Er worden geen partners meer getoond, omdat er nog
+  geen partners zijn (logisch bij een nieuw concept). Bekende namen tonen zou onterecht zijn.
+- **Eén consistent e-mailadres** overal op de publieke site: `info@honorcareinternational.com`
+  (top bar, footer, contactpagina — beide kantoren). Het afwijkende Colombia-adres is verwijderd.
 
-### Foto's wisselen
-Alle foto-URL's staan in `public/css/style.css`:
-- Hero: `.hero { background: url('...') }`
-- Skyline: `.why-card { background: url('...') }`
-- Subpagina-banners: de klassen `.ph-about`, `.ph-institutions`, `.ph-candidates`,
-  `.ph-academy`, `.ph-housing`, `.ph-poland`, `.ph-contact`
-- Kaarten: `.img1` t/m `.img4`
-Vervang de Unsplash-URL door een andere `https://images.unsplash.com/...`-URL
-(of je eigen foto in `public/images/`) om een beeld te wisselen.
+> Het admin-login-adres (standaard `admin@honorcarepoland.eu`) staat los van het publieke
+> contactadres en stel je in via de Railway-variabele `ADMIN_EMAIL`.
 
 ## Behouden
-Meertaligheid PL/EN/NL/ES met taalkiezer (`i18n.js`), nieuw logo + favicon (SVG),
-Playfair Display + Poppins, specialisatiebalk, statistieksectie, partners,
-uitgebreide footer met werkende nieuwsbrief, security headers (CSP staat
-`images.unsplash.com` + Google Fonts toe), toegankelijkheid, mobiel menu,
-`/healthz`, 404, 2FA-fix. Admin-portaal blijft Nederlands.
+Volledige plandocumenten in het portaal (`documents.js`), mooie foto's door de hele site,
+meertaligheid PL/EN/NL/ES (`i18n.js`), logo + favicon, Playfair/Poppins, werkende
+nieuwsbrief, security headers, toegankelijkheid, mobiel menu, 2FA, `/healthz`, 404.
 
 ## Variabelen (Railway)
 `MONGODB_URI`, `SESSION_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `NODE_ENV=production`.
