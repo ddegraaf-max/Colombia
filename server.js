@@ -142,11 +142,24 @@ const BOOK = {
 function book(req) { return BOOK[req.lang] || BOOK.pl; }
 
 // ---- E-mail via Resend ----
-const MAIL_TO = process.env.MAIL_TO || 'info@honorcareinternational.com';
-const MAIL_FROM = process.env.RESEND_FROM || 'Honor Care International <onboarding@resend.dev>';
+function stripPrefix(v) { return String(v || '').replace(/^\s*[A-Za-z0-9_]+\s*=\s*/, '').trim(); }
+function detectResendKey() {
+  const ex = v => { const m = String(v || '').match(/re_[A-Za-z0-9_]{8,}/); return m ? m[0] : ''; };
+  let k = ex(process.env.RESEND_API_KEY); if (k) return k;
+  for (const v of Object.values(process.env)) { k = ex(v); if (k) return k; } // vind de sleutel ongeacht de variabelenaam
+  return '';
+}
+function detectMailTo() {
+  let v = stripPrefix(process.env.MAIL_TO); if (v.includes('@')) return v;
+  for (const [k, val] of Object.entries(process.env)) { if (/mail.?to/i.test(k)) { const e = stripPrefix(val); if (e.includes('@')) return e; } }
+  return 'info@honorcareinternational.com';
+}
+const RESEND_KEY = detectResendKey();
+const MAIL_TO = detectMailTo();
+const MAIL_FROM = stripPrefix(process.env.RESEND_FROM) || 'Honor Care International <onboarding@resend.dev>';
 async function sendEmail({ to, subject, html, replyTo }) {
-  const key = process.env.RESEND_API_KEY;
-  if (!key) { console.warn('[mail] RESEND_API_KEY ontbreekt — niet verzonden:', subject); return { skipped: true }; }
+  const key = RESEND_KEY;
+  if (!key) { console.warn('[mail] geen Resend-sleutel gevonden — niet verzonden:', subject); return { skipped: true }; }
   try {
     const r = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -293,20 +306,22 @@ app.get('/contact', (req, res) => {
   const ok = req.query.ok ? `<div class="ok cf-ok">✓ ${esc(c.thanks)}</div>` : '';
   const locIc = '<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>';
   const mailIc = '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>';
+  const clockIc = '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>';
   const body = `<section class="page-hero ph-contact"><div class="page-hero-inner"><h1>${tr.nav.contact}</h1><p>${tr.contactIntro}</p></div></section>
 <section class="page has-hero">${ok}
-<div class="contact-grid">
-<aside class="contact-info">
-<h2>${esc(c.title)}</h2><p class="contact-sub">${esc(c.sub)}</p>
-<div class="co"><span class="co-ic">${icon(locIc)}</span><div><b>${f.officeNL}</b><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p><p class="co-h">${f.hoursNL}</p></div></div>
-<div class="co"><span class="co-ic">${icon(locIc)}</span><div><b>${f.officeCO}</b><p>Carrera 13 # 97-76, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p><p class="co-h">${f.hoursCO}</p></div></div>
-<div class="co"><span class="co-ic">${icon(mailIc)}</span><div><b>${esc(c.emailLabel)}</b><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p></div></div>
-</aside>
-<div class="contact-card">
+<div class="contact-split">
+<div class="cs-info">
+<h2>${esc(c.title)}</h2><p class="cs-sub">${esc(c.sub)}</p>
+<div class="cs-item"><span class="cs-ic">${icon(locIc)}</span><div><b>${f.officeNL}</b><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p></div></div>
+<div class="cs-item"><span class="cs-ic">${icon(locIc)}</span><div><b>${f.officeCO}</b><p>Carrera 13 # 97-76, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p></div></div>
+<div class="cs-item"><span class="cs-ic">${icon(mailIc)}</span><div><b>${esc(c.emailLabel)}</b><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p></div></div>
+<div class="cs-item"><span class="cs-ic">${icon(clockIc)}</span><div><b>${esc(c.hours)}</b><p>${f.hoursNL}</p></div></div>
+</div>
+<div class="cs-form">
 <form class="contactform" method="post" action="/contact">
 <div class="cf-row"><label>${esc(c.name)}<input name="name" autocomplete="name" placeholder="Jan Kowalski" required></label><label>${esc(c.email)}<input type="email" name="email" autocomplete="email" placeholder="jan@example.com" required></label></div>
-<label>${esc(c.subject)}<input name="subject" placeholder="..."></label>
-<label>${esc(c.message)}<textarea name="message" rows="6" placeholder="..." required></textarea></label>
+<label>${esc(c.subject)}<input name="subject"></label>
+<label>${esc(c.message)}<textarea name="message" rows="6" required></textarea></label>
 <button class="btn gold full">${esc(c.send)}</button>
 <p class="cf-note">🔒 ${esc(c.note)}</p>
 </form>
@@ -731,7 +746,8 @@ app.get('/admin/mailtest', requireAuth, async (req, res) => {
   const inner = `<div class="rcard">
 <p><b>Afzender (RESEND_FROM):</b> ${esc(MAIL_FROM)}</p>
 <p><b>Ontvanger (MAIL_TO):</b> ${esc(MAIL_TO)}</p>
-<p><b>API-sleutel aanwezig:</b> ${process.env.RESEND_API_KEY ? 'ja' : 'nee'}</p>
+<p><b>API-sleutel aanwezig:</b> ${RESEND_KEY ? ('ja, lengte ' + RESEND_KEY.length) : 'NEE'}</p>
+<p><b>Door Railway doorgegeven RESEND/MAIL-variabelen:</b> ${esc(Object.keys(process.env).filter(k => /resend|mail/i.test(k)).join(', ') || '(geen)')}</p>
 <p class="${cls}" style="margin-top:10px">${esc(msg)}</p>
 <p class="hint">Staat hier "domain is not verified"? Verifieer dan <b>honorcareinternational.com</b> in Resend (Domains → Add Domain → DNS-records plaatsen). Wil je eerst alleen testen? Zet <code>RESEND_FROM=onboarding@resend.dev</code> en <code>MAIL_TO</code> op het e-mailadres van je eigen Resend-account; dan komt deze test binnen.</p>
 <p><a class="btn navy small" href="/admin/mailtest">Opnieuw testen</a> <a class="btn gold small" href="/dashboard">Dashboard</a></p></div>`;
@@ -776,7 +792,9 @@ mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
   app.listen(PORT, () => {
-    console.log('HonorCare Working Docs v33 draait op poort ' + PORT);
-    console.log('[env] RESEND_API_KEY: ' + (process.env.RESEND_API_KEY ? 'geladen ✓' : 'ONTBREEKT ✗') + ' | MAIL_TO: ' + (process.env.MAIL_TO || '(standaard info@honorcareinternational.com)') + ' | RESEND_FROM: ' + (process.env.RESEND_FROM || '(standaard onboarding@resend.dev)'));
+    console.log('HonorCare Working Docs v34 draait op poort ' + PORT);
+    const found = Object.keys(process.env).filter(k => /resend|mail/i.test(k));
+    console.log('[env] RESEND/MAIL-variabelen die Railway doorgeeft: ' + (found.length ? found.join(', ') : '(GEEN)'));
+    console.log('[mail] Resend-sleutel gedetecteerd: ' + (RESEND_KEY ? ('JA ✓ (lengte ' + RESEND_KEY.length + ')') : 'NEE ✗') + ' | MAIL_TO: ' + MAIL_TO + ' | FROM: ' + MAIL_FROM);
   });
 }).catch(e => { console.error(e); process.exit(1); });

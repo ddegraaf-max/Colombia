@@ -1,27 +1,36 @@
-# HonorCare Working Docs v31
+# HonorCare Working Docs v34
 
 Node.js/Express + MongoDB, Railway (NIXPACKS, `npm start`, poort 8080).
 
-## Nieuw in v31 — e-mail diagnose
-- **/admin/mailtest** (alleen na beheerderslogin, ook via Back-up → "E-mailtest uitvoeren"):
-  stuurt een testbericht naar `MAIL_TO` en toont de **exacte Resend-respons** — succes met
-  Resend-id, of de precieze fout (bijv. "domain is not verified").
+## v34 — e-mail werkt nu ongeacht de variabelenaam + mooier contactformulier
 
-## E-mail komt niet aan? Checklist
-1. Open **/admin/mailtest** en lees de melding.
-2. Staat er "domain is not verified": het afzenderdomein in `RESEND_FROM`
-   (honorcareinternational.com) is nog niet geverifieerd in Resend. Resend weigert dan de
-   verzending. → Resend → **Domains → Add Domain** → DNS-records (SPF/DKIM) plaatsen bij je
-   registrar → wachten op "Verified".
-3. Alleen even testen zonder domeinverificatie: zet tijdelijk
-   `RESEND_FROM=onboarding@resend.dev` én `MAIL_TO` = het e-mailadres van je **eigen
-   Resend-account**. In testmodus levert Resend namelijk uitsluitend op dat adres.
-4. Controleer ook Resend → **Logs/Emails** voor de afleverstatus.
+### Resend: robuuste detectie
+De app vond de sleutel niet omdat de variabelenaam in Railway nét anders was. Dat is nu
+opgelost: de app **herkent de Resend-sleutel op zijn waarde** — elke omgevingsvariabele
+waarvan de waarde met `re_` begint wordt als sleutel gebruikt, ongeacht hoe die variabele
+heet. Ook een per ongeluk meegeplakt `NAAM=` ervoor wordt weggehaald. `MAIL_TO` wordt
+herkend via een losse naam-match (MAILTO, Mail_To, met spatie, enz.).
 
-## E-mailfuncties (sinds v30)
-Contactformulier, gespreksaanvragen (publiek + account) en nieuwsbrief → melding naar
-Honor Care + bevestiging naar de afzender. Reply-to = afzender.
+### Diagnose in de logs
+Bij het opstarten logt de app nu:
+```
+[env] RESEND/MAIL-variabelen die Railway doorgeeft: <namen>
+[mail] Resend-sleutel gedetecteerd: JA ✓ (lengte 36) | MAIL_TO: ... | FROM: ...
+```
+- "JA ✓" → sleutel gevonden, e-mail kan verzonden worden.
+- "NEE ✗" → er staat nergens een waarde die met `re_` begint → de waarde is leeg of niet
+  opgeslagen (niet alleen de naam fout). Open dan /admin/mailtest voor details.
 
-## Variabelen (Railway → Variables)
-`MONGODB_URI` (persistent!), `SESSION_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`,
-`RESEND_API_KEY`, `MAIL_TO`, `RESEND_FROM`, `ANTHROPIC_API_KEY` (+ `ANTHROPIC_MODEL`), `NODE_ENV=production`.
+### Mooier contactformulier
+Volledig nieuw ontwerp: één elegante "split card" — links een donkerblauw paneel met
+contactgegevens en gouden icoon-accenten, rechts een rustig wit formulier met gouden focus
+en een knop op volle breedte. Responsief (panelen stapelen op mobiel).
+
+## Daarna nog (domeinverificatie)
+Zodra de sleutel "JA ✓" is en e-mail naar externe mensen moet: verifieer
+honorcareinternational.com in Resend (Domains → Add Domain → DNS). Anders levert Resend met
+een onbekend domein alleen af op je eigen Resend-accountmail.
+
+## Variabelen (Railway)
+`MONGODB_URI`, `SESSION_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `RESEND_API_KEY`,
+`MAIL_TO`, `RESEND_FROM`, `ANTHROPIC_API_KEY` (+ `ANTHROPIC_MODEL`), `NODE_ENV=production`.
