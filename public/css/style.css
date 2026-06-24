@@ -369,3 +369,13 @@ code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
   .modules{grid-template-columns:1fr}
   .pipeline{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ===== Contactformulier ===== */
+.contactform-wrap{margin-top:30px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px}
+.contactform-wrap h2{font-family:'Playfair Display',serif;color:var(--navy);margin:0 0 16px}
+.contactform{display:flex;flex-direction:column;gap:14px}
+.contactform label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--navy)}
+.contactform input,.contactform textarea{padding:11px;border:1px solid #cdd6e0;border-radius:8px;font-size:15px;font-family:'Poppins',sans-serif;font-weight:400}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.contactform .btn{align-self:flex-start}
+@media(max-width:640px){.cf-row{grid-template-columns:1fr}.contactform .btn{align-self:stretch}}

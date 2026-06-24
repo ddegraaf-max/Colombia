@@ -96,6 +96,7 @@ const Subsidy = mongoose.model('Subsidy', new mongoose.Schema({ title: String, p
 const Newsletter = mongoose.model('Newsletter', new mongoose.Schema({ email: { type: String, lowercase: true }, lang: String, createdAt: { type: Date, default: Date.now } }));
 const PortalUser = mongoose.model('PortalUser', new mongoose.Schema({ name: String, email: { type: String, unique: true, lowercase: true }, passwordHash: String, role: { type: String, default: 'Zorgprofessional' }, language: { type: String, default: 'pl' }, twoFASecret: { type: String, default: null }, twoFAEnabled: { type: Boolean, default: false }, createdAt: { type: Date, default: Date.now }, lastLogin: Date }));
 const Appointment = mongoose.model('Appointment', new mongoose.Schema({ name: String, email: String, portalUserId: { type: String, default: null }, date: String, time: String, topic: String, channel: { type: String, default: 'Videogesprek' }, status: { type: String, default: 'Aangevraagd' }, notes: String, createdAt: { type: Date, default: Date.now } }));
+const ContactMessage = mongoose.model('ContactMessage', new mongoose.Schema({ name: String, email: String, subject: String, message: String, lang: String, status: { type: String, default: 'Nieuw' }, createdAt: { type: Date, default: Date.now } }));
 
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false, proxy: true, cookie: { httpOnly: true, sameSite: 'lax', secure: IS_PROD, maxAge: 1000 * 60 * 60 * 8 }, store: MongoStore.create({ mongoUrl: MONGO }) }));
 
@@ -139,6 +140,38 @@ const BOOK = {
   es: { title: 'Agenda una charla', sub: 'Elige el momento que mejor te venga — confirmaremos en breve.', date: 'Fecha', time: 'Hora', name: 'Nombre completo', email: 'Correo', topic: 'Tema', channel: 'Formato', video: 'Videollamada', phone: 'Teléfono', onsite: 'Presencial', send: 'Enviar solicitud', thanks: '¡Gracias! Tu solicitud se ha enviado. Te contactaremos para confirmar.', back: 'Inicio' }
 };
 function book(req) { return BOOK[req.lang] || BOOK.pl; }
+
+// ---- E-mail via Resend ----
+const MAIL_TO = process.env.MAIL_TO || 'info@honorcareinternational.com';
+const MAIL_FROM = process.env.RESEND_FROM || 'Honor Care International <onboarding@resend.dev>';
+async function sendEmail({ to, subject, html, replyTo }) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) { console.warn('[mail] RESEND_API_KEY ontbreekt — niet verzonden:', subject); return { skipped: true }; }
+  try {
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from: MAIL_FROM, to: Array.isArray(to) ? to : [to], subject, html, ...(replyTo ? { reply_to: replyTo } : {}) })
+    });
+    if (!r.ok) { const t = await r.text().catch(() => ''); console.error('[mail] Resend-fout', r.status, t.slice(0, 300)); return { error: r.status }; }
+    return await r.json();
+  } catch (e) { console.error('[mail] uitzondering', e.message); return { error: 'network' }; }
+}
+function mailWrap(title, rows) {
+  const body = rows.map(([k, v]) => `<tr><td style="padding:6px 12px;color:#667;font-size:13px">${esc(k)}</td><td style="padding:6px 12px;font-weight:600;color:#002B55">${esc(v)}</td></tr>`).join('');
+  return `<div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;border:1px solid #e6e6e6;border-radius:10px;overflow:hidden">
+<div style="background:#002B55;color:#fff;padding:16px 20px;font-size:18px">Honor Care International</div>
+<div style="padding:20px"><h2 style="color:#002B55;margin:0 0 12px;font-size:18px">${esc(title)}</h2>
+<table style="width:100%;border-collapse:collapse">${body}</table></div>
+<div style="background:#f6f4ef;color:#888;padding:12px 20px;font-size:12px">Automatisch bericht van honorcareinternational.com</div></div>`;
+}
+const CONTACT = {
+  pl: { title: 'Skontaktuj się', name: 'Imię i nazwisko', email: 'E-mail', subject: 'Temat', message: 'Wiadomość', send: 'Wyślij', thanks: 'Dziękujemy! Twoja wiadomość została wysłana.' },
+  en: { title: 'Contact us', name: 'Full name', email: 'Email', subject: 'Subject', message: 'Message', send: 'Send', thanks: 'Thank you! Your message has been sent.' },
+  nl: { title: 'Neem contact op', name: 'Naam', email: 'E-mail', subject: 'Onderwerp', message: 'Bericht', send: 'Versturen', thanks: 'Bedankt! Je bericht is verstuurd.' },
+  es: { title: 'Contáctanos', name: 'Nombre completo', email: 'Correo', subject: 'Asunto', message: 'Mensaje', send: 'Enviar', thanks: '¡Gracias! Tu mensaje ha sido enviado.' }
+};
+function contactT(req) { return CONTACT[req.lang] || CONTACT.pl; }
 const TIMES = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
 const DMONTHS = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
 function shiftMonth(ym, delta) { let [Y, M] = ym.split('-').map(Number); M += delta; while (M < 1) { M += 12; Y--; } while (M > 12) { M -= 12; Y++; } return `${Y}-${String(M).padStart(2, '0')}`; }
@@ -237,6 +270,7 @@ app.post('/newsletter', async (req, res) => {
   const email = String(req.body.email || '').toLowerCase().trim();
   if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     try { await Newsletter.updateOne({ email }, { $setOnInsert: { email, lang: req.lang, createdAt: new Date() } }, { upsert: true }); } catch (e) {}
+    sendEmail({ to: MAIL_TO, subject: `Nieuwe nieuwsbrief-inschrijving`, html: mailWrap('Nieuwe nieuwsbrief-inschrijving', [['E-mail', email], ['Taal', req.lang]]) });
   }
   res.redirect('/?sub=ok#main');
 });
@@ -255,12 +289,35 @@ app.get('/academy', (req, res) => contentPage(req, res, 'academy'));
 app.get('/housing', (req, res) => contentPage(req, res, 'housing'));
 app.get('/poland', (req, res) => contentPage(req, res, 'poland'));
 app.get('/contact', (req, res) => {
-  const lang = req.lang, tr = T[lang], f = tr.footer;
-  const body = `<section class="page-hero ph-contact"><div class="page-hero-inner"><h1>${tr.nav.contact}</h1><p>${tr.contactIntro}</p></div></section><section class="page has-hero"><div class="grid two">
+  const lang = req.lang, tr = T[lang], f = tr.footer, c = contactT(req);
+  const ok = req.query.ok ? `<div class="ok" style="margin-bottom:18px">${esc(c.thanks)}</div>` : '';
+  const body = `<section class="page-hero ph-contact"><div class="page-hero-inner"><h1>${tr.nav.contact}</h1><p>${tr.contactIntro}</p></div></section><section class="page has-hero">${ok}<div class="grid two">
 <article class="panel"><h3>${f.officeNL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>${f.hoursNL}</p></article>
 <article class="panel"><h3>${f.officeCO}</h3><p>Carrera 13 # 97-76, Oficina 501, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>${f.hoursCO}</p></article>
-</div></section>${footer(lang)}`;
+</div>
+<div class="contactform-wrap"><h2>${esc(c.title)}</h2><form class="contactform" method="post" action="/contact">
+<div class="cf-row"><label>${esc(c.name)}<input name="name" autocomplete="name" required></label><label>${esc(c.email)}<input type="email" name="email" autocomplete="email" required></label></div>
+<label>${esc(c.subject)}<input name="subject"></label>
+<label>${esc(c.message)}<textarea name="message" rows="5" required></textarea></label>
+<button class="btn gold">${esc(c.send)}</button>
+</form></div>
+</section>${footer(lang)}`;
   res.send(layout(tr.nav.contact, body, 'contact', lang, req.path));
+});
+app.post('/contact', async (req, res) => {
+  const name = String(req.body.name || '').trim();
+  const email = String(req.body.email || '').toLowerCase().trim();
+  const subject = String(req.body.subject || '').trim();
+  const message = String(req.body.message || '').trim();
+  const c = contactT(req);
+  if (name && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && message) {
+    try { await ContactMessage.create({ name, email, subject, message, lang: req.lang }); } catch (e) {}
+    // melding naar Honor Care
+    sendEmail({ to: MAIL_TO, replyTo: email, subject: `Nieuw contactbericht — ${name}`, html: mailWrap('Nieuw contactbericht', [['Naam', name], ['E-mail', email], ['Onderwerp', subject || '—'], ['Bericht', message]]) });
+    // bevestiging naar afzender (werkt zodra je domein in Resend geverifieerd is)
+    sendEmail({ to: email, subject: c.thanks, html: mailWrap(c.thanks, [['Naam', name], ['Onderwerp', subject || '—'], ['Bericht', message]]) });
+  }
+  res.redirect('/contact?ok=1');
 });
 
 // ---------- Plan een gesprek (publiek) ----------
@@ -286,7 +343,12 @@ app.get('/plan', (req, res) => {
 app.post('/plan', async (req, res) => {
   const name = String(req.body.name || '').trim(), email = String(req.body.email || '').toLowerCase().trim();
   const date = String(req.body.date || ''), time = String(req.body.time || '');
-  if (name && email && date) { try { await Appointment.create({ name, email, date, time, topic: String(req.body.topic || ''), channel: String(req.body.channel || 'Videogesprek'), status: 'Aangevraagd' }); } catch (e) {} }
+  const topic = String(req.body.topic || ''), channel = String(req.body.channel || 'Videogesprek');
+  if (name && email && date) {
+    try { await Appointment.create({ name, email, date, time, topic, channel, status: 'Aangevraagd' }); } catch (e) {}
+    sendEmail({ to: MAIL_TO, replyTo: email, subject: `Nieuwe gespreksaanvraag — ${name}`, html: mailWrap('Nieuwe gespreksaanvraag', [['Naam', name], ['E-mail', email], ['Datum', date], ['Tijd', time], ['Kanaal', channel], ['Onderwerp', topic || '—']]) });
+    sendEmail({ to: email, subject: book(req).thanks, html: mailWrap(book(req).title, [['Datum', date], ['Tijd', time], ['Kanaal', channel]]) });
+  }
   res.redirect('/plan?ok=1');
 });
 
@@ -333,7 +395,7 @@ app.post('/verify-2fa', requireLogin, async (req, res) => {
 app.post('/logout', (req, res) => req.session.destroy(() => res.redirect('/')));
 
 // ---------- Portaal ----------
-const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
+const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/messages', 'Berichten'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
 function portalNav(active) { return `<nav class="pnav" aria-label="Portaal">${PORTAL_LINKS.map(([h, l]) => `<a href="${h}" class="${active === h ? 'on' : ''}">${l}</a>`).join('')}</nav>`; }
 function portalShell(req, res, title, inner, active) {
   const head = `<div class="page-head"><div><h1>${esc(title)}</h1></div><form method="post" action="/logout"><button class="btn navy small">Uitloggen</button></form></div>`;
@@ -354,7 +416,8 @@ app.get('/dashboard', requireAuth, async (req, res) => {
     Document.countDocuments(), Candidate.countDocuments(), Institution.countDocuments(),
     Placement.countDocuments(), Housing.countDocuments(), Subsidy.countDocuments()]);
   const appt = await Appointment.countDocuments();
-  const tiles = [['/agenda', 'Agenda', appt], ['/candidates', 'Kandidaten', cand], ['/institutions-list', 'Instellingen', inst], ['/placements', 'Plaatsingen', plac], ['/housing-list', 'Woningen', hous], ['/documents', 'Documenten', docs], ['/subsidies', 'Subsidies', subs]];
+  const msgs = await ContactMessage.countDocuments();
+  const tiles = [['/agenda', 'Agenda', appt], ['/messages', 'Berichten', msgs], ['/candidates', 'Kandidaten', cand], ['/institutions-list', 'Instellingen', inst], ['/placements', 'Plaatsingen', plac], ['/housing-list', 'Woningen', hous], ['/documents', 'Documenten', docs], ['/subsidies', 'Subsidies', subs]];
   const cands = await Candidate.find().lean();
   const stages = ['Nieuw', 'Screening', 'Taalopleiding', 'Erkenning', 'Visum', 'Geplaatst'];
   const pc = {}; stages.forEach(s => pc[s] = 0); cands.forEach(c => { if (pc[c.status] != null) pc[c.status]++; });
@@ -463,7 +526,12 @@ app.get('/portal/account', requireUser, async (req, res) => {
 app.post('/portal/appointment', requireUser, async (req, res) => {
   const u = await PortalUser.findById(req.session.portalUserId).lean();
   const date = String(req.body.date || ''), time = String(req.body.time || '');
-  if (u && date) { try { await Appointment.create({ name: u.name, email: u.email, portalUserId: String(u._id), date, time, topic: String(req.body.topic || ''), channel: String(req.body.channel || 'Videogesprek'), status: 'Aangevraagd' }); } catch (e) {} }
+  const topic = String(req.body.topic || ''), channel = String(req.body.channel || 'Videogesprek');
+  if (u && date) {
+    try { await Appointment.create({ name: u.name, email: u.email, portalUserId: String(u._id), date, time, topic, channel, status: 'Aangevraagd' }); } catch (e) {}
+    sendEmail({ to: MAIL_TO, replyTo: u.email, subject: `Gespreksaanvraag (portaal) — ${u.name}`, html: mailWrap('Gespreksaanvraag via portaal', [['Naam', u.name], ['E-mail', u.email], ['Datum', date], ['Tijd', time], ['Kanaal', channel], ['Onderwerp', topic || '—']]) });
+    sendEmail({ to: u.email, subject: book(req).thanks, html: mailWrap(book(req).title, [['Datum', date], ['Tijd', time], ['Kanaal', channel]]) });
+  }
   res.redirect('/portal/account');
 });
 app.post('/portal/account', requireUser, async (req, res) => {
@@ -607,6 +675,11 @@ resource({
   fields: [{ name: 'name', label: 'Naam' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'date', label: 'Datum', type: 'date' }, { name: 'time', label: 'Tijd', type: 'select', options: TIMES }, { name: 'topic', label: 'Onderwerp' }, { name: 'channel', label: 'Kanaal', type: 'select', options: ['Videogesprek', 'Telefoon', 'Op locatie'] }, { name: 'status', label: 'Status', type: 'select', options: ['Aangevraagd', 'Bevestigd', 'Afgerond', 'Geannuleerd'] }, { name: 'notes', label: 'Notities', type: 'textarea' }]
 });
 
+resource({
+  path: '/messages', Model: ContactMessage, title: 'Berichten', titleField: 'name', statusField: 'status', columns: ['email', 'subject'],
+  fields: [{ name: 'name', label: 'Naam' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'subject', label: 'Onderwerp' }, { name: 'message', label: 'Bericht', type: 'textarea' }, { name: 'status', label: 'Status', type: 'select', options: ['Nieuw', 'Beantwoord', 'Gearchiveerd'] }]
+});
+
 // ---- AI-assistent ----
 async function aiChat(messages) {
   const key = process.env.ANTHROPIC_API_KEY;
@@ -637,7 +710,7 @@ app.post('/assistant/chat', requireAuth, async (req, res) => {
 });
 
 // ---- Back-up & herstel (databescherming) ----
-const COLLECTIONS = { documents: Document, candidates: Candidate, institutions: Institution, placements: Placement, housing: Housing, subsidies: Subsidy, appointments: Appointment, newsletter: Newsletter, portalusers: PortalUser };
+const COLLECTIONS = { documents: Document, candidates: Candidate, institutions: Institution, placements: Placement, housing: Housing, subsidies: Subsidy, appointments: Appointment, messages: ContactMessage, newsletter: Newsletter, portalusers: PortalUser };
 app.get('/backup', requireAuth, (req, res) => {
   const inner = `<p>Bescherm je gegevens: download regelmatig een back-up. Zo ben je nooit data kwijt, ook niet bij een herinstallatie of migratie.</p>
 <p><a class="btn gold" href="/backup/download">Download volledige back-up (JSON)</a></p>
@@ -675,5 +748,5 @@ app.use((req, res) => { const tr = T[req.lang]; res.status(404).send(layout('404
 mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
-  app.listen(PORT, () => console.log('HonorCare Working Docs v29 draait op poort ' + PORT));
+  app.listen(PORT, () => console.log('HonorCare Working Docs v30 draait op poort ' + PORT));
 }).catch(e => { console.error(e); process.exit(1); });
