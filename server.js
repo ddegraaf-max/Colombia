@@ -10,6 +10,7 @@ require('dotenv').config();
 const { LANGS, LANGMETA, T } = require('./i18n');
 
 const app = express();
+const ASSET_V = Date.now(); // cache-busting: nieuwe waarde bij elke (her)start/deploy
 app.set('trust proxy', 1);
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 app.use(express.json({ limit: '5mb' }));
@@ -62,7 +63,7 @@ function layout(title, body, active = 'home', lang = 'pl', curPath = '/') {
   const tr = T[lang];
   const nav = [['home', '/'], ['about', '/about'], ['institutions', '/institutions'], ['candidates', '/candidates-info'], ['academy', '/academy'], ['housing', '/housing'], ['poland', '/poland'], ['contact', '/contact']]
     .map(([k, href]) => `<a class="${active === k ? 'active' : ''}" href="${href}">${tr.nav[k]}</a>`).join('');
-  return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><meta name="description" content="Honor Care International — ${esc(tr.hero.p).slice(0, 140)}"><link rel="icon" href="/images/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"></head><body>
+  return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><meta name="description" content="Honor Care International — ${esc(tr.hero.p).slice(0, 140)}"><link rel="icon" href="/images/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css?v=${ASSET_V}"></head><body>
 <a class="skip" href="#main">→</a>
 <div class="top"><span class="ttag">${tr.topTagline}</span><span class="right"><a href="tel:+48221234567">☎ +48 22 123 45 67</a> <i class="t-loc">|</i> <a class="t-mail" href="mailto:info@honorcareinternational.com">✉ info@honorcareinternational.com</a> <i class="t-loc">|</i> <span class="t-loc">📍 ${tr.location}</span> <i>|</i> ${langSwitcher(lang, curPath)}</span></div>
 <header class="header"><a class="logo" href="/"><img src="/images/logo.svg" alt="Honor Care International" width="290" height="65"></a>
@@ -711,7 +712,7 @@ app.get('/assistant', requireAuth, (req, res) => {
   const inner = `<p>Stel vragen over werving, planning of subsidies, of laat de assistent een e-mail of tekst opstellen.</p>${warn}
 <div id="chat" class="chat" aria-live="polite"></div>
 <form id="chatform" class="chatform"><input id="msg" type="text" placeholder="Typ je bericht…" autocomplete="off" aria-label="Bericht"><button class="btn gold" type="submit">Stuur</button></form>
-<script src="/js/assistant.js"></script>`;
+<script src="/js/assistant.js?v=${ASSET_V}"></script>`;
   portalShell(req, res, 'AI-assistent', inner, '/assistant');
 });
 app.post('/assistant/chat', requireAuth, async (req, res) => {
@@ -778,7 +779,7 @@ mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
   app.listen(PORT, () => {
-    console.log('HonorCare Working Docs v35 draait op poort ' + PORT);
+    console.log('HonorCare Working Docs v36 draait op poort ' + PORT);
     const found = Object.keys(process.env).filter(k => /resend|mail/i.test(k));
     console.log('[env] RESEND/MAIL-variabelen die Railway doorgeeft: ' + (found.length ? found.join(', ') : '(GEEN)'));
     console.log('[mail] Resend-sleutel gedetecteerd: ' + (RESEND_KEY ? ('JA ✓ (lengte ' + RESEND_KEY.length + ')') : 'NEE ✗') + ' | MAIL_TO: ' + MAIL_TO + ' | FROM: ' + MAIL_FROM);
