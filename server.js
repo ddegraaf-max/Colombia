@@ -166,10 +166,10 @@ function mailWrap(title, rows) {
 <div style="background:#f6f4ef;color:#888;padding:12px 20px;font-size:12px">Automatisch bericht van honorcareinternational.com</div></div>`;
 }
 const CONTACT = {
-  pl: { title: 'Skontaktuj się', name: 'Imię i nazwisko', email: 'E-mail', subject: 'Temat', message: 'Wiadomość', send: 'Wyślij', thanks: 'Dziękujemy! Twoja wiadomość została wysłana.' },
-  en: { title: 'Contact us', name: 'Full name', email: 'Email', subject: 'Subject', message: 'Message', send: 'Send', thanks: 'Thank you! Your message has been sent.' },
-  nl: { title: 'Neem contact op', name: 'Naam', email: 'E-mail', subject: 'Onderwerp', message: 'Bericht', send: 'Versturen', thanks: 'Bedankt! Je bericht is verstuurd.' },
-  es: { title: 'Contáctanos', name: 'Nombre completo', email: 'Correo', subject: 'Asunto', message: 'Mensaje', send: 'Enviar', thanks: '¡Gracias! Tu mensaje ha sido enviado.' }
+  pl: { title: 'Skontaktuj się', sub: 'Masz pytanie? Napisz do nas — zwykle odpowiadamy w ciągu jednego dnia roboczego.', note: 'Odpowiadamy w ciągu 24 godzin.', name: 'Imię i nazwisko', email: 'E-mail', subject: 'Temat', message: 'Wiadomość', send: 'Wyślij wiadomość', thanks: 'Dziękujemy! Twoja wiadomość została wysłana.', hours: 'Godziny otwarcia', emailLabel: 'E-mail' },
+  en: { title: 'Contact us', sub: 'Have a question? Send us a message — we usually reply within one business day.', note: 'We reply within 24 hours.', name: 'Full name', email: 'Email', subject: 'Subject', message: 'Message', send: 'Send message', thanks: 'Thank you! Your message has been sent.', hours: 'Opening hours', emailLabel: 'Email' },
+  nl: { title: 'Neem contact op', sub: 'Een vraag? Stuur ons een bericht — we reageren meestal binnen één werkdag.', note: 'We reageren binnen 24 uur.', name: 'Naam', email: 'E-mail', subject: 'Onderwerp', message: 'Bericht', send: 'Bericht versturen', thanks: 'Bedankt! Je bericht is verstuurd.', hours: 'Openingstijden', emailLabel: 'E-mail' },
+  es: { title: 'Contáctanos', sub: '¿Tienes una pregunta? Escríbenos — solemos responder en un día laborable.', note: 'Respondemos en 24 horas.', name: 'Nombre completo', email: 'Correo', subject: 'Asunto', message: 'Mensaje', send: 'Enviar mensaje', thanks: '¡Gracias! Tu mensaje ha sido enviado.', hours: 'Horario', emailLabel: 'Correo' }
 };
 function contactT(req) { return CONTACT[req.lang] || CONTACT.pl; }
 const TIMES = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
@@ -290,17 +290,28 @@ app.get('/housing', (req, res) => contentPage(req, res, 'housing'));
 app.get('/poland', (req, res) => contentPage(req, res, 'poland'));
 app.get('/contact', (req, res) => {
   const lang = req.lang, tr = T[lang], f = tr.footer, c = contactT(req);
-  const ok = req.query.ok ? `<div class="ok" style="margin-bottom:18px">${esc(c.thanks)}</div>` : '';
-  const body = `<section class="page-hero ph-contact"><div class="page-hero-inner"><h1>${tr.nav.contact}</h1><p>${tr.contactIntro}</p></div></section><section class="page has-hero">${ok}<div class="grid two">
-<article class="panel"><h3>${f.officeNL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>${f.hoursNL}</p></article>
-<article class="panel"><h3>${f.officeCO}</h3><p>Carrera 13 # 97-76, Oficina 501, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>${f.hoursCO}</p></article>
+  const ok = req.query.ok ? `<div class="ok cf-ok">✓ ${esc(c.thanks)}</div>` : '';
+  const locIc = '<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>';
+  const mailIc = '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>';
+  const body = `<section class="page-hero ph-contact"><div class="page-hero-inner"><h1>${tr.nav.contact}</h1><p>${tr.contactIntro}</p></div></section>
+<section class="page has-hero">${ok}
+<div class="contact-grid">
+<aside class="contact-info">
+<h2>${esc(c.title)}</h2><p class="contact-sub">${esc(c.sub)}</p>
+<div class="co"><span class="co-ic">${icon(locIc)}</span><div><b>${f.officeNL}</b><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p><p class="co-h">${f.hoursNL}</p></div></div>
+<div class="co"><span class="co-ic">${icon(locIc)}</span><div><b>${f.officeCO}</b><p>Carrera 13 # 97-76, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p><p class="co-h">${f.hoursCO}</p></div></div>
+<div class="co"><span class="co-ic">${icon(mailIc)}</span><div><b>${esc(c.emailLabel)}</b><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p></div></div>
+</aside>
+<div class="contact-card">
+<form class="contactform" method="post" action="/contact">
+<div class="cf-row"><label>${esc(c.name)}<input name="name" autocomplete="name" placeholder="Jan Kowalski" required></label><label>${esc(c.email)}<input type="email" name="email" autocomplete="email" placeholder="jan@example.com" required></label></div>
+<label>${esc(c.subject)}<input name="subject" placeholder="..."></label>
+<label>${esc(c.message)}<textarea name="message" rows="6" placeholder="..." required></textarea></label>
+<button class="btn gold full">${esc(c.send)}</button>
+<p class="cf-note">🔒 ${esc(c.note)}</p>
+</form>
 </div>
-<div class="contactform-wrap"><h2>${esc(c.title)}</h2><form class="contactform" method="post" action="/contact">
-<div class="cf-row"><label>${esc(c.name)}<input name="name" autocomplete="name" required></label><label>${esc(c.email)}<input type="email" name="email" autocomplete="email" required></label></div>
-<label>${esc(c.subject)}<input name="subject"></label>
-<label>${esc(c.message)}<textarea name="message" rows="5" required></textarea></label>
-<button class="btn gold">${esc(c.send)}</button>
-</form></div>
+</div>
 </section>${footer(lang)}`;
   res.send(layout(tr.nav.contact, body, 'contact', lang, req.path));
 });
@@ -765,7 +776,7 @@ mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
   app.listen(PORT, () => {
-    console.log('HonorCare Working Docs v32 draait op poort ' + PORT);
+    console.log('HonorCare Working Docs v33 draait op poort ' + PORT);
     console.log('[env] RESEND_API_KEY: ' + (process.env.RESEND_API_KEY ? 'geladen ✓' : 'ONTBREEKT ✗') + ' | MAIL_TO: ' + (process.env.MAIL_TO || '(standaard info@honorcareinternational.com)') + ' | RESEND_FROM: ' + (process.env.RESEND_FROM || '(standaard onboarding@resend.dev)'));
   });
 }).catch(e => { console.error(e); process.exit(1); });
