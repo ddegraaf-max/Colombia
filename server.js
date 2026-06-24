@@ -764,5 +764,8 @@ app.use((req, res) => { const tr = T[req.lang]; res.status(404).send(layout('404
 mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
-  app.listen(PORT, () => console.log('HonorCare Working Docs v31 draait op poort ' + PORT));
+  app.listen(PORT, () => {
+    console.log('HonorCare Working Docs v32 draait op poort ' + PORT);
+    console.log('[env] RESEND_API_KEY: ' + (process.env.RESEND_API_KEY ? 'geladen ✓' : 'ONTBREEKT ✗') + ' | MAIL_TO: ' + (process.env.MAIL_TO || '(standaard info@honorcareinternational.com)') + ' | RESEND_FROM: ' + (process.env.RESEND_FROM || '(standaard onboarding@resend.dev)'));
+  });
 }).catch(e => { console.error(e); process.exit(1); });
