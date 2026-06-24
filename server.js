@@ -153,7 +153,7 @@ async function sendEmail({ to, subject, html, replyTo }) {
       headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' },
       body: JSON.stringify({ from: MAIL_FROM, to: Array.isArray(to) ? to : [to], subject, html, ...(replyTo ? { reply_to: replyTo } : {}) })
     });
-    if (!r.ok) { const t = await r.text().catch(() => ''); console.error('[mail] Resend-fout', r.status, t.slice(0, 300)); return { error: r.status }; }
+    if (!r.ok) { const t = await r.text().catch(() => ''); console.error('[mail] Resend-fout', r.status, t.slice(0, 300)); return { error: r.status, detail: t }; }
     return await r.json();
   } catch (e) { console.error('[mail] uitzondering', e.message); return { error: 'network' }; }
 }
@@ -711,11 +711,27 @@ app.post('/assistant/chat', requireAuth, async (req, res) => {
 
 // ---- Back-up & herstel (databescherming) ----
 const COLLECTIONS = { documents: Document, candidates: Candidate, institutions: Institution, placements: Placement, housing: Housing, subsidies: Subsidy, appointments: Appointment, messages: ContactMessage, newsletter: Newsletter, portalusers: PortalUser };
+app.get('/admin/mailtest', requireAuth, async (req, res) => {
+  const r = await sendEmail({ to: MAIL_TO, subject: 'Testbericht — Honor Care', html: mailWrap('Testbericht', [['Resultaat', 'Als je dit ziet, werkt Resend correct.'], ['Verzonden naar', MAIL_TO]]) });
+  let cls = 'ok', msg;
+  if (r.skipped) { cls = 'error'; msg = 'RESEND_API_KEY ontbreekt of is leeg.'; }
+  else if (r.error) { cls = 'error'; msg = `FOUT ${r.error}: ${(r.detail || '').slice(0, 500)}`; }
+  else { msg = `Verstuurd ✓ (Resend-id: ${r.id || '?'}). Controleer de inbox van ${MAIL_TO}.`; }
+  const inner = `<div class="rcard">
+<p><b>Afzender (RESEND_FROM):</b> ${esc(MAIL_FROM)}</p>
+<p><b>Ontvanger (MAIL_TO):</b> ${esc(MAIL_TO)}</p>
+<p><b>API-sleutel aanwezig:</b> ${process.env.RESEND_API_KEY ? 'ja' : 'nee'}</p>
+<p class="${cls}" style="margin-top:10px">${esc(msg)}</p>
+<p class="hint">Staat hier "domain is not verified"? Verifieer dan <b>honorcareinternational.com</b> in Resend (Domains → Add Domain → DNS-records plaatsen). Wil je eerst alleen testen? Zet <code>RESEND_FROM=onboarding@resend.dev</code> en <code>MAIL_TO</code> op het e-mailadres van je eigen Resend-account; dan komt deze test binnen.</p>
+<p><a class="btn navy small" href="/admin/mailtest">Opnieuw testen</a> <a class="btn gold small" href="/dashboard">Dashboard</a></p></div>`;
+  portalShell(req, res, 'E-mailtest', inner, '/backup');
+});
 app.get('/backup', requireAuth, (req, res) => {
   const inner = `<p>Bescherm je gegevens: download regelmatig een back-up. Zo ben je nooit data kwijt, ook niet bij een herinstallatie of migratie.</p>
 <p><a class="btn gold" href="/backup/download">Download volledige back-up (JSON)</a></p>
 <h2>Herstellen / importeren</h2><p class="hint">Plak hieronder de inhoud van een back-upbestand. Bestaande records (zelfde id) worden overgeslagen, alleen ontbrekende worden toegevoegd — er wordt niets verwijderd of overschreven.</p>
 <form method="post" action="/restore" class="rform"><div class="ff"><label for="json">Back-up-JSON</label><textarea id="json" name="json" rows="6" placeholder='{"candidates":[...],"housing":[...]}'></textarea></div><div class="rform-actions"><button class="btn navy">Importeren</button></div></form>
+<h2>E-mail (Resend)</h2><p><a class="btn navy" href="/admin/mailtest">E-mailtest uitvoeren</a></p><p class="hint">Stuurt een testbericht naar MAIL_TO en toont de exacte Resend-respons (handig om te zien of je domein geverifieerd is).</p>
 <h2>Gegevens behouden bij Railway</h2><p class="hint">Gebruik een <b>persistente</b> database (bijv. MongoDB Atlas) en zet die connectiestring in <code>MONGODB_URI</code>. Dan blijft alle data bewaard bij elke nieuwe deploy. De seed is niet-destructief: bestaande documenten en woningen worden nooit overschreven.</p>`;
   portalShell(req, res, 'Back-up & herstel', inner, '/backup');
 });
@@ -748,5 +764,5 @@ app.use((req, res) => { const tr = T[req.lang]; res.status(404).send(layout('404
 mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
-  app.listen(PORT, () => console.log('HonorCare Working Docs v30 draait op poort ' + PORT));
+  app.listen(PORT, () => console.log('HonorCare Working Docs v31 draait op poort ' + PORT));
 }).catch(e => { console.error(e); process.exit(1); });
