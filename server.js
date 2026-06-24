@@ -306,9 +306,21 @@ app.get('/contact', (req, res) => {
   const lang = req.lang, tr = T[lang], f = tr.footer, c = contactT(req);
   const locIc = '<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>';
   const mailIc = '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>';
+  const done = req.query.ok ? `<div class="ok contact-ok">${esc(c.thanks)}</div>` : '';
   const body = `<section class="page-hero ph-contact"><div class="page-hero-inner"><h1>${tr.nav.contact}</h1><p>${tr.contactIntro}</p></div></section>
 <section class="page has-hero">
 <p class="contact-lead">${esc(c.sub)}</p>
+${done}
+<div class="contact-form-card">
+<h2>${esc(c.title)}</h2>
+<form class="authform" method="post" action="/contact">
+<label>${esc(c.name)}<input name="name" autocomplete="name" required></label>
+<label>${esc(c.email)}<input type="email" name="email" autocomplete="email" required></label>
+<label>${esc(c.subject)}<input name="subject" autocomplete="off"></label>
+<label>${esc(c.message)}<textarea name="message" rows="6" required></textarea></label>
+<button class="btn gold full">${esc(c.send)}</button>
+</form>
+</div>
 <div class="contact-cards">
 <article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p><p class="ci-h">${f.hoursNL}</p></article>
 <article class="ci-card"><span class="ci-ic">${icon(mailIc)}</span><h3>${esc(c.emailLabel)}</h3><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p class="ci-h">${esc(c.note)}</p></article>
