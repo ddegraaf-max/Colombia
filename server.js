@@ -303,29 +303,15 @@ app.get('/housing', (req, res) => contentPage(req, res, 'housing'));
 app.get('/poland', (req, res) => contentPage(req, res, 'poland'));
 app.get('/contact', (req, res) => {
   const lang = req.lang, tr = T[lang], f = tr.footer, c = contactT(req);
-  const ok = req.query.ok ? `<div class="ok cf-ok">✓ ${esc(c.thanks)}</div>` : '';
   const locIc = '<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>';
   const mailIc = '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>';
-  const clockIc = '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>';
   const body = `<section class="page-hero ph-contact"><div class="page-hero-inner"><h1>${tr.nav.contact}</h1><p>${tr.contactIntro}</p></div></section>
-<section class="page has-hero">${ok}
-<div class="contact-split">
-<div class="cs-info">
-<h2>${esc(c.title)}</h2><p class="cs-sub">${esc(c.sub)}</p>
-<div class="cs-item"><span class="cs-ic">${icon(locIc)}</span><div><b>${f.officeNL}</b><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p></div></div>
-<div class="cs-item"><span class="cs-ic">${icon(locIc)}</span><div><b>${f.officeCO}</b><p>Carrera 13 # 97-76, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p></div></div>
-<div class="cs-item"><span class="cs-ic">${icon(mailIc)}</span><div><b>${esc(c.emailLabel)}</b><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p></div></div>
-<div class="cs-item"><span class="cs-ic">${icon(clockIc)}</span><div><b>${esc(c.hours)}</b><p>${f.hoursNL}</p></div></div>
-</div>
-<div class="cs-form">
-<form class="contactform" method="post" action="/contact">
-<div class="cf-row"><label>${esc(c.name)}<input name="name" autocomplete="name" placeholder="Jan Kowalski" required></label><label>${esc(c.email)}<input type="email" name="email" autocomplete="email" placeholder="jan@example.com" required></label></div>
-<label>${esc(c.subject)}<input name="subject"></label>
-<label>${esc(c.message)}<textarea name="message" rows="6" required></textarea></label>
-<button class="btn gold full">${esc(c.send)}</button>
-<p class="cf-note">🔒 ${esc(c.note)}</p>
-</form>
-</div>
+<section class="page has-hero">
+<p class="contact-lead">${esc(c.sub)}</p>
+<div class="contact-cards">
+<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p><p class="ci-h">${f.hoursNL}</p></article>
+<article class="ci-card"><span class="ci-ic">${icon(mailIc)}</span><h3>${esc(c.emailLabel)}</h3><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p class="ci-h">${esc(c.note)}</p></article>
+<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeCO}</h3><p>Carrera 13 # 97-76, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p><p class="ci-h">${f.hoursCO}</p></article>
 </div>
 </section>${footer(lang)}`;
   res.send(layout(tr.nav.contact, body, 'contact', lang, req.path));
@@ -792,7 +778,7 @@ mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
   app.listen(PORT, () => {
-    console.log('HonorCare Working Docs v34 draait op poort ' + PORT);
+    console.log('HonorCare Working Docs v35 draait op poort ' + PORT);
     const found = Object.keys(process.env).filter(k => /resend|mail/i.test(k));
     console.log('[env] RESEND/MAIL-variabelen die Railway doorgeeft: ' + (found.length ? found.join(', ') : '(GEEN)'));
     console.log('[mail] Resend-sleutel gedetecteerd: ' + (RESEND_KEY ? ('JA ✓ (lengte ' + RESEND_KEY.length + ')') : 'NEE ✗') + ' | MAIL_TO: ' + MAIL_TO + ' | FROM: ' + MAIL_FROM);
