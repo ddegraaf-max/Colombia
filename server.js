@@ -73,6 +73,26 @@ function layout(title, body, active = 'home', lang = 'pl', curPath = '/') {
 <main id="main">${body}</main></body></html>`;
 }
 
+const PARTNER_NAME = process.env.PARTNER_NAME || '';
+const PARTNER_REG = process.env.PARTNER_REG || '';
+const PARTNER_DEFAULT = { pl: 'nasz licencjonowany partner', en: 'our licensed partner', nl: 'onze gelicentieerde partner', es: 'nuestro socio autorizado' };
+const LEGAL = {
+  pl: 'Honor Care International zajmuje się rekrutacją, przygotowaniem i wsparciem profesjonalistów medycznych z Kolumbii. Oficjalne pośrednictwo pracy, udostępnianie pracowników i/lub zatrudnienie realizuje {partner}, zarejestrowana agencja zatrudnienia{reg}. Dla kandydatów nasze usługi są bezpłatne.',
+  en: 'Honor Care International provides recruitment, preparation and support for healthcare professionals from Colombia. The official job placement, staffing and/or employment is handled by {partner}, a registered staffing and recruitment agency{reg}. Our services are free of charge for candidates.',
+  nl: 'Honor Care International verzorgt werving, voorbereiding en begeleiding van zorgprofessionals uit Colombia. De officiële arbeidsbemiddeling, terbeschikkingstelling en/of het dienstverband worden verzorgd door {partner}, een geregistreerd uitzend- en bemiddelingsbureau{reg}. Voor kandidaten zijn onze diensten kosteloos.',
+  es: 'Honor Care International se encarga de la captación, preparación y acompañamiento de profesionales sanitarios de Colombia. La intermediación laboral, la cesión de personal y/o el empleo los gestiona {partner}, una agencia de empleo y selección registrada{reg}. Para los candidatos, nuestros servicios son gratuitos.'
+};
+function legalText(lang) {
+  const partner = PARTNER_NAME || PARTNER_DEFAULT[lang] || PARTNER_DEFAULT.pl;
+  const reg = PARTNER_REG ? ` (${PARTNER_REG})` : '';
+  return (LEGAL[lang] || LEGAL.pl).replace('{partner}', partner).replace('{reg}', reg);
+}
+const HOWIT = {
+  pl: { eyebrow: 'JAK TO DZIAŁA', h2: 'Z Kolumbii do holenderskiej ochrony zdrowia — krok po kroku', note: 'Honor Care nie prowadzi pośrednictwa samodzielnie; oficjalne zatrudnienie realizuje nasze zarejestrowane biuro partnerskie.', steps: [['Rekrutacja i przygotowanie', 'Znajdujemy i wspieramy profesjonalistów w Kolumbii: język niderlandzki (B1–B2, NT2), pomoc w uznaniu dyplomu i rejestracji BIG, przygotowanie i relokacja.'], ['Oficjalne zatrudnienie', 'Pośrednictwo, umowę i pozwolenia realizuje nasze zarejestrowane biuro partnerskie — uprawniony pośrednik/pracodawca.'], ['Wsparcie aż do Holandii', 'Towarzyszymy kandydatowi aż do przyjazdu i integracji. Dla kandydata bezpłatnie.']] },
+  en: { eyebrow: 'HOW IT WORKS', h2: 'From Colombia to Dutch healthcare, step by step', note: 'Honor Care does not place workers itself; the official placement and employment are handled by our registered partner agency.', steps: [['Sourcing & preparation', 'We find and guide professionals in Colombia: Dutch to B1–B2 (NT2), help with diploma recognition and BIG registration, preparation and relocation.'], ['Official placement', 'Placement, the contract and permits are handled by our registered partner agency — the authorised intermediary/employer.'], ['Support all the way to the Netherlands', 'We support the candidate through arrival and integration. Free of charge for the candidate.']] },
+  nl: { eyebrow: 'HOE HET WERKT', h2: 'Van Colombia naar de Nederlandse zorg — stap voor stap', note: 'Honor Care bemiddelt niet zelf; de officiële plaatsing en het dienstverband lopen via ons geregistreerde partnerbureau.', steps: [['Werving & voorbereiding', 'Wij vinden en begeleiden professionals in Colombia: Nederlands tot B1–B2 (NT2), hulp bij diploma-erkenning en BIG-registratie, voorbereiding en relocatie.'], ['Officiële plaatsing', 'De bemiddeling, het contract en de vergunningen lopen via ons geregistreerde partnerbureau — de erkende bemiddelaar/werkgever.'], ['Begeleiding tot in Nederland', 'Wij ondersteunen de kandidaat tot en met aankomst en integratie. Voor de kandidaat kosteloos.']] },
+  es: { eyebrow: 'CÓMO FUNCIONA', h2: 'De Colombia a la sanidad neerlandesa, paso a paso', note: 'Honor Care no realiza la intermediación; la colocación oficial y el empleo los gestiona nuestra agencia asociada registrada.', steps: [['Captación y preparación', 'Encontramos y acompañamos a profesionales en Colombia: neerlandés hasta B1–B2 (NT2), ayuda con la homologación del título y el registro BIG, preparación y reubicación.'], ['Colocación oficial', 'La intermediación, el contrato y los permisos los gestiona nuestra agencia asociada registrada: el intermediario autorizado.'], ['Acompañamiento hasta los Países Bajos', 'Apoyamos al candidato hasta la llegada y la integración. Gratis para el candidato.']] }
+};
 function footer(lang = 'pl') {
   const tr = T[lang], f = tr.footer;
   const links = [['home', '/'], ['about', '/about'], ['institutions', '/institutions'], ['candidates', '/candidates-info'], ['academy', '/academy'], ['housing', '/housing'], ['poland', '/poland'], ['contact', '/contact']]
@@ -80,10 +100,10 @@ function footer(lang = 'pl') {
   return `<footer class="footer"><div class="footer-main">
 <div class="fcol"><img class="flogo" src="/images/logo.svg" alt="Honor Care International" width="230" height="52"><p>${f.tagline}</p><div class="social"><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 8H6v4h3v12h5V12h3.6l.4-4h-4V6.3c0-1 .2-1.3 1.2-1.3H18V0h-3.6C10.8 0 9 1.6 9 4.6V8z"/></svg></a><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.5 3 5.5 7V24h-5v-7c0-1.7 0-3.8-2.3-3.8s-2.7 1.8-2.7 3.7V24h-5V8z"/></svg></a><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.5-.1 4.8c-.1 3.2-1.6 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.5.1-4.8C2.4 4 3.9 2.4 7.1 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 12 18.6 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 12 7.7a4.3 4.3 0 0 1 0 8.6zm6.8-11.1a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></a></div></div>
 <div class="fcol"><h4>${f.quick}</h4><ul>${links}</ul></div>
-<div class="fcol"><h4>${f.officeNL}</h4><p>📍 ul. Prosta 69, 00-838<br>Warszawa, ${tr.nav.poland}</p><p>☎ <a href="tel:+48221234567">+48 22 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p></div>
+<div class="fcol"><h4>${f.officeNL}</h4><p>📍 Torenlaan 5A, 1402 BN<br>Bussum, ${tr.nav.poland}</p><p>☎ <a href="tel:+31351234567">+31 35 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p></div>
 <div class="fcol"><h4>${f.officeCO}</h4><p>📍 Carrera 13 # 97-76, Oficina 501<br>Bogotá, Colombia</p><p>☎ <a href="tel:+573201234567">+57 320 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursCO}</p></div>
 <div class="fcol newsletter"><h4>${f.newsletter}</h4><p>${f.newsletterText}</p><form method="post" action="/newsletter"><div class="nl-row"><input type="email" name="email" placeholder="${f.newsletterPh}" aria-label="${f.newsletterPh}" required><button class="nl-btn" aria-label="OK">→</button></div></form></div>
-</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International. ${f.rights}</span><span><a href="/poland">${f.privacy}</a> &nbsp;|&nbsp; <a href="/about">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
+</div><div class="footer-legal">${legalText(lang)}</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International. ${f.rights}</span><span><a href="/poland">${f.privacy}</a> &nbsp;|&nbsp; <a href="/about">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
 }
 
 mongoose.set('strictQuery', true);
@@ -275,6 +295,7 @@ app.get('/', (req, res) => {
 <section class="hero"><div class="hero-inner"><h1>${tr.hero.h1[0]}<br>${tr.hero.h1[1]}<br><strong>${tr.hero.h1[2]}</strong></h1><p>${tr.hero.p}</p><div class="bullets">${tr.hero.bullets.map(x => `<div><b>✓</b>${x}</div>`).join('')}</div><div class="hero-cta"><a class="btn navy" href="/institutions">${tr.hero.btnInst}</a><a class="btn gold" href="/candidates-info">${tr.hero.btnProf}</a><a class="btn light" href="/plan">${tr.hero.btnMeet}</a></div></div><div class="hero-badge">${heart}<span>${tr.hero.badge}</span></div></section>
 <section class="specs">${tr.specs.map((label, i) => `<div class="spec"><span class="spec-ic">${icon(SPEC_ICONS[i])}</span><span>${label}</span></div>`).join('')}</section>
 <section class="cards-wrap"><div class="cards">${tr.cards.map((c, i) => `<article class="card"><div class="card-img ${CARD_META[i][0]}" role="img" aria-label="${esc(c.h)}"></div><div class="card-body"><span class="tag">${c.tag}</span><h3>${c.h}</h3><ul>${c.items.map(li => `<li>${li}</li>`).join('')}</ul><a class="btn ${CARD_META[i][2]} full" href="${CARD_META[i][1]}">${c.btn}</a></div></article>`).join('')}</div></section>
+<section class="howit"><div class="howit-head"><span class="eyebrow">${HOWIT[lang].eyebrow}</span><h2>${HOWIT[lang].h2}</h2></div><div class="howit-steps">${HOWIT[lang].steps.map((s, i) => `<div class="howit-step"><span class="howit-n">${i + 1}</span><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join('')}</div><p class="howit-note">${HOWIT[lang].note}</p></section>
 <section class="why"><div class="why-card"><span class="eyebrow">${icon('<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>')} ${tr.why.eyebrow}</span><h2>${tr.why.h2[0]}<br>${tr.why.h2[1]}</h2><p>${tr.why.p}</p><a class="btn gold" href="/poland">${tr.why.btn}</a></div><div class="why-stats">${tr.why.stats.map((s, i) => `<div class="stat"><span class="stat-ic">${icon(STAT_ICONS[i])}</span><b>${s[0]}</b><span class="stat-label">${s[1]}</span></div>`).join('')}</div></section>
 ${footer(lang)}`;
   res.send(layout('Honor Care International', body, 'home', lang, req.path));
@@ -306,23 +327,11 @@ app.get('/contact', (req, res) => {
   const lang = req.lang, tr = T[lang], f = tr.footer, c = contactT(req);
   const locIc = '<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>';
   const mailIc = '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>';
-  const done = req.query.ok ? `<div class="ok contact-ok">${esc(c.thanks)}</div>` : '';
   const body = `<section class="page-hero ph-contact"><div class="page-hero-inner"><h1>${tr.nav.contact}</h1><p>${tr.contactIntro}</p></div></section>
 <section class="page has-hero">
 <p class="contact-lead">${esc(c.sub)}</p>
-${done}
-<div class="contact-form-card">
-<h2>${esc(c.title)}</h2>
-<form class="authform" method="post" action="/contact">
-<label>${esc(c.name)}<input name="name" autocomplete="name" required></label>
-<label>${esc(c.email)}<input type="email" name="email" autocomplete="email" required></label>
-<label>${esc(c.subject)}<input name="subject" autocomplete="off"></label>
-<label>${esc(c.message)}<textarea name="message" rows="6" required></textarea></label>
-<button class="btn gold full">${esc(c.send)}</button>
-</form>
-</div>
 <div class="contact-cards">
-<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p><p class="ci-h">${f.hoursNL}</p></article>
+<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+31351234567">+31 35 123 45 67</a></p><p class="ci-h">${f.hoursNL}</p></article>
 <article class="ci-card"><span class="ci-ic">${icon(mailIc)}</span><h3>${esc(c.emailLabel)}</h3><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p class="ci-h">${esc(c.note)}</p></article>
 <article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeCO}</h3><p>Carrera 13 # 97-76, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p><p class="ci-h">${f.hoursCO}</p></article>
 </div>
@@ -791,7 +800,7 @@ mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
   app.listen(PORT, () => {
-    console.log('HonorCare Working Docs v36 draait op poort ' + PORT);
+    console.log('HonorCare Working Docs v39 draait op poort ' + PORT);
     const found = Object.keys(process.env).filter(k => /resend|mail/i.test(k));
     console.log('[env] RESEND/MAIL-variabelen die Railway doorgeeft: ' + (found.length ? found.join(', ') : '(GEEN)'));
     console.log('[mail] Resend-sleutel gedetecteerd: ' + (RESEND_KEY ? ('JA ✓ (lengte ' + RESEND_KEY.length + ')') : 'NEE ✗') + ' | MAIL_TO: ' + MAIL_TO + ' | FROM: ' + MAIL_FROM);

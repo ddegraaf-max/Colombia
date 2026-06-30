@@ -314,8 +314,7 @@ code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
 #tab-register:checked~.pane-register{display:block}
 .authform{display:flex;flex-direction:column;gap:14px}
 .authform label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--navy)}
-.authform input,.authform select,.authform textarea{padding:11px;border:1px solid #cdd6e0;border-radius:8px;font-size:15px;font-family:'Poppins',sans-serif;font-weight:400}
-.authform textarea{resize:vertical;min-height:120px}
+.authform input,.authform select{padding:11px;border:1px solid #cdd6e0;border-radius:8px;font-size:15px;font-family:'Poppins',sans-serif;font-weight:400}
 .authnote{margin-top:18px;text-align:center;font-size:12.5px;color:var(--muted)}
 .adminlink{opacity:.75}
 .adminlink:hover{opacity:1;color:var(--gold)}
@@ -373,10 +372,6 @@ code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
 
 /* ===== Contact (info) ===== */
 .contact-lead{text-align:center;max-width:620px;margin:0 auto 34px;color:var(--muted);font-size:17px;line-height:1.6}
-.contact-ok{max-width:620px;margin:0 auto 24px;text-align:center}
-.contact-form-card{max-width:620px;margin:0 auto 44px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:32px 30px;box-shadow:0 10px 40px rgba(0,0,0,.06)}
-.contact-form-card h2{font-family:'Playfair Display',serif;color:var(--navy);margin:0 0 18px;font-size:24px;text-align:center}
-@media(max-width:560px){.contact-form-card{margin:0 12px 32px;padding:24px 18px}}
 .contact-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .ci-card{background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:14px;padding:30px 26px;box-shadow:0 10px 30px rgba(0,0,0,.05);text-align:center}
 .ci-ic{display:inline-flex;width:54px;height:54px;border-radius:14px;background:var(--navy);align-items:center;justify-content:center;margin-bottom:14px}
@@ -387,3 +382,18 @@ code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
 .ci-card p a:hover{color:var(--gold)}
 .ci-h{color:var(--muted);font-size:13px}
 @media(max-width:860px){.contact-cards{grid-template-columns:1fr}}
+
+/* ===== Hoe het werkt (juridisch model) ===== */
+.howit{max-width:1180px;margin:0 auto;padding:64px 5vw 8px}
+.howit-head{text-align:center;margin-bottom:36px}
+.howit-head h2{font-family:'Playfair Display',serif;color:var(--navy);font-size:clamp(24px,3vw,34px);margin:10px auto 0;max-width:760px}
+.howit-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.howit-step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:30px 26px 26px;box-shadow:0 10px 30px rgba(0,0,0,.05)}
+.howit-n{display:inline-flex;width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;font-weight:800;font-size:18px;align-items:center;justify-content:center;margin-bottom:14px}
+.howit-step h3{font-family:'Playfair Display',serif;color:var(--navy);font-size:19px;margin:0 0 8px}
+.howit-step p{color:var(--text);font-size:14.5px;line-height:1.6;margin:0}
+.howit-note{max-width:780px;margin:26px auto 0;text-align:center;font-size:13.5px;color:var(--muted);font-style:italic}
+@media(max-width:860px){.howit-steps{grid-template-columns:1fr}.howit{padding-top:48px}}
+
+/* ===== Juridische voettekst ===== */
+.footer-legal{border-top:1px solid rgba(255,255,255,.12);padding:18px 5vw;font-size:12px;line-height:1.65;color:rgba(255,255,255,.6);max-width:1180px;margin:0 auto}
