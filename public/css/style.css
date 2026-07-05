@@ -383,6 +383,30 @@ code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
 .ci-h{color:var(--muted);font-size:13px}
 @media(max-width:860px){.contact-cards{grid-template-columns:1fr}}
 
+/* ===== Contactformulier ===== */
+.contact-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:26px;align-items:start;max-width:1120px;margin:0 auto 46px;scroll-margin-top:110px}
+.contact-form-card{background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:18px;padding:36px 34px;box-shadow:0 16px 48px rgba(0,43,85,.09)}
+.cf-head{display:flex;gap:16px;align-items:center;margin-bottom:22px}
+.cf-ic{display:inline-flex;flex:0 0 auto;width:52px;height:52px;border-radius:14px;background:var(--navy);align-items:center;justify-content:center}
+.cf-ic svg{width:24px;height:24px;stroke:var(--gold2)}
+.cf-head h2{font-family:'Playfair Display',serif;color:var(--navy);margin:0;font-size:26px;line-height:1.15}
+.cf-head p{margin:3px 0 0;color:var(--muted);font-size:13.5px}
+.cform{display:flex;flex-direction:column;gap:16px}
+.cform label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--navy);letter-spacing:.2px}
+.cform input,.cform textarea{padding:12px 14px;border:1.5px solid #d5dde6;border-radius:10px;font-size:15px;font-family:'Poppins',sans-serif;font-weight:400;color:var(--text);background:#fbfcfe;transition:border-color .15s,box-shadow .15s,background .15s}
+.cform input:focus,.cform textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,150,47,.16);background:#fff}
+.cform textarea{resize:vertical;min-height:150px;line-height:1.55}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cform .btn{margin-top:4px;padding:15px 24px;font-size:13px}
+.cf-privacy{margin:4px 0 0;text-align:center;font-size:12.5px;color:var(--muted)}
+.hp{position:absolute!important;left:-9999px;top:-9999px;height:1px;width:1px;opacity:0;pointer-events:none}
+.contact-ok{display:flex;align-items:center;gap:12px;background:#e8f5ee;border:1px solid #bfe3cf;color:#1f7a4d;padding:14px 18px;border-radius:12px;margin-bottom:20px;font-weight:600;font-size:14.5px}
+.contact-ok svg{width:26px;height:26px;flex:0 0 auto}
+.contact-aside{display:flex;flex-direction:column;gap:20px}
+.contact-aside .ci-card{padding:26px 24px}
+@media(max-width:960px){.contact-grid{grid-template-columns:1fr;margin:0 12px 36px}.contact-form-card{padding:26px 20px}}
+@media(max-width:560px){.cf-row{grid-template-columns:1fr}}
+
 /* ===== Hoe het werkt (juridisch model) ===== */
 .howit{max-width:1180px;margin:0 auto;padding:64px 5vw 8px}
 .howit-head{text-align:center;margin-bottom:36px}

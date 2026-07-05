@@ -327,18 +327,38 @@ app.get('/contact', (req, res) => {
   const lang = req.lang, tr = T[lang], f = tr.footer, c = contactT(req);
   const locIc = '<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>';
   const mailIc = '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>';
+  const a = acc(req);
+  const done = req.query.ok ? `<div class="contact-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg><span>${esc(c.thanks)}</span></div>` : '';
   const body = `<section class="page-hero ph-contact"><div class="page-hero-inner"><h1>${tr.nav.contact}</h1><p>${tr.contactIntro}</p></div></section>
 <section class="page has-hero">
 <p class="contact-lead">${esc(c.sub)}</p>
-<div class="contact-cards">
+<div class="contact-grid" id="kontakt">
+<div class="contact-form-card">
+${done}
+<div class="cf-head"><span class="cf-ic">${icon(mailIc)}</span><div><h2>${esc(c.title)}</h2><p>${esc(c.note)}</p></div></div>
+<form class="cform" method="post" action="/contact#kontakt">
+<div class="cf-row">
+<label>${esc(c.name)} *<input name="name" autocomplete="name" maxlength="120" required></label>
+<label>${esc(c.email)} *<input type="email" name="email" autocomplete="email" maxlength="160" required></label>
+</div>
+<label>${esc(c.subject)}<input name="subject" autocomplete="off" maxlength="160"></label>
+<label>${esc(c.message)} *<textarea name="message" rows="7" maxlength="5000" required></textarea></label>
+<input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="btn gold full">${esc(c.send)} →</button>
+<p class="cf-privacy">🔒 ${esc(a.secNote)}</p>
+</form>
+</div>
+<aside class="contact-aside">
 <article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+31351234567">+31 35 123 45 67</a></p><p class="ci-h">${f.hoursNL}</p></article>
 <article class="ci-card"><span class="ci-ic">${icon(mailIc)}</span><h3>${esc(c.emailLabel)}</h3><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p class="ci-h">${esc(c.note)}</p></article>
 <article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeCO}</h3><p>Carrera 13 # 97-76, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p><p class="ci-h">${f.hoursCO}</p></article>
+</aside>
 </div>
 </section>${footer(lang)}`;
   res.send(layout(tr.nav.contact, body, 'contact', lang, req.path));
 });
 app.post('/contact', async (req, res) => {
+  if (String(req.body.website || '').trim()) return res.redirect('/contact?ok=1#kontakt'); // honeypot: bots vullen dit verborgen veld in
   const name = String(req.body.name || '').trim();
   const email = String(req.body.email || '').toLowerCase().trim();
   const subject = String(req.body.subject || '').trim();
@@ -351,7 +371,7 @@ app.post('/contact', async (req, res) => {
     // bevestiging naar afzender (werkt zodra je domein in Resend geverifieerd is)
     sendEmail({ to: email, subject: c.thanks, html: mailWrap(c.thanks, [['Naam', name], ['Onderwerp', subject || '—'], ['Bericht', message]]) });
   }
-  res.redirect('/contact?ok=1');
+  res.redirect('/contact?ok=1#kontakt');
 });
 
 // ---------- Plan een gesprek (publiek) ----------
