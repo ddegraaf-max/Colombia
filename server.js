@@ -205,7 +205,7 @@ const MAIL_FROM = stripPrefix(process.env.RESEND_FROM) || 'Honor Care Internatio
 // ---- Cloudflare Turnstile (antyspam) — aktywuje się, gdy w env są klucze ----
 const TURNSTILE_SITE_KEY = stripPrefix(process.env.TURNSTILE_SITE_KEY || '');
 const TURNSTILE_SECRET_KEY = stripPrefix(process.env.TURNSTILE_SECRET_KEY || '');
-function turnstileWidget() { return TURNSTILE_SITE_KEY ? `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script><div class="cf-turnstile" data-sitekey="${esc(TURNSTILE_SITE_KEY)}" style="margin:2px 0"></div>` : ''; }
+function turnstileWidget(lang) { return TURNSTILE_SITE_KEY ? `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script><div class="cf-turnstile" data-sitekey="${esc(TURNSTILE_SITE_KEY)}" data-language="${esc(LANGS.includes(lang) ? lang : 'auto')}" style="margin:2px 0"></div>` : ''; }
 async function verifyTurnstile(req) {
   if (!TURNSTILE_SECRET_KEY) return true; // wyłączone, dopóki nie ma kluczy
   try {
@@ -382,7 +382,7 @@ ${done}
 <label>${esc(c.message)} *<textarea name="message" rows="7" maxlength="5000" required></textarea></label>
 <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 <input type="hidden" name="ft" value="${formToken()}">
-${turnstileWidget()}
+${turnstileWidget(lang)}
 <button class="btn gold full">${esc(c.send)} →</button>
 <p class="cf-privacy">🔒 ${esc(a.secNote)}</p>
 </form>
@@ -430,7 +430,7 @@ app.get('/plan', (req, res) => {
 <label>${esc(b.topic)}<input name="topic"></label>
 <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 <input type="hidden" name="ft" value="${formToken()}">
-${turnstileWidget()}
+${turnstileWidget(req.lang)}
 <button class="btn gold full">${esc(b.send)}</button>
 </form>
 <p class="authnote">🔒 ${esc(a.secNote)}</p>
