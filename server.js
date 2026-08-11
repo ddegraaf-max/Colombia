@@ -33,7 +33,8 @@ app.use((req, res, next) => {
   res.setHeader('Content-Security-Policy',
     "default-src 'self'; img-src 'self' data: https://images.unsplash.com; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; " +
-    "script-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com; base-uri 'self'; frame-ancestors 'self'; object-src 'none'");
+    "script-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com; " +
+    "connect-src 'self' https://challenges.cloudflare.com; base-uri 'self'; frame-ancestors 'self'; object-src 'none'");
   next();
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: IS_PROD ? '7d' : 0 }));
