@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const speakeasy = require('speakeasy');
 const QRCode = require('qrcode');
 const path = require('path');
+const crypto = require('crypto');
 require('dotenv').config();
 const { LANGS, LANGMETA, T } = require('./i18n');
 
@@ -32,7 +33,7 @@ app.use((req, res, next) => {
   res.setHeader('Content-Security-Policy',
     "default-src 'self'; img-src 'self' data: https://images.unsplash.com; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; " +
-    "script-src 'self'; base-uri 'self'; frame-ancestors 'self'; object-src 'none'");
+    "script-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com; base-uri 'self'; frame-ancestors 'self'; object-src 'none'");
   next();
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: IS_PROD ? '7d' : 0 }));
@@ -136,6 +137,27 @@ function recordFail(key) { const a = loginAttempts.get(key) || { count: 0, until
 function clearFails(key) { loginAttempts.delete(key); }
 function setLangCookie(res, lang) { res.setHeader('Set-Cookie', `lang=${lang}; Path=/; Max-Age=31536000; SameSite=Lax`); }
 
+// Antyspam formularzy publicznych: podpisany token czasowy (odrzuca boty POST-ujące
+// wprost, bez pobrania strony, oraz zgłoszenia szybsze niż 3 s) + limit zgłoszeń na IP.
+function formToken() { const t = Date.now().toString(36); return t + '.' + crypto.createHmac('sha256', SESSION_SECRET).update('ft:' + t).digest('hex').slice(0, 20); }
+function checkFormToken(tok) {
+  const [t, sig] = String(tok || '').split('.');
+  if (!t || !sig) return false;
+  const exp = crypto.createHmac('sha256', SESSION_SECRET).update('ft:' + t).digest('hex').slice(0, 20);
+  if (sig.length !== exp.length || !crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(exp))) return false;
+  const age = Date.now() - parseInt(t, 36);
+  return age >= 3000 && age <= 6 * 60 * 60 * 1000;
+}
+const formHits = new Map();
+function tooMany(req, scope, max = 5) {
+  const key = scope + ':' + (req.ip || (req.headers['x-forwarded-for'] || '').split(',')[0] || 'x');
+  const now = Date.now();
+  const arr = (formHits.get(key) || []).filter(ts => now - ts < 60 * 60 * 1000);
+  arr.push(now); formHits.set(key, arr);
+  if (formHits.size > 5000) { for (const [k, v] of formHits) { if (!v.some(ts => now - ts < 60 * 60 * 1000)) formHits.delete(k); } }
+  return arr.length > max;
+}
+
 // Gebruikers-toegang (los van admin): pas door als ingelogd én 2FA (indien aan) voltooid.
 const requireUser = (req, res, next) => {
   if (!req.session?.portalUserId) return res.redirect('/portal');
@@ -178,6 +200,19 @@ function detectMailTo() {
 const RESEND_KEY = detectResendKey();
 const MAIL_TO = detectMailTo();
 const MAIL_FROM = stripPrefix(process.env.RESEND_FROM) || 'Honor Care International <onboarding@resend.dev>';
+
+// ---- Cloudflare Turnstile (antyspam) — aktywuje się, gdy w env są klucze ----
+const TURNSTILE_SITE_KEY = stripPrefix(process.env.TURNSTILE_SITE_KEY || '');
+const TURNSTILE_SECRET_KEY = stripPrefix(process.env.TURNSTILE_SECRET_KEY || '');
+function turnstileWidget() { return TURNSTILE_SITE_KEY ? `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script><div class="cf-turnstile" data-sitekey="${esc(TURNSTILE_SITE_KEY)}" style="margin:2px 0"></div>` : ''; }
+async function verifyTurnstile(req) {
+  if (!TURNSTILE_SECRET_KEY) return true; // wyłączone, dopóki nie ma kluczy
+  try {
+    const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ secret: TURNSTILE_SECRET_KEY, response: String(req.body['cf-turnstile-response'] || ''), remoteip: req.ip || '' }).toString() });
+    const j = await r.json();
+    return !!j.success;
+  } catch (e) { console.error('[turnstile] weryfikacja niedostępna:', e.message); return true; } // awaria Cloudflare nie może blokować ludzi
+}
 async function sendEmail({ to, subject, html, replyTo }) {
   const key = RESEND_KEY;
   if (!key) { console.warn('[mail] geen Resend-sleutel gevonden — niet verzonden:', subject); return { skipped: true }; }
@@ -302,6 +337,7 @@ ${footer(lang)}`;
 });
 
 app.post('/newsletter', async (req, res) => {
+  if (tooMany(req, 'newsletter', 3)) { console.log('[antyspam] odrzucono zapis do newslettera'); return res.redirect('/?sub=ok#main'); }
   const email = String(req.body.email || '').toLowerCase().trim();
   if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     try { await Newsletter.updateOne({ email }, { $setOnInsert: { email, lang: req.lang, createdAt: new Date() } }, { upsert: true }); } catch (e) {}
@@ -344,6 +380,8 @@ ${done}
 <label>${esc(c.subject)}<input name="subject" autocomplete="off" maxlength="160"></label>
 <label>${esc(c.message)} *<textarea name="message" rows="7" maxlength="5000" required></textarea></label>
 <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+<input type="hidden" name="ft" value="${formToken()}">
+${turnstileWidget()}
 <button class="btn gold full">${esc(c.send)} →</button>
 <p class="cf-privacy">🔒 ${esc(a.secNote)}</p>
 </form>
@@ -359,6 +397,7 @@ ${done}
 });
 app.post('/contact', async (req, res) => {
   if (String(req.body.website || '').trim()) return res.redirect('/contact?ok=1#kontakt'); // honeypot: bots vullen dit verborgen veld in
+  if (!checkFormToken(req.body.ft) || tooMany(req, 'contact') || !(await verifyTurnstile(req))) { console.log('[antyspam] odrzucono zgłoszenie z formularza kontaktowego'); return res.redirect('/contact?ok=1#kontakt'); }
   const name = String(req.body.name || '').trim();
   const email = String(req.body.email || '').toLowerCase().trim();
   const subject = String(req.body.subject || '').trim();
@@ -388,6 +427,9 @@ app.get('/plan', (req, res) => {
 <label>${esc(b.time)}<select name="time">${TIMES.map(x => `<option>${x}</option>`).join('')}</select></label>
 <label>${esc(b.channel)}<select name="channel"><option value="Videogesprek">${esc(b.video)}</option><option value="Telefoon">${esc(b.phone)}</option><option value="Op locatie">${esc(b.onsite)}</option></select></label>
 <label>${esc(b.topic)}<input name="topic"></label>
+<input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+<input type="hidden" name="ft" value="${formToken()}">
+${turnstileWidget()}
 <button class="btn gold full">${esc(b.send)}</button>
 </form>
 <p class="authnote">🔒 ${esc(a.secNote)}</p>
@@ -395,6 +437,8 @@ app.get('/plan', (req, res) => {
   res.send(layout(b.title, inner, 'home', req.lang, req.path));
 });
 app.post('/plan', async (req, res) => {
+  if (String(req.body.website || '').trim()) return res.redirect('/plan?ok=1');
+  if (!checkFormToken(req.body.ft) || tooMany(req, 'plan') || !(await verifyTurnstile(req))) { console.log('[antyspam] odrzucono prośbę o rozmowę'); return res.redirect('/plan?ok=1'); }
   const name = String(req.body.name || '').trim(), email = String(req.body.email || '').toLowerCase().trim();
   const date = String(req.body.date || ''), time = String(req.body.time || '');
   const topic = String(req.body.topic || ''), channel = String(req.body.channel || 'Videogesprek');
