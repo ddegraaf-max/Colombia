@@ -10,7 +10,7 @@ const LANGMETA = {
 const T = {
   pl: {
     topTagline: 'Zaufanie. Opieka. Przyszłość.', location: 'Bussum, Holandia',
-    nav: { home: 'Strona główna', about: 'O nas', institutions: 'Dla instytucji', candidates: 'Dla profesjonalistów', academy: 'Akademia', housing: 'Mieszkania', poland: 'Holandia', contact: 'Kontakt', portal: 'Portal' },
+    nav: { home: 'Strona główna', about: 'O nas', institutions: 'Dla instytucji', candidates: 'Dla profesjonalistów', academy: 'Akademia', housing: 'Mieszkania', poland: 'Holandia', contact: 'Kontakt', portal: 'Moje konto' },
     hero: { h1: ['Kompleksowe', 'rozwiązania w opiece zdrowotnej', 'dla Holandii'], p: 'Wspieramy profesjonalistów medycznych z Kolumbii i Hiszpanii w drodze do kariery w holenderskiej ochronie zdrowia: rekrutacja, język niderlandzki (NT2), uznanie dyplomu i rejestracja BIG, przygotowanie i wsparcie. Oficjalne zatrudnienie realizuje nasze zarejestrowane biuro partnerskie. Polska dołączy jako drugi rynek.', bullets: ['Rekrutacja międzynarodowa', 'Legalizacja i dokumenty', 'Kursy języka niderlandzkiego (NT2)', 'Wsparcie po przyjeździe', 'Zakwaterowanie', 'Integracja i adaptacja', 'Opieka koordynatora', 'Dla profesjonalistów i rodzin'], btnInst: 'Dla instytucji', btnProf: 'Dla profesjonalistów', btnMeet: '▣ Umów spotkanie', badge: 'Z miłości do ludzi, z myślą o przyszłości' },
     specs: ['Lekarze ogólni', 'Specjaliści', 'Stomatolodzy', 'Pielęgniarki', 'Psycholodzy', 'Fizjoterapeuci', 'Farmaceuci', 'Ratownicy medyczni', 'Opiekunowie medyczni', 'I więcej specjalizacji'],
     cards: [
@@ -37,7 +37,7 @@ const T = {
 
   en: {
     topTagline: 'Trust. Care. Future.', location: 'Bussum, Netherlands',
-    nav: { home: 'Home', about: 'About us', institutions: 'For institutions', candidates: 'For professionals', academy: 'Academy', housing: 'Housing', poland: 'Netherlands', contact: 'Contact', portal: 'Portal' },
+    nav: { home: 'Home', about: 'About us', institutions: 'For institutions', candidates: 'For professionals', academy: 'Academy', housing: 'Housing', poland: 'Netherlands', contact: 'Contact', portal: 'My account' },
     hero: { h1: ['Comprehensive', 'healthcare solutions', 'for the Netherlands'], p: 'We guide healthcare professionals from Colombia and Spain toward a career in Dutch healthcare: sourcing, Dutch (NT2), diploma recognition and BIG registration, preparation and support. The official placement is handled by our registered partner agency. Poland will follow as a second market.', bullets: ['International recruitment', 'Legalisation & documents', 'Dutch courses (NT2)', 'Post-arrival support', 'Housing', 'Integration & adaptation', 'Coordinator care', 'For professionals & families'], btnInst: 'For institutions', btnProf: 'For professionals', btnMeet: '▣ Book a meeting', badge: 'Out of love for people, with the future in mind' },
     specs: ['General practitioners', 'Specialists', 'Dentists', 'Nurses', 'Psychologists', 'Physiotherapists', 'Pharmacists', 'Paramedics', 'Medical caregivers', 'And more specialties'],
     cards: [
@@ -64,7 +64,7 @@ const T = {
 
   nl: {
     topTagline: 'Vertrouwen. Zorg. Toekomst.', location: 'Bussum, Nederland',
-    nav: { home: 'Home', about: 'Over ons', institutions: 'Voor instellingen', candidates: 'Voor professionals', academy: 'Academie', housing: 'Huisvesting', poland: 'Nederland', contact: 'Contact', portal: 'Portal' },
+    nav: { home: 'Home', about: 'Over ons', institutions: 'Voor instellingen', candidates: 'Voor professionals', academy: 'Academie', housing: 'Huisvesting', poland: 'Nederland', contact: 'Contact', portal: 'Mijn account' },
     hero: { h1: ['Complete', 'zorgoplossingen', 'voor Nederland'], p: 'Wij begeleiden zorgprofessionals uit Colombia en Spanje naar een carrière in de Nederlandse zorg: werving, Nederlands (NT2), diploma-erkenning en BIG-registratie, voorbereiding en begeleiding. De officiële plaatsing verloopt via ons geregistreerde partnerbureau. Polen volgt als tweede markt.', bullets: ['Internationale werving', 'Legalisatie & documenten', 'Cursussen Nederlands (NT2)', 'Begeleiding na aankomst', 'Huisvesting', 'Integratie & aanpassing', 'Zorg van een coördinator', 'Voor professionals & gezinnen'], btnInst: 'Voor instellingen', btnProf: 'Voor professionals', btnMeet: '▣ Plan een gesprek', badge: 'Uit liefde voor mensen, met het oog op de toekomst' },
     specs: ['Huisartsen', 'Specialisten', 'Tandartsen', 'Verpleegkundigen', 'Psychologen', 'Fysiotherapeuten', 'Apothekers', 'Ambulanceverpleegkundigen', 'Zorgverleners', 'En meer specialismen'],
     cards: [
@@ -91,7 +91,7 @@ const T = {
 
   es: {
     topTagline: 'Confianza. Cuidado. Futuro.', location: 'Bussum, Países Bajos',
-    nav: { home: 'Inicio', about: 'Sobre nosotros', institutions: 'Para instituciones', candidates: 'Para profesionales', academy: 'Academia', housing: 'Viviendas', poland: 'Países Bajos', contact: 'Contacto', portal: 'Portal' },
+    nav: { home: 'Inicio', about: 'Sobre nosotros', institutions: 'Para instituciones', candidates: 'Para profesionales', academy: 'Academia', housing: 'Viviendas', poland: 'Países Bajos', contact: 'Contacto', portal: 'Mi cuenta' },
     hero: { h1: ['Soluciones integrales', 'en atención sanitaria', 'para los Países Bajos'], p: 'Acompañamos a profesionales sanitarios de Colombia y España hacia una carrera en la sanidad neerlandesa: captación, neerlandés (NT2), homologación del título y registro BIG, preparación y apoyo. La colocación oficial se realiza a través de nuestra agencia asociada registrada. Polonia llegará como segundo mercado.', bullets: ['Reclutamiento internacional', 'Legalización y documentos', 'Cursos de neerlandés (NT2)', 'Apoyo tras la llegada', 'Alojamiento', 'Integración y adaptación', 'Atención de un coordinador', 'Para profesionales y familias'], btnInst: 'Para instituciones', btnProf: 'Para profesionales', btnMeet: '▣ Reservar una reunión', badge: 'Por amor a las personas, pensando en el futuro' },
     specs: ['Médicos generales', 'Especialistas', 'Dentistas', 'Enfermeros', 'Psicólogos', 'Fisioterapeutas', 'Farmacéuticos', 'Paramédicos', 'Cuidadores médicos', 'Y más especialidades'],
     cards: [

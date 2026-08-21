@@ -5,12 +5,12 @@
 const EXTRAS = {
   nl: {
     faqTitle: 'Veelgestelde vragen',
-    ctaLabels: { plan: 'PLAN EEN GESPREK', ask: 'STEL EEN VRAAG', route: 'BEKIJK DE EU-ROUTE', numbers: 'BEKIJK DE CIJFERS' },
+    ctaLabels: { plan: 'PLAN EEN GESPREK', ask: 'STEL EEN VRAAG', route: 'BEKIJK DE EU-ROUTE', numbers: 'BEKIJK DE CIJFERS', account: 'MAAK JE PROFIEL AAN' },
     cta: {
       about: ['Meer weten over hoe wij werken?', 'We leggen graag uit hoe het traject loopt en waar onze rol ophoudt.'],
       institutions: ['Personeelsvraag bespreken?', 'Vertel ons welke functies openstaan; wij kijken of internationale werving past bij uw situatie.'],
-      candidates: ['Klaar voor de eerste stap?', 'Een vrijblijvend gesprek waarin we eerlijk vertellen wat het traject vraagt.'],
-      academy: ['Wil je weten waar je nu staat?', 'We bepalen samen je taalniveau en wat er nog nodig is.'],
+      candidates: ['Klaar voor de eerste stap?', 'Maak een profiel aan, dan weten wij wie je bent en wat je zoekt. Je hoort van ons zodra er een passende functie is.'],
+      academy: ['Wil je weten waar je nu staat?', 'Maak een profiel aan met je huidige taalniveau; dan bepalen we samen wat er nog nodig is.'],
       housing: ['Vragen over wonen?', 'Stel ze gerust — we vertellen liever vooraf hoe het zit.']
     },
     faq: {
@@ -52,12 +52,12 @@ const EXTRAS = {
   },
   en: {
     faqTitle: 'Frequently asked questions',
-    ctaLabels: { plan: 'BOOK A MEETING', ask: 'ASK A QUESTION', route: 'SEE THE EU ROUTE', numbers: 'SEE THE FIGURES' },
+    ctaLabels: { plan: 'BOOK A MEETING', ask: 'ASK A QUESTION', route: 'SEE THE EU ROUTE', numbers: 'SEE THE FIGURES', account: 'CREATE YOUR PROFILE' },
     cta: {
       about: ['Want to know how we work?', 'We are happy to explain how the journey runs and where our role ends.'],
       institutions: ['Discuss your staffing needs?', 'Tell us which roles are open; we will see whether international recruitment fits your situation.'],
-      candidates: ['Ready for the first step?', 'A no-obligation conversation in which we tell you honestly what the journey asks.'],
-      academy: ['Want to know where you stand?', 'Together we determine your language level and what is still needed.'],
+      candidates: ['Ready for the first step?', 'Create a profile so we know who you are and what you are looking for. You will hear from us as soon as a suitable position comes up.'],
+      academy: ['Want to know where you stand?', 'Create a profile with your current language level; together we determine what is still needed.'],
       housing: ['Questions about housing?', 'Ask away — we would rather explain it beforehand.']
     },
     faq: {
@@ -99,12 +99,12 @@ const EXTRAS = {
   },
   es: {
     faqTitle: 'Preguntas frecuentes',
-    ctaLabels: { plan: 'RESERVAR UNA REUNIÓN', ask: 'HACER UNA PREGUNTA', route: 'VER LA RUTA UE', numbers: 'VER LAS CIFRAS' },
+    ctaLabels: { plan: 'RESERVAR UNA REUNIÓN', ask: 'HACER UNA PREGUNTA', route: 'VER LA RUTA UE', numbers: 'VER LAS CIFRAS', account: 'CREA TU PERFIL' },
     cta: {
       about: ['¿Quieres saber cómo trabajamos?', 'Te explicamos con gusto cómo funciona el recorrido y dónde termina nuestro papel.'],
       institutions: ['¿Hablamos de sus necesidades de personal?', 'Cuéntenos qué puestos tiene abiertos y veremos si la captación internacional encaja.'],
-      candidates: ['¿Listo para el primer paso?', 'Una conversación sin compromiso en la que te contamos con honestidad qué exige el recorrido.'],
-      academy: ['¿Quieres saber en qué punto estás?', 'Determinamos juntos tu nivel de idioma y lo que aún hace falta.'],
+      candidates: ['¿Listo para el primer paso?', 'Crea un perfil para que sepamos quién eres y qué buscas. Te avisaremos en cuanto surja un puesto adecuado.'],
+      academy: ['¿Quieres saber en qué punto estás?', 'Crea un perfil con tu nivel actual; juntos determinamos lo que aún hace falta.'],
       housing: ['¿Dudas sobre la vivienda?', 'Pregunta sin problema: preferimos explicarlo antes.']
     },
     faq: {
@@ -146,12 +146,12 @@ const EXTRAS = {
   },
   pl: {
     faqTitle: 'Najczęstsze pytania',
-    ctaLabels: { plan: 'UMÓW ROZMOWĘ', ask: 'ZADAJ PYTANIE', route: 'ZOBACZ ŚCIEŻKĘ UE', numbers: 'ZOBACZ DANE' },
+    ctaLabels: { plan: 'UMÓW ROZMOWĘ', ask: 'ZADAJ PYTANIE', route: 'ZOBACZ ŚCIEŻKĘ UE', numbers: 'ZOBACZ DANE', account: 'ZAŁÓŻ PROFIL' },
     cta: {
       about: ['Chcesz wiedzieć, jak pracujemy?', 'Chętnie wyjaśnimy przebieg ścieżki i to, gdzie kończy się nasza rola.'],
       institutions: ['Porozmawiajmy o potrzebach kadrowych', 'Powiedz nam, jakie stanowiska są wolne; sprawdzimy, czy rekrutacja międzynarodowa pasuje do Twojej sytuacji.'],
-      candidates: ['Gotowy na pierwszy krok?', 'Niezobowiązująca rozmowa, w której uczciwie mówimy, czego wymaga ta droga.'],
-      academy: ['Chcesz wiedzieć, na jakim jesteś etapie?', 'Wspólnie ustalimy Twój poziom językowy i to, czego jeszcze brakuje.'],
+      candidates: ['Gotowy na pierwszy krok?', 'Załóż profil, żebyśmy wiedzieli, kim jesteś i czego szukasz. Odezwiemy się, gdy pojawi się odpowiednie stanowisko.'],
+      academy: ['Chcesz wiedzieć, na jakim jesteś etapie?', 'Załóż profil z obecnym poziomem językowym; wspólnie ustalimy, czego jeszcze brakuje.'],
       housing: ['Pytania o mieszkanie?', 'Śmiało pytaj — wolimy wyjaśnić to wcześniej.']
     },
     faq: {
@@ -197,8 +197,8 @@ const EXTRAS = {
 const CTA_BUTTONS = {
   about: [['plan', '/plan', 'gold'], ['route', '/eu-route', 'light']],
   institutions: [['plan', '/plan', 'gold'], ['ask', '/contact#kontakt', 'light']],
-  candidates: [['route', '/eu-route', 'gold'], ['plan', '/plan', 'light']],
-  academy: [['plan', '/plan', 'gold'], ['ask', '/contact#kontakt', 'light']],
+  candidates: [['account', '/portal', 'gold'], ['route', '/eu-route', 'light']],
+  academy: [['account', '/portal', 'gold'], ['plan', '/plan', 'light']],
   housing: [['numbers', '/poland', 'gold'], ['ask', '/contact#kontakt', 'light']]
 };
 

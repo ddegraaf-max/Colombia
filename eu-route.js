@@ -48,7 +48,7 @@ const EUROUTE = {
       partner: { h: 'Het geregistreerde partnerbureau doet', items: ['De bemiddeling en matching met de zorginstelling', 'Het arbeidscontract en het werkgeverschap', 'Loon, arbeidsvoorwaarden en werkgeversverplichtingen', 'Naleving van de Waadi/Wtta als erkende bemiddelaar'] },
       note: 'Wij vragen jou als kandidaat nooit om geld voor bemiddeling of plaatsing. Word je door iemand anders wél om betaling gevraagd — vraag dan altijd om opheldering.'
     },
-    cta: { h2: 'Klaar voor de eerste stap?', p: 'Plan een vrijblijvend gesprek. We vertellen je eerlijk wat het traject vraagt en wat het je oplevert.', btn1: 'PLAN EEN GESPREK', btn2: 'STEL EEN VRAAG' }
+    cta: { h2: 'Klaar voor de eerste stap?', p: 'Maak een profiel aan, dan weten wij wie je bent en wat je zoekt. Liever eerst praten? Plan een vrijblijvend gesprek.', btn1: 'MAAK JE PROFIEL AAN', btn2: 'PLAN EEN GESPREK', btn3: 'STEL EEN VRAAG' }
   },
   en: {
     navLabel: 'EU route',
@@ -96,7 +96,7 @@ const EUROUTE = {
       partner: { h: 'The registered partner agency does', items: ['The placement and matching with the healthcare institution', 'The employment contract and employer responsibility', 'Salary, terms of employment and employer obligations', 'Compliance with the Waadi/Wtta as authorised intermediary'] },
       note: 'We never ask you as a candidate for money in exchange for placement or mediation. If anyone else does ask you to pay, always ask for clarification.'
     },
-    cta: { h2: 'Ready for the first step?', p: 'Book a no-obligation conversation. We will tell you honestly what the journey asks and what it gives you.', btn1: 'BOOK A MEETING', btn2: 'ASK A QUESTION' }
+    cta: { h2: 'Ready for the first step?', p: 'Create a profile so we know who you are and what you are looking for. Rather talk first? Book a no-obligation conversation.', btn1: 'CREATE YOUR PROFILE', btn2: 'BOOK A MEETING', btn3: 'ASK A QUESTION' }
   },
   pl: {
     navLabel: 'Ścieżka UE',
@@ -144,7 +144,7 @@ const EUROUTE = {
       partner: { h: 'Zarejestrowane biuro partnerskie robi', items: ['Pośrednictwo i dopasowanie do placówki medycznej', 'Umowę o pracę i rolę pracodawcy', 'Wynagrodzenie, warunki pracy i obowiązki pracodawcy', 'Przestrzeganie Waadi/Wtta jako uprawniony pośrednik'] },
       note: 'Nigdy nie pobieramy od Ciebie jako kandydata opłat za pośrednictwo ani zatrudnienie. Jeśli ktokolwiek prosi Cię o zapłatę — zawsze żądaj wyjaśnień.'
     },
-    cta: { h2: 'Gotowy na pierwszy krok?', p: 'Umów niezobowiązującą rozmowę. Uczciwie powiemy, czego wymaga ta droga i co Ci daje.', btn1: 'UMÓW ROZMOWĘ', btn2: 'ZADAJ PYTANIE' }
+    cta: { h2: 'Gotowy na pierwszy krok?', p: 'Załóż profil, żebyśmy wiedzieli, kim jesteś i czego szukasz. Wolisz najpierw porozmawiać? Umów niezobowiązującą rozmowę.', btn1: 'ZAŁÓŻ PROFIL', btn2: 'UMÓW ROZMOWĘ', btn3: 'ZADAJ PYTANIE' }
   },
   es: {
     navLabel: 'Ruta UE',
@@ -192,7 +192,7 @@ const EUROUTE = {
       partner: { h: 'La agencia asociada registrada hace', items: ['La intermediación y el emparejamiento con el centro sanitario', 'El contrato de trabajo y la condición de empleador', 'El salario, las condiciones laborales y las obligaciones del empleador', 'El cumplimiento de la Waadi/Wtta como intermediario autorizado'] },
       note: 'Nunca te pedimos dinero como candidato a cambio de intermediación o colocación. Si alguien te pide un pago, pide siempre explicaciones.'
     },
-    cta: { h2: '¿Listo para el primer paso?', p: 'Reserva una conversación sin compromiso. Te contamos con honestidad qué exige el recorrido y qué te aporta.', btn1: 'RESERVAR UNA REUNIÓN', btn2: 'HACER UNA PREGUNTA' }
+    cta: { h2: '¿Listo para el primer paso?', p: 'Crea un perfil para que sepamos quién eres y qué buscas. ¿Prefieres hablar primero? Reserva una conversación sin compromiso.', btn1: 'CREA TU PERFIL', btn2: 'RESERVAR UNA REUNIÓN', btn3: 'HACER UNA PREGUNTA' }
   }
 };
 
@@ -215,7 +215,7 @@ function renderEuRoute(lang, h) {
 <div class="eur-roles"><div class="eur-head"><span class="eyebrow">${esc(e.roles.eyebrow)}</span><h2>${esc(e.roles.h2)}</h2><p>${esc(e.roles.sub)}</p></div>
 <div class="eur-roles-grid"><article class="eur-role us"><h3>${esc(e.roles.us.h)}</h3><ul>${roleList(e.roles.us.items)}</ul></article><article class="eur-role partner"><h3>${esc(e.roles.partner.h)}</h3><ul>${roleList(e.roles.partner.items)}</ul></article></div>
 <p class="eur-note">${esc(e.roles.note)}</p></div>
-<div class="eur-cta"><h2>${esc(e.cta.h2)}</h2><p>${esc(e.cta.p)}</p><div class="eur-cta-btns"><a class="btn gold" href="/plan">${esc(e.cta.btn1)}</a><a class="btn light" href="/contact#kontakt">${esc(e.cta.btn2)}</a></div></div>
+<div class="eur-cta"><h2>${esc(e.cta.h2)}</h2><p>${esc(e.cta.p)}</p><div class="eur-cta-btns"><a class="btn gold" href="/portal">${esc(e.cta.btn1)}</a><a class="btn light" href="/plan">${esc(e.cta.btn2)}</a><a class="btn light" href="/contact#kontakt">${esc(e.cta.btn3)}</a></div></div>
 </section>`;
 }
 
