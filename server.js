@@ -69,7 +69,7 @@ function layout(title, body, active = 'home', lang = 'pl', curPath = '/') {
     .map(([k, href]) => `<a class="${active === k ? 'active' : ''}" href="${href}">${k === 'euroute' ? esc(EUROUTE[lang].navLabel) : tr.nav[k]}</a>`).join('');
   return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><meta name="description" content="Honor Care International — ${esc(tr.hero.p).slice(0, 140)}"><link rel="icon" href="/images/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css?v=${ASSET_V}"></head><body>
 <a class="skip" href="#main">→</a>
-<div class="top"><span class="ttag">${tr.topTagline}</span><span class="right"><a href="tel:+48221234567">☎ +48 22 123 45 67</a> <i class="t-loc">|</i> <a class="t-mail" href="mailto:info@honorcareinternational.com">✉ info@honorcareinternational.com</a> <i class="t-loc">|</i> <span class="t-loc">📍 ${tr.location}</span> <i>|</i> ${langSwitcher(lang, curPath)}</span></div>
+<div class="top"><span class="ttag">${tr.topTagline}</span><span class="right"><a href="tel:+31646150160">☎ +31 6 46 15 01 60</a> <i class="t-loc">|</i> <a class="t-mail" href="mailto:info@honorcareinternational.com">✉ info@honorcareinternational.com</a> <i class="t-loc">|</i> <span class="t-loc">📍 ${tr.location}</span> <i>|</i> ${langSwitcher(lang, curPath)}</span></div>
 <header class="header"><a class="logo" href="/"><img src="/images/logo.svg" alt="Honor Care International" width="290" height="65"></a>
 <input type="checkbox" id="navtoggle" class="navtoggle">
 <label for="navtoggle" class="burger" aria-label="Menu"><span></span><span></span><span></span></label>
@@ -81,10 +81,10 @@ const PARTNER_NAME = process.env.PARTNER_NAME || '';
 const PARTNER_REG = process.env.PARTNER_REG || '';
 const PARTNER_DEFAULT = { pl: 'nasz licencjonowany partner', en: 'our licensed partner', nl: 'onze gelicentieerde partner', es: 'nuestro socio autorizado' };
 const LEGAL = {
-  pl: 'Honor Care International zajmuje się rekrutacją, przygotowaniem i wsparciem profesjonalistów medycznych z Kolumbii. Oficjalne pośrednictwo pracy, udostępnianie pracowników i/lub zatrudnienie realizuje {partner}, zarejestrowana agencja zatrudnienia{reg}. Dla kandydatów nasze usługi są bezpłatne.',
-  en: 'Honor Care International provides recruitment, preparation and support for healthcare professionals from Colombia. The official job placement, staffing and/or employment is handled by {partner}, a registered staffing and recruitment agency{reg}. Our services are free of charge for candidates.',
-  nl: 'Honor Care International verzorgt werving, voorbereiding en begeleiding van zorgprofessionals uit Colombia. De officiële arbeidsbemiddeling, terbeschikkingstelling en/of het dienstverband worden verzorgd door {partner}, een geregistreerd uitzend- en bemiddelingsbureau{reg}. Voor kandidaten zijn onze diensten kosteloos.',
-  es: 'Honor Care International se encarga de la captación, preparación y acompañamiento de profesionales sanitarios de Colombia. La intermediación laboral, la cesión de personal y/o el empleo los gestiona {partner}, una agencia de empleo y selección registrada{reg}. Para los candidatos, nuestros servicios son gratuitos.'
+  pl: 'Honor Care International zajmuje się rekrutacją, przygotowaniem i wsparciem profesjonalistów medycznych z Hiszpanii, innych krajów UE i Kolumbii. Oficjalne pośrednictwo pracy, udostępnianie pracowników i/lub zatrudnienie realizuje {partner}, zarejestrowana agencja zatrudnienia{reg}. Dla kandydatów nasze usługi są bezpłatne.',
+  en: 'Honor Care International provides recruitment, preparation and support for healthcare professionals from Spain, other EU countries and Colombia. The official job placement, staffing and/or employment is handled by {partner}, a registered staffing and recruitment agency{reg}. Our services are free of charge for candidates.',
+  nl: 'Honor Care International verzorgt werving, voorbereiding en begeleiding van zorgprofessionals uit Spanje, andere EU-landen en Colombia. De officiële arbeidsbemiddeling, terbeschikkingstelling en/of het dienstverband worden verzorgd door {partner}, een geregistreerd uitzend- en bemiddelingsbureau{reg}. Voor kandidaten zijn onze diensten kosteloos.',
+  es: 'Honor Care International se encarga de la captación, preparación y acompañamiento de profesionales sanitarios de España, otros países de la UE y Colombia. La intermediación laboral, la cesión de personal y/o el empleo los gestiona {partner}, una agencia de empleo y selección registrada{reg}. Para los candidatos, nuestros servicios son gratuitos.'
 };
 function legalText(lang) {
   const partner = PARTNER_NAME || PARTNER_DEFAULT[lang] || PARTNER_DEFAULT.pl;
@@ -104,8 +104,8 @@ function footer(lang = 'pl') {
   return `<footer class="footer"><div class="footer-main">
 <div class="fcol"><img class="flogo" src="/images/logo.svg" alt="Honor Care International" width="230" height="52"><p>${f.tagline}</p><div class="social"><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 8H6v4h3v12h5V12h3.6l.4-4h-4V6.3c0-1 .2-1.3 1.2-1.3H18V0h-3.6C10.8 0 9 1.6 9 4.6V8z"/></svg></a><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.5 3 5.5 7V24h-5v-7c0-1.7 0-3.8-2.3-3.8s-2.7 1.8-2.7 3.7V24h-5V8z"/></svg></a><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.5-.1 4.8c-.1 3.2-1.6 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.5.1-4.8C2.4 4 3.9 2.4 7.1 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 12 18.6 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 12 7.7a4.3 4.3 0 0 1 0 8.6zm6.8-11.1a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></a></div></div>
 <div class="fcol"><h4>${f.quick}</h4><ul>${links}</ul></div>
-<div class="fcol"><h4>${f.officeNL}</h4><p>📍 Torenlaan 5A, 1402 BN<br>Bussum, ${tr.nav.poland}</p><p>☎ <a href="tel:+31351234567">+31 35 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p></div>
-<div class="fcol"><h4>${f.officePL}</h4><p>📍 ul. Prosta 69, 00-838<br>Warszawa</p><p>☎ <a href="tel:+48221234567">+48 22 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursPL}</p></div>
+<div class="fcol"><h4>${f.officeNL}</h4><p>📍 Torenlaan 5A, 1402 BN<br>Bussum, ${tr.nav.poland}</p><p>☎ <a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p></div>
+<div class="fcol"><h4>${f.officePL}</h4><p>📍 Białka 15</p><p>☎ <a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursPL}</p></div>
 <div class="fcol newsletter"><h4>${f.newsletter}</h4><p>${f.newsletterText}</p><form method="post" action="/newsletter"><div class="nl-row"><input type="email" name="email" placeholder="${f.newsletterPh}" aria-label="${f.newsletterPh}" required><button class="nl-btn" aria-label="OK">→</button></div></form></div>
 </div><div class="footer-legal">${legalText(lang)}</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International. ${f.rights}</span><span><a href="/poland">${f.privacy}</a> &nbsp;|&nbsp; <a href="/about">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
 }
@@ -421,9 +421,9 @@ ${turnstileWidget(lang)}
 </form>
 </div>
 <aside class="contact-aside">
-<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>Torenlaan 5A, 1402 BN Bussum</p><p><a href="tel:+31351234567">+31 35 123 45 67</a></p><p class="ci-h">${f.hoursNL}</p></article>
+<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>Torenlaan 5A, 1402 BN Bussum</p><p><a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p class="ci-h">${f.hoursNL}</p></article>
 <article class="ci-card"><span class="ci-ic">${icon(mailIc)}</span><h3>${esc(c.emailLabel)}</h3><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p class="ci-h">${esc(c.note)}</p></article>
-<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officePL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p><p class="ci-h">${f.hoursPL}</p></article>
+<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officePL}</h3><p>Białka 15</p><p><a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p class="ci-h">${f.hoursPL}</p></article>
 </aside>
 </div>
 </section>${footer(lang)}`;
