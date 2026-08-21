@@ -11,6 +11,7 @@ const LINE = '#e7e2d8';
 const TEXT = '#1a2b40';
 const MUTED = '#5b6b7d';
 
+const ENTITY_LINE = 'Honor Care International is een handelsnaam van Creditline B.V. · KvK 59683198';
 const SITE = 'https://honorcareinternational.com';
 const MAIL = 'info@honorcareinternational.com';
 const TEL = '+31 6 46 15 01 60';
@@ -76,6 +77,7 @@ ${note}
 <a href="${SITE}" style="color:${NAVY2};text-decoration:none">${f.site}</a>
 </div>
 <div style="font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:${MUTED};line-height:1.7;padding-top:8px">${E(f.offices)}</div>
+<div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:${MUTED};line-height:1.6;padding-top:4px">${E(ENTITY_LINE)}</div>
 <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:${MUTED};line-height:1.65;padding-top:12px;border-top:1px solid ${LINE};margin-top:12px">${E(f.legal)}</div>
 <div style="font-family:Arial,Helvetica,sans-serif;font-size:10.5px;color:#8a97a5;padding-top:10px">${E(f.auto)}</div>
 </td></tr>

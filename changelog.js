@@ -4,6 +4,15 @@
 
 const VERSIONS = [
   {
+    v: '47.0.0', date: '21-08-2026', title: 'Rechtspersoon en KvK-nummer',
+    items: [
+      'Honor Care International is een handelsnaam van Creditline B.V. (KvK 59683198); dat staat nu correct in het privacybeleid en de algemene voorwaarden',
+      'Creditline B.V. is benoemd als verwerkingsverantwoordelijke, in vier talen',
+      'Rechtspersoon en KvK-nummer toegevoegd aan de footer van de site en van de e-mails',
+      'Documentversie van privacybeleid en voorwaarden naar 1.1'
+    ]
+  },
+  {
     v: '46.0.0', date: '21-08-2026', title: 'Versienummers en versieoverzicht',
     items: [
       'Versieoverzicht in het beheerportaal: per versie wat er is gewijzigd, met de actieve versie gemarkeerd',

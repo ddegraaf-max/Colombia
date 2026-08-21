@@ -129,7 +129,7 @@ function footer(lang = 'pl') {
 <div class="fcol"><h4>${f.officeNL}</h4><p>📍 Torenlaan 5A, 1402 BN<br>Bussum, ${tr.nav.poland}</p><p>☎ <a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p>${clocksBlock('Nederland', 'Colombia')}</div>
 <div class="fcol"><h4>${f.officePL}</h4><p>📍 Białka 15, 09-550<br>Szczawin Kościelny</p><p>☎ <a href="tel:+48452823838">+48 45 282 38 38</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursPL}</p></div>
 <div class="fcol newsletter"><h4>${f.newsletter}</h4><p>${f.newsletterText}</p><form method="post" action="/newsletter"><div class="nl-row"><input type="email" name="email" placeholder="${f.newsletterPh}" aria-label="${f.newsletterPh}" required><button class="nl-btn" aria-label="OK">→</button></div></form></div>
-</div><div class="footer-legal">${legalText(lang)}</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International. ${f.rights}</span><span><a href="/privacy">${f.privacy}</a> &nbsp;|&nbsp; <a href="/voorwaarden">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
+</div><div class="footer-legal">${legalText(lang)}</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International — handelsnaam van Creditline B.V. · KvK 59683198. ${f.rights}</span><span><a href="/privacy">${f.privacy}</a> &nbsp;|&nbsp; <a href="/voorwaarden">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
 }
 
 mongoose.set('strictQuery', true);

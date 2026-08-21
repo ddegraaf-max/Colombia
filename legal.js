@@ -2,12 +2,15 @@
 // daadwerkelijk verwerkt — niet een algemeen sjabloon. Wijzigt de site, dan
 // moet dit mee. Bedrijfsgegevens komen uit de omgeving zodat ze op één plek staan.
 
-const KVK = String(process.env.COMPANY_KVK || '').trim();
+// Honor Care International is een handelsnaam; de rechtspersoon is Creditline B.V.
+// In juridische documenten moet de rechtspersoon genoemd worden, niet alleen de handelsnaam.
+const KVK = String(process.env.COMPANY_KVK || '59683198').trim();
 const COMPANY = String(process.env.COMPANY_NAME || 'Honor Care International').trim();
+const ENTITY = String(process.env.COMPANY_ENTITY || 'Creditline B.V.').trim();
 const UPDATED = '21-08-2026';
 // Documentversie: hoog dit op bij elke inhoudelijke wijziging van de tekst,
 // los van het versienummer van de applicatie.
-const DOC_VERSION = { privacy: '1.0', terms: '1.0' };
+const DOC_VERSION = { privacy: '1.1', terms: '1.1' };
 
 const L = {
   nl: {
@@ -16,9 +19,9 @@ const L = {
       intro: 'Wij verwerken persoonsgegevens van kandidaten, zorginstellingen en bezoekers van deze website. Hieronder leggen wij precies uit welke gegevens dat zijn, waarom wij ze verwerken en welke rechten je hebt. Wij houden ons daarbij aan de Algemene verordening gegevensbescherming (AVG).',
       sections: [
         ['Wie is verantwoordelijk?', [
-          COMPANY + ' is verwerkingsverantwoordelijke voor de gegevens die via deze website worden verzameld.',
+          COMPANY + ' is een handelsnaam van ' + ENTITY + ', die verwerkingsverantwoordelijke is voor de gegevens die via deze website worden verzameld.',
           'Nederland — Torenlaan 5A, 1402 BN Bussum. Polen — Białka 15, 09-550 Szczawin Kościelny.',
-          'E-mail: info@honorcareinternational.com · Telefoon: +31 6 46 15 01 60' + (KVK ? ' · KvK: ' + KVK : '')
+          'E-mail: info@honorcareinternational.com · Telefoon: +31 6 46 15 01 60' + (KVK ? ' · Kamer van Koophandel: ' + KVK : '')
         ]],
         ['Welke gegevens verwerken wij?', [
           'Contactformulier: je naam, e-mailadres, onderwerp, de inhoud van je bericht en de taal waarin je de site gebruikt.',
@@ -74,7 +77,7 @@ const L = {
       intro: 'Deze voorwaarden gelden voor het gebruik van deze website en voor onze dienstverlening aan kandidaten en zorginstellingen. Lees ze door voordat je van onze diensten gebruikmaakt.',
       sections: [
         ['Wie wij zijn en wat wij doen', [
-          COMPANY + ' werft zorgprofessionals in Spanje, andere EU-landen en Colombia, bereidt hen voor op werken in de Nederlandse zorg en begeleidt hen tijdens en na dat traject.',
+          COMPANY + ' is een handelsnaam van ' + ENTITY + ', ingeschreven bij de Kamer van Koophandel onder nummer ' + KVK + '. Onder die naam werven wij zorgprofessionals in Spanje, andere EU-landen en Colombia, bereidt hen voor op werken in de Nederlandse zorg en begeleidt hen tijdens en na dat traject.',
           'Onze dienstverlening bestaat uit werving en selectie, screening en documentcontrole, taalopleiding Nederlands, begeleiding bij diploma-erkenning en BIG-registratie, het regelen van huisvesting en begeleiding na aankomst.'
         ]],
         ['Wat wij uitdrukkelijk niet doen', [
@@ -126,9 +129,9 @@ const L = {
       intro: 'We process personal data of candidates, healthcare institutions and visitors to this website. Below we explain exactly which data that is, why we process it and what rights you have. In doing so we comply with the General Data Protection Regulation (GDPR).',
       sections: [
         ['Who is responsible?', [
-          COMPANY + ' is the data controller for the data collected through this website.',
+          COMPANY + ' is a trade name of ' + ENTITY + ', which is the data controller for the data collected through this website.',
           'Netherlands — Torenlaan 5A, 1402 BN Bussum. Poland — Białka 15, 09-550 Szczawin Kościelny.',
-          'Email: info@honorcareinternational.com · Phone: +31 6 46 15 01 60' + (KVK ? ' · Chamber of Commerce: ' + KVK : '')
+          'Email: info@honorcareinternational.com · Phone: +31 6 46 15 01 60' + (KVK ? ' · Dutch Chamber of Commerce: ' + KVK : '')
         ]],
         ['Which data do we process?', [
           'Contact form: your name, email address, subject, the content of your message and the language you use the site in.',
@@ -184,7 +187,7 @@ const L = {
       intro: 'These terms apply to the use of this website and to our services for candidates and healthcare institutions. Please read them before using our services.',
       sections: [
         ['Who we are and what we do', [
-          COMPANY + ' recruits healthcare professionals in Spain, other EU countries and Colombia, prepares them for work in Dutch healthcare and supports them during and after that journey.',
+          COMPANY + ' is a trade name of ' + ENTITY + ', registered with the Dutch Chamber of Commerce under number ' + KVK + '. Under that name we recruit healthcare professionals in Spain, other EU countries and Colombia, prepares them for work in Dutch healthcare and supports them during and after that journey.',
           'Our services consist of recruitment and selection, screening and document checks, Dutch language training, support with diploma recognition and BIG registration, arranging housing and guidance after arrival.'
         ]],
         ['What we expressly do not do', [
@@ -236,9 +239,9 @@ const L = {
       intro: 'Tratamos datos personales de candidatos, centros sanitarios y visitantes de esta web. A continuación explicamos exactamente qué datos son, por qué los tratamos y qué derechos tienes. Cumplimos con el Reglamento General de Protección de Datos (RGPD).',
       sections: [
         ['¿Quién es responsable?', [
-          COMPANY + ' es el responsable del tratamiento de los datos recogidos a través de esta web.',
+          COMPANY + ' es un nombre comercial de ' + ENTITY + ', que es el responsable del tratamiento de los datos recogidos a través de esta web.',
           'Países Bajos — Torenlaan 5A, 1402 BN Bussum. Polonia — Białka 15, 09-550 Szczawin Kościelny.',
-          'Correo: info@honorcareinternational.com · Teléfono: +31 6 46 15 01 60' + (KVK ? ' · Registro mercantil: ' + KVK : '')
+          'Correo: info@honorcareinternational.com · Teléfono: +31 6 46 15 01 60' + (KVK ? ' · Registro mercantil neerlandés: ' + KVK : '')
         ]],
         ['¿Qué datos tratamos?', [
           'Formulario de contacto: tu nombre, correo electrónico, asunto, el contenido de tu mensaje y el idioma en el que usas la web.',
@@ -294,7 +297,7 @@ const L = {
       intro: 'Estas condiciones se aplican al uso de esta web y a nuestros servicios para candidatos y centros sanitarios. Léelas antes de usar nuestros servicios.',
       sections: [
         ['Quiénes somos y qué hacemos', [
-          COMPANY + ' capta profesionales sanitarios en España, otros países de la UE y Colombia, los prepara para trabajar en la sanidad neerlandesa y los acompaña durante y después de ese recorrido.',
+          COMPANY + ' es un nombre comercial de ' + ENTITY + ', inscrita en el registro mercantil neerlandés con el número ' + KVK + '. Bajo ese nombre captamos profesionales sanitarios en España, otros países de la UE y Colombia, los prepara para trabajar en la sanidad neerlandesa y los acompaña durante y después de ese recorrido.',
           'Nuestros servicios incluyen captación y selección, evaluación y verificación de documentos, formación en neerlandés, apoyo con la homologación y el registro BIG, la gestión del alojamiento y el acompañamiento tras la llegada.'
         ]],
         ['Lo que expresamente no hacemos', [
@@ -346,9 +349,9 @@ const L = {
       intro: 'Przetwarzamy dane osobowe kandydatów, placówek medycznych i odwiedzających tę stronę. Poniżej wyjaśniamy dokładnie, jakie to dane, dlaczego je przetwarzamy i jakie masz prawa. Działamy zgodnie z RODO.',
       sections: [
         ['Kto jest administratorem?', [
-          COMPANY + ' jest administratorem danych zbieranych za pośrednictwem tej strony.',
+          COMPANY + ' jest nazwą handlową spółki ' + ENTITY + ', która jest administratorem danych zbieranych za pośrednictwem tej strony.',
           'Holandia — Torenlaan 5A, 1402 BN Bussum. Polska — Białka 15, 09-550 Szczawin Kościelny.',
-          'E-mail: info@honorcareinternational.com · Telefon: +31 6 46 15 01 60' + (KVK ? ' · KvK: ' + KVK : '')
+          'E-mail: info@honorcareinternational.com · Telefon: +31 6 46 15 01 60' + (KVK ? ' · Holenderski rejestr handlowy: ' + KVK : '')
         ]],
         ['Jakie dane przetwarzamy?', [
           'Formularz kontaktowy: imię i nazwisko, adres e-mail, temat, treść wiadomości oraz język, w którym korzystasz ze strony.',
@@ -404,7 +407,7 @@ const L = {
       intro: 'Niniejszy regulamin dotyczy korzystania z tej strony oraz naszych usług dla kandydatów i placówek medycznych. Zapoznaj się z nim przed skorzystaniem z naszych usług.',
       sections: [
         ['Kim jesteśmy i co robimy', [
-          COMPANY + ' rekrutuje profesjonalistów medycznych w Hiszpanii, innych krajach UE i Kolumbii, przygotowuje ich do pracy w holenderskiej opiece zdrowotnej i wspiera w trakcie oraz po tej ścieżce.',
+          COMPANY + ' jest nazwą handlową spółki ' + ENTITY + ', wpisanej do holenderskiego rejestru handlowego pod numerem ' + KVK + '. Pod tą nazwą rekrutujemy profesjonalistów medycznych w Hiszpanii, innych krajach UE i Kolumbii, przygotowuje ich do pracy w holenderskiej opiece zdrowotnej i wspiera w trakcie oraz po tej ścieżce.',
           'Nasze usługi obejmują rekrutację i selekcję, weryfikację i sprawdzenie dokumentów, kurs niderlandzkiego, wsparcie przy uznaniu dyplomu i rejestracji BIG, organizację zakwaterowania oraz opiekę po przyjeździe.'
         ]],
         ['Czego wyraźnie nie robimy', [
