@@ -16,6 +16,7 @@ const { renderNetherlands } = require('./netherlands');
 const { renderExtras } = require('./page-extras');
 const { renderLegal, legalTitle } = require('./legal');
 const { renderJourney } = require('./journey');
+const { renderChangelog, UI: CL_UI } = require('./changelog');
 const WA_NUMBER = '31646150160'; // WhatsApp: zelfde nummer als telefoon
 const WA_LINK = 'https://wa.me/' + WA_NUMBER;
 const waIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.5-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.4 1.9.8 2.6.9 3.5.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4 0-.1-.2-.2-.5-.3z"/><path d="M12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.1c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.1 8.1 0 1 1 12 20.1z"/></svg>';
@@ -565,11 +566,11 @@ app.post('/verify-2fa', requireLogin, async (req, res) => {
 app.post('/logout', (req, res) => req.session.destroy(() => res.redirect('/')));
 
 // ---------- Portaal ----------
-const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/talentpool', 'Kandidatenbank'], ['/zorgscan', 'Zorgscan'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/messages', 'Berichten'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
+const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/talentpool', 'Kandidatenbank'], ['/zorgscan', 'Zorgscan'], ['/versies', 'Versies'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/messages', 'Berichten'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
 function portalNav(active) { return `<nav class="pnav" aria-label="Portaal">${PORTAL_LINKS.map(([h, l]) => `<a href="${h}" class="${active === h ? 'on' : ''}">${l}</a>`).join('')}</nav>`; }
 function portalShell(req, res, title, inner, active) {
   const head = `<div class="page-head"><div><h1>${esc(title)}</h1></div><form method="post" action="/logout"><button class="btn navy small">Uitloggen</button></form></div>`;
-  res.send(layout(title, `<section class="page portal">${head}${portalNav(active)}<div class="pbody">${inner}</div><p class="portal-version">${esc(versionLine())}</p></section>`, 'home', req.lang, req.path));
+  res.send(layout(title, `<section class="page portal">${head}${portalNav(active)}<div class="pbody">${inner}</div><p class="portal-version"><a href="/versies">${esc(versionLine())}</a></p></section>`, 'home', req.lang, req.path));
 }
 function badge(status) {
   if (!status) return '';
@@ -956,6 +957,9 @@ app.get('/zorgscan', requireAuth, async (req, res) => {
   for (const k of ['profession', 'province', 'hc_min', 'q']) if (f[k]) qs.set(k, f[k]);
   const [stats, vac] = await Promise.all([ZS.zsFetch('/api/stats'), ZS.zsFetch('/api/vacatures?' + qs.toString())]);
   portalShell(req, res, 'Zorgscan', ZS.renderPanel(stats, vac, f, { esc }), '/zorgscan');
+});
+app.get('/versies', requireAuth, (req, res) => {
+  portalShell(req, res, CL_UI.h, renderChangelog(PKG.version, esc), '/versies');
 });
 app.get('/backup', requireAuth, (req, res) => {
   const inner = `<p>Bescherm je gegevens: download regelmatig een back-up. Zo ben je nooit data kwijt, ook niet bij een herinstallatie of migratie.</p>

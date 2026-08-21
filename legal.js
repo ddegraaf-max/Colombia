@@ -5,6 +5,9 @@
 const KVK = String(process.env.COMPANY_KVK || '').trim();
 const COMPANY = String(process.env.COMPANY_NAME || 'Honor Care International').trim();
 const UPDATED = '21-08-2026';
+// Documentversie: hoog dit op bij elke inhoudelijke wijziging van de tekst,
+// los van het versienummer van de applicatie.
+const DOC_VERSION = { privacy: '1.0', terms: '1.0' };
 
 const L = {
   nl: {
@@ -114,7 +117,7 @@ const L = {
         ]]
       ]
     },
-    updatedLabel: 'Laatst bijgewerkt op'
+    updatedLabel: 'Laatst bijgewerkt op', versionLabel: 'Versie'
   },
 
   en: {
@@ -224,7 +227,7 @@ const L = {
         ]]
       ]
     },
-    updatedLabel: 'Last updated on'
+    updatedLabel: 'Last updated on', versionLabel: 'Version'
   },
 
   es: {
@@ -334,7 +337,7 @@ const L = {
         ]]
       ]
     },
-    updatedLabel: 'Última actualización'
+    updatedLabel: 'Última actualización', versionLabel: 'Versión'
   },
 
   pl: {
@@ -444,7 +447,7 @@ const L = {
         ]]
       ]
     },
-    updatedLabel: 'Ostatnia aktualizacja'
+    updatedLabel: 'Ostatnia aktualizacja', versionLabel: 'Wersja'
   }
 };
 
@@ -458,7 +461,7 @@ ${regels.map(r => `<p>${esc(r)}</p>`).join('')}
   return `<section class="page has-hero"><div class="lg-doc">
 <p class="lg-intro">${esc(t.intro)}</p>
 ${secties}
-<p class="lg-updated">${esc(meta.updatedLabel)} ${UPDATED}</p>
+<p class="lg-updated">${esc(meta.versionLabel)} ${DOC_VERSION[kind]} &middot; ${esc(meta.updatedLabel)} ${UPDATED}</p>
 </div></section>`;
 }
 
