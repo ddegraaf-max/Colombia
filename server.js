@@ -257,14 +257,17 @@ async function sendEmail({ to, subject, html, replyTo }) {
     return await r.json();
   } catch (e) { console.error('[mail] uitzondering', e.message); return { error: 'network' }; }
 }
-function mailWrap(title, rows) {
-  const body = rows.map(([k, v]) => `<tr><td style="padding:6px 12px;color:#667;font-size:13px">${esc(k)}</td><td style="padding:6px 12px;font-weight:600;color:#002B55">${esc(v)}</td></tr>`).join('');
-  return `<div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;border:1px solid #e6e6e6;border-radius:10px;overflow:hidden">
-<div style="background:#002B55;color:#fff;padding:16px 20px;font-size:18px">Honor Care International</div>
-<div style="padding:20px"><h2 style="color:#002B55;margin:0 0 12px;font-size:18px">${esc(title)}</h2>
-<table style="width:100%;border-collapse:collapse">${body}</table></div>
-<div style="background:#f6f4ef;color:#888;padding:12px 20px;font-size:12px">Automatisch bericht van honorcareinternational.com</div></div>`;
-}
+const MT = require('./mail-template');
+// Zelfde aanroep als voorheen; opts is optioneel (intro, note, cta, lang, preheader).
+function mailWrap(title, rows, opts) { return MT.mailWrap(title, rows, opts, esc); }
+// Begeleidende teksten per taal voor de bevestigingsmail aan de afzender.
+const MAILTXT = {
+  nl: { intro: 'Bedankt voor je bericht. We hebben het in goede orde ontvangen en reageren meestal binnen één werkdag. Hieronder vind je wat je ons stuurde.', note: 'Let op: wij vragen kandidaten nooit om geld voor bemiddeling of plaatsing. Onze dienstverlening is voor jou kosteloos.', cta: 'BEKIJK DE EU-ROUTE', sub: 'We hebben je bericht ontvangen' },
+  en: { intro: 'Thank you for your message. We have received it and usually reply within one business day. Below is what you sent us.', note: 'Please note: we never ask candidates for money in exchange for placement. Our services are free of charge for you.', cta: 'SEE THE EU ROUTE', sub: 'We have received your message' },
+  es: { intro: 'Gracias por tu mensaje. Lo hemos recibido correctamente y solemos responder en un día laborable. Abajo tienes lo que nos enviaste.', note: 'Ten en cuenta: nunca pedimos dinero a los candidatos a cambio de una colocación. Nuestros servicios son gratuitos para ti.', cta: 'VER LA RUTA UE', sub: 'Hemos recibido tu mensaje' },
+  pl: { intro: 'Dziękujemy za wiadomość. Otrzymaliśmy ją i zwykle odpowiadamy w ciągu jednego dnia roboczego. Poniżej znajdziesz treść, którą nam przesłałeś.', note: 'Uwaga: nigdy nie pobieramy od kandydatów opłat za pośrednictwo ani zatrudnienie. Nasze usługi są dla Ciebie bezpłatne.', cta: 'ZOBACZ ŚCIEŻKĘ UE', sub: 'Otrzymaliśmy Twoją wiadomość' }
+};
+function mailtxt(lang) { return MAILTXT[lang] || MAILTXT.nl; }
 const CONTACT = {
   pl: { title: 'Skontaktuj się', sub: 'Masz pytanie? Napisz do nas — zwykle odpowiadamy w ciągu jednego dnia roboczego.', note: 'Odpowiadamy w ciągu 24 godzin.', name: 'Imię i nazwisko', email: 'E-mail', subject: 'Temat', message: 'Wiadomość', send: 'Wyślij wiadomość', thanks: 'Dziękujemy! Twoja wiadomość została wysłana.', hours: 'Godziny otwarcia', emailLabel: 'E-mail' },
   en: { title: 'Contact us', sub: 'Have a question? Send us a message — we usually reply within one business day.', note: 'We reply within 24 hours.', name: 'Full name', email: 'Email', subject: 'Subject', message: 'Message', send: 'Send message', thanks: 'Thank you! Your message has been sent.', hours: 'Opening hours', emailLabel: 'Email' },
@@ -464,9 +467,10 @@ app.post('/contact', async (req, res) => {
   if (name && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && message) {
     try { await ContactMessage.create({ name, email, subject, message, lang: req.lang }); } catch (e) {}
     // melding naar Honor Care
-    sendEmail({ to: MAIL_TO, replyTo: email, subject: `Nieuw contactbericht — ${name}`, html: mailWrap('Nieuw contactbericht', [['Naam', name], ['E-mail', email], ['Onderwerp', subject || '—'], ['Bericht', message]]) });
+    sendEmail({ to: MAIL_TO, replyTo: email, subject: `Nieuw contactbericht — ${name}`, html: mailWrap('Nieuw contactbericht', [['Naam', name], ['E-mail', email], ['Taal', req.lang.toUpperCase()], ['Onderwerp', subject || '—'], ['Bericht', message]], { lang: 'nl', intro: 'Er is een nieuw bericht binnengekomen via het contactformulier. Je kunt rechtstreeks op deze e-mail antwoorden; het antwoord gaat naar de afzender.', preheader: name + ' — ' + (subject || 'bericht via het contactformulier') }) });
     // bevestiging naar afzender (werkt zodra je domein in Resend geverifieerd is)
-    sendEmail({ to: email, subject: c.thanks, html: mailWrap(c.thanks, [['Naam', name], ['Onderwerp', subject || '—'], ['Bericht', message]]) });
+    const mt = mailtxt(req.lang);
+    sendEmail({ to: email, subject: mt.sub, html: mailWrap(c.thanks, [['Naam', name], ['Onderwerp', subject || '—'], ['Bericht', message]], { lang: req.lang, intro: mt.intro, note: mt.note, cta: { label: mt.cta, url: MT.SITE + '/eu-route' }, preheader: mt.intro.slice(0, 90) }) });
   }
   res.redirect('/contact?ok=1#kontakt');
 });
