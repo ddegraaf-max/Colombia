@@ -162,10 +162,19 @@ function tooMany(req, scope, max = 5) {
 }
 
 // Gebruikers-toegang (los van admin): pas door als ingelogd én 2FA (indien aan) voltooid.
+// Basistoegang tot het portaal: ingelogd, en als 2FA aanstaat ook geverifieerd.
+// Kandidaten kunnen hun profiel dus direct invullen; 2FA is een aanrader, geen drempel.
 const requireUser = (req, res, next) => {
   if (!req.session?.portalUserId) return res.redirect('/portal');
   if (req.session?.userPending2FA) return res.redirect('/portal/2fa');
-  if (!req.session?.user2FAEnabled && req.path !== '/portal/security/2fa-setup') return res.redirect('/portal/security/2fa-setup');
+  return next();
+};
+// Voor gevoelige handelingen (documenten, persoonsgegevens, 2FA uitzetten):
+// hier is tweestapsverificatie wél verplicht.
+const requireUser2FA = (req, res, next) => {
+  if (!req.session?.portalUserId) return res.redirect('/portal');
+  if (req.session?.userPending2FA) return res.redirect('/portal/2fa');
+  if (!req.session?.user2FAEnabled) return res.redirect('/portal/security/2fa-setup');
   return next();
 };
 
@@ -599,7 +608,7 @@ app.post('/portal/register', async (req, res) => {
   let u; try { u = await PortalUser.create({ name, email, passwordHash: await bcrypt.hash(pw, 12), role, language }); } catch (e) { return portalAuthPage(req, res, { tab: 'register', error: a.exists }); }
   req.session.portalUserId = u._id.toString(); req.session.portalEmail = email; req.session.userPending2FA = false; req.session.user2FAEnabled = false;
   setLangCookie(res, language);
-  res.redirect('/portal/security/2fa-setup');
+  res.redirect('/portal/account');
 });
 app.post('/portal/login', async (req, res) => {
   const a = acc(req);
@@ -641,10 +650,13 @@ app.get('/portal/account', requireUser, async (req, res) => {
   const mine = (await Appointment.find().lean()).filter(x => String(x.portalUserId) === String(u._id)).sort((x, y) => ((x.date || '') + (x.time || '')).localeCompare((y.date || '') + (y.time || '')));
   const myList = mine.length ? `<div class="tablewrap" style="margin-top:14px"><table class="rtable"><thead><tr><th>${esc(b.date)}</th><th>${esc(b.time)}</th><th>${esc(b.topic)}</th><th>Status</th></tr></thead><tbody>${mine.map(m => `<tr><td>${esc(m.date || '')}</td><td>${esc(m.time || '')}</td><td>${esc(m.topic || '')}</td><td>${badge(m.status)}</td></tr>`).join('')}</tbody></table></div>` : '';
   const profileCard = u.role !== 'Zorginstelling' ? CP.renderProfileForm(u, req.lang, esc) : '';
+  const secCard = u.twoFAEnabled
+    ? `<div class="rcard"><h2>${esc(a.security)}</h2><p class="ok">✓ ${esc(a.twofaOn)}</p><form method="post" action="/portal/security/2fa-disable"><button class="btn navy small">${esc(a.disable2fa)}</button></form><p class="hint">🔒 ${esc(a.secNote)}</p></div>`
+    : `<div class="rcard"><h2>${esc(a.security)}</h2><p class="warn">${esc(a.twofaOff)}</p><p><a class="btn gold small" href="/portal/security/2fa-setup">${esc(a.enable2fa)}</a></p><p class="hint">🔒 ${esc(a.secNote)}</p></div>`;
   const inner = `<section class="page portal"><div class="page-head"><div><h1>${esc(a.account)}</h1><p>${esc(a.hello)}, ${esc(u.name)} · ${esc(u.role)}</p></div><form method="post" action="/portal/logout"><button class="btn navy small">${esc(a.logout)}</button></form></div>
 <div class="rcard"><h2>${esc(a.profile)}</h2><form class="rform" method="post" action="/portal/account"><div class="ff"><label>${esc(a.name)}</label><input name="name" value="${esc(u.name)}"></div><div class="ff"><label>${esc(a.type)}</label><select name="role">${roleOpts}</select></div><div class="ff"><label>${esc(a.lang)}</label><select name="language">${langOpts}</select></div><div class="rform-actions"><button class="btn gold">${esc(a.save)}</button></div></form></div>
 ${profileCard}<div class="rcard"><h2>${esc(b.title)}</h2><form class="rform" method="post" action="/portal/appointment"><div class="ff"><label>${esc(b.date)}</label><input type="date" name="date" min="${today}" required></div><div class="ff"><label>${esc(b.time)}</label><select name="time">${TIMES.map(x => `<option>${x}</option>`).join('')}</select></div><div class="ff"><label>${esc(b.channel)}</label><select name="channel"><option value="Videogesprek">${esc(b.video)}</option><option value="Telefoon">${esc(b.phone)}</option><option value="Op locatie">${esc(b.onsite)}</option></select></div><div class="ff"><label>${esc(b.topic)}</label><input name="topic"></div><div class="rform-actions"><button class="btn gold">${esc(b.send)}</button></div></form>${myList}</div>
-<div class="rcard"><h2>${esc(a.security)}</h2><p class="ok">✓ ${esc(a.twofaOn)}</p><p class="hint">🔒 ${esc(a.secNote)}</p></div>
+${secCard}
 </section>`;
   res.send(layout(a.account, inner, 'home', req.lang, req.path));
 });
@@ -689,7 +701,7 @@ app.post('/portal/security/2fa-setup', requireUser, async (req, res) => {
   }
   res.redirect('/portal/account');
 });
-app.post('/portal/security/2fa-disable', requireUser, async (req, res) => {
+app.post('/portal/security/2fa-disable', requireUser2FA, async (req, res) => {
   await PortalUser.findByIdAndUpdate(req.session.portalUserId, { twoFASecret: null, twoFAEnabled: false });
   res.redirect('/portal/account');
 });

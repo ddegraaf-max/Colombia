@@ -497,3 +497,4 @@ code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
 .tp-k{color:var(--muted);width:210px;font-size:13.5px}
 .tp-motiv{background:var(--bg);border-left:3px solid var(--gold);padding:14px 16px;border-radius:8px;white-space:pre-wrap;line-height:1.6}
 @media(max-width:700px){.prof-form{grid-template-columns:1fr}.tp-filters input[type=search]{min-width:0;width:100%}}
+.warn{background:#fdf3e0;border:1px solid #f0dcb4;color:#8a6412;padding:12px 15px;border-radius:9px;font-size:14px;margin:0 0 12px}
