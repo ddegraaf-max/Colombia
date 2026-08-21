@@ -22,7 +22,7 @@ const EUROUTE = {
       eyebrow: 'WAT WIJ BIEDEN', h2: 'Wat jij van ons krijgt',
       items: [
         ['Nederlandse taalopleiding', 'Van A1 tot B1/B2 (NT2), inclusief medische terminologie. Online te volgen vanuit Spanje, naast je werk.'],
-        ['Begeleiding bij erkenning en BIG', 'Wij helpen je bij de erkenning van je EU-diploma en bij je inschrijving in het BIG-register (CIBG).'],
+        ['Begeleiding bij erkenning en BIG', 'Wij helpen je bij de erkenning van je EU-diploma en je inschrijving in het BIG-register. Voor een deel van de EU-diploma’s geldt een verkorte route; anders beoordeelt de commissie CBGV je dossier — dat duurt maximaal 13 weken na een compleet dossier. Aantoonbare kennis van het Nederlands hoort bij elke route.'],
         ['Voorbereiding op de Nederlandse zorg', 'Hoe het zorgstelsel werkt, wat een Nederlandse werkgever verwacht en hoe de omgang met patiënten en collega’s is.'],
         ['Huisvesting', 'Een gemeubileerde woning, klaar bij aankomst en dicht bij je werk.'],
         ['Een vast aanspreekpunt', 'Eén coördinator die jouw dossier kent en je begeleidt — ook ná aankomst in Nederland.'],
@@ -70,7 +70,7 @@ const EUROUTE = {
       eyebrow: 'WHAT WE OFFER', h2: 'What you get from us',
       items: [
         ['Dutch language training', 'From A1 to B1/B2 (NT2), including medical terminology. Available online from Spain, alongside your work.'],
-        ['Support with recognition and BIG', 'We help you with the recognition of your EU diploma and with your registration in the BIG register (CIBG).'],
+        ['Support with recognition and BIG', 'We help you with the recognition of your EU diploma and your registration in the BIG register. Some EU diplomas follow a shortened route; otherwise the CBGV committee assesses your file, which takes up to 13 weeks once it is complete. Demonstrable Dutch proficiency is part of every route.'],
         ['Preparation for Dutch healthcare', 'How the healthcare system works, what a Dutch employer expects, and how people interact with patients and colleagues.'],
         ['Housing', 'A furnished home, ready on arrival and close to your workplace.'],
         ['One point of contact', 'A single coordinator who knows your file and supports you — including after you arrive.'],
@@ -118,7 +118,7 @@ const EUROUTE = {
       eyebrow: 'CO OFERUJEMY', h2: 'Co otrzymujesz od nas',
       items: [
         ['Kurs języka niderlandzkiego', 'Od A1 do B1/B2 (NT2) wraz z terminologią medyczną. Online z Hiszpanii, obok Twojej pracy.'],
-        ['Wsparcie przy uznaniu dyplomu i BIG', 'Pomagamy w uznaniu dyplomu z UE oraz w rejestracji w rejestrze BIG (CIBG).'],
+        ['Wsparcie przy uznaniu dyplomu i BIG', 'Pomagamy w uznaniu dyplomu z UE i rejestracji w rejestrze BIG. Część dyplomów z UE idzie drogą skróconą; w pozostałych przypadkach dokumentację ocenia komisja CBGV — do 13 tygodni od kompletnego wniosku. Udokumentowana znajomość niderlandzkiego jest wymagana w każdej ścieżce.'],
         ['Przygotowanie do pracy w Holandii', 'Jak działa system opieki zdrowotnej, czego oczekuje holenderski pracodawca i jak wygląda kontakt z pacjentem i zespołem.'],
         ['Zakwaterowanie', 'Umeblowane mieszkanie, gotowe na przyjazd i blisko miejsca pracy.'],
         ['Stały opiekun', 'Jeden koordynator, który zna Twoją sprawę i prowadzi Cię — również po przyjeździe.'],
@@ -166,7 +166,7 @@ const EUROUTE = {
       eyebrow: 'QUÉ OFRECEMOS', h2: 'Qué recibes de nosotros',
       items: [
         ['Formación en neerlandés', 'De A1 a B1/B2 (NT2), con terminología médica. Online desde España, compatible con tu trabajo.'],
-        ['Apoyo con la homologación y el BIG', 'Te ayudamos con el reconocimiento de tu título de la UE y con tu inscripción en el registro BIG (CIBG).'],
+        ['Apoyo con la homologación y el BIG', 'Te ayudamos con el reconocimiento de tu título de la UE y tu inscripción en el registro BIG. Algunos títulos de la UE siguen una vía abreviada; en el resto, la comisión CBGV evalúa tu expediente, con un máximo de 13 semanas desde que está completo. Acreditar el neerlandés forma parte de todas las vías.'],
         ['Preparación para la sanidad neerlandesa', 'Cómo funciona el sistema sanitario, qué espera un empleador neerlandés y cómo es el trato con pacientes y compañeros.'],
         ['Alojamiento', 'Una vivienda amueblada, lista a tu llegada y cerca de tu puesto de trabajo.'],
         ['Un único interlocutor', 'Un coordinador que conoce tu expediente y te acompaña, también después de tu llegada.'],

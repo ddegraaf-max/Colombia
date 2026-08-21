@@ -561,3 +561,24 @@ code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
 .clock-city{display:block;font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;opacity:.75}
 .clock b{font-family:'Playfair Display',serif;font-size:19px;letter-spacing:.5px}
 @media(max-width:640px){.wa-float{right:14px;bottom:14px;width:50px;height:50px}.wa-float svg{width:26px;height:26px}}
+
+/* ===== Veelgestelde vragen en vervolgstap onder inhoudspagina's ===== */
+.housing-note{max-width:860px;margin:0 auto 30px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;padding:16px 20px;color:var(--text);font-size:15px;line-height:1.65}
+.housing-note a{color:var(--navy2);font-weight:600;text-decoration:underline}
+.housing-note a:hover{color:var(--gold)}
+.faq{max-width:860px;margin:52px auto 0}
+.faq h2{text-align:center;font-size:clamp(24px,2.6vw,32px);margin:0 0 22px}
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-item{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:box-shadow .2s}
+.faq-item[open]{box-shadow:0 10px 28px rgba(0,43,85,.07);border-color:#d9cfb8}
+.faq-item summary{cursor:pointer;padding:17px 46px 17px 20px;font-weight:600;color:var(--navy);font-size:15.5px;position:relative;list-style:none}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";position:absolute;right:19px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:21px;font-weight:600;line-height:1}
+.faq-item[open] summary::after{content:"\2013"}
+.faq-item summary:hover{color:var(--gold)}
+.faq-item p{margin:0;padding:0 20px 18px;color:var(--muted);font-size:14.5px;line-height:1.7}
+.page-cta{max-width:760px;margin:52px auto 0;text-align:center;background:var(--navy);border-radius:18px;padding:38px 30px;color:#fff}
+.page-cta h2{color:#fff;font-size:clamp(22px,2.4vw,30px);margin:0 0 10px}
+.page-cta p{color:#cfdbe8;margin:0 0 22px;font-size:15.5px;line-height:1.6}
+.page-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+@media(max-width:640px){.faq{margin-top:38px}.page-cta{margin:38px 12px 0;padding:28px 20px}.housing-note{margin:0 12px 24px}}
