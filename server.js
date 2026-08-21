@@ -11,8 +11,16 @@ require('dotenv').config();
 const { LANGS, LANGMETA, T } = require('./i18n');
 const { EUROUTE, renderEuRoute } = require('./eu-route');
 const CP = require('./candidate-profile');
+const ZS = require('./zorgscan-panel');
 
 const app = express();
+const PKG = require('./package.json');
+const STARTED_AT = new Date();
+// Versielabel voor het beheerportaal: welke build draait er nu echt?
+function versionLine() {
+  const t = STARTED_AT.toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  return 'Honor Care Portaal v' + PKG.version + ' · actief sinds ' + t;
+}
 const ASSET_V = Date.now(); // cache-busting: nieuwe waarde bij elke (her)start/deploy
 app.set('trust proxy', 1);
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
@@ -527,11 +535,11 @@ app.post('/verify-2fa', requireLogin, async (req, res) => {
 app.post('/logout', (req, res) => req.session.destroy(() => res.redirect('/')));
 
 // ---------- Portaal ----------
-const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/talentpool', 'Kandidatenbank'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/messages', 'Berichten'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
+const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/talentpool', 'Kandidatenbank'], ['/zorgscan', 'Zorgscan'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/messages', 'Berichten'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
 function portalNav(active) { return `<nav class="pnav" aria-label="Portaal">${PORTAL_LINKS.map(([h, l]) => `<a href="${h}" class="${active === h ? 'on' : ''}">${l}</a>`).join('')}</nav>`; }
 function portalShell(req, res, title, inner, active) {
   const head = `<div class="page-head"><div><h1>${esc(title)}</h1></div><form method="post" action="/logout"><button class="btn navy small">Uitloggen</button></form></div>`;
-  res.send(layout(title, `<section class="page portal">${head}${portalNav(active)}<div class="pbody">${inner}</div></section>`, 'home', req.lang, req.path));
+  res.send(layout(title, `<section class="page portal">${head}${portalNav(active)}<div class="pbody">${inner}</div><p class="portal-version">${esc(versionLine())}</p></section>`, 'home', req.lang, req.path));
 }
 function badge(status) {
   if (!status) return '';
@@ -906,6 +914,18 @@ app.post('/talentpool/:id', requireAuth, async (req, res) => {
   try { await PortalUser.findByIdAndUpdate(req.params.id, upd); } catch (e) {}
   res.redirect('/talentpool/' + req.params.id);
 });
+app.get('/zorgscan', requireAuth, async (req, res) => {
+  const f = {
+    profession: ZS.PROFESSIONS.includes(String(req.query.profession || '')) ? String(req.query.profession) : '',
+    province: ZS.PROVINCES.includes(String(req.query.province || '')) ? String(req.query.province) : '',
+    hc_min: /^\d{1,3}$/.test(String(req.query.hc_min || '')) ? String(req.query.hc_min) : '',
+    q: String(req.query.q || '').trim().slice(0, 80)
+  };
+  const qs = new URLSearchParams({ limit: '40', sort: 'nieuw' });
+  for (const k of ['profession', 'province', 'hc_min', 'q']) if (f[k]) qs.set(k, f[k]);
+  const [stats, vac] = await Promise.all([ZS.zsFetch('/api/stats'), ZS.zsFetch('/api/vacatures?' + qs.toString())]);
+  portalShell(req, res, 'Zorgscan', ZS.renderPanel(stats, vac, f, { esc }), '/zorgscan');
+});
 app.get('/backup', requireAuth, (req, res) => {
   const inner = `<p>Bescherm je gegevens: download regelmatig een back-up. Zo ben je nooit data kwijt, ook niet bij een herinstallatie of migratie.</p>
 <p><a class="btn gold" href="/backup/download">Download volledige back-up (JSON)</a></p>
@@ -945,7 +965,7 @@ mongoose.connect(MONGO).then(async () => {
   console.log('MongoDB verbonden');
   await seed();
   app.listen(PORT, () => {
-    console.log('HonorCare Working Docs v39 draait op poort ' + PORT);
+    console.log('HonorCare Working Docs v' + PKG.version + ' draait op poort ' + PORT);
     const found = Object.keys(process.env).filter(k => /resend|mail/i.test(k));
     console.log('[env] RESEND/MAIL-variabelen die Railway doorgeeft: ' + (found.length ? found.join(', ') : '(GEEN)'));
     console.log('[mail] Resend-sleutel gedetecteerd: ' + (RESEND_KEY ? ('JA ✓ (lengte ' + RESEND_KEY.length + ')') : 'NEE ✗') + ' | MAIL_TO: ' + MAIL_TO + ' | FROM: ' + MAIL_FROM);
