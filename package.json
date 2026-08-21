@@ -1,6 +1,6 @@
 {
-  "name": "honorcare-working-docs-v43",
-  "version": "43.0.0",
+  "name": "honorcare-working-docs-v44",
+  "version": "44.0.0",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

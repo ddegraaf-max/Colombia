@@ -114,7 +114,9 @@ function renderProfileForm(u, lang, esc) {
 <p class="hint">🔒 ${esc(p.note)}</p></div>`;
 }
 
-const ADMIN_STATUS = ['Nieuw', 'Benaderd', 'In gesprek', 'Taalopleiding', 'Klaar voor plaatsing', 'Overgedragen aan partner', 'Niet passend'];
+// De fasen komen uit journey.js zodat kandidaat en beheerder hetzelfde zien.
+const { ADMIN_PHASES } = require('./journey');
+const ADMIN_STATUS = ADMIN_PHASES;
 
 // ---------- Beheer: kaartenbak ----------
 function renderTalentPool(items, f, h) {

@@ -14,6 +14,8 @@ const CP = require('./candidate-profile');
 const ZS = require('./zorgscan-panel');
 const { renderNetherlands } = require('./netherlands');
 const { renderExtras } = require('./page-extras');
+const { renderLegal, legalTitle } = require('./legal');
+const { renderJourney } = require('./journey');
 const WA_NUMBER = '31646150160'; // WhatsApp: zelfde nummer als telefoon
 const WA_LINK = 'https://wa.me/' + WA_NUMBER;
 const waIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.5-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.4 1.9.8 2.6.9 3.5.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4 0-.1-.2-.2-.5-.3z"/><path d="M12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.1c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.1 8.1 0 1 1 12 20.1z"/></svg>';
@@ -126,7 +128,7 @@ function footer(lang = 'pl') {
 <div class="fcol"><h4>${f.officeNL}</h4><p>📍 Torenlaan 5A, 1402 BN<br>Bussum, ${tr.nav.poland}</p><p>☎ <a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p>${clocksBlock('Nederland', 'Colombia')}</div>
 <div class="fcol"><h4>${f.officePL}</h4><p>📍 Białka 15, 09-550<br>Szczawin Kościelny</p><p>☎ <a href="tel:+48452823838">+48 45 282 38 38</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursPL}</p></div>
 <div class="fcol newsletter"><h4>${f.newsletter}</h4><p>${f.newsletterText}</p><form method="post" action="/newsletter"><div class="nl-row"><input type="email" name="email" placeholder="${f.newsletterPh}" aria-label="${f.newsletterPh}" required><button class="nl-btn" aria-label="OK">→</button></div></form></div>
-</div><div class="footer-legal">${legalText(lang)}</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International. ${f.rights}</span><span><a href="/poland">${f.privacy}</a> &nbsp;|&nbsp; <a href="/about">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
+</div><div class="footer-legal">${legalText(lang)}</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International. ${f.rights}</span><span><a href="/privacy">${f.privacy}</a> &nbsp;|&nbsp; <a href="/voorwaarden">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
 }
 
 mongoose.set('strictQuery', true);
@@ -420,6 +422,14 @@ app.get('/eu-route', (req, res) => {
   const body = renderEuRoute(lang, { esc, icon }) + footer(lang);
   res.send(layout(e.title, body, 'euroute', lang, req.path));
 });
+function legalPage(req, res, kind) {
+  const lang = req.lang, titel = legalTitle(kind, lang);
+  const body = `<section class="page-hero ph-legal"><div class="page-hero-inner"><h1>${esc(titel)}</h1></div></section>` +
+    renderLegal(kind, lang, esc) + footer(lang);
+  res.send(layout(titel, body, 'home', lang, req.path));
+}
+app.get('/privacy', (req, res) => legalPage(req, res, 'privacy'));
+app.get('/voorwaarden', (req, res) => legalPage(req, res, 'terms'));
 app.get('/contact', (req, res) => {
   const lang = req.lang, tr = T[lang], f = tr.footer, c = contactT(req);
   const locIc = '<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>';
@@ -678,12 +688,13 @@ app.get('/portal/account', requireUser, async (req, res) => {
   const mine = (await Appointment.find().lean()).filter(x => String(x.portalUserId) === String(u._id)).sort((x, y) => ((x.date || '') + (x.time || '')).localeCompare((y.date || '') + (y.time || '')));
   const myList = mine.length ? `<div class="tablewrap" style="margin-top:14px"><table class="rtable"><thead><tr><th>${esc(b.date)}</th><th>${esc(b.time)}</th><th>${esc(b.topic)}</th><th>Status</th></tr></thead><tbody>${mine.map(m => `<tr><td>${esc(m.date || '')}</td><td>${esc(m.time || '')}</td><td>${esc(m.topic || '')}</td><td>${badge(m.status)}</td></tr>`).join('')}</tbody></table></div>` : '';
   const profileCard = u.role !== 'Zorginstelling' ? CP.renderProfileForm(u, req.lang, esc) : '';
+  const journeyCard = u.role !== 'Zorginstelling' ? renderJourney(u.adminStatus, req.lang, esc) : '';
   const secCard = u.twoFAEnabled
     ? `<div class="rcard"><h2>${esc(a.security)}</h2><p class="ok">✓ ${esc(a.twofaOn)}</p><form method="post" action="/portal/security/2fa-disable"><button class="btn navy small">${esc(a.disable2fa)}</button></form><p class="hint">🔒 ${esc(a.secNote)}</p></div>`
     : `<div class="rcard"><h2>${esc(a.security)}</h2><p class="warn">${esc(a.twofaOff)}</p><p><a class="btn gold small" href="/portal/security/2fa-setup">${esc(a.enable2fa)}</a></p><p class="hint">🔒 ${esc(a.secNote)}</p></div>`;
   const inner = `<section class="page portal"><div class="page-head"><div><h1>${esc(a.account)}</h1><p>${esc(a.hello)}, ${esc(u.name)} · ${esc(u.role)}</p></div><form method="post" action="/portal/logout"><button class="btn navy small">${esc(a.logout)}</button></form></div>
 <div class="rcard"><h2>${esc(a.profile)}</h2><form class="rform" method="post" action="/portal/account"><div class="ff"><label>${esc(a.name)}</label><input name="name" value="${esc(u.name)}"></div><div class="ff"><label>${esc(a.type)}</label><select name="role">${roleOpts}</select></div><div class="ff"><label>${esc(a.lang)}</label><select name="language">${langOpts}</select></div><div class="rform-actions"><button class="btn gold">${esc(a.save)}</button></div></form></div>
-${profileCard}<div class="rcard"><h2>${esc(b.title)}</h2><form class="rform" method="post" action="/portal/appointment"><div class="ff"><label>${esc(b.date)}</label><input type="date" name="date" min="${today}" required></div><div class="ff"><label>${esc(b.time)}</label><select name="time">${TIMES.map(x => `<option>${x}</option>`).join('')}</select></div><div class="ff"><label>${esc(b.channel)}</label><select name="channel"><option value="Videogesprek">${esc(b.video)}</option><option value="Telefoon">${esc(b.phone)}</option><option value="Op locatie">${esc(b.onsite)}</option></select></div><div class="ff"><label>${esc(b.topic)}</label><input name="topic"></div><div class="rform-actions"><button class="btn gold">${esc(b.send)}</button></div></form>${myList}</div>
+${journeyCard}${profileCard}<div class="rcard"><h2>${esc(b.title)}</h2><form class="rform" method="post" action="/portal/appointment"><div class="ff"><label>${esc(b.date)}</label><input type="date" name="date" min="${today}" required></div><div class="ff"><label>${esc(b.time)}</label><select name="time">${TIMES.map(x => `<option>${x}</option>`).join('')}</select></div><div class="ff"><label>${esc(b.channel)}</label><select name="channel"><option value="Videogesprek">${esc(b.video)}</option><option value="Telefoon">${esc(b.phone)}</option><option value="Op locatie">${esc(b.onsite)}</option></select></div><div class="ff"><label>${esc(b.topic)}</label><input name="topic"></div><div class="rform-actions"><button class="btn gold">${esc(b.send)}</button></div></form>${myList}</div>
 ${secCard}
 </section>`;
   res.send(layout(a.account, inner, 'home', req.lang, req.path));
