@@ -480,3 +480,20 @@ code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
 .eur-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 @media(max-width:900px){.eur-grid,.eur-roles-grid{grid-template-columns:1fr}.eur-roles{padding:30px 20px;border-radius:16px}.eur-cta{padding:30px 20px}.eur-block{margin-bottom:40px}}
 @media(min-width:981px) and (max-width:1300px){.menu{gap:13px;font-size:11px}}
+
+/* ===== Kandidaatprofiel (portaal) + kaartenbank (beheer) ===== */
+.prof-bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:8px 0 6px}
+.prof-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.prof-pct{margin:0 0 18px;font-size:12.5px;color:var(--muted);font-weight:600}
+.prof-form{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+.prof-form .ff-wide,.prof-form .rform-actions,.prof-form .chkff{grid-column:1/-1}
+.tp-filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 18px}
+.tp-filters select,.tp-filters input{padding:9px 12px;border:1px solid #cdd6e0;border-radius:8px;font-family:'Poppins',sans-serif;font-size:14px}
+.tp-filters input[type=search]{min-width:230px;flex:1}
+.tp-sub{color:var(--muted);font-size:12px}
+.tp-pct{display:inline-block;padding:3px 9px;border-radius:20px;background:#eef1f5;color:var(--muted);font-size:12px;font-weight:700}
+.tp-pct.mid{background:#fdf3e0;color:#a9761d}
+.tp-pct.good{background:#e8f5ee;color:#1f7a4d}
+.tp-k{color:var(--muted);width:210px;font-size:13.5px}
+.tp-motiv{background:var(--bg);border-left:3px solid var(--gold);padding:14px 16px;border-radius:8px;white-space:pre-wrap;line-height:1.6}
+@media(max-width:700px){.prof-form{grid-template-columns:1fr}.tp-filters input[type=search]{min-width:0;width:100%}}

@@ -10,6 +10,7 @@ const crypto = require('crypto');
 require('dotenv').config();
 const { LANGS, LANGMETA, T } = require('./i18n');
 const { EUROUTE, renderEuRoute } = require('./eu-route');
+const CP = require('./candidate-profile');
 
 const app = express();
 const ASSET_V = Date.now(); // cache-busting: nieuwe waarde bij elke (her)start/deploy
@@ -104,7 +105,7 @@ function footer(lang = 'pl') {
 <div class="fcol"><img class="flogo" src="/images/logo.svg" alt="Honor Care International" width="230" height="52"><p>${f.tagline}</p><div class="social"><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 8H6v4h3v12h5V12h3.6l.4-4h-4V6.3c0-1 .2-1.3 1.2-1.3H18V0h-3.6C10.8 0 9 1.6 9 4.6V8z"/></svg></a><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.5 3 5.5 7V24h-5v-7c0-1.7 0-3.8-2.3-3.8s-2.7 1.8-2.7 3.7V24h-5V8z"/></svg></a><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.5-.1 4.8c-.1 3.2-1.6 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.5.1-4.8C2.4 4 3.9 2.4 7.1 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 12 18.6 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 12 7.7a4.3 4.3 0 0 1 0 8.6zm6.8-11.1a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></a></div></div>
 <div class="fcol"><h4>${f.quick}</h4><ul>${links}</ul></div>
 <div class="fcol"><h4>${f.officeNL}</h4><p>📍 Torenlaan 5A, 1402 BN<br>Bussum, ${tr.nav.poland}</p><p>☎ <a href="tel:+31351234567">+31 35 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p></div>
-<div class="fcol"><h4>${f.officeCO}</h4><p>📍 Carrera 13 # 97-76, Oficina 501<br>Bogotá, Colombia</p><p>☎ <a href="tel:+573201234567">+57 320 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursCO}</p></div>
+<div class="fcol"><h4>${f.officePL}</h4><p>📍 ul. Prosta 69, 00-838<br>Warszawa</p><p>☎ <a href="tel:+48221234567">+48 22 123 45 67</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursPL}</p></div>
 <div class="fcol newsletter"><h4>${f.newsletter}</h4><p>${f.newsletterText}</p><form method="post" action="/newsletter"><div class="nl-row"><input type="email" name="email" placeholder="${f.newsletterPh}" aria-label="${f.newsletterPh}" required><button class="nl-btn" aria-label="OK">→</button></div></form></div>
 </div><div class="footer-legal">${legalText(lang)}</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International. ${f.rights}</span><span><a href="/poland">${f.privacy}</a> &nbsp;|&nbsp; <a href="/about">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
 }
@@ -118,7 +119,7 @@ const Placement = mongoose.model('Placement', new mongoose.Schema({ candidate: S
 const Housing = mongoose.model('Housing', new mongoose.Schema({ title: String, district: String, address: String, rooms: String, area: String, price: String, furnished: { type: Boolean, default: true }, status: { type: String, default: 'Beschikbaar' }, otodomUrl: String, assignedTo: String, notes: String, createdAt: { type: Date, default: Date.now } }));
 const Subsidy = mongoose.model('Subsidy', new mongoose.Schema({ title: String, program: String, deadline: String, status: { type: String, default: 'Concept' }, notes: String, createdAt: { type: Date, default: Date.now } }));
 const Newsletter = mongoose.model('Newsletter', new mongoose.Schema({ email: { type: String, lowercase: true }, lang: String, createdAt: { type: Date, default: Date.now } }));
-const PortalUser = mongoose.model('PortalUser', new mongoose.Schema({ name: String, email: { type: String, unique: true, lowercase: true }, passwordHash: String, role: { type: String, default: 'Zorgprofessional' }, language: { type: String, default: 'pl' }, twoFASecret: { type: String, default: null }, twoFAEnabled: { type: Boolean, default: false }, createdAt: { type: Date, default: Date.now }, lastLogin: Date }));
+const PortalUser = mongoose.model('PortalUser', new mongoose.Schema({ name: String, email: { type: String, unique: true, lowercase: true }, passwordHash: String, role: { type: String, default: 'Zorgprofessional' }, language: { type: String, default: 'pl' }, twoFASecret: { type: String, default: null }, twoFAEnabled: { type: Boolean, default: false }, profession: String, specialty: String, country: String, city: String, phone: String, experienceYears: Number, dutchLevel: String, englishLevel: String, bigStatus: String, availableFrom: String, euNational: { type: Boolean, default: false }, motivation: String, profileUpdatedAt: Date, adminStatus: { type: String, default: 'Nieuw' }, adminNotes: String, createdAt: { type: Date, default: Date.now }, lastLogin: Date }));
 const Appointment = mongoose.model('Appointment', new mongoose.Schema({ name: String, email: String, portalUserId: { type: String, default: null }, date: String, time: String, topic: String, channel: { type: String, default: 'Videogesprek' }, status: { type: String, default: 'Aangevraagd' }, notes: String, createdAt: { type: Date, default: Date.now } }));
 const ContactMessage = mongoose.model('ContactMessage', new mongoose.Schema({ name: String, email: String, subject: String, message: String, lang: String, status: { type: String, default: 'Nieuw' }, createdAt: { type: Date, default: Date.now } }));
 
@@ -411,9 +412,9 @@ ${turnstileWidget(lang)}
 </form>
 </div>
 <aside class="contact-aside">
-<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+31351234567">+31 35 123 45 67</a></p><p class="ci-h">${f.hoursNL}</p></article>
+<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>Torenlaan 5A, 1402 BN Bussum</p><p><a href="tel:+31351234567">+31 35 123 45 67</a></p><p class="ci-h">${f.hoursNL}</p></article>
 <article class="ci-card"><span class="ci-ic">${icon(mailIc)}</span><h3>${esc(c.emailLabel)}</h3><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p class="ci-h">${esc(c.note)}</p></article>
-<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeCO}</h3><p>Carrera 13 # 97-76, Bogotá</p><p><a href="tel:+573201234567">+57 320 123 45 67</a></p><p class="ci-h">${f.hoursCO}</p></article>
+<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officePL}</h3><p>ul. Prosta 69, 00-838 Warszawa</p><p><a href="tel:+48221234567">+48 22 123 45 67</a></p><p class="ci-h">${f.hoursPL}</p></article>
 </aside>
 </div>
 </section>${footer(lang)}`;
@@ -517,7 +518,7 @@ app.post('/verify-2fa', requireLogin, async (req, res) => {
 app.post('/logout', (req, res) => req.session.destroy(() => res.redirect('/')));
 
 // ---------- Portaal ----------
-const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/messages', 'Berichten'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
+const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/talentpool', 'Kandidatenbank'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/messages', 'Berichten'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
 function portalNav(active) { return `<nav class="pnav" aria-label="Portaal">${PORTAL_LINKS.map(([h, l]) => `<a href="${h}" class="${active === h ? 'on' : ''}">${l}</a>`).join('')}</nav>`; }
 function portalShell(req, res, title, inner, active) {
   const head = `<div class="page-head"><div><h1>${esc(title)}</h1></div><form method="post" action="/logout"><button class="btn navy small">Uitloggen</button></form></div>`;
@@ -539,7 +540,8 @@ app.get('/dashboard', requireAuth, async (req, res) => {
     Placement.countDocuments(), Housing.countDocuments(), Subsidy.countDocuments()]);
   const appt = await Appointment.countDocuments();
   const msgs = await ContactMessage.countDocuments();
-  const tiles = [['/agenda', 'Agenda', appt], ['/messages', 'Berichten', msgs], ['/candidates', 'Kandidaten', cand], ['/institutions-list', 'Instellingen', inst], ['/placements', 'Plaatsingen', plac], ['/housing-list', 'Woningen', hous], ['/documents', 'Documenten', docs], ['/subsidies', 'Subsidies', subs]];
+  const pool = await PortalUser.countDocuments({ role: { $ne: 'Zorginstelling' } });
+  const tiles = [['/agenda', 'Agenda', appt], ['/messages', 'Berichten', msgs], ['/talentpool', 'Kandidatenbank', pool], ['/candidates', 'Kandidaten', cand], ['/institutions-list', 'Instellingen', inst], ['/placements', 'Plaatsingen', plac], ['/housing-list', 'Woningen', hous], ['/documents', 'Documenten', docs], ['/subsidies', 'Subsidies', subs]];
   const cands = await Candidate.find().lean();
   const stages = ['Nieuw', 'Screening', 'Taalopleiding', 'Erkenning', 'Visum', 'Geplaatst'];
   const pc = {}; stages.forEach(s => pc[s] = 0); cands.forEach(c => { if (pc[c.status] != null) pc[c.status]++; });
@@ -638,9 +640,10 @@ app.get('/portal/account', requireUser, async (req, res) => {
   const today = new Date().toISOString().slice(0, 10);
   const mine = (await Appointment.find().lean()).filter(x => String(x.portalUserId) === String(u._id)).sort((x, y) => ((x.date || '') + (x.time || '')).localeCompare((y.date || '') + (y.time || '')));
   const myList = mine.length ? `<div class="tablewrap" style="margin-top:14px"><table class="rtable"><thead><tr><th>${esc(b.date)}</th><th>${esc(b.time)}</th><th>${esc(b.topic)}</th><th>Status</th></tr></thead><tbody>${mine.map(m => `<tr><td>${esc(m.date || '')}</td><td>${esc(m.time || '')}</td><td>${esc(m.topic || '')}</td><td>${badge(m.status)}</td></tr>`).join('')}</tbody></table></div>` : '';
+  const profileCard = u.role !== 'Zorginstelling' ? CP.renderProfileForm(u, req.lang, esc) : '';
   const inner = `<section class="page portal"><div class="page-head"><div><h1>${esc(a.account)}</h1><p>${esc(a.hello)}, ${esc(u.name)} · ${esc(u.role)}</p></div><form method="post" action="/portal/logout"><button class="btn navy small">${esc(a.logout)}</button></form></div>
 <div class="rcard"><h2>${esc(a.profile)}</h2><form class="rform" method="post" action="/portal/account"><div class="ff"><label>${esc(a.name)}</label><input name="name" value="${esc(u.name)}"></div><div class="ff"><label>${esc(a.type)}</label><select name="role">${roleOpts}</select></div><div class="ff"><label>${esc(a.lang)}</label><select name="language">${langOpts}</select></div><div class="rform-actions"><button class="btn gold">${esc(a.save)}</button></div></form></div>
-<div class="rcard"><h2>${esc(b.title)}</h2><form class="rform" method="post" action="/portal/appointment"><div class="ff"><label>${esc(b.date)}</label><input type="date" name="date" min="${today}" required></div><div class="ff"><label>${esc(b.time)}</label><select name="time">${TIMES.map(x => `<option>${x}</option>`).join('')}</select></div><div class="ff"><label>${esc(b.channel)}</label><select name="channel"><option value="Videogesprek">${esc(b.video)}</option><option value="Telefoon">${esc(b.phone)}</option><option value="Op locatie">${esc(b.onsite)}</option></select></div><div class="ff"><label>${esc(b.topic)}</label><input name="topic"></div><div class="rform-actions"><button class="btn gold">${esc(b.send)}</button></div></form>${myList}</div>
+${profileCard}<div class="rcard"><h2>${esc(b.title)}</h2><form class="rform" method="post" action="/portal/appointment"><div class="ff"><label>${esc(b.date)}</label><input type="date" name="date" min="${today}" required></div><div class="ff"><label>${esc(b.time)}</label><select name="time">${TIMES.map(x => `<option>${x}</option>`).join('')}</select></div><div class="ff"><label>${esc(b.channel)}</label><select name="channel"><option value="Videogesprek">${esc(b.video)}</option><option value="Telefoon">${esc(b.phone)}</option><option value="Op locatie">${esc(b.onsite)}</option></select></div><div class="ff"><label>${esc(b.topic)}</label><input name="topic"></div><div class="rform-actions"><button class="btn gold">${esc(b.send)}</button></div></form>${myList}</div>
 <div class="rcard"><h2>${esc(a.security)}</h2><p class="ok">✓ ${esc(a.twofaOn)}</p><p class="hint">🔒 ${esc(a.secNote)}</p></div>
 </section>`;
   res.send(layout(a.account, inner, 'home', req.lang, req.path));
@@ -654,6 +657,10 @@ app.post('/portal/appointment', requireUser, async (req, res) => {
     sendEmail({ to: MAIL_TO, replyTo: u.email, subject: `Gespreksaanvraag (portaal) — ${u.name}`, html: mailWrap('Gespreksaanvraag via portaal', [['Naam', u.name], ['E-mail', u.email], ['Datum', date], ['Tijd', time], ['Kanaal', channel], ['Onderwerp', topic || '—']]) });
     sendEmail({ to: u.email, subject: book(req).thanks, html: mailWrap(book(req).title, [['Datum', date], ['Tijd', time], ['Kanaal', channel]]) });
   }
+  res.redirect('/portal/account');
+});
+app.post('/portal/profile', requireUser, async (req, res) => {
+  try { await PortalUser.findByIdAndUpdate(req.session.portalUserId, CP.coerceProfile(req.body)); } catch (e) {}
   res.redirect('/portal/account');
 });
 app.post('/portal/account', requireUser, async (req, res) => {
@@ -848,6 +855,44 @@ app.get('/admin/mailtest', requireAuth, async (req, res) => {
 <p class="hint">Staat hier "domain is not verified"? Verifieer dan <b>honorcareinternational.com</b> in Resend (Domains → Add Domain → DNS-records plaatsen). Wil je eerst alleen testen? Zet <code>RESEND_FROM=onboarding@resend.dev</code> en <code>MAIL_TO</code> op het e-mailadres van je eigen Resend-account; dan komt deze test binnen.</p>
 <p><a class="btn navy small" href="/admin/mailtest">Opnieuw testen</a> <a class="btn gold small" href="/dashboard">Dashboard</a></p></div>`;
   portalShell(req, res, 'E-mailtest', inner, '/backup');
+});
+function talentQuery(req) {
+  const q = { role: { $ne: 'Zorginstelling' } };
+  const f = { country: String(req.query.country || ''), profession: String(req.query.profession || ''), dutch: String(req.query.dutch || ''), q: String(req.query.q || '').trim() };
+  if (CP.COUNTRIES.includes(f.country)) q.country = f.country;
+  if (CP.PROFESSIONS.includes(f.profession)) q.profession = f.profession;
+  if (CP.LEVELS.includes(f.dutch)) q.dutchLevel = f.dutch;
+  if (f.q) { const rx = new RegExp(f.q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'); q.$or = [{ name: rx }, { email: rx }, { city: rx }]; }
+  const params = new URLSearchParams();
+  for (const k of ['country', 'profession', 'dutch', 'q']) if (f[k]) params.set(k, f[k]);
+  f.qs = params.toString();
+  return { q, f };
+}
+app.get('/talentpool', requireAuth, async (req, res) => {
+  const { q, f } = talentQuery(req);
+  const items = await PortalUser.find(q).sort({ profileUpdatedAt: -1, createdAt: -1 }).lean();
+  portalShell(req, res, 'Kandidatenbank', CP.renderTalentPool(items, f, { esc, badge }), '/talentpool');
+});
+app.get('/talentpool.csv', requireAuth, async (req, res) => {
+  const { q } = talentQuery(req);
+  const items = await PortalUser.find(q).sort({ createdAt: -1 }).lean();
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename="kandidaten-' + new Date().toISOString().slice(0, 10) + '.csv"');
+  res.send(CP.toCSV(items));
+});
+app.get('/talentpool/:id', requireAuth, async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect('/talentpool');
+  const u = await PortalUser.findById(req.params.id).lean();
+  if (!u) return res.redirect('/talentpool');
+  portalShell(req, res, u.name || 'Kandidaat', CP.renderTalentDetail(u, { esc }), '/talentpool');
+});
+app.post('/talentpool/:id', requireAuth, async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect('/talentpool');
+  const st = String(req.body.adminStatus || '');
+  const upd = { adminNotes: String(req.body.adminNotes || '').slice(0, 4000) };
+  if (CP.ADMIN_STATUS.includes(st)) upd.adminStatus = st;
+  try { await PortalUser.findByIdAndUpdate(req.params.id, upd); } catch (e) {}
+  res.redirect('/talentpool/' + req.params.id);
 });
 app.get('/backup', requireAuth, (req, res) => {
   const inner = `<p>Bescherm je gegevens: download regelmatig een back-up. Zo ben je nooit data kwijt, ook niet bij een herinstallatie of migratie.</p>
