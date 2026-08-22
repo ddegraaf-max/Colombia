@@ -20,6 +20,7 @@ const { renderChangelog, UI: CL_UI } = require('./changelog');
 const VAC = require('./vacancies');
 const { renderPricing } = require('./pricing');
 const MSG = require('./messages');
+const RET = require('./retention');
 // Helpers die de vacaturemodule nodig heeft; zo blijft de opmaak gelijk aan de rest.
 function vacHelpers() {
   return { esc, badge, professions: CP.PROFESSIONS, professionLabel: (c) => CP.ADMIN.profession[c] || c };
@@ -136,7 +137,6 @@ function footer(lang = 'pl') {
 <div class="fcol"><img class="flogo" src="/images/logo.svg" alt="Honor Care International" width="230" height="52"><p>${f.tagline}</p><div class="social"><a class="wa" href="${WA_LINK}" target="_blank" rel="noopener" aria-label="WhatsApp">${waIcon}</a><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 8H6v4h3v12h5V12h3.6l.4-4h-4V6.3c0-1 .2-1.3 1.2-1.3H18V0h-3.6C10.8 0 9 1.6 9 4.6V8z"/></svg></a><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.5 3 5.5 7V24h-5v-7c0-1.7 0-3.8-2.3-3.8s-2.7 1.8-2.7 3.7V24h-5V8z"/></svg></a><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.5-.1 4.8c-.1 3.2-1.6 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.5.1-4.8C2.4 4 3.9 2.4 7.1 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 12 18.6 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 12 7.7a4.3 4.3 0 0 1 0 8.6zm6.8-11.1a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></a></div></div>
 <div class="fcol"><h4>${f.quick}</h4><ul>${links}</ul></div>
 <div class="fcol"><h4>${f.officeNL}</h4><p>📍 Torenlaan 5A, 1402 BN<br>Bussum, ${tr.nav.poland}</p><p>☎ <a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p>${clocksBlock('Nederland', 'Colombia')}</div>
-<div class="fcol"><h4>${f.officePL}</h4><p>📍 Białka 15, 09-550<br>Szczawin Kościelny</p><p>☎ <a href="tel:+48452823838">+48 45 282 38 38</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursPL}</p></div>
 <div class="fcol newsletter"><h4>${f.newsletter}</h4><p>${f.newsletterText}</p><form method="post" action="/newsletter"><input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><input type="hidden" name="ft" value="${formToken()}"><div class="nl-row"><input type="email" name="email" placeholder="${f.newsletterPh}" aria-label="${f.newsletterPh}" required><button class="nl-btn" aria-label="OK">→</button></div></form></div>
 </div><div class="footer-legal">${legalText(lang)}</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International — handelsnaam van Creditline B.V. · KvK 59683198. ${f.rights}</span><span><a href="/privacy">${f.privacy}</a> &nbsp;|&nbsp; <a href="/voorwaarden">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
 }
@@ -151,7 +151,7 @@ const Housing = mongoose.model('Housing', new mongoose.Schema({ title: String, d
 const Subsidy = mongoose.model('Subsidy', new mongoose.Schema({ title: String, program: String, deadline: String, status: { type: String, default: 'Concept' }, notes: String, createdAt: { type: Date, default: Date.now } }));
 const Newsletter = mongoose.model('Newsletter', new mongoose.Schema({ email: { type: String, lowercase: true }, lang: String, createdAt: { type: Date, default: Date.now } }));
 const PortalUser = mongoose.model('PortalUser', new mongoose.Schema({ name: String, email: { type: String, unique: true, lowercase: true }, passwordHash: String, role: { type: String, default: 'Zorgprofessional' }, language: { type: String, default: 'pl' }, twoFASecret: { type: String, default: null }, twoFAEnabled: { type: Boolean, default: false }, profession: String, specialty: String, country: String, city: String, phone: String, experienceYears: Number, dutchLevel: String, englishLevel: String, bigStatus: String, availableFrom: String, euNational: { type: Boolean, default: false }, motivation: String, profileUpdatedAt: Date, adminStatus: { type: String, default: 'Nieuw' }, adminNotes: String, createdAt: { type: Date, default: Date.now }, lastLogin: Date }));
-const Appointment = mongoose.model('Appointment', new mongoose.Schema({ name: String, email: String, portalUserId: { type: String, default: null }, date: String, time: String, topic: String, channel: { type: String, default: 'Videogesprek' }, status: { type: String, default: 'Aangevraagd' }, notes: String, createdAt: { type: Date, default: Date.now } }));
+const Appointment = mongoose.model('Appointment', new mongoose.Schema({ name: String, email: String, portalUserId: { type: String, default: null }, date: String, time: String, topic: String, language: String, channel: { type: String, default: 'Videogesprek' }, status: { type: String, default: 'Aangevraagd' }, notes: String, createdAt: { type: Date, default: Date.now } }));
 const Vacancy = mongoose.model('Vacancy', new mongoose.Schema({ title: String, profession: String, city: String, province: String, hours: String, contract: String, salary: String, languageLevel: String, startDate: String, description: String, requirements: String, employer: String, contactEmail: String, ownerId: String, status: { type: String, default: 'Ter beoordeling' }, adminNotes: String, createdAt: { type: Date, default: Date.now }, publishedAt: Date }));
 const VacancyInterest = mongoose.model('VacancyInterest', new mongoose.Schema({ vacancyId: String, portalUserId: String, name: String, email: String, createdAt: { type: Date, default: Date.now } }));
 const ContactMessage = mongoose.model('ContactMessage', new mongoose.Schema({ name: String, email: String, subject: String, message: String, lang: String, status: { type: String, default: 'Nieuw' }, createdAt: { type: Date, default: Date.now } }));
@@ -222,10 +222,10 @@ function acc(req) { return ACC[req.lang] || ACC.pl; }
 
 // Planning / agenda
 const BOOK = {
-  pl: { title: 'Umów rozmowę', sub: 'Wybierz dogodny termin — odezwiemy się, aby potwierdzić.', date: 'Data', time: 'Godzina', name: 'Imię i nazwisko', email: 'E-mail', topic: 'Temat', channel: 'Forma', video: 'Wideorozmowa', phone: 'Telefon', onsite: 'Na miejscu', send: 'Wyślij prośbę', thanks: 'Dziękujemy! Twoja prośba została wysłana. Skontaktujemy się, aby potwierdzić termin.', back: 'Strona główna' },
-  en: { title: 'Schedule a call', sub: 'Pick a time that suits you — we will confirm shortly.', date: 'Date', time: 'Time', name: 'Full name', email: 'Email', topic: 'Topic', channel: 'Format', video: 'Video call', phone: 'Phone', onsite: 'On site', send: 'Send request', thanks: 'Thank you! Your request has been sent. We will contact you to confirm.', back: 'Home' },
-  nl: { title: 'Plan een gesprek', sub: 'Kies een moment dat jou uitkomt — we bevestigen zo snel mogelijk.', date: 'Datum', time: 'Tijd', name: 'Naam', email: 'E-mail', topic: 'Onderwerp', channel: 'Vorm', video: 'Videogesprek', phone: 'Telefoon', onsite: 'Op locatie', send: 'Aanvraag versturen', thanks: 'Bedankt! Je gespreksaanvraag is verstuurd. We nemen contact op om te bevestigen.', back: 'Home' },
-  es: { title: 'Agenda una charla', sub: 'Elige el momento que mejor te venga — confirmaremos en breve.', date: 'Fecha', time: 'Hora', name: 'Nombre completo', email: 'Correo', topic: 'Tema', channel: 'Formato', video: 'Videollamada', phone: 'Teléfono', onsite: 'Presencial', send: 'Enviar solicitud', thanks: '¡Gracias! Tu solicitud se ha enviado. Te contactaremos para confirmar.', back: 'Inicio' }
+  pl: { title: 'Umów rozmowę', sub: 'Wybierz dogodny termin — odezwiemy się, aby potwierdzić.', date: 'Data', time: 'Godzina', name: 'Imię i nazwisko', email: 'E-mail', topic: 'Temat', langLabel: 'Język rozmowy', channel: 'Forma', video: 'Wideorozmowa', phone: 'Telefon', onsite: 'Na miejscu', send: 'Wyślij prośbę', thanks: 'Dziękujemy! Twoja prośba została wysłana. Skontaktujemy się, aby potwierdzić termin.', back: 'Strona główna' },
+  en: { title: 'Schedule a call', sub: 'Pick a time that suits you — we will confirm shortly.', date: 'Date', time: 'Time', name: 'Full name', email: 'Email', topic: 'Topic', langLabel: 'Language of the conversation', channel: 'Format', video: 'Video call', phone: 'Phone', onsite: 'On site', send: 'Send request', thanks: 'Thank you! Your request has been sent. We will contact you to confirm.', back: 'Home' },
+  nl: { title: 'Plan een gesprek', sub: 'Kies een moment dat jou uitkomt — we bevestigen zo snel mogelijk.', date: 'Datum', time: 'Tijd', name: 'Naam', email: 'E-mail', topic: 'Onderwerp', langLabel: 'Taal van het gesprek', channel: 'Vorm', video: 'Videogesprek', phone: 'Telefoon', onsite: 'Op locatie', send: 'Aanvraag versturen', thanks: 'Bedankt! Je gespreksaanvraag is verstuurd. We nemen contact op om te bevestigen.', back: 'Home' },
+  es: { title: 'Agenda una charla', sub: 'Elige el momento que mejor te venga — confirmaremos en breve.', date: 'Fecha', time: 'Hora', name: 'Nombre completo', email: 'Correo', topic: 'Tema', langLabel: 'Idioma de la conversación', channel: 'Formato', video: 'Videollamada', phone: 'Teléfono', onsite: 'Presencial', send: 'Enviar solicitud', thanks: '¡Gracias! Tu solicitud se ha enviado. Te contactaremos para confirmar.', back: 'Inicio' }
 };
 function book(req) { return BOOK[req.lang] || BOOK.pl; }
 
@@ -334,6 +334,8 @@ async function seed() {
     );
   }
   await seedHousing();
+  // Bewaartermijn afdwingen: draait direct en daarna elke 24 uur.
+  RET.plan({ berichten: ContactMessage, afspraken: Appointment }, console.log);
   console.log('Admin, documenten en woningen gecontroleerd (niet-destructief)');
 }
 
@@ -479,6 +481,7 @@ app.get('/contact', (req, res) => {
   const lang = req.lang, tr = T[lang], f = tr.footer, c = contactT(req);
   const locIc = '<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>';
   const mailIc = '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>';
+  const waIc = '<path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.2-5.1A8.5 8.5 0 1 1 21 11.5z"/><path d="M8.5 9.5c0 4 2 6 6 6"/>';
   const a = acc(req);
   const done = req.query.ok ? `<div class="contact-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg><span>${esc(c.thanks)}</span></div>` : '';
   const body = `<section class="page-hero ph-contact"><div class="page-hero-inner"><h1>${tr.nav.contact}</h1><p>${tr.contactIntro}</p></div></section>
@@ -505,7 +508,7 @@ ${turnstileWidget(lang)}
 <aside class="contact-aside">
 <article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>Torenlaan 5A, 1402 BN Bussum</p><p><a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p class="ci-h">${f.hoursNL}</p></article>
 <article class="ci-card"><span class="ci-ic">${icon(mailIc)}</span><h3>${esc(c.emailLabel)}</h3><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p class="ci-h">${esc(c.note)}</p></article>
-<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officePL}</h3><p>Białka 15, 09-550 Szczawin Kościelny</p><p><a href="tel:+48452823838">+48 45 282 38 38</a></p><p class="ci-h">${f.hoursPL}</p></article>
+<article class="ci-card"><span class="ci-ic">${icon(waIc)}</span><h3>WhatsApp</h3><p><a href="${WA_LINK}" target="_blank" rel="noopener">+31 6 46 15 01 60</a></p><p class="ci-h">${esc(c.note)}</p></article>
 </aside>
 </div>
 </section>${footer(lang)}`;
@@ -543,7 +546,8 @@ app.get('/plan', (req, res) => {
 <label>${esc(b.date)}<input type="date" name="date" min="${today}" required></label>
 <label>${esc(b.time)}<select name="time">${TIMES.map(x => `<option>${x}</option>`).join('')}</select></label>
 <label>${esc(b.channel)}<select name="channel"><option value="Videogesprek">${esc(b.video)}</option><option value="Telefoon">${esc(b.phone)}</option><option value="Op locatie">${esc(b.onsite)}</option></select></label>
-<label>${esc(b.topic)}<input name="topic"></label>
+<label>${esc(b.langLabel)}<select name="gesprekstaal">${LANGS.map(l => `<option value="${l}"${l === req.lang ? ' selected' : ''}>${LANGMETA[l].flag} ${LANGMETA[l].name}</option>`).join('')}</select></label>
+<label>${esc(b.topic)} *<input name="topic" maxlength="160" required></label>
 <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 <input type="hidden" name="ft" value="${formToken()}">
 ${turnstileWidget(req.lang)}
@@ -558,10 +562,11 @@ app.post('/plan', async (req, res) => {
   if (!checkFormToken(req.body.ft) || tooMany(req, 'plan') || !(await verifyTurnstile(req))) { console.log('[antyspam] odrzucono prośbę o rozmowę'); return res.redirect('/plan?ok=1'); }
   const name = String(req.body.name || '').trim(), email = String(req.body.email || '').toLowerCase().trim();
   const date = String(req.body.date || ''), time = String(req.body.time || '');
-  const topic = String(req.body.topic || ''), channel = String(req.body.channel || 'Videogesprek');
-  if (name && email && date) {
-    try { await Appointment.create({ name, email, date, time, topic, channel, status: 'Aangevraagd' }); } catch (e) {}
-    sendEmail({ to: MAIL_TO, replyTo: email, subject: `Nieuwe gespreksaanvraag — ${name}`, html: mailWrap('Nieuwe gespreksaanvraag', [['Naam', name], ['E-mail', email], ['Datum', date], ['Tijd', time], ['Kanaal', channel], ['Onderwerp', topic || '—']]) });
+  const topic = String(req.body.topic || '').trim().slice(0, 160), channel = String(req.body.channel || 'Videogesprek');
+  const gesprekstaal = LANGS.includes(String(req.body.gesprekstaal || '')) ? String(req.body.gesprekstaal) : req.lang;
+  if (name && email && date && topic) {
+    try { await Appointment.create({ name, email, date, time, topic, channel, language: gesprekstaal, status: 'Aangevraagd' }); } catch (e) {}
+    sendEmail({ to: MAIL_TO, replyTo: email, subject: `Nieuwe gespreksaanvraag — ${name}`, html: mailWrap('Nieuwe gespreksaanvraag', [['Naam', name], ['E-mail', email], ['Datum', date], ['Tijd', time], ['Kanaal', channel], ['Taal van het gesprek', (LANGMETA[gesprekstaal] || {}).name || gesprekstaal], ['Onderwerp', topic]], { lang: 'nl', intro: 'Er is een gespreksaanvraag binnengekomen via de website. Je kunt rechtstreeks op deze e-mail antwoorden.' }) });
     sendEmail({ to: email, subject: book(req).thanks, html: mailWrap(book(req).title, [['Datum', date], ['Tijd', time], ['Kanaal', channel]]) });
   }
   res.redirect('/plan?ok=1');
@@ -928,8 +933,8 @@ app.get('/agenda', requireAuth, async (req, res) => {
   portalShell(req, res, 'Agenda', inner, '/agenda');
 });
 resource({
-  path: '/appointments', Model: Appointment, title: 'Afspraken', titleField: 'name', statusField: 'status', columns: ['date', 'time', 'topic', 'channel'],
-  fields: [{ name: 'name', label: 'Naam' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'date', label: 'Datum', type: 'date' }, { name: 'time', label: 'Tijd', type: 'select', options: TIMES }, { name: 'topic', label: 'Onderwerp' }, { name: 'channel', label: 'Kanaal', type: 'select', options: ['Videogesprek', 'Telefoon', 'Op locatie'] }, { name: 'status', label: 'Status', type: 'select', options: ['Aangevraagd', 'Bevestigd', 'Afgerond', 'Geannuleerd'] }, { name: 'notes', label: 'Notities', type: 'textarea' }]
+  path: '/appointments', Model: Appointment, title: 'Afspraken', titleField: 'name', statusField: 'status', columns: ['date', 'time', 'topic', 'channel', 'language'],
+  fields: [{ name: 'name', label: 'Naam' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'date', label: 'Datum', type: 'date' }, { name: 'time', label: 'Tijd', type: 'select', options: TIMES }, { name: 'topic', label: 'Onderwerp' }, { name: 'channel', label: 'Kanaal', type: 'select', options: ['Videogesprek', 'Telefoon', 'Op locatie'] }, { name: 'language', label: 'Taal van het gesprek', type: 'select', options: LANGS }, { name: 'status', label: 'Status', type: 'select', options: ['Aangevraagd', 'Bevestigd', 'Afgerond', 'Geannuleerd'] }, { name: 'notes', label: 'Notities', type: 'textarea' }]
 });
 
 // Berichten krijgen een eigen pagina in plaats van de generieke lijst: bij honderden

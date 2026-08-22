@@ -2,6 +2,7 @@
 // Daarom: aanvinken in de lijst, bulkacties bovenaan, en het bericht zelf
 // direct leesbaar zodat je niets hoeft te openen om te kunnen beoordelen.
 
+const RET = require('./retention');
 const STATUS = ['Nieuw', 'Beantwoord', 'Gearchiveerd'];
 
 // Spamsignalen. Bewust conservatief: dit selecteert alleen voor, verwijdert nooit
@@ -48,11 +49,13 @@ function renderMessages(items, f, h) {
 <td class="msg-van"><b>${esc(m.name || '(geen naam)')}</b>${sp ? '<span class="msg-flag">mogelijk spam</span>' : ''}<br><a href="mailto:${esc(m.email || '')}">${esc(m.email || '')}</a></td>
 <td class="msg-inhoud">${m.subject ? '<b>' + esc(m.subject) + '</b><br>' : ''}<span>${esc(knip(m.message, 220))}</span></td>
 <td class="msg-datum">${esc(m.createdAt ? new Date(m.createdAt).toLocaleDateString('nl-NL') : '')}<br><span class="tp-sub">${esc(m.lang ? m.lang.toUpperCase() : '')}</span></td>
+<td class="msg-zl">${RET.zandloper(m.createdAt, esc)}</td>
 <td>${badge(m.status)}</td>
 <td class="tact"><a class="btn navy small" href="/messages/${m._id}">Open</a></td></tr>`;
   }).join('');
 
-  return `<p class="hint">Vink berichten aan en verwijder ze in één keer. Berichten met een spamvermoeden zijn gemarkeerd; met de knop hieronder selecteer je ze allemaal tegelijk. Er wordt nooit iets automatisch verwijderd.</p>
+  return `<p class="hint">${esc(RET.uitleg())}</p>
+<p class="hint">Vink berichten aan en verwijder ze in één keer. Berichten met een spamvermoeden zijn gemarkeerd; met de knop hieronder selecteer je ze allemaal tegelijk. De spamherkenning selecteert alleen voor — wat er weggaat, bepaal jij.</p>
 
 <form class="tp-filters" method="get" action="/messages">
 <input type="search" name="q" value="${esc(f.q || '')}" placeholder="Zoek op naam, e-mail of inhoud">
@@ -75,8 +78,8 @@ ${STATUS.map(s => filterKnop(s, s, f.status === s)).join('')}
 </span>
 </div>
 <div class="tablewrap"><table class="rtable msg-tabel"><thead><tr>
-<th class="msg-check"></th><th>Afzender</th><th>Bericht</th><th>Datum</th><th>Status</th><th></th>
-</tr></thead><tbody>${rijen || '<tr><td colspan="6" class="empty">Geen berichten gevonden.</td></tr>'}</tbody></table></div>
+<th class="msg-check"></th><th>Afzender</th><th>Bericht</th><th>Datum</th><th>Nog te bewaren</th><th>Status</th><th></th>
+</tr></thead><tbody>${rijen || '<tr><td colspan="7" class="empty">Geen berichten gevonden.</td></tr>'}</tbody></table></div>
 </form>
 <p class="hint">${items.length} bericht${items.length === 1 ? '' : 'en'} in deze selectie${verdacht ? `, waarvan ${verdacht} met een spamvermoeden` : ''}.</p>
 <script src="/js/berichten.js"></script>`;
@@ -96,6 +99,7 @@ ${sp ? '<p class="warn">Dit bericht heeft kenmerken van spam. Beoordeel zelf voo
 <tr><td class="tp-k">Onderwerp</td><td>${esc(m.subject || '—')}</td></tr>
 <tr><td class="tp-k">Taal</td><td>${esc(m.lang ? m.lang.toUpperCase() : '—')}</td></tr>
 <tr><td class="tp-k">Ontvangen</td><td>${esc(m.createdAt ? new Date(m.createdAt).toLocaleString('nl-NL') : '—')}</td></tr>
+<tr><td class="tp-k">Automatisch verwijderd op</td><td>${esc(RET.vervaldatum(m.createdAt) ? RET.vervaldatum(m.createdAt).toLocaleDateString('nl-NL') : '—')} ${RET.zandloper(m.createdAt, esc)}</td></tr>
 </tbody></table></div>
 <h3>Bericht</h3><p class="tp-motiv">${esc(m.message || '')}</p>
 </div>

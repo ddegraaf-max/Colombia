@@ -10,7 +10,7 @@ const ENTITY = String(process.env.COMPANY_ENTITY || 'Creditline B.V.').trim();
 const UPDATED = '21-08-2026';
 // Documentversie: hoog dit op bij elke inhoudelijke wijziging van de tekst,
 // los van het versienummer van de applicatie.
-const DOC_VERSION = { privacy: '1.1', terms: '1.1' };
+const DOC_VERSION = { privacy: '1.2', terms: '1.2' };
 
 const L = {
   nl: {
@@ -20,7 +20,7 @@ const L = {
       sections: [
         ['Wie is verantwoordelijk?', [
           COMPANY + ' is een handelsnaam van ' + ENTITY + ', die verwerkingsverantwoordelijke is voor de gegevens die via deze website worden verzameld.',
-          'Nederland — Torenlaan 5A, 1402 BN Bussum. Polen — Białka 15, 09-550 Szczawin Kościelny.',
+          'Adres: Torenlaan 5A, 1402 BN Bussum, Nederland.',
           'E-mail: info@honorcareinternational.com · Telefoon: +31 6 46 15 01 60' + (KVK ? ' · Kamer van Koophandel: ' + KVK : '')
         ]],
         ['Welke gegevens verwerken wij?', [
@@ -50,7 +50,7 @@ const L = {
           'Berichten via het contactformulier en gespreksaanvragen: zolang dat nodig is om je vraag af te handelen en daarna maximaal twee jaar.',
           'Kandidaatprofielen: zolang je account bestaat. Verwijder je je account of vraag je daarom, dan verwijderen wij je profiel.',
           'Nieuwsbrief: tot je je afmeldt.',
-          'Wij hebben deze termijnen als beleid vastgelegd; verwijdering gebeurt momenteel op verzoek en bij periodieke opschoning.'
+          'Deze termijnen worden automatisch afgedwongen: berichten en gespreksaanvragen die ouder zijn dan twee jaar worden dagelijks verwijderd, zonder dat daar een handeling voor nodig is. Wil je iets eerder verwijderd hebben, dan doen wij dat op verzoek.'
         ]],
         ['Cookies', [
           'Wij plaatsen twee functionele cookies. Een taalcookie onthoudt in welke taal je de site bekijkt en blijft een jaar staan. Een sessiecookie houdt je ingelogd in het portaal en verloopt na acht uur of bij uitloggen.',
@@ -130,7 +130,7 @@ const L = {
       sections: [
         ['Who is responsible?', [
           COMPANY + ' is a trade name of ' + ENTITY + ', which is the data controller for the data collected through this website.',
-          'Netherlands — Torenlaan 5A, 1402 BN Bussum. Poland — Białka 15, 09-550 Szczawin Kościelny.',
+          'Address: Torenlaan 5A, 1402 BN Bussum, the Netherlands.',
           'Email: info@honorcareinternational.com · Phone: +31 6 46 15 01 60' + (KVK ? ' · Dutch Chamber of Commerce: ' + KVK : '')
         ]],
         ['Which data do we process?', [
@@ -160,7 +160,7 @@ const L = {
           'Contact form messages and meeting requests: as long as needed to handle your question, and no more than two years afterwards.',
           'Candidate profiles: for as long as your account exists. If you delete your account or ask us to, we remove your profile.',
           'Newsletter: until you unsubscribe.',
-          'We have set these periods as policy; deletion currently takes place on request and during periodic clean-ups.'
+          'These periods are enforced automatically: messages and meeting requests older than two years are deleted daily, without any action being required. If you want something removed sooner, we will do so on request.'
         ]],
         ['Cookies', [
           'We place two functional cookies. A language cookie remembers which language you view the site in and lasts one year. A session cookie keeps you logged in to the portal and expires after eight hours or when you log out.',
@@ -240,7 +240,7 @@ const L = {
       sections: [
         ['¿Quién es responsable?', [
           COMPANY + ' es un nombre comercial de ' + ENTITY + ', que es el responsable del tratamiento de los datos recogidos a través de esta web.',
-          'Países Bajos — Torenlaan 5A, 1402 BN Bussum. Polonia — Białka 15, 09-550 Szczawin Kościelny.',
+          'Dirección: Torenlaan 5A, 1402 BN Bussum, Países Bajos.',
           'Correo: info@honorcareinternational.com · Teléfono: +31 6 46 15 01 60' + (KVK ? ' · Registro mercantil neerlandés: ' + KVK : '')
         ]],
         ['¿Qué datos tratamos?', [
@@ -270,7 +270,7 @@ const L = {
           'Mensajes del formulario y solicitudes de reunión: mientras sea necesario para atender tu consulta y, como máximo, dos años después.',
           'Perfiles de candidato: mientras exista tu cuenta. Si la eliminas o nos lo pides, borramos tu perfil.',
           'Boletín: hasta que te des de baja.',
-          'Hemos fijado estos plazos como política; la eliminación se realiza actualmente a petición y en limpiezas periódicas.'
+          'Estos plazos se aplican automáticamente: los mensajes y las solicitudes de reunión con más de dos años se eliminan a diario, sin que haga falta ninguna acción. Si quieres que borremos algo antes, lo hacemos a petición.'
         ]],
         ['Cookies', [
           'Usamos dos cookies funcionales. Una cookie de idioma recuerda en qué idioma ves la web y dura un año. Una cookie de sesión te mantiene conectado al portal y caduca a las ocho horas o al cerrar sesión.',
@@ -350,7 +350,7 @@ const L = {
       sections: [
         ['Kto jest administratorem?', [
           COMPANY + ' jest nazwą handlową spółki ' + ENTITY + ', która jest administratorem danych zbieranych za pośrednictwem tej strony.',
-          'Holandia — Torenlaan 5A, 1402 BN Bussum. Polska — Białka 15, 09-550 Szczawin Kościelny.',
+          'Adres: Torenlaan 5A, 1402 BN Bussum, Holandia.',
           'E-mail: info@honorcareinternational.com · Telefon: +31 6 46 15 01 60' + (KVK ? ' · Holenderski rejestr handlowy: ' + KVK : '')
         ]],
         ['Jakie dane przetwarzamy?', [
@@ -380,7 +380,7 @@ const L = {
           'Wiadomości z formularza i prośby o rozmowę: tak długo, jak to potrzebne do obsługi sprawy, i maksymalnie dwa lata później.',
           'Profile kandydatów: dopóki istnieje Twoje konto. Gdy je usuniesz lub o to poprosisz, kasujemy profil.',
           'Newsletter: do momentu wypisania się.',
-          'Terminy te przyjęliśmy jako politykę; usuwanie odbywa się obecnie na żądanie oraz przy okresowych porządkach.'
+          'Terminy te są egzekwowane automatycznie: wiadomości i prośby o rozmowę starsze niż dwa lata są usuwane codziennie, bez żadnych dodatkowych czynności. Jeśli chcesz, żebyśmy coś usunęli wcześniej, zrobimy to na życzenie.'
         ]],
         ['Pliki cookie', [
           'Stosujemy dwa funkcjonalne pliki cookie. Językowy zapamiętuje wersję językową strony i działa rok. Sesyjny utrzymuje zalogowanie w portalu i wygasa po ośmiu godzinach lub przy wylogowaniu.',

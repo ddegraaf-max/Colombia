@@ -4,6 +4,17 @@
 
 const VERSIONS = [
   {
+    v: '51.0.0', date: '22-08-2026', title: 'Automatisch opruimen, Pools kantoor weg, gespreksformulier',
+    items: [
+      'Berichten en gespreksaanvragen worden na 24 maanden automatisch verwijderd; de opruiming draait bij het opstarten en daarna dagelijks, en wordt gelogd',
+      'Zandloper in de berichtenlijst laat per bericht zien hoelang het nog bewaard blijft; groen bij ruim de tijd, oranje binnen een half jaar, rood binnen een maand',
+      'Het Poolse kantooradres is overal verwijderd — site, contactpagina, e-mails en juridische documenten — omdat het geen vestiging van Creditline B.V. is',
+      'Op de contactpagina staat nu een WhatsApp-kaart in plaats van het Poolse adres',
+      'Gespreksformulier: je kiest de taal waarin je het gesprek wilt voeren, en het onderwerp is verplicht geworden',
+      'Documentversie van privacybeleid en voorwaarden naar 1.2: de bewaartermijn wordt nu automatisch afgedwongen'
+    ]
+  },
+  {
     v: '50.0.0', date: '22-08-2026', title: 'Beveiligingscontrole',
     items: [
       'Alle 20 beheerpagina’s, schrijfacties en portaalpagina’s gecontroleerd: zonder login geen toegang',
