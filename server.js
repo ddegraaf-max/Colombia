@@ -19,6 +19,7 @@ const { renderJourney } = require('./journey');
 const { renderChangelog, UI: CL_UI } = require('./changelog');
 const VAC = require('./vacancies');
 const { renderPricing } = require('./pricing');
+const MSG = require('./messages');
 // Helpers die de vacaturemodule nodig heeft; zo blijft de opmaak gelijk aan de rest.
 function vacHelpers() {
   return { esc, badge, professions: CP.PROFESSIONS, professionLabel: (c) => CP.ADMIN.profession[c] || c };
@@ -926,9 +927,43 @@ resource({
   fields: [{ name: 'name', label: 'Naam' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'date', label: 'Datum', type: 'date' }, { name: 'time', label: 'Tijd', type: 'select', options: TIMES }, { name: 'topic', label: 'Onderwerp' }, { name: 'channel', label: 'Kanaal', type: 'select', options: ['Videogesprek', 'Telefoon', 'Op locatie'] }, { name: 'status', label: 'Status', type: 'select', options: ['Aangevraagd', 'Bevestigd', 'Afgerond', 'Geannuleerd'] }, { name: 'notes', label: 'Notities', type: 'textarea' }]
 });
 
-resource({
-  path: '/messages', Model: ContactMessage, title: 'Berichten', titleField: 'name', statusField: 'status', columns: ['email', 'subject'],
-  fields: [{ name: 'name', label: 'Naam' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'subject', label: 'Onderwerp' }, { name: 'message', label: 'Bericht', type: 'textarea' }, { name: 'status', label: 'Status', type: 'select', options: ['Nieuw', 'Beantwoord', 'Gearchiveerd'] }]
+// Berichten krijgen een eigen pagina in plaats van de generieke lijst: bij honderden
+// spamberichten moet je in één handeling kunnen opruimen.
+app.get('/messages', requireAuth, async (req, res) => {
+  const f = { status: MSG.STATUS.includes(String(req.query.status || '')) ? String(req.query.status) : '', q: String(req.query.q || '').trim().slice(0, 80) };
+  const q = {};
+  if (f.status) q.status = f.status;
+  if (f.q) { const rx = new RegExp(f.q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'); q.$or = [{ name: rx }, { email: rx }, { subject: rx }, { message: rx }]; }
+  const items = await ContactMessage.find(q).sort({ createdAt: -1 }).limit(500).lean();
+  portalShell(req, res, 'Berichten', MSG.renderMessages(items, f, { esc, badge }), '/messages');
+});
+app.post('/messages/bulk', requireAuth, async (req, res) => {
+  const ruw = req.body.ids;
+  const ids = (Array.isArray(ruw) ? ruw : (ruw ? [ruw] : [])).filter(id => mongoose.Types.ObjectId.isValid(id));
+  const actie = String(req.body.actie || '');
+  if (ids.length) {
+    try {
+      if (actie === 'verwijderen') await ContactMessage.deleteMany({ _id: { $in: ids } });
+      else if (actie === 'archiveren') await ContactMessage.updateMany({ _id: { $in: ids } }, { status: 'Gearchiveerd' });
+    } catch (e) {}
+  }
+  res.redirect('/messages');
+});
+app.get('/messages/:id', requireAuth, async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect('/messages');
+  const m = await ContactMessage.findById(req.params.id).lean();
+  if (!m) return res.redirect('/messages');
+  portalShell(req, res, m.name || 'Bericht', MSG.renderMessageDetail(m, { esc }), '/messages');
+});
+app.post('/messages/:id', requireAuth, async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect('/messages');
+  const st = String(req.body.status || '');
+  if (MSG.STATUS.includes(st)) { try { await ContactMessage.findByIdAndUpdate(req.params.id, { status: st }); } catch (e) {} }
+  res.redirect('/messages/' + req.params.id);
+});
+app.post('/messages/:id/delete', requireAuth, async (req, res) => {
+  if (mongoose.Types.ObjectId.isValid(req.params.id)) { try { await ContactMessage.findByIdAndDelete(req.params.id); } catch (e) {} }
+  res.redirect('/messages');
 });
 
 // ---- AI-assistent ----

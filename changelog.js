@@ -4,6 +4,17 @@
 
 const VERSIONS = [
   {
+    v: '49.0.0', date: '22-08-2026', title: 'Berichtenbak met bulkacties',
+    items: [
+      'Berichten aanvinken en in één keer verwijderen of archiveren, in plaats van elk bericht apart openen',
+      'Knop die alle berichten met een spamvermoeden tegelijk selecteert; er wordt nooit automatisch iets verwijderd',
+      'Spamvermoeden op basis van links, spamwoorden, schriftsoort en lengte — gemarkeerd in de lijst',
+      'Bericht is direct leesbaar in de lijst, dus beoordelen kan zonder klikken',
+      'Alles selecteren, shift-klik voor een reeks, en een bevestiging met het aantal vóór verwijderen',
+      'Zoeken op naam, e-mail, onderwerp of inhoud en filteren op status'
+    ]
+  },
+  {
     v: '48.0.0', date: '22-08-2026', title: 'Vacatures, tariefmodel en herstel beheerportaal',
     items: [
       'Opgelost: de klasse portal werd zowel voor de menuknop als voor de beheerpagina gebruikt, waardoor alle tekst in het beheerportaal wit op wit was en de achtergrond blauw kleurde bij hover. De menuregel is nu beperkt tot het hoofdmenu',
