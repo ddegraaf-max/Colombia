@@ -6,6 +6,8 @@
 // De keuzehulp rekent volledig in de browser (public/js/salaris.js); er gaat geen enkel
 // gegeven naar de server en er komt geen externe dienst aan te pas.
 
+const { renderVergelijk } = require('./spain');
+
 const DATA = {
   // FWG-tabel CAO VVT per 1 juli 2026 (36 uur), inclusief de structurele verhoging
   // van 3,5% per die datum. Bron: mijninschaling.nl en salaristabel.nl, zie bronnenlijst.
@@ -401,6 +403,8 @@ function renderSalary(lang, h) {
 
   return `<section class="page sal">
 <div class="sal-intro"><p>${esc(t.intro)}</p></div>
+
+${renderVergelijk(lang, h, DATA)}
 
 <div class="sal-block"><div class="sal-head"><span class="eyebrow">${esc(t.cao.eyebrow)}</span><h2>${esc(t.cao.h2)}</h2><p>${esc(t.cao.sub)}</p></div>
 <div class="grid">${caoPoints}</div></div>

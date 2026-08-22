@@ -4,6 +4,19 @@
 
 const VERSIONS = [
   {
+    v: '59.0.0', date: '22-08-2026', title: 'Spanje naast Nederland: de vergelijking die de rest niet laat zien',
+    items: [
+      'Nieuw blok bovenaan de salarispagina: wat een Spaanse auxiliar en enfermero nu verdienen, naast het Nederlandse bedrag',
+      'Kernpunt uitgelicht: al in de ondersteunende functie, nog voor de BIG-registratie, verdient een kandidaat meer dan een enfermero aan het begin van zijn loopbaan in Spanje',
+      'Tweede tabel corrigeert voor het duurdere leven in Nederland, zodat het verschil in koopkracht zichtbaar wordt in plaats van alleen het brutobedrag',
+      'Uitleg waarom die correctie voor onze kandidaten milder uitpakt: de huur loopt via de werkgever en is vooraf afgesproken, niet de Nederlandse marktprijs',
+      'Argumenten buiten het geld: 76,7% tijdelijke contracten in Spanje in 2025, en 6,45 verpleegkundigen per 1.000 inwoners tegenover 11,5 in Nederland',
+      'Eigen blok met wat er tegenover staat: je begint onder je niveau, de taal is een harde eis, je deelt eerst je woning en je woont ver van familie',
+      'Vijf bronnen bij de vergelijking, zodat elk cijfer te controleren is',
+      'De Nederlandse bedragen worden berekend uit de CAO-tabel, dus een nieuwe CAO werkt automatisch door in de vergelijking'
+    ]
+  },
+  {
     v: '58.0.0', date: '22-08-2026', title: 'Salarispagina met keuzehulp',
     items: [
       'Nieuwe pagina /salaris in vier talen: wat je verdient in de Nederlandse zorg, met de CAO VVT-tabel per 1 juli 2026',
