@@ -4,6 +4,17 @@
 
 const VERSIONS = [
   {
+    v: '48.0.0', date: '22-08-2026', title: 'Vacatures, tariefmodel en herstel beheerportaal',
+    items: [
+      'Opgelost: de klasse portal werd zowel voor de menuknop als voor de beheerpagina gebruikt, waardoor alle tekst in het beheerportaal wit op wit was en de achtergrond blauw kleurde bij hover. De menuregel is nu beperkt tot het hoofdmenu',
+      'Beheerportaal opgepoetst: tegels met leesbare labels, nettere tabbladen en kaarten in de huisstijl',
+      'Vacatures: zorginstellingen plaatsen zelf via het portaal, de beheerder keurt goed, daarna staan ze openbaar in vier talen',
+      'Kandidaten melden interesse in een vacature; die meldingen komen bij de vacature in het beheer te staan',
+      'Tariefmodel in het beheer: kosten per kandidaat, uitval en marge naar een break-even en geadviseerd tarief, met vergelijking tegen de marktnorm',
+      'Nederland stond even niet in het hoofdmenu; teruggezet en het menu compacter gemaakt'
+    ]
+  },
+  {
     v: '47.0.0', date: '21-08-2026', title: 'Rechtspersoon en KvK-nummer',
     items: [
       'Honor Care International is een handelsnaam van Creditline B.V. (KvK 59683198); dat staat nu correct in het privacybeleid en de algemene voorwaarden',

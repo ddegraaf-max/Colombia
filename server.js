@@ -17,6 +17,12 @@ const { renderExtras } = require('./page-extras');
 const { renderLegal, legalTitle } = require('./legal');
 const { renderJourney } = require('./journey');
 const { renderChangelog, UI: CL_UI } = require('./changelog');
+const VAC = require('./vacancies');
+const { renderPricing } = require('./pricing');
+// Helpers die de vacaturemodule nodig heeft; zo blijft de opmaak gelijk aan de rest.
+function vacHelpers() {
+  return { esc, badge, professions: CP.PROFESSIONS, professionLabel: (c) => CP.ADMIN.profession[c] || c };
+}
 const WA_NUMBER = '31646150160'; // WhatsApp: zelfde nummer als telefoon
 const WA_LINK = 'https://wa.me/' + WA_NUMBER;
 const waIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.5-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.4 1.9.8 2.6.9 3.5.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4 0-.1-.2-.2-.5-.3z"/><path d="M12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.1c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.1 8.1 0 1 1 12 20.1z"/></svg>';
@@ -85,8 +91,8 @@ function langSwitcher(lang, curPath) {
 
 function layout(title, body, active = 'home', lang = 'pl', curPath = '/') {
   const tr = T[lang];
-  const nav = [['home', '/'], ['about', '/about'], ['institutions', '/institutions'], ['candidates', '/candidates-info'], ['academy', '/academy'], ['housing', '/housing'], ['poland', '/poland'], ['euroute', '/eu-route'], ['contact', '/contact']]
-    .map(([k, href]) => `<a class="${active === k ? 'active' : ''}" href="${href}">${k === 'euroute' ? esc(EUROUTE[lang].navLabel) : tr.nav[k]}</a>`).join('');
+  const nav = [['home', '/'], ['about', '/about'], ['institutions', '/institutions'], ['candidates', '/candidates-info'], ['academy', '/academy'], ['housing', '/housing'], ['poland', '/poland'], ['euroute', '/eu-route'], ['vacatures', '/vacatures'], ['contact', '/contact']]
+    .map(([k, href]) => `<a class="${active === k ? 'active' : ''}" href="${href}">${k === 'euroute' ? esc(EUROUTE[lang].navLabel) : (k === 'vacatures' ? esc(VAC.tx(lang).navLabel) : tr.nav[k])}</a>`).join('');
   return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><meta name="description" content="Honor Care International — ${esc(tr.hero.p).slice(0, 140)}"><link rel="icon" href="/images/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css?v=${ASSET_V}"></head><body>
 <a class="skip" href="#main">→</a>
 <div class="top"><span class="ttag">${tr.topTagline}</span><span class="right"><a href="tel:+31646150160">☎ +31 6 46 15 01 60</a> <i class="t-loc">|</i> <a class="t-wa" href="${WA_LINK}" target="_blank" rel="noopener">${waIcon} WhatsApp</a> <i class="t-loc">|</i> <a class="t-mail" href="mailto:info@honorcareinternational.com">✉ info@honorcareinternational.com</a> <i class="t-loc">|</i> <span class="t-loc">📍 ${tr.location}</span> <i>|</i> ${langSwitcher(lang, curPath)}</span></div>
@@ -121,8 +127,8 @@ const HOWIT = {
 };
 function footer(lang = 'pl') {
   const tr = T[lang], f = tr.footer;
-  const links = [['home', '/'], ['about', '/about'], ['institutions', '/institutions'], ['candidates', '/candidates-info'], ['academy', '/academy'], ['housing', '/housing'], ['poland', '/poland'], ['euroute', '/eu-route'], ['contact', '/contact']]
-    .map(([k, href]) => `<li><a href="${href}">${k === 'euroute' ? esc(EUROUTE[lang].navLabel) : tr.nav[k]}</a></li>`).join('');
+  const links = [['home', '/'], ['about', '/about'], ['institutions', '/institutions'], ['candidates', '/candidates-info'], ['academy', '/academy'], ['housing', '/housing'], ['poland', '/poland'], ['euroute', '/eu-route'], ['vacatures', '/vacatures'], ['contact', '/contact']]
+    .map(([k, href]) => `<li><a href="${href}">${k === 'euroute' ? esc(EUROUTE[lang].navLabel) : (k === 'vacatures' ? esc(VAC.tx(lang).navLabel) : tr.nav[k])}</a></li>`).join('');
   return `<footer class="footer"><div class="footer-main">
 <div class="fcol"><img class="flogo" src="/images/logo.svg" alt="Honor Care International" width="230" height="52"><p>${f.tagline}</p><div class="social"><a class="wa" href="${WA_LINK}" target="_blank" rel="noopener" aria-label="WhatsApp">${waIcon}</a><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 8H6v4h3v12h5V12h3.6l.4-4h-4V6.3c0-1 .2-1.3 1.2-1.3H18V0h-3.6C10.8 0 9 1.6 9 4.6V8z"/></svg></a><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.5 3 5.5 7V24h-5v-7c0-1.7 0-3.8-2.3-3.8s-2.7 1.8-2.7 3.7V24h-5V8z"/></svg></a><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.5-.1 4.8c-.1 3.2-1.6 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.5.1-4.8C2.4 4 3.9 2.4 7.1 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 12 18.6 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 12 7.7a4.3 4.3 0 0 1 0 8.6zm6.8-11.1a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></a></div></div>
 <div class="fcol"><h4>${f.quick}</h4><ul>${links}</ul></div>
@@ -143,6 +149,8 @@ const Subsidy = mongoose.model('Subsidy', new mongoose.Schema({ title: String, p
 const Newsletter = mongoose.model('Newsletter', new mongoose.Schema({ email: { type: String, lowercase: true }, lang: String, createdAt: { type: Date, default: Date.now } }));
 const PortalUser = mongoose.model('PortalUser', new mongoose.Schema({ name: String, email: { type: String, unique: true, lowercase: true }, passwordHash: String, role: { type: String, default: 'Zorgprofessional' }, language: { type: String, default: 'pl' }, twoFASecret: { type: String, default: null }, twoFAEnabled: { type: Boolean, default: false }, profession: String, specialty: String, country: String, city: String, phone: String, experienceYears: Number, dutchLevel: String, englishLevel: String, bigStatus: String, availableFrom: String, euNational: { type: Boolean, default: false }, motivation: String, profileUpdatedAt: Date, adminStatus: { type: String, default: 'Nieuw' }, adminNotes: String, createdAt: { type: Date, default: Date.now }, lastLogin: Date }));
 const Appointment = mongoose.model('Appointment', new mongoose.Schema({ name: String, email: String, portalUserId: { type: String, default: null }, date: String, time: String, topic: String, channel: { type: String, default: 'Videogesprek' }, status: { type: String, default: 'Aangevraagd' }, notes: String, createdAt: { type: Date, default: Date.now } }));
+const Vacancy = mongoose.model('Vacancy', new mongoose.Schema({ title: String, profession: String, city: String, province: String, hours: String, contract: String, salary: String, languageLevel: String, startDate: String, description: String, requirements: String, employer: String, contactEmail: String, ownerId: String, status: { type: String, default: 'Ter beoordeling' }, adminNotes: String, createdAt: { type: Date, default: Date.now }, publishedAt: Date }));
+const VacancyInterest = mongoose.model('VacancyInterest', new mongoose.Schema({ vacancyId: String, portalUserId: String, name: String, email: String, createdAt: { type: Date, default: Date.now } }));
 const ContactMessage = mongoose.model('ContactMessage', new mongoose.Schema({ name: String, email: String, subject: String, message: String, lang: String, status: { type: String, default: 'Nieuw' }, createdAt: { type: Date, default: Date.now } }));
 
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false, proxy: true, cookie: { httpOnly: true, sameSite: 'lax', secure: IS_PROD, maxAge: 1000 * 60 * 60 * 8 }, store: MongoStore.create({ mongoUrl: MONGO }) }));
@@ -431,6 +439,36 @@ function legalPage(req, res, kind) {
 }
 app.get('/privacy', (req, res) => legalPage(req, res, 'privacy'));
 app.get('/voorwaarden', (req, res) => legalPage(req, res, 'terms'));
+app.get('/vacatures', async (req, res) => {
+  const lang = req.lang, t = VAC.tx(lang);
+  const items = await Vacancy.find({ status: 'Gepubliceerd' }).sort({ publishedAt: -1 }).lean();
+  const body = `<section class="page-hero ph-vacatures"><div class="page-hero-inner"><h1>${esc(t.title)}</h1></div></section>` +
+    VAC.renderList(items, lang, vacHelpers()) + footer(lang);
+  res.send(layout(t.title, body, 'vacatures', lang, req.path));
+});
+app.get('/vacatures/:id', async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect('/vacatures');
+  const lang = req.lang, t = VAC.tx(lang);
+  const v = await Vacancy.findOne({ _id: req.params.id, status: 'Gepubliceerd' }).lean();
+  if (!v) return res.redirect('/vacatures');
+  const uid = req.session?.portalUserId || null;
+  const already = uid ? !!(await VacancyInterest.findOne({ vacancyId: String(v._id), portalUserId: String(uid) })) : false;
+  const body = `<section class="page-hero ph-vacatures"><div class="page-hero-inner"><h1>${esc(t.title)}</h1></div></section>` +
+    VAC.renderDetail(v, lang, vacHelpers(), { loggedIn: !!uid, already, done: req.query.ok === '1' }) + footer(lang);
+  res.send(layout(v.title, body, 'vacatures', lang, req.path));
+});
+app.post('/vacatures/:id/interesse', requireUser, async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect('/vacatures');
+  const v = await Vacancy.findOne({ _id: req.params.id, status: 'Gepubliceerd' }).lean();
+  const u = await PortalUser.findById(req.session.portalUserId).lean();
+  if (!v || !u) return res.redirect('/vacatures');
+  const bestaat = await VacancyInterest.findOne({ vacancyId: String(v._id), portalUserId: String(u._id) });
+  if (!bestaat) {
+    try { await VacancyInterest.create({ vacancyId: String(v._id), portalUserId: String(u._id), name: u.name, email: u.email }); } catch (e) {}
+    sendEmail({ to: MAIL_TO, replyTo: u.email, subject: `Interesse in vacature — ${u.name}`, html: mailWrap('Kandidaat meldt interesse', [['Kandidaat', u.name], ['E-mail', u.email], ['Vacature', v.title], ['Werkgever', v.employer || '—'], ['Plaats', v.city || '—']], { lang: 'nl', intro: 'Een kandidaat heeft via de website interesse gemeld in een vacature. Je kunt rechtstreeks op deze e-mail antwoorden.' }) });
+  }
+  res.redirect('/vacatures/' + v._id + '?ok=1');
+});
 app.get('/contact', (req, res) => {
   const lang = req.lang, tr = T[lang], f = tr.footer, c = contactT(req);
   const locIc = '<path d="M12 21c4-4 7-7.4 7-11a7 7 0 1 0-14 0c0 3.6 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/>';
@@ -566,7 +604,7 @@ app.post('/verify-2fa', requireLogin, async (req, res) => {
 app.post('/logout', (req, res) => req.session.destroy(() => res.redirect('/')));
 
 // ---------- Portaal ----------
-const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/talentpool', 'Kandidatenbank'], ['/zorgscan', 'Zorgscan'], ['/versies', 'Versies'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/messages', 'Berichten'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
+const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/talentpool', 'Kandidatenbank'], ['/zorgscan', 'Zorgscan'], ['/vacatures-beheer', 'Vacatures'], ['/tarief', 'Tarief'], ['/versies', 'Versies'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/messages', 'Berichten'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
 function portalNav(active) { return `<nav class="pnav" aria-label="Portaal">${PORTAL_LINKS.map(([h, l]) => `<a href="${h}" class="${active === h ? 'on' : ''}">${l}</a>`).join('')}</nav>`; }
 function portalShell(req, res, title, inner, active) {
   const head = `<div class="page-head"><div><h1>${esc(title)}</h1></div><form method="post" action="/logout"><button class="btn navy small">Uitloggen</button></form></div>`;
@@ -710,6 +748,38 @@ app.post('/portal/appointment', requireUser, async (req, res) => {
     sendEmail({ to: u.email, subject: book(req).thanks, html: mailWrap(book(req).title, [['Datum', date], ['Tijd', time], ['Kanaal', channel]]) });
   }
   res.redirect('/portal/account');
+});
+app.get('/portal/vacatures', requireUser, async (req, res) => {
+  const u = await PortalUser.findById(req.session.portalUserId).lean();
+  if (!u || u.role !== 'Zorginstelling') return res.redirect('/portal/account');
+  const items = await Vacancy.find({ ownerId: String(u._id) }).sort({ createdAt: -1 }).lean();
+  const inner = `<section class="page portal"><div class="page-head"><div><h1>${esc(VAC.PORTAL_NL.h)}</h1><p>${esc(u.name)}</p></div><form method="post" action="/portal/logout"><button class="btn navy small">Uitloggen</button></form></div>` +
+    `<nav class="pnav"><a href="/portal/account">Mijn account</a><a href="/portal/vacatures" class="on">${esc(VAC.PORTAL_NL.h)}</a></nav><div class="pbody">` +
+    VAC.renderPortalVacancies(items, req.lang, vacHelpers(), req.query.ok === '1') + '</div></section>';
+  res.send(layout(VAC.PORTAL_NL.h, inner, 'home', req.lang, req.path));
+});
+app.post('/portal/vacatures', requireUser, async (req, res) => {
+  const u = await PortalUser.findById(req.session.portalUserId).lean();
+  if (!u || u.role !== 'Zorginstelling') return res.redirect('/portal/account');
+  const val = (n, max) => String(req.body[n] || '').trim().slice(0, max);
+  const titel = val('title', 120);
+  if (titel) {
+    try {
+      await Vacancy.create({
+        title: titel,
+        profession: CP.PROFESSIONS.includes(val('profession', 40)) ? val('profession', 40) : '',
+        city: val('city', 80), province: val('province', 60), hours: val('hours', 40),
+        contract: VAC.CONTRACT.includes(val('contract', 40)) ? val('contract', 40) : '',
+        salary: val('salary', 80),
+        languageLevel: ['B1', 'B2', 'B2+'].includes(val('languageLevel', 5)) ? val('languageLevel', 5) : '',
+        startDate: /^\d{4}-\d{2}-\d{2}$/.test(val('startDate', 10)) ? val('startDate', 10) : '',
+        description: val('description', 4000), requirements: val('requirements', 2000),
+        employer: u.name, contactEmail: u.email, ownerId: String(u._id), status: 'Ter beoordeling'
+      });
+      sendEmail({ to: MAIL_TO, replyTo: u.email, subject: `Nieuwe vacature ter beoordeling — ${u.name}`, html: mailWrap('Nieuwe vacature ter beoordeling', [['Instelling', u.name], ['Functie', titel], ['Plaats', val('city', 80) || '—']], { lang: 'nl', intro: 'Een zorginstelling heeft een vacature geplaatst. Beoordeel hem in het beheerportaal onder Vacatures.' }) });
+    } catch (e) {}
+  }
+  res.redirect('/portal/vacatures?ok=1');
 });
 app.post('/portal/profile', requireUser, async (req, res) => {
   try { await PortalUser.findByIdAndUpdate(req.session.portalUserId, CP.coerceProfile(req.body)); } catch (e) {}
@@ -957,6 +1027,31 @@ app.get('/zorgscan', requireAuth, async (req, res) => {
   for (const k of ['profession', 'province', 'hc_min', 'q']) if (f[k]) qs.set(k, f[k]);
   const [stats, vac] = await Promise.all([ZS.zsFetch('/api/stats'), ZS.zsFetch('/api/vacatures?' + qs.toString())]);
   portalShell(req, res, 'Zorgscan', ZS.renderPanel(stats, vac, f, { esc }), '/zorgscan');
+});
+app.get('/vacatures-beheer', requireAuth, async (req, res) => {
+  const items = await Vacancy.find().sort({ createdAt: -1 }).lean();
+  const counts = await VacancyInterest.aggregate([{ $group: { _id: '$vacancyId', n: { $sum: 1 } } }]).catch(() => []);
+  const map = Object.fromEntries((counts || []).map(c => [c._id, c.n]));
+  items.forEach(v => { v.interestCount = map[String(v._id)] || 0; });
+  portalShell(req, res, 'Vacatures', VAC.renderModeration(items, vacHelpers()), '/vacatures-beheer');
+});
+app.get('/vacatures-beheer/:id', requireAuth, async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect('/vacatures-beheer');
+  const v = await Vacancy.findById(req.params.id).lean();
+  if (!v) return res.redirect('/vacatures-beheer');
+  const interesses = await VacancyInterest.find({ vacancyId: String(v._id) }).sort({ createdAt: -1 }).lean();
+  portalShell(req, res, v.title, VAC.renderModerationDetail(v, interesses, vacHelpers()), '/vacatures-beheer');
+});
+app.post('/vacatures-beheer/:id', requireAuth, async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect('/vacatures-beheer');
+  const st = String(req.body.status || '');
+  const upd = { adminNotes: String(req.body.adminNotes || '').slice(0, 2000) };
+  if (VAC.STATUS.includes(st)) { upd.status = st; if (st === 'Gepubliceerd') upd.publishedAt = new Date(); }
+  try { await Vacancy.findByIdAndUpdate(req.params.id, upd); } catch (e) {}
+  res.redirect('/vacatures-beheer/' + req.params.id);
+});
+app.get('/tarief', requireAuth, (req, res) => {
+  portalShell(req, res, 'Tariefmodel', renderPricing(esc), '/tarief');
 });
 app.get('/versies', requireAuth, (req, res) => {
   portalShell(req, res, CL_UI.h, renderChangelog(PKG.version, esc), '/versies');
