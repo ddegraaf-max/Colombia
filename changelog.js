@@ -13,7 +13,8 @@ const VERSIONS = [
       'Oorzaak van alle drie was dezelfde: kolommen in een rooster krimpen standaard niet onder de breedte van hun langste woord',
       'Tikdoelen vergroot naar 40 pixels: telefoonnummer en e-mailadres in de balk bovenaan en in de voettekst, bronlinks, taalkeuze en de taalknoppen in het portaal',
       'Kleine bijschriften bij de grafieken van 11,5 naar 12,5 pixels op mobiel',
-      'Alle 81 interne links in vier talen gecontroleerd: geen gebroken link, elke pagina heeft een titel, een h1, het juiste taalattribuut en alt-teksten'
+      'Alle 81 interne links in vier talen gecontroleerd: geen gebroken link, elke pagina heeft een titel, een h1, het juiste taalattribuut en alt-teksten',
+      'Taalkeuze bovenaan opende op mobiel 55 pixels buiten het scherm; die staat nu vast aan de bovenbalk'
     ]
   },
   {

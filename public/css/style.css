@@ -916,3 +916,9 @@ tr.msg-spam td{border-top-color:#f6dedb}
   .langsel a,.langmenu a,.langsel-menu a{min-height:40px;display:flex;align-items:center}
 }
 @media(max-width:640px){.lchip{padding:10px 14px;font-size:13px;display:inline-flex;align-items:center;min-height:40px}}
+/* Taalmenu stak op mobiel 55px buiten het scherm; nu vastgezet aan de bovenbalk. */
+@media(max-width:640px){
+  .top{position:relative}
+  .langsel{position:static}
+  .langmenu{left:auto;right:12px;top:calc(100% - 2px);max-width:calc(100vw - 24px)}
+}
