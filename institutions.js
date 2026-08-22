@@ -26,7 +26,7 @@ const T = {
       eyebrow: 'WAAROM DIT BETER WERKT', h2: 'Vier redenen dat dit model beter uitpakt',
       items: [
         ['Capaciteit nu, niet later', 'U vult een deel van uw personeelstekort binnen maanden in plaats van na een volledig opleidingstraject.'],
-        ['Veel minder uitval', 'Wie in een team werkt, een salaris ontvangt en dagelijks Nederlands hoort, haakt aanzienlijk minder snel af dan iemand die in het buitenland in zijn eentje zit te studeren.'],
+        ['Veel minder uitval', 'Onze kandidaten halen op eigen kracht en op eigen kosten niveau A2 voordat wij ze aannemen; wie die stap zet, meent het. Daarna werken ze in een team, ontvangen ze salaris en horen ze dagelijks Nederlands. Dat haakt aanzienlijk minder snel af dan iemand die in zijn eentje in het buitenland zit te studeren.'],
         ['Sneller op niveau', 'Taal leer je het snelst door hem te gebruiken. Op de afdeling gaat dat vele malen sneller dan in een online les.'],
         ['U kent elkaar al', 'Bij de overgang naar de verpleegkundige functie werkt u met iemand die uw organisatie, uw bewoners en uw werkwijze al kent. Geen nieuwe inwerkperiode.']
       ]
@@ -34,7 +34,7 @@ const T = {
     rollen: {
       eyebrow: 'DUIDELIJKE ROLVERDELING', h2: 'Wie doet wat',
       sub: 'Honor Care International bemiddelt niet zelf en is geen werkgever. Dat houdt de verhoudingen zuiver en het traject in lijn met de Nederlandse wetgeving.',
-      us: { h: 'Wij doen', items: ['Werving en selectie in Spanje en andere EU-landen', 'Screening en controle van diploma’s en documenten', 'Taalopleiding Nederlands tot het vereiste niveau', 'Begeleiding bij diploma-erkenning en BIG-registratie', 'Huisvesting en begeleiding na aankomst', 'Eén vast aanspreekpunt voor u en voor de kandidaat'] },
+      us: { h: 'Wij doen', items: ['Werving en selectie in Spanje en andere EU-landen', 'Screening en controle van diploma’s en documenten', 'Taalopleiding Nederlands van A2 tot het vereiste niveau', 'Begeleiding bij diploma-erkenning en BIG-registratie', 'Huisvesting en begeleiding na aankomst', 'Eén vast aanspreekpunt voor u en voor de kandidaat'] },
       partner: { h: 'Het geregistreerde partnerbureau doet', items: ['De officiële bemiddeling en het werkgeverschap', 'Het arbeidscontract en de arbeidsvoorwaarden', 'Loonbetaling en werkgeversverplichtingen', 'Naleving van de Waadi en de Wtta'] },
       inst: { h: 'Wij vragen van u', items: ['Een ondersteunende functie waarin de kandidaat kan starten', 'Een vaste begeleider of buddy op de afdeling', 'Ruimte in het rooster voor de taalopleiding', 'Bereidheid de kandidaat te laten doorgroeien zodra de BIG-registratie rond is'] }
     },
@@ -68,7 +68,7 @@ const T = {
       eyebrow: 'WHY THIS WORKS BETTER', h2: 'Four reasons this model pays off',
       items: [
         ['Capacity now, not later', 'You fill part of your staffing gap within months instead of after a full training programme.'],
-        ['Far less drop-out', 'Someone working in a team, earning a salary and hearing Dutch every day is considerably less likely to give up than someone studying alone abroad.'],
+        ['Far less drop-out', 'Our candidates reach level A2 under their own steam and at their own expense before we take them on; anyone taking that step means it. After that they work in a team, earn a salary and hear Dutch every day. That gives up considerably less often than someone studying alone abroad.'],
         ['Faster to the required level', 'You learn a language fastest by using it. On the ward that goes many times faster than in an online lesson.'],
         ['You already know each other', 'When the move to the nursing role comes, you are working with someone who already knows your organisation, your residents and your way of working. No new induction.']
       ]
@@ -76,7 +76,7 @@ const T = {
     rollen: {
       eyebrow: 'CLEAR DIVISION OF ROLES', h2: 'Who does what',
       sub: 'Honor Care International does not place workers itself and is not an employer. That keeps the relationships clean and the process compliant with Dutch law.',
-      us: { h: 'We do', items: ['Recruitment and selection in Spain and other EU countries', 'Screening and verification of diplomas and documents', 'Dutch language training to the required level', 'Support with diploma recognition and BIG registration', 'Housing and guidance after arrival', 'One point of contact for you and for the candidate'] },
+      us: { h: 'We do', items: ['Recruitment and selection in Spain and other EU countries', 'Screening and verification of diplomas and documents', 'Dutch language training from A2 to the required level', 'Support with diploma recognition and BIG registration', 'Housing and guidance after arrival', 'One point of contact for you and for the candidate'] },
       partner: { h: 'The registered partner agency does', items: ['The official placement and the employer role', 'The employment contract and terms of employment', 'Salary payment and employer obligations', 'Compliance with the Waadi and the Wtta'] },
       inst: { h: 'We ask of you', items: ['A supporting role in which the candidate can start', 'A dedicated mentor or buddy on the ward', 'Room in the rota for language training', 'Willingness to let the candidate move up once BIG registration is complete'] }
     },
@@ -110,7 +110,7 @@ const T = {
       eyebrow: 'POR QUÉ FUNCIONA MEJOR', h2: 'Cuatro razones por las que este modelo sale mejor',
       items: [
         ['Capacidad ahora, no después', 'Cubre parte de su falta de personal en meses en lugar de tras un programa formativo completo.'],
-        ['Muchísimo menos abandono', 'Quien trabaja en equipo, cobra un salario y escucha neerlandés a diario abandona bastante menos que quien estudia solo en el extranjero.'],
+        ['Muchísimo menos abandono', 'Nuestros candidatos alcanzan el nivel A2 por su cuenta y a su cargo antes de que los aceptemos; quien da ese paso va en serio. Después trabajan en equipo, cobran un salario y escuchan neerlandés a diario. Eso abandona bastante menos que quien estudia solo en el extranjero.'],
         ['Antes al nivel exigido', 'Un idioma se aprende usándolo. En la planta eso va mucho más rápido que en una clase online.'],
         ['Ya se conocen', 'Al pasar al puesto de enfermero trabaja con alguien que ya conoce su organización, sus residentes y su forma de trabajar. Sin nueva incorporación.']
       ]
@@ -118,7 +118,7 @@ const T = {
     rollen: {
       eyebrow: 'REPARTO CLARO DE FUNCIONES', h2: 'Quién hace qué',
       sub: 'Honor Care International no realiza la intermediación ni es empleador. Eso mantiene limpias las relaciones y el proceso conforme a la ley neerlandesa.',
-      us: { h: 'Nosotros hacemos', items: ['Captación y selección en España y otros países de la UE', 'Evaluación y verificación de títulos y documentos', 'Formación en neerlandés hasta el nivel exigido', 'Apoyo con la homologación y el registro BIG', 'Alojamiento y acompañamiento tras la llegada', 'Un único interlocutor para usted y para el candidato'] },
+      us: { h: 'Nosotros hacemos', items: ['Captación y selección en España y otros países de la UE', 'Evaluación y verificación de títulos y documentos', 'Formación en neerlandés desde A2 hasta el nivel exigido', 'Apoyo con la homologación y el registro BIG', 'Alojamiento y acompañamiento tras la llegada', 'Un único interlocutor para usted y para el candidato'] },
       partner: { h: 'La agencia asociada registrada hace', items: ['La intermediación oficial y la condición de empleador', 'El contrato y las condiciones laborales', 'El pago del salario y las obligaciones del empleador', 'El cumplimiento de la Waadi y la Wtta'] },
       inst: { h: 'Le pedimos', items: ['Un puesto de apoyo donde el candidato pueda empezar', 'Un mentor fijo en la planta', 'Espacio en el turno para la formación lingüística', 'Disposición a promocionar al candidato cuando tenga el registro BIG'] }
     },
@@ -152,7 +152,7 @@ const T = {
       eyebrow: 'DLACZEGO TO DZIAŁA LEPIEJ', h2: 'Cztery powody, dla których ten model się opłaca',
       items: [
         ['Ludzie teraz, nie później', 'Część braków kadrowych zapełniacie w ciągu miesięcy, a nie po pełnym programie szkoleniowym.'],
-        ['Znacznie mniejsza rezygnacja', 'Kto pracuje w zespole, dostaje wynagrodzenie i codziennie słyszy niderlandzki, rezygnuje znacznie rzadziej niż osoba ucząca się sama za granicą.'],
+        ['Znacznie mniejsza rezygnacja', 'Nasi kandydaci osiągają poziom A2 własnymi siłami i na własny koszt, zanim ich przyjmiemy; kto robi ten krok, mówi poważnie. Potem pracują w zespole, dostają wynagrodzenie i codziennie słyszą niderlandzki. Rezygnują znacznie rzadziej niż osoby uczące się samotnie za granicą.'],
         ['Szybciej na wymaganym poziomie', 'Języka uczy się najszybciej przez używanie. Na oddziale idzie to wielokrotnie szybciej niż na lekcji online.'],
         ['Już się znacie', 'Przy przejściu na stanowisko pielęgniarki pracujecie z kimś, kto zna Waszą organizację, pacjentów i sposób pracy. Bez ponownego wdrażania.']
       ]
@@ -160,7 +160,7 @@ const T = {
     rollen: {
       eyebrow: 'JASNY PODZIAŁ RÓL', h2: 'Kto co robi',
       sub: 'Honor Care International nie prowadzi pośrednictwa i nie jest pracodawcą. Dzięki temu relacje pozostają czyste, a proces zgodny z holenderskim prawem.',
-      us: { h: 'My robimy', items: ['Rekrutację i selekcję w Hiszpanii i innych krajach UE', 'Weryfikację dyplomów i dokumentów', 'Naukę niderlandzkiego do wymaganego poziomu', 'Wsparcie przy uznaniu dyplomu i rejestracji BIG', 'Zakwaterowanie i opiekę po przyjeździe', 'Jeden punkt kontaktu dla Państwa i dla kandydata'] },
+      us: { h: 'My robimy', items: ['Rekrutację i selekcję w Hiszpanii i innych krajach UE', 'Weryfikację dyplomów i dokumentów', 'Naukę niderlandzkiego od A2 do wymaganego poziomu', 'Wsparcie przy uznaniu dyplomu i rejestracji BIG', 'Zakwaterowanie i opiekę po przyjeździe', 'Jeden punkt kontaktu dla Państwa i dla kandydata'] },
       partner: { h: 'Zarejestrowane biuro partnerskie robi', items: ['Oficjalne pośrednictwo i rolę pracodawcy', 'Umowę o pracę i warunki zatrudnienia', 'Wypłatę wynagrodzenia i obowiązki pracodawcy', 'Przestrzeganie Waadi i Wtta'] },
       inst: { h: 'Prosimy Państwa o', items: ['Stanowisko wspierające, na którym kandydat może zacząć', 'Stałego opiekuna na oddziale', 'Miejsce w grafiku na naukę języka', 'Gotowość do awansowania kandydata po uzyskaniu rejestracji BIG'] }
     },

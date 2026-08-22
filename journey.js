@@ -19,10 +19,10 @@ const PHASES = [
   },
   {
     key: 'taal',
-    nl: { t: 'Taalopleiding Nederlands', w: 'De langste en bepalende fase. Je leert online vanuit huis tot het niveau dat jouw beroep vraagt: B1 bij mbo, B2 bij hbo en B2+ bij een universitaire opleiding.', y: 'Lessen volgen en oefenen' },
-    en: { t: 'Dutch language training', w: 'The longest and decisive phase. You study online from home to the level your profession requires: B1 for vocational, B2 for higher professional and B2+ for university level.', y: 'Attend lessons and practise' },
-    es: { t: 'Formación en neerlandés', w: 'La fase más larga y decisiva. Estudias online desde casa hasta el nivel que exige tu profesión: B1 para FP, B2 para grado superior y B2+ para nivel universitario.', y: 'Asistir a clase y practicar' },
-    pl: { t: 'Nauka niderlandzkiego', w: 'Najdłuższy i decydujący etap. Uczysz się online w domu do poziomu wymaganego w Twoim zawodzie: B1 przy średnim, B2 przy wyższym zawodowym i B2+ przy uniwersyteckim.', y: 'Uczestnicz w zajęciach i ćwicz' }
+    nl: { t: 'Taalopleiding Nederlands', w: 'De langste en bepalende fase. Tot A2 heb je het zelf gedaan; vanaf daar verzorgen wij de opleiding tot het niveau dat jouw beroep vraagt: B1 bij mbo, B2 bij hbo en B2+ bij een universitaire opleiding.', y: 'Lessen volgen en oefenen' },
+    en: { t: 'Dutch language training', w: 'The longest and decisive phase. You reached A2 on your own; from there we provide the training up to the level your profession requires: B1 for vocational, B2 for higher professional and B2+ for university level.', y: 'Attend lessons and practise' },
+    es: { t: 'Formación en neerlandés', w: 'La fase más larga y decisiva. Hasta A2 lo has hecho tú; a partir de ahí nosotros damos la formación hasta el nivel que exige tu profesión: B1 para FP, B2 para grado superior y B2+ para nivel universitario.', y: 'Asistir a clase y practicar' },
+    pl: { t: 'Nauka niderlandzkiego', w: 'Najdłuższy i decydujący etap. Do A2 doszedłeś sam; od tego miejsca my prowadzimy naukę do poziomu wymaganego w Twoim zawodzie: B1 przy średnim, B2 przy wyższym zawodowym i B2+ przy uniwersyteckim.', y: 'Uczestnicz w zajęciach i ćwicz' }
   },
   {
     key: 'erkenning',

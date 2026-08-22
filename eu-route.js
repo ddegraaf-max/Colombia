@@ -12,7 +12,7 @@ const EUROUTE = {
       items: [
         ['EU-nationaliteit', 'Je hebt de nationaliteit van Spanje of een ander EU/EER-land. Daardoor heb je geen visum of tewerkstellingsvergunning nodig om in Nederland te werken.'],
         ['Een erkend zorgdiploma', 'Je bent gediplomeerd zorgprofessional — bijvoorbeeld verpleegkundige, arts of tandarts — met een diploma dat binnen de EU is afgegeven.'],
-        ['Motivatie om Nederlands te leren', 'Dit is verreweg de grootste stap. Je leert tot minimaal B1, voor veel functies B2 (NT2). Reken op enkele maanden intensief studeren, vaak naast je huidige werk.'],
+        ['Zelf beginnen met Nederlands', 'Dit is verreweg de grootste stap, en die zet je zelf als eerste. Je haalt op eigen kracht niveau A2 bij een taalschool naar keuze, op eigen kosten. Daarmee laat je zien dat je het meent — en vanaf dat punt nemen wij de opleiding over tot B1 of B2 (NT2).'],
         ['Bereidheid om te verhuizen', 'Je bent bereid daadwerkelijk naar Nederland te verhuizen en hier te wonen en werken. De huisvesting regelen wij.'],
         ['Volledige en eerlijke documenten', 'Diploma’s, werkervaring, identiteitsbewijs en referenties — compleet, geldig en op tijd aangeleverd.'],
         ['Actieve deelname', 'Je volgt de lessen trouw, blijft bereikbaar voor je coördinator en geeft wijzigingen in je situatie direct door.']
@@ -26,7 +26,7 @@ const EUROUTE = {
         ['Voorbereiding op de Nederlandse zorg', 'Hoe het zorgstelsel werkt, wat een Nederlandse werkgever verwacht en hoe de omgang met patiënten en collega’s is.'],
         ['Huisvesting', 'Een gemeubileerde woning, klaar bij aankomst en dicht bij je werk.'],
         ['Een vast aanspreekpunt', 'Eén coördinator die jouw dossier kent en je begeleidt — ook ná aankomst in Nederland.'],
-        ['Kosteloos voor jou', 'Aan onze voorbereiding, opleiding en begeleiding zijn voor jou als kandidaat geen kosten verbonden.'],
+        ['Kosteloos vanaf A2', 'De basis tot A2 regel je zelf. Alles wat daarna komt — het vervolgtraject naar B1 of B2, de begeleiding bij erkenning en BIG, je huisvesting en de nazorg — kost jou niets. Aan ons betaal je nooit iets.'],
         ['Werken en leren tegelijk', 'Je hoeft niet maandenlang onbetaald thuis te studeren. Zodra je Nederlands goed genoeg is voor de dagelijkse praktijk, start je in een ondersteunende functie in de zorg — met salaris. Je leert de taal verder op de werkvloer en groeit door zodra je BIG-registratie rond is.']
       ]
     },
@@ -35,7 +35,7 @@ const EUROUTE = {
       list: [
         ['Kennismaking', 'Een open gesprek over je achtergrond, je wensen en wat het traject van je vraagt. Vrijblijvend.'],
         ['Screening en documentcheck', 'We controleren diploma, werkervaring en documenten en bepalen samen welk beroep en niveau bij je passen.'],
-        ['Taalopleiding Nederlands', 'Je start met NT2, online vanuit Spanje. Dit is de langste en bepalende fase van het traject.'],
+        ['Taalopleiding Nederlands', 'Je bent zelf begonnen tot A2; vanaf daar nemen wij het over richting B1 of B2, online vanuit Spanje. Dit is de langste en bepalende fase van het traject.'],
         ['Erkenning en BIG-registratie', 'Parallel aan de taalopleiding regelen we de erkenning van je EU-diploma en je BIG-registratie.'],
         ['Kennismaking met de werkgever', 'Het geregistreerde partnerbureau brengt je in contact met een passende zorginstelling.'],
         ['Officiële plaatsing en contract', 'Het partnerbureau sluit het arbeidscontract met je. Zij zijn de erkende bemiddelaar en werkgever — niet Honor Care.'],
@@ -61,7 +61,7 @@ const EUROUTE = {
       items: [
         ['EU nationality', 'You hold the nationality of Spain or another EU/EEA country, so you need no visa or work permit to work in the Netherlands.'],
         ['A recognised healthcare diploma', 'You are a qualified healthcare professional — for example a nurse, doctor or dentist — with a diploma issued within the EU.'],
-        ['Motivation to learn Dutch', 'By far the biggest step. You study to at least B1, and B2 (NT2) for many roles. Expect several months of intensive study, often alongside your current job.'],
+        ['Starting with Dutch yourself', 'By far the biggest step, and it is the one you take first. You reach level A2 under your own steam, at a language school of your choice and at your own expense. That shows you mean it — and from there we take over the training up to B1 or B2 (NT2).'],
         ['Willingness to relocate', 'You are genuinely prepared to move to the Netherlands and live and work here. We arrange the housing.'],
         ['Complete and honest documents', 'Diplomas, work experience, identity documents and references — complete, valid and submitted on time.'],
         ['Active participation', 'You attend your lessons, stay reachable for your coordinator and report any change in your situation straight away.']
@@ -75,7 +75,7 @@ const EUROUTE = {
         ['Preparation for Dutch healthcare', 'How the healthcare system works, what a Dutch employer expects, and how people interact with patients and colleagues.'],
         ['Housing', 'A furnished home, ready on arrival and close to your workplace.'],
         ['One point of contact', 'A single coordinator who knows your file and supports you — including after you arrive.'],
-        ['Free of charge for you', 'Our preparation, training and guidance come at no cost to you as a candidate.'],
+        ['Free of charge from A2 onwards', 'You arrange the basics up to A2 yourself. Everything after that — the route to B1 or B2, support with recognition and BIG, your housing and aftercare — costs you nothing. You never pay us anything.'],
         ['Work and learn at the same time', 'You do not have to study unpaid at home for months. As soon as your Dutch is good enough for daily practice you start in a supporting role in healthcare — with a salary. You keep learning the language on the ward and move up once your BIG registration is complete.']
       ]
     },
@@ -84,7 +84,7 @@ const EUROUTE = {
       list: [
         ['Introduction', 'An open conversation about your background, your goals and what the journey asks of you. No obligations.'],
         ['Screening and document check', 'We verify your diploma, experience and documents and determine together which role and level suit you.'],
-        ['Dutch language training', 'You start NT2 online from Spain. This is the longest and most decisive phase of the journey.'],
+        ['Dutch language training', 'You have reached A2 on your own; from there we take over towards B1 or B2, online from Spain. This is the longest and most decisive phase of the journey.'],
         ['Recognition and BIG registration', 'Alongside the language training we arrange recognition of your EU diploma and your BIG registration.'],
         ['Meeting the employer', 'The registered partner agency introduces you to a suitable healthcare institution.'],
         ['Official placement and contract', 'The partner agency signs the employment contract with you. They are the authorised intermediary and employer — not Honor Care.'],
@@ -110,7 +110,7 @@ const EUROUTE = {
       items: [
         ['Obywatelstwo UE', 'Masz obywatelstwo Hiszpanii lub innego kraju UE/EOG, dzięki czemu nie potrzebujesz wizy ani zezwolenia na pracę w Holandii.'],
         ['Uznany dyplom medyczny', 'Jesteś wykwalifikowanym profesjonalistą medycznym — np. pielęgniarką, lekarzem lub stomatologiem — z dyplomem wydanym w UE.'],
-        ['Motywacja do nauki niderlandzkiego', 'To zdecydowanie największy krok. Uczysz się co najmniej do B1, a przy wielu stanowiskach do B2 (NT2). Licz się z kilkoma miesiącami intensywnej nauki, często obok obecnej pracy.'],
+        ['Samodzielny start z niderlandzkim', 'To zdecydowanie największy krok i robisz go jako pierwszy sam. Poziom A2 osiągasz własnymi siłami, w wybranej szkole i na własny koszt. Tym pokazujesz, że mówisz poważnie — a od tego momentu szkolenie przejmujemy my, do B1 lub B2 (NT2).'],
         ['Gotowość do przeprowadzki', 'Jesteś realnie gotowy przeprowadzić się do Holandii oraz tu mieszkać i pracować. Zakwaterowanie organizujemy my.'],
         ['Kompletne i rzetelne dokumenty', 'Dyplomy, doświadczenie zawodowe, dokument tożsamości i referencje — kompletne, ważne i dostarczone na czas.'],
         ['Aktywny udział', 'Regularnie uczestniczysz w zajęciach, jesteś dostępny dla koordynatora i od razu zgłaszasz zmiany w swojej sytuacji.']
@@ -124,7 +124,7 @@ const EUROUTE = {
         ['Przygotowanie do pracy w Holandii', 'Jak działa system opieki zdrowotnej, czego oczekuje holenderski pracodawca i jak wygląda kontakt z pacjentem i zespołem.'],
         ['Zakwaterowanie', 'Umeblowane mieszkanie, gotowe na przyjazd i blisko miejsca pracy.'],
         ['Stały opiekun', 'Jeden koordynator, który zna Twoją sprawę i prowadzi Cię — również po przyjeździe.'],
-        ['Bezpłatnie dla Ciebie', 'Za nasze przygotowanie, szkolenie i opiekę nie ponosisz jako kandydat żadnych kosztów.'],
+        ['Bezpłatnie od poziomu A2', 'Podstawy do A2 organizujesz sam. Wszystko dalej — nauka do B1 lub B2, wsparcie przy uznaniu dyplomu i BIG, zakwaterowanie i opieka — nic Cię nie kosztuje. Nam nigdy nic nie płacisz.'],
         ['Praca i nauka jednocześnie', 'Nie musisz miesiącami uczyć się w domu bez wynagrodzenia. Gdy Twój niderlandzki wystarcza do codziennej praktyki, zaczynasz na stanowisku wspierającym w opiece — z pensją. Języka uczysz się dalej na oddziale i awansujesz po uzyskaniu rejestracji BIG.']
       ]
     },
@@ -133,7 +133,7 @@ const EUROUTE = {
       list: [
         ['Rozmowa wstępna', 'Otwarta rozmowa o Twoim doświadczeniu, oczekiwaniach i tym, czego wymaga cała ścieżka. Bez zobowiązań.'],
         ['Weryfikacja i dokumenty', 'Sprawdzamy dyplom, doświadczenie i dokumenty oraz wspólnie ustalamy odpowiedni zawód i poziom.'],
-        ['Nauka niderlandzkiego', 'Zaczynasz kurs NT2 online z Hiszpanii. To najdłuższy i decydujący etap.'],
+        ['Nauka niderlandzkiego', 'Do A2 doszedłeś sam; od tego miejsca przejmujemy naukę do B1 lub B2, online z Hiszpanii. To najdłuższy i decydujący etap.'],
         ['Uznanie dyplomu i rejestracja BIG', 'Równolegle do nauki załatwiamy uznanie dyplomu z UE i rejestrację BIG.'],
         ['Poznanie pracodawcy', 'Zarejestrowane biuro partnerskie kontaktuje Cię z odpowiednią placówką medyczną.'],
         ['Oficjalne zatrudnienie i umowa', 'Umowę o pracę zawiera z Tobą biuro partnerskie. To ono jest uprawnionym pośrednikiem i pracodawcą — nie Honor Care.'],
@@ -159,7 +159,7 @@ const EUROUTE = {
       items: [
         ['Nacionalidad de la UE', 'Tienes la nacionalidad de España o de otro país de la UE/EEE, por lo que no necesitas visado ni permiso de trabajo para trabajar en los Países Bajos.'],
         ['Un título sanitario reconocido', 'Eres profesional sanitario titulado —por ejemplo enfermero, médico o dentista— con un título expedido en la UE.'],
-        ['Motivación para aprender neerlandés', 'Es con diferencia el paso más grande. Estudias hasta B1 como mínimo y hasta B2 (NT2) para muchos puestos. Cuenta con varios meses de estudio intensivo, a menudo compaginado con tu trabajo actual.'],
+        ['Empezar tú con el neerlandés', 'Es con diferencia el paso más grande, y es el primero que das tú. Alcanzas el nivel A2 por tu cuenta, en la escuela que elijas y a tu cargo. Así demuestras que va en serio, y a partir de ahí asumimos nosotros la formación hasta B1 o B2 (NT2).'],
         ['Disposición a mudarte', 'Estás realmente dispuesto a mudarte a los Países Bajos y vivir y trabajar aquí. Del alojamiento nos encargamos nosotros.'],
         ['Documentación completa y veraz', 'Títulos, experiencia laboral, documento de identidad y referencias: completos, válidos y entregados a tiempo.'],
         ['Participación activa', 'Asistes a las clases con constancia, estás localizable para tu coordinador y comunicas de inmediato cualquier cambio en tu situación.']
@@ -173,7 +173,7 @@ const EUROUTE = {
         ['Preparación para la sanidad neerlandesa', 'Cómo funciona el sistema sanitario, qué espera un empleador neerlandés y cómo es el trato con pacientes y compañeros.'],
         ['Alojamiento', 'Una vivienda amueblada, lista a tu llegada y cerca de tu puesto de trabajo.'],
         ['Un único interlocutor', 'Un coordinador que conoce tu expediente y te acompaña, también después de tu llegada.'],
-        ['Gratuito para ti', 'Nuestra preparación, formación y acompañamiento no tienen ningún coste para ti como candidato.'],
+        ['Gratuito a partir de A2', 'La base hasta A2 la organizas tú. Todo lo que viene después —el trayecto hasta B1 o B2, el apoyo con la homologación y el BIG, tu alojamiento y el seguimiento— no te cuesta nada. A nosotros nunca nos pagas nada.'],
         ['Trabajar y aprender a la vez', 'No tienes que estudiar meses en casa sin cobrar. En cuanto tu neerlandés basta para el día a día, empiezas en un puesto de apoyo en sanidad, con salario. Sigues aprendiendo el idioma en el trabajo y promocionas cuando tengas el registro BIG.']
       ]
     },
@@ -182,7 +182,7 @@ const EUROUTE = {
       list: [
         ['Primer contacto', 'Una conversación abierta sobre tu trayectoria, tus objetivos y lo que exige el recorrido. Sin compromiso.'],
         ['Evaluación y documentación', 'Verificamos tu título, tu experiencia y tus documentos y decidimos juntos qué profesión y nivel encajan contigo.'],
-        ['Formación en neerlandés', 'Empiezas el NT2 online desde España. Es la fase más larga y decisiva del recorrido.'],
+        ['Formación en neerlandés', 'Has llegado a A2 por tu cuenta; a partir de ahí tomamos el relevo hacia B1 o B2, online desde España. Es la fase más larga y decisiva del recorrido.'],
         ['Homologación y registro BIG', 'En paralelo a la formación gestionamos el reconocimiento de tu título de la UE y tu registro BIG.'],
         ['Conocer al empleador', 'La agencia asociada registrada te pone en contacto con un centro sanitario adecuado.'],
         ['Colocación oficial y contrato', 'La agencia asociada firma contigo el contrato de trabajo. Ella es el intermediario autorizado y el empleador, no Honor Care.'],

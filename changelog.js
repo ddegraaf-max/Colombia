@@ -4,6 +4,17 @@
 
 const VERSIONS = [
   {
+    v: '56.0.0', date: '22-08-2026', title: 'Kosten kloppend gemaakt: basis tot A2 doet de kandidaat zelf',
+    items: [
+      'De site beloofde op acht plekken in vier talen dat het traject volledig kosteloos was; dat klopte niet meer',
+      'Overal aangepast: de basiscursus tot A2 regelt en betaalt de kandidaat zelf bij een taalschool naar keuze, vanaf A2 is onze dienstverlening kosteloos',
+      'De kandidaat betaalt die school rechtstreeks en nooit aan ons; dat blijft zo in verband met het betaalverbod in de Waadi',
+      'Op de EU-route staat zelf beginnen met Nederlands nu als expliciete instapeis',
+      'Instellingenpagina gebruikt het als kwaliteitssignaal: wie op eigen kracht A2 haalt, meent het',
+      'Algemene voorwaarden naar documentversie 1.3; disclaimer op elke pagina en in elke e-mail aangepast'
+    ]
+  },
+  {
     v: '55.0.0', date: '22-08-2026', title: 'Geen echte berichten meer kwijtraken',
     items: [
       'Een bericht dat Turnstile niet haalt wordt niet langer stilzwijgend weggegooid: het komt gewoon binnen, met [niet geverifieerd] in de onderwerpregel en een toelichting in de mail',

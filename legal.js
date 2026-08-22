@@ -10,7 +10,7 @@ const ENTITY = String(process.env.COMPANY_ENTITY || 'Creditline B.V.').trim();
 const UPDATED = '21-08-2026';
 // Documentversie: hoog dit op bij elke inhoudelijke wijziging van de tekst,
 // los van het versienummer van de applicatie.
-const DOC_VERSION = { privacy: '1.2', terms: '1.2' };
+const DOC_VERSION = { privacy: '1.2', terms: '1.3' };
 
 const L = {
   nl: {
@@ -86,9 +86,10 @@ const L = {
           'Afspraken over loon, arbeidsvoorwaarden en de duur van het contract maak je met dat partnerbureau, niet met ons.'
         ]],
         ['Kosteloos voor kandidaten', [
-          'Aan onze werving, voorbereiding, taalopleiding en begeleiding zijn voor jou als kandidaat geen kosten verbonden.',
+          'De basiscursus Nederlands tot niveau A2 regel en betaal je zelf, bij een taalschool naar keuze. Dat is een instapvoorwaarde; je betaalt die school rechtstreeks en niet ons.',
+          'Vanaf niveau A2 zijn onze diensten voor jou kosteloos: het vervolgtraject naar B1 of B2, de begeleiding bij diploma-erkenning en BIG-registratie, de huisvesting en de nazorg.',
           'Wij vragen je nooit om een vergoeding in ruil voor werk of bemiddeling. Vraagt iemand je daar wél om, neem dan contact met ons op.',
-          'Kosten die je zelf draagt zijn wel: je huur zodra je in Nederland woont, het examengeld voor het Staatsexamen NT2, de kosten van je BIG-registratie en het opvragen van officiële documenten in je eigen land. Wij maken die kosten vooraf inzichtelijk.'
+          'Kosten die je verder zelf draagt: je huur zodra je in Nederland woont, het examengeld voor het Staatsexamen NT2, de kosten van je BIG-registratie en het opvragen van officiële documenten in je eigen land. Wij maken die kosten vooraf inzichtelijk.'
         ]],
         ['Wat wij van jou verwachten', [
           'Dat je juiste en volledige informatie aanlevert en wijzigingen in je situatie direct doorgeeft.',
@@ -196,9 +197,10 @@ const L = {
           'Agreements on salary, terms of employment and contract duration are made with that partner agency, not with us.'
         ]],
         ['Free of charge for candidates', [
-          'Our recruitment, preparation, language training and guidance are free of charge for you as a candidate.',
+          'You arrange and pay for the basic Dutch course up to level A2 yourself, at a language school of your choice. That is an entry condition; you pay that school directly and not us.',
+          'From level A2 onwards our services are free of charge for you: the continuation to B1 or B2, support with diploma recognition and BIG registration, housing and aftercare.',
           'We never ask you for a fee in exchange for work or placement. If anyone does ask you for that, please contact us.',
-          'Costs you do bear yourself: your rent once you live in the Netherlands, the examination fee for the Staatsexamen NT2, the cost of your BIG registration and obtaining official documents in your own country. We make those costs clear in advance.'
+          'Further costs you bear yourself: your rent once you live in the Netherlands, the examination fee for the Staatsexamen NT2, the cost of your BIG registration and obtaining official documents in your own country. We make those costs clear in advance.'
         ]],
         ['What we expect from you', [
           'That you provide accurate and complete information and report changes in your situation immediately.',
@@ -306,9 +308,10 @@ const L = {
           'Los acuerdos sobre salario, condiciones laborales y duración del contrato se pactan con esa agencia, no con nosotros.'
         ]],
         ['Gratuito para los candidatos', [
-          'Nuestra captación, preparación, formación lingüística y acompañamiento son gratuitos para ti como candidato.',
+          'El curso básico de neerlandés hasta el nivel A2 lo organizas y lo pagas tú, en la escuela de idiomas que elijas. Es una condición de entrada; pagas a esa escuela directamente y no a nosotros.',
+          'A partir del nivel A2 nuestros servicios son gratuitos para ti: la continuación hasta B1 o B2, el apoyo con la homologación y el registro BIG, el alojamiento y el seguimiento.',
           'Nunca te pedimos una compensación a cambio de trabajo o intermediación. Si alguien lo hace, ponte en contacto con nosotros.',
-          'Sí corren por tu cuenta: el alquiler cuando vivas en los Países Bajos, la tasa del Staatsexamen NT2, el coste de tu registro BIG y la obtención de documentos oficiales en tu país. Te informamos de esos costes por adelantado.'
+          'Otros costes que asumes tú: el alquiler cuando vivas en los Países Bajos, la tasa del Staatsexamen NT2, el coste de tu registro BIG y la obtención de documentos oficiales en tu país. Te informamos de esos costes por adelantado.'
         ]],
         ['Qué esperamos de ti', [
           'Que facilites información correcta y completa y comuniques de inmediato los cambios en tu situación.',
@@ -416,9 +419,10 @@ const L = {
           'Ustalenia dotyczące wynagrodzenia, warunków pracy i czasu trwania umowy zawierasz z tym biurem, a nie z nami.'
         ]],
         ['Bezpłatnie dla kandydatów', [
-          'Nasza rekrutacja, przygotowanie, kurs językowy i opieka są dla Ciebie jako kandydata bezpłatne.',
+          'Podstawowy kurs niderlandzkiego do poziomu A2 organizujesz i opłacasz sam, w wybranej szkole językowej. To warunek wstępny; płacisz tej szkole bezpośrednio, a nie nam.',
+          'Od poziomu A2 nasze usługi są dla Ciebie bezpłatne: dalsza nauka do B1 lub B2, wsparcie przy uznaniu dyplomu i rejestracji BIG, zakwaterowanie i opieka.',
           'Nigdy nie żądamy od Ciebie opłaty w zamian za pracę czy pośrednictwo. Jeśli ktokolwiek tego żąda, skontaktuj się z nami.',
-          'Koszty, które ponosisz sam: czynsz po zamieszkaniu w Holandii, opłata egzaminacyjna Staatsexamen NT2, koszt rejestracji BIG oraz uzyskanie oficjalnych dokumentów w swoim kraju. Informujemy o nich z góry.'
+          'Pozostałe koszty po Twojej stronie: czynsz po zamieszkaniu w Holandii, opłata egzaminacyjna Staatsexamen NT2, koszt rejestracji BIG oraz uzyskanie oficjalnych dokumentów w swoim kraju. Informujemy o nich z góry.'
         ]],
         ['Czego oczekujemy od Ciebie', [
           'Że podasz prawdziwe i kompletne informacje oraz niezwłocznie zgłosisz zmiany w swojej sytuacji.',

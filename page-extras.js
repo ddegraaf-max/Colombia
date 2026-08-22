@@ -17,7 +17,7 @@ const EXTRAS = {
       about: [
         ['Zijn jullie een uitzendbureau?', 'Nee. Wij werven, leiden op en begeleiden. De officiële bemiddeling, het contract en het werkgeverschap lopen via ons geregistreerde partnerbureau. Die scheiding is wettelijk vereist en houden wij strikt aan.'],
         ['Uit welke landen werven jullie?', 'Op dit moment richten wij ons vooral op Spanje en andere EU-landen, omdat daar geen visum of tewerkstellingsvergunning nodig is. Daarnaast werven wij in Colombia; dat traject duurt langer.'],
-        ['Wat kost het een kandidaat?', 'Niets. Onze voorbereiding, taalopleiding en begeleiding zijn voor kandidaten kosteloos. Wie geld vraagt in ruil voor werk in Nederland, deugt niet.'],
+        ['Wat kost het een kandidaat?', 'De basiscursus tot A2 regelt en betaalt de kandidaat zelf bij een taalschool naar keuze; dat is onze instapeis. Alles daarna — het vervolgtraject, de begeleiding bij erkenning en BIG, huisvesting en nazorg — is voor de kandidaat kosteloos. Aan ons betaalt hij nooit iets. Wie geld vraagt in ruil voor werk in Nederland, deugt niet.'],
         ['Hoe waarborgen jullie eerlijke werving?', 'Wij volgen de WHO-gedragscode voor internationale werving van zorgpersoneel, werken met transparante afspraken en leggen vooraf vast wat je huur en arbeidsvoorwaarden worden.']
       ],
       institutions: [
@@ -27,7 +27,7 @@ const EXTRAS = {
         ['Wat als een kandidaat toch niet past?', 'Dat bespreken we open en tijdig. Wij hebben er niets aan om iemand te plaatsen die niet op zijn plek is — begeleiding na aankomst is juist bedoeld om dat te voorkomen.']
       ],
       candidates: [
-        ['Wat kost dit mij?', 'Niets. Onze begeleiding en opleiding zijn voor jou kosteloos. Je betaalt wel gewoon huur zodra je hier woont; dat bedrag spreken we vooraf met je af.'],
+        ['Wat kost dit mij?', 'De basiscursus Nederlands tot A2 regel en betaal je zelf, bij een taalschool naar keuze. Dat is onze instapeis. Vanaf A2 nemen wij het over: het vervolg naar B1 of B2, de begeleiding bij erkenning en BIG-registratie, je huisvesting en de nazorg zijn voor jou kosteloos. Aan ons betaal je nooit iets. Wel draag je zelf je huur zodra je hier woont, het examengeld voor het Staatsexamen NT2 en de kosten van je BIG-registratie.'],
         ['Hoe lang duurt het hele traject?', 'De taal bepaalt het tempo. Reken op enkele maanden intensief studeren naar B1/B2, met de diploma-erkenning die daarnaast loopt. Wij zijn eerlijk over de planning zodra we je niveau kennen.'],
         ['Moet ik al Nederlands spreken?', 'Nee, je kunt op nul beginnen. Maar je moet wel bereid zijn er stevig voor te gaan zitten: zonder aantoonbaar Nederlands is BIG-registratie niet mogelijk.'],
         ['Kan mijn gezin meekomen?', 'Als EU-burger heb je vrij verkeer, dus je gezin mag meeverhuizen. Houd er rekening mee dat passende gezinswoningen schaars zijn; bespreek dit daarom vroeg in het traject.'],
@@ -38,7 +38,7 @@ const EXTRAS = {
         ['Wat is NT2 precies?', 'Het Staatsexamen Nederlands als tweede taal. Er zijn twee programma’s: Programma I leidt naar niveau B1 (werk of opleiding op mbo-niveau) en Programma II naar B2 (hbo- of universitair niveau). Beide bestaan uit vier onderdelen: lezen, luisteren, spreken en schrijven.'],
         ['Welk niveau heb ik nodig?', 'Voor de meeste zorgfuncties minimaal B1; voor functies op hbo-niveau vaak B2. Aantoonbare taalbeheersing hoort bij elke route naar BIG-registratie.'],
         ['Kan ik vanuit Spanje leren?', 'Ja. De lessen zijn online te volgen naast je huidige werk. Dat is ook precies de bedoeling: je begint met de taal vóórdat je verhuist.'],
-        ['Wat kost de opleiding mij?', 'Niets. De taalopleiding en de voorbereiding zijn onderdeel van onze begeleiding en voor jou als kandidaat kosteloos.']
+        ['Wat kost de opleiding mij?', 'De basis tot A2 doe je zelf, bij een taalschool naar keuze en op eigen kosten. Daarna is de opleiding van ons: het traject van A2 naar B1 of B2, inclusief medische terminologie en examentraining, is voor jou kosteloos.']
       ],
       housing: [
         ['Krijg ik een eigen woning?', 'In het begin meestal niet. Je start vaak in gedeelde huisvesting met collega’s — dat drukt de kosten en je staat er niet alleen voor. Na je inwerkperiode helpen we je op weg naar eigen woonruimte.'],
@@ -65,7 +65,7 @@ const EXTRAS = {
       about: [
         ['Are you a staffing agency?', 'No. We recruit, train and guide. The official placement, the contract and the employer role run through our registered partner agency. That separation is required by law and we keep to it strictly.'],
         ['Which countries do you recruit from?', 'Right now we focus mainly on Spain and other EU countries, because no visa or work permit is needed there. We also recruit in Colombia; that route takes longer.'],
-        ['What does it cost a candidate?', 'Nothing. Our preparation, language training and guidance are free of charge for candidates. Anyone asking for money in exchange for work in the Netherlands is not to be trusted.'],
+        ['What does it cost a candidate?', 'The candidate arranges and pays for the basic course up to A2 themselves at a language school of their choice; that is our entry requirement. Everything after that — the continuation, support with recognition and BIG, housing and aftercare — is free of charge for the candidate. They never pay us anything. Anyone asking for money in exchange for work in the Netherlands is not to be trusted.'],
         ['How do you ensure ethical recruitment?', 'We follow the WHO code of practice on international recruitment of health personnel, work with transparent agreements and set out your rent and terms of employment in advance.']
       ],
       institutions: [
@@ -75,7 +75,7 @@ const EXTRAS = {
         ['What if a candidate turns out not to fit?', 'We discuss that openly and early. Placing someone who is not in the right place helps nobody — post-arrival guidance exists precisely to prevent it.']
       ],
       candidates: [
-        ['What does this cost me?', 'Nothing. Our guidance and training are free for you. You do of course pay rent once you live here; we agree that amount with you in advance.'],
+        ['What does this cost me?', 'You arrange and pay for the basic Dutch course up to A2 yourself, at a language school of your choice. That is our entry requirement. From A2 onwards we take over: the continuation to B1 or B2, support with recognition and BIG registration, your housing and aftercare are free of charge for you. You never pay us anything. You do cover your own rent once you live here, the Staatsexamen NT2 exam fee and the cost of your BIG registration.'],
         ['How long does the whole journey take?', 'The language sets the pace. Expect several months of intensive study towards B1/B2, with diploma recognition running alongside. We are honest about the planning as soon as we know your level.'],
         ['Do I need to speak Dutch already?', 'No, you can start from zero. But you must be willing to work hard at it: without demonstrable Dutch, BIG registration is not possible.'],
         ['Can my family come along?', 'As an EU citizen you have free movement, so your family may move with you. Do bear in mind that suitable family homes are scarce, so raise this early in the process.'],
@@ -86,7 +86,7 @@ const EXTRAS = {
         ['What exactly is NT2?', 'The state examination in Dutch as a second language. There are two programmes: Programme I leads to level B1 (work or study at vocational level) and Programme II to B2 (higher professional or university level). Both consist of four parts: reading, listening, speaking and writing.'],
         ['Which level do I need?', 'For most care roles at least B1; for roles at higher professional level often B2. Demonstrable language proficiency is part of every route to BIG registration.'],
         ['Can I study from Spain?', 'Yes. Lessons are available online alongside your current job. That is exactly the intention: you start with the language before you move.'],
-        ['What does the training cost me?', 'Nothing. The language training and preparation are part of our guidance and free of charge for you as a candidate.']
+        ['What does the training cost me?', 'You do the basics up to A2 yourself, at a language school of your choice and at your own expense. After that the training is on us: the route from A2 to B1 or B2, including medical terminology and exam preparation, is free of charge for you.']
       ],
       housing: [
         ['Will I get my own home?', 'Usually not at first. You often start in shared housing with colleagues — it keeps costs down and you are not on your own. After your settling-in period we help you towards your own place.'],
@@ -113,7 +113,7 @@ const EXTRAS = {
       about: [
         ['¿Sois una empresa de trabajo temporal?', 'No. Nosotros captamos, formamos y acompañamos. La intermediación oficial, el contrato y la condición de empleador corresponden a nuestra agencia asociada registrada. Esa separación la exige la ley y la respetamos estrictamente.'],
         ['¿En qué países captáis?', 'Ahora nos centramos sobre todo en España y otros países de la UE, porque allí no hace falta visado ni permiso de trabajo. También captamos en Colombia; ese recorrido es más largo.'],
-        ['¿Cuánto le cuesta al candidato?', 'Nada. Nuestra preparación, formación lingüística y acompañamiento son gratuitos para los candidatos. Quien pide dinero a cambio de trabajo en los Países Bajos no es de fiar.'],
+        ['¿Cuánto le cuesta al candidato?', 'El curso básico hasta A2 lo organiza y paga el propio candidato en la escuela que elija; es nuestro requisito de entrada. Todo lo demás —la continuación, el apoyo con la homologación y el BIG, el alojamiento y el seguimiento— es gratuito para el candidato. A nosotros nunca nos paga nada. Quien pide dinero a cambio de trabajo en los Países Bajos no es de fiar.'],
         ['¿Cómo garantizáis una captación ética?', 'Seguimos el código de la OMS sobre contratación internacional de personal sanitario, trabajamos con acuerdos transparentes y fijamos de antemano tu alquiler y tus condiciones laborales.']
       ],
       institutions: [
@@ -123,7 +123,7 @@ const EXTRAS = {
         ['¿Y si un candidato no encaja?', 'Lo hablamos abiertamente y a tiempo. Colocar a alguien que no está en su sitio no beneficia a nadie; el acompañamiento tras la llegada existe justamente para evitarlo.']
       ],
       candidates: [
-        ['¿Cuánto me cuesta?', 'Nada. Nuestro acompañamiento y formación son gratuitos para ti. Sí pagarás alquiler cuando vivas aquí; ese importe lo acordamos contigo de antemano.'],
+        ['¿Cuánto me cuesta?', 'El curso básico de neerlandés hasta A2 lo organizas y lo pagas tú, en la escuela de idiomas que elijas. Es nuestro requisito de entrada. A partir de A2 tomamos el relevo: la continuación hasta B1 o B2, el apoyo con la homologación y el registro BIG, tu alojamiento y el seguimiento son gratuitos para ti. A nosotros nunca nos pagas nada. Sí asumes tu alquiler cuando vivas aquí, la tasa del Staatsexamen NT2 y el coste del registro BIG.'],
         ['¿Cuánto dura todo el recorrido?', 'El idioma marca el ritmo. Cuenta con varios meses de estudio intensivo hasta B1/B2, con la homologación en paralelo. Somos honestos con la planificación en cuanto conocemos tu nivel.'],
         ['¿Tengo que hablar ya neerlandés?', 'No, puedes empezar de cero. Pero debes estar dispuesto a dedicarle esfuerzo: sin neerlandés acreditado no es posible el registro BIG.'],
         ['¿Puede venir mi familia?', 'Como ciudadano de la UE tienes libre circulación, así que tu familia puede mudarse contigo. Ten en cuenta que las viviendas familiares adecuadas son escasas: coméntalo pronto en el proceso.'],
@@ -134,7 +134,7 @@ const EXTRAS = {
         ['¿Qué es exactamente el NT2?', 'El examen estatal de neerlandés como segunda lengua. Hay dos programas: el Programa I lleva al nivel B1 (trabajo o estudios de formación profesional) y el Programa II al B2 (nivel universitario o equivalente). Ambos constan de cuatro partes: lectura, comprensión oral, expresión oral y escritura.'],
         ['¿Qué nivel necesito?', 'Para la mayoría de puestos sanitarios, B1 como mínimo; para puestos de nivel superior, a menudo B2. Acreditar el idioma forma parte de todas las vías hacia el registro BIG.'],
         ['¿Puedo estudiar desde España?', 'Sí. Las clases son online y compatibles con tu trabajo actual. Esa es justamente la idea: empiezas con el idioma antes de mudarte.'],
-        ['¿Cuánto me cuesta la formación?', 'Nada. La formación lingüística y la preparación forman parte de nuestro acompañamiento y son gratuitas para ti.']
+        ['¿Cuánto me cuesta la formación?', 'La base hasta A2 la haces por tu cuenta, en la escuela que elijas y a tu cargo. A partir de ahí la formación corre de nuestra cuenta: el trayecto de A2 a B1 o B2, con terminología médica y preparación del examen, es gratuito para ti.']
       ],
       housing: [
         ['¿Tendré vivienda propia?', 'Al principio normalmente no. Sueles empezar en vivienda compartida con compañeros: abarata costes y no estás solo. Tras el periodo de adaptación te ayudamos a buscar tu propio hogar.'],
@@ -161,7 +161,7 @@ const EXTRAS = {
       about: [
         ['Czy jesteście agencją pracy tymczasowej?', 'Nie. My rekrutujemy, szkolimy i wspieramy. Oficjalne pośrednictwo, umowa i rola pracodawcy należą do naszego zarejestrowanego biura partnerskiego. Ten podział wynika z prawa i ściśle go przestrzegamy.'],
         ['Z jakich krajów rekrutujecie?', 'Obecnie skupiamy się głównie na Hiszpanii i innych krajach UE, bo tam nie potrzeba wizy ani zezwolenia na pracę. Rekrutujemy też w Kolumbii; ta ścieżka trwa dłużej.'],
-        ['Ile to kosztuje kandydata?', 'Nic. Przygotowanie, kurs językowy i opieka są dla kandydatów bezpłatne. Kto żąda pieniędzy w zamian za pracę w Holandii, nie jest uczciwy.'],
+        ['Ile to kosztuje kandydata?', 'Podstawowy kurs do poziomu A2 kandydat organizuje i opłaca sam w wybranej szkole; to nasz warunek wstępny. Wszystko dalej — kontynuacja nauki, wsparcie przy uznaniu dyplomu i BIG, zakwaterowanie i opieka — jest dla kandydata bezpłatne. Nam nigdy nic nie płaci. Kto żąda pieniędzy w zamian za pracę w Holandii, nie jest uczciwy.'],
         ['Jak zapewniacie etyczną rekrutację?', 'Stosujemy kodeks WHO dotyczący międzynarodowej rekrutacji personelu medycznego, działamy na przejrzystych zasadach i z góry ustalamy czynsz oraz warunki pracy.']
       ],
       institutions: [
@@ -171,7 +171,7 @@ const EXTRAS = {
         ['A jeśli kandydat jednak nie pasuje?', 'Rozmawiamy o tym otwarcie i w porę. Umieszczanie kogoś w niewłaściwym miejscu nikomu nie służy — opieka po przyjeździe ma temu właśnie zapobiegać.']
       ],
       candidates: [
-        ['Ile mnie to kosztuje?', 'Nic. Nasza opieka i szkolenie są dla Ciebie bezpłatne. Czynsz oczywiście płacisz, gdy już tu mieszkasz; kwotę ustalamy z góry.'],
+        ['Ile mnie to kosztuje?', 'Podstawowy kurs niderlandzkiego do poziomu A2 organizujesz i opłacasz sam, w wybranej przez siebie szkole językowej. To nasz warunek wstępny. Od poziomu A2 przejmujemy pałeczkę: dalsza nauka do B1 lub B2, wsparcie przy uznaniu dyplomu i rejestracji BIG, zakwaterowanie i opieka są dla Ciebie bezpłatne. Nam nigdy nic nie płacisz. Sam pokrywasz czynsz po zamieszkaniu tutaj, opłatę egzaminacyjną Staatsexamen NT2 i koszt rejestracji BIG.'],
         ['Ile trwa cała ścieżka?', 'Tempo wyznacza język. Licz na kilka miesięcy intensywnej nauki do B1/B2, przy równoległym uznaniu dyplomu. Uczciwie przedstawiamy harmonogram, gdy poznamy Twój poziom.'],
         ['Czy muszę już znać niderlandzki?', 'Nie, możesz zacząć od zera. Musisz jednak być gotów solidnie się przyłożyć: bez udokumentowanego niderlandzkiego rejestracja BIG nie jest możliwa.'],
         ['Czy rodzina może przyjechać ze mną?', 'Jako obywatel UE masz swobodę przemieszczania się, więc rodzina może się przeprowadzić. Pamiętaj, że mieszkań rodzinnych brakuje — zgłoś to wcześnie w procesie.'],
@@ -182,7 +182,7 @@ const EXTRAS = {
         ['Czym dokładnie jest NT2?', 'To egzamin państwowy z niderlandzkiego jako drugiego języka. Są dwa programy: Program I prowadzi do poziomu B1 (praca lub nauka na poziomie średnim), a Program II do B2 (poziom wyższy). Oba składają się z czterech części: czytanie, słuchanie, mówienie i pisanie.'],
         ['Jakiego poziomu potrzebuję?', 'Do większości stanowisk w opiece co najmniej B1; do stanowisk wyższego szczebla często B2. Udokumentowana znajomość języka należy do każdej ścieżki rejestracji BIG.'],
         ['Czy mogę uczyć się z Hiszpanii?', 'Tak. Zajęcia są online i można je łączyć z obecną pracą. O to właśnie chodzi: zaczynasz od języka, zanim się przeprowadzisz.'],
-        ['Ile kosztuje mnie szkolenie?', 'Nic. Kurs językowy i przygotowanie są częścią naszej opieki i bezpłatne dla Ciebie.']
+        ['Ile kosztuje mnie szkolenie?', 'Podstawy do poziomu A2 robisz sam, w wybranej szkole i na własny koszt. Dalej szkolenie jest po naszej stronie: droga z A2 do B1 lub B2, z terminologią medyczną i przygotowaniem do egzaminu, jest dla Ciebie bezpłatna.']
       ],
       housing: [
         ['Czy dostanę własne mieszkanie?', 'Na początku zwykle nie. Zaczynasz zwykle w mieszkaniu dzielonym z kolegami — to obniża koszty i nie jesteś sam. Po okresie wdrożenia pomagamy znaleźć własne lokum.'],
