@@ -20,7 +20,7 @@ const L = {
       sections: [
         ['Wie is verantwoordelijk?', [
           COMPANY + ' is een handelsnaam van ' + ENTITY + ', die verwerkingsverantwoordelijke is voor de gegevens die via deze website worden verzameld.',
-          'Adres: Torenlaan 5A, 1402 BN Bussum, Nederland.',
+          'Adres: Torenlaan 5A, 1402 AT Bussum, Nederland.',
           'E-mail: info@honorcareinternational.com · Telefoon: +31 6 46 15 01 60' + (KVK ? ' · Kamer van Koophandel: ' + KVK : '')
         ]],
         ['Welke gegevens verwerken wij?', [
@@ -130,7 +130,7 @@ const L = {
       sections: [
         ['Who is responsible?', [
           COMPANY + ' is a trade name of ' + ENTITY + ', which is the data controller for the data collected through this website.',
-          'Address: Torenlaan 5A, 1402 BN Bussum, the Netherlands.',
+          'Address: Torenlaan 5A, 1402 AT Bussum, the Netherlands.',
           'Email: info@honorcareinternational.com · Phone: +31 6 46 15 01 60' + (KVK ? ' · Dutch Chamber of Commerce: ' + KVK : '')
         ]],
         ['Which data do we process?', [
@@ -240,7 +240,7 @@ const L = {
       sections: [
         ['¿Quién es responsable?', [
           COMPANY + ' es un nombre comercial de ' + ENTITY + ', que es el responsable del tratamiento de los datos recogidos a través de esta web.',
-          'Dirección: Torenlaan 5A, 1402 BN Bussum, Países Bajos.',
+          'Dirección: Torenlaan 5A, 1402 AT Bussum, Países Bajos.',
           'Correo: info@honorcareinternational.com · Teléfono: +31 6 46 15 01 60' + (KVK ? ' · Registro mercantil neerlandés: ' + KVK : '')
         ]],
         ['¿Qué datos tratamos?', [
@@ -350,7 +350,7 @@ const L = {
       sections: [
         ['Kto jest administratorem?', [
           COMPANY + ' jest nazwą handlową spółki ' + ENTITY + ', która jest administratorem danych zbieranych za pośrednictwem tej strony.',
-          'Adres: Torenlaan 5A, 1402 BN Bussum, Holandia.',
+          'Adres: Torenlaan 5A, 1402 AT Bussum, Holandia.',
           'E-mail: info@honorcareinternational.com · Telefon: +31 6 46 15 01 60' + (KVK ? ' · Holenderski rejestr handlowy: ' + KVK : '')
         ]],
         ['Jakie dane przetwarzamy?', [

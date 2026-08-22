@@ -4,6 +4,18 @@
 
 const VERSIONS = [
   {
+    v: '52.0.0', date: '22-08-2026', title: 'Gebruikers met eigen taal, veldnamen en klokken',
+    items: [
+      'Gebruikersbeheer: maak accounts aan voor collega’s, elk met een eigen taal voor het beheerportaal (Nederlands, Engels, Spaans of Pools)',
+      'Menu, knoppen en paginakoppen van het beheerportaal vertaald; vrije tekst van kandidaten blijft in de oorspronkelijke taal',
+      'Je kunt 2FA van een collega resetten en je eigen account niet verwijderen',
+      'Bij kandidaten heette het veld Taalniveau Pools; dat is nu Taalniveau Nederlands',
+      'Standaardland bij nieuwe kandidaten van Kolumbia naar Spanje, en Visum in de pijplijn vervangen door BIG-registratie',
+      'Klok voor Spanje toegevoegd naast Nederland en Colombia',
+      'Postcode van het kantoor gecorrigeerd naar 1402 AT'
+    ]
+  },
+  {
     v: '51.0.0', date: '22-08-2026', title: 'Automatisch opruimen, Pools kantoor weg, gespreksformulier',
     items: [
       'Berichten en gespreksaanvragen worden na 24 maanden automatisch verwijderd; de opruiming draait bij het opstarten en daarna dagelijks, en wordt gelogd',

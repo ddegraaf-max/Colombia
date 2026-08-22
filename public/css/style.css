@@ -556,8 +556,8 @@ code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
 .wa-float{position:fixed;right:20px;bottom:20px;z-index:40;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(37,211,102,.42);transition:transform .15s}
 .wa-float svg{width:30px;height:30px}
 .wa-float:hover{transform:scale(1.07)}
-.clocks{display:flex;gap:16px;margin-top:12px}
-.clock{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:9px;padding:7px 12px;min-width:86px}
+.clocks{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.clock{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:9px;padding:7px 11px;min-width:78px}
 .clock-city{display:block;font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;opacity:.75}
 .clock b{font-family:'Playfair Display',serif;font-size:19px;letter-spacing:.5px}
 @media(max-width:640px){.wa-float{right:14px;bottom:14px;width:50px;height:50px}.wa-float svg{width:26px;height:26px}}
@@ -738,3 +738,4 @@ tr.msg-spam td{border-top-color:#f6dedb}
 .zl-ver{background:#eef4ef;color:#3d6b4f}
 .zl-binnenkort{background:#fdf3e0;color:#8a6412}
 .zl-bijna{background:#fdecea;color:#a3332a}
+.inlineform{display:inline-block;margin:0 4px 0 0}

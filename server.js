@@ -21,6 +21,7 @@ const VAC = require('./vacancies');
 const { renderPricing } = require('./pricing');
 const MSG = require('./messages');
 const RET = require('./retention');
+const AI18N = require('./admin-i18n');
 // Helpers die de vacaturemodule nodig heeft; zo blijft de opmaak gelijk aan de rest.
 function vacHelpers() {
   return { esc, badge, professions: CP.PROFESSIONS, professionLabel: (c) => CP.ADMIN.profession[c] || c };
@@ -29,8 +30,11 @@ const WA_NUMBER = '31646150160'; // WhatsApp: zelfde nummer als telefoon
 const WA_LINK = 'https://wa.me/' + WA_NUMBER;
 const waIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.5-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.4 1.9.8 2.6.9 3.5.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4 0-.1-.2-.2-.5-.3z"/><path d="M12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.1c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.1 8.1 0 1 1 12 20.1z"/></svg>';
 // Klokken: het tijdsverschil met Colombia is voor kandidaten en planning relevant.
-function clocksBlock(labelNL, labelCO) {
-  return `<div class="clocks" data-clocks><div class="clock"><span class="clock-city">${esc(labelNL)}</span><b data-clock="Europe/Amsterdam">--:--</b></div><div class="clock"><span class="clock-city">${esc(labelCO)}</span><b data-clock="America/Bogota">--:--</b></div></div>`;
+// Drie klokken: Nederland en Spanje delen een tijdzone, maar het zijn wel
+// twee landen waar we mee werken; Colombia loopt zes tot zeven uur achter.
+function clocksBlock() {
+  const steden = [['Nederland', 'Europe/Amsterdam'], ['Spanje', 'Europe/Madrid'], ['Colombia', 'America/Bogota']];
+  return `<div class="clocks" data-clocks>${steden.map(([naam, tz]) => `<div class="clock"><span class="clock-city">${esc(naam)}</span><b data-clock="${tz}">--:--</b></div>`).join('')}</div>`;
 }
 
 const app = express();
@@ -136,15 +140,15 @@ function footer(lang = 'pl') {
   return `<footer class="footer"><div class="footer-main">
 <div class="fcol"><img class="flogo" src="/images/logo.svg" alt="Honor Care International" width="230" height="52"><p>${f.tagline}</p><div class="social"><a class="wa" href="${WA_LINK}" target="_blank" rel="noopener" aria-label="WhatsApp">${waIcon}</a><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 8H6v4h3v12h5V12h3.6l.4-4h-4V6.3c0-1 .2-1.3 1.2-1.3H18V0h-3.6C10.8 0 9 1.6 9 4.6V8z"/></svg></a><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.5 3 5.5 7V24h-5v-7c0-1.7 0-3.8-2.3-3.8s-2.7 1.8-2.7 3.7V24h-5V8z"/></svg></a><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.5-.1 4.8c-.1 3.2-1.6 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.5.1-4.8C2.4 4 3.9 2.4 7.1 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 12 18.6 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 12 7.7a4.3 4.3 0 0 1 0 8.6zm6.8-11.1a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></a></div></div>
 <div class="fcol"><h4>${f.quick}</h4><ul>${links}</ul></div>
-<div class="fcol"><h4>${f.officeNL}</h4><p>📍 Torenlaan 5A, 1402 BN<br>Bussum, ${tr.nav.poland}</p><p>☎ <a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p>${clocksBlock('Nederland', 'Colombia')}</div>
+<div class="fcol"><h4>${f.officeNL}</h4><p>📍 Torenlaan 5A, 1402 AT<br>Bussum, ${tr.nav.poland}</p><p>☎ <a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p>${clocksBlock()}</div>
 <div class="fcol newsletter"><h4>${f.newsletter}</h4><p>${f.newsletterText}</p><form method="post" action="/newsletter"><input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><input type="hidden" name="ft" value="${formToken()}"><div class="nl-row"><input type="email" name="email" placeholder="${f.newsletterPh}" aria-label="${f.newsletterPh}" required><button class="nl-btn" aria-label="OK">→</button></div></form></div>
 </div><div class="footer-legal">${legalText(lang)}</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International — handelsnaam van Creditline B.V. · KvK 59683198. ${f.rights}</span><span><a href="/privacy">${f.privacy}</a> &nbsp;|&nbsp; <a href="/voorwaarden">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
 }
 
 mongoose.set('strictQuery', true);
-const User = mongoose.model('User', new mongoose.Schema({ email: { type: String, unique: true, lowercase: true }, passwordHash: String, twoFASecret: { type: String, default: null }, createdAt: { type: Date, default: Date.now } }));
+const User = mongoose.model('User', new mongoose.Schema({ name: String, language: { type: String, default: 'nl' }, lastLogin: Date, email: { type: String, unique: true, lowercase: true }, passwordHash: String, twoFASecret: { type: String, default: null }, createdAt: { type: Date, default: Date.now } }));
 const Document = mongoose.model('Document', new mongoose.Schema({ title: String, category: String, language: String, status: String, notes: String, content: String, createdAt: { type: Date, default: Date.now } }));
-const Candidate = mongoose.model('Candidate', new mongoose.Schema({ name: String, email: String, phone: String, profession: String, specialty: String, country: { type: String, default: 'Kolumbia' }, city: String, language: String, status: { type: String, default: 'Nieuw' }, notes: String, createdAt: { type: Date, default: Date.now } }));
+const Candidate = mongoose.model('Candidate', new mongoose.Schema({ name: String, email: String, phone: String, profession: String, specialty: String, country: { type: String, default: 'Spanje' }, city: String, language: String, status: { type: String, default: 'Nieuw' }, notes: String, createdAt: { type: Date, default: Date.now } }));
 const Institution = mongoose.model('Institution', new mongoose.Schema({ name: String, contact: String, email: String, phone: String, city: String, type: String, demand: String, status: { type: String, default: 'Prospect' }, notes: String, createdAt: { type: Date, default: Date.now } }));
 const Placement = mongoose.model('Placement', new mongoose.Schema({ candidate: String, institution: String, role: String, startDate: String, status: { type: String, default: 'Voorgesteld' }, notes: String, createdAt: { type: Date, default: Date.now } }));
 const Housing = mongoose.model('Housing', new mongoose.Schema({ title: String, district: String, address: String, rooms: String, area: String, price: String, furnished: { type: Boolean, default: true }, status: { type: String, default: 'Beschikbaar' }, otodomUrl: String, assignedTo: String, notes: String, createdAt: { type: Date, default: Date.now } }));
@@ -159,6 +163,8 @@ const ContactMessage = mongoose.model('ContactMessage', new mongoose.Schema({ na
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false, proxy: true, cookie: { httpOnly: true, sameSite: 'lax', secure: IS_PROD, maxAge: 1000 * 60 * 60 * 8 }, store: MongoStore.create({ mongoUrl: MONGO }) }));
 
 const requireLogin = (req, res, next) => req.session?.userId ? next() : res.redirect('/login');
+// Taal van de ingelogde beheerder; bepaalt in welke taal het portaal verschijnt.
+function adminLang(req) { return AI18N.TALEN.includes(req.session?.adminLang) ? req.session.adminLang : 'nl'; }
 const requireAuth = (req, res, next) => {
   if (req.session?.userId && req.session?.totpPassed) return next();
   if (!req.session?.userId) return res.redirect('/login');
@@ -506,7 +512,7 @@ ${turnstileWidget(lang)}
 </form>
 </div>
 <aside class="contact-aside">
-<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>Torenlaan 5A, 1402 BN Bussum</p><p><a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p class="ci-h">${f.hoursNL}</p></article>
+<article class="ci-card"><span class="ci-ic">${icon(locIc)}</span><h3>${f.officeNL}</h3><p>Torenlaan 5A, 1402 AT Bussum</p><p><a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p class="ci-h">${f.hoursNL}</p></article>
 <article class="ci-card"><span class="ci-ic">${icon(mailIc)}</span><h3>${esc(c.emailLabel)}</h3><p><a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p class="ci-h">${esc(c.note)}</p></article>
 <article class="ci-card"><span class="ci-ic">${icon(waIc)}</span><h3>WhatsApp</h3><p><a href="${WA_LINK}" target="_blank" rel="noopener">+31 6 46 15 01 60</a></p><p class="ci-h">${esc(c.note)}</p></article>
 </aside>
@@ -585,6 +591,8 @@ app.post('/login', async (req, res) => {
   clearFails(key);
   req.session.userId = user._id.toString();
   req.session.email = user.email;
+  req.session.adminLang = user.language || 'nl';
+  try { await User.findByIdAndUpdate(user._id, { lastLogin: new Date() }); } catch (e) {}
   req.session.totpPassed = false;
   req.session.twoFAConfigured = !!user.twoFASecret;
   if (!user.twoFASecret) return res.redirect('/setup-2fa');
@@ -615,11 +623,12 @@ app.post('/verify-2fa', requireLogin, async (req, res) => {
 app.post('/logout', (req, res) => req.session.destroy(() => res.redirect('/')));
 
 // ---------- Portaal ----------
-const PORTAL_LINKS = [['/dashboard', 'Dashboard'], ['/agenda', 'Agenda'], ['/candidates', 'Kandidaten'], ['/talentpool', 'Kandidatenbank'], ['/zorgscan', 'Zorgscan'], ['/vacatures-beheer', 'Vacatures'], ['/tarief', 'Tarief'], ['/versies', 'Versies'], ['/institutions-list', 'Instellingen'], ['/placements', 'Plaatsingen'], ['/housing-list', 'Woningen'], ['/messages', 'Berichten'], ['/documents', 'Documenten'], ['/subsidies', 'Subsidies'], ['/assistant', 'AI-assistent'], ['/backup', 'Back-up']];
-function portalNav(active) { return `<nav class="pnav" aria-label="Portaal">${PORTAL_LINKS.map(([h, l]) => `<a href="${h}" class="${active === h ? 'on' : ''}">${l}</a>`).join('')}</nav>`; }
+const PORTAL_LINKS = [['/dashboard', 'dashboard'], ['/agenda', 'agenda'], ['/candidates', 'candidates'], ['/talentpool', 'talentpool'], ['/zorgscan', 'zorgscan'], ['/vacatures-beheer', 'vacatures'], ['/messages', 'messages'], ['/institutions-list', 'institutions'], ['/placements', 'placements'], ['/housing-list', 'housing'], ['/documents', 'documents'], ['/subsidies', 'subsidies'], ['/tarief', 'tarief'], ['/gebruikers', 'gebruikers'], ['/versies', 'versies'], ['/assistant', 'assistant'], ['/backup', 'backup']];
+function portalNav(active, lang) { const T = AI18N.t(lang); return `<nav class="pnav" aria-label="Portaal">${PORTAL_LINKS.map(([h, k]) => `<a href="${h}" class="${active === h ? 'on' : ''}">${esc(T.nav[k] || k)}</a>`).join('')}</nav>`; }
 function portalShell(req, res, title, inner, active) {
-  const head = `<div class="page-head"><div><h1>${esc(title)}</h1></div><form method="post" action="/logout"><button class="btn navy small">Uitloggen</button></form></div>`;
-  res.send(layout(title, `<section class="page portal">${head}${portalNav(active)}<div class="pbody">${inner}</div><p class="portal-version"><a href="/versies">${esc(versionLine())}</a></p></section>`, 'home', req.lang, req.path));
+  const lang = adminLang(req), T = AI18N.t(lang);
+  const head = `<div class="page-head"><div><h1>${esc(title)}</h1></div><form method="post" action="/logout"><button class="btn navy small">${esc(T.logout)}</button></form></div>`;
+  res.send(layout(title, `<section class="page portal">${head}${portalNav(active, lang)}<div class="pbody">${inner}</div><p class="portal-version"><a href="/versies">${esc(versionLine())}</a></p></section>`, 'home', req.lang, req.path));
 }
 function badge(status) {
   if (!status) return '';
@@ -640,7 +649,7 @@ app.get('/dashboard', requireAuth, async (req, res) => {
   const pool = await PortalUser.countDocuments({ role: { $ne: 'Zorginstelling' } });
   const tiles = [['/agenda', 'Agenda', appt], ['/messages', 'Berichten', msgs], ['/talentpool', 'Kandidatenbank', pool], ['/candidates', 'Kandidaten', cand], ['/institutions-list', 'Instellingen', inst], ['/placements', 'Plaatsingen', plac], ['/housing-list', 'Woningen', hous], ['/documents', 'Documenten', docs], ['/subsidies', 'Subsidies', subs]];
   const cands = await Candidate.find().lean();
-  const stages = ['Nieuw', 'Screening', 'Taalopleiding', 'Erkenning', 'Visum', 'Geplaatst'];
+  const stages = ['Nieuw', 'Screening', 'Taalopleiding', 'Erkenning', 'BIG-registratie', 'Geplaatst'];
   const pc = {}; stages.forEach(s => pc[s] = 0); cands.forEach(c => { if (pc[c.status] != null) pc[c.status]++; });
   const inner = `<p class="welcome">Welkom, ${esc(req.session.email)}. Beheer hier het volledige traject — van werving tot plaatsing.</p>
 <section class="modules">${tiles.map(t => `<a href="${t[0]}"><b>${t[2]}</b><span>${t[1]}</span></a>`).join('')}</section>
@@ -910,7 +919,7 @@ function resource(opts) {
 
 const OTODOM_URL = 'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/mazowieckie/warszawa';
 resource({ path: '/candidates', Model: Candidate, title: 'Kandidaten', titleField: 'name', statusField: 'status', columns: ['profession', 'city', 'language'],
-  fields: [{ name: 'name', label: 'Naam' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'phone', label: 'Telefoon', type: 'tel' }, { name: 'profession', label: 'Beroep' }, { name: 'specialty', label: 'Specialisatie' }, { name: 'country', label: 'Land' }, { name: 'city', label: 'Stad' }, { name: 'language', label: 'Taalniveau Pools', type: 'select', options: ['Geen', 'A1', 'A2', 'B1', 'B2', 'C1'] }, { name: 'status', label: 'Status', type: 'select', options: ['Nieuw', 'Screening', 'Taalopleiding', 'Erkenning', 'Visum', 'Geplaatst', 'Afgewezen'] }, { name: 'notes', label: 'Notities', type: 'textarea' }] });
+  fields: [{ name: 'name', label: 'Naam' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'phone', label: 'Telefoon', type: 'tel' }, { name: 'profession', label: 'Beroep' }, { name: 'specialty', label: 'Specialisatie' }, { name: 'country', label: 'Land' }, { name: 'city', label: 'Stad' }, { name: 'language', label: 'Taalniveau Nederlands', type: 'select', options: ['Geen', 'A1', 'A2', 'B1', 'B2', 'C1'] }, { name: 'status', label: 'Status', type: 'select', options: ['Nieuw', 'Screening', 'Taalopleiding', 'Erkenning', 'BIG-registratie', 'Geplaatst', 'Afgewezen'] }, { name: 'notes', label: 'Notities', type: 'textarea' }] });
 resource({ path: '/institutions-list', Model: Institution, title: 'Instellingen', titleField: 'name', statusField: 'status', columns: ['city', 'type', 'demand'],
   fields: [{ name: 'name', label: 'Naam' }, { name: 'contact', label: 'Contactpersoon' }, { name: 'email', label: 'E-mail', type: 'email' }, { name: 'phone', label: 'Telefoon', type: 'tel' }, { name: 'city', label: 'Stad' }, { name: 'type', label: 'Type', type: 'select', options: ['Ziekenhuis', 'Kliniek', 'Verpleeghuis', 'Thuiszorg', 'Anders'] }, { name: 'demand', label: 'Behoefte (profiel/aantal)' }, { name: 'status', label: 'Status', type: 'select', options: ['Prospect', 'In gesprek', 'Klant', 'On hold', 'Gestopt'] }, { name: 'notes', label: 'Notities', type: 'textarea' }] });
 resource({ path: '/placements', Model: Placement, title: 'Plaatsingen', titleField: 'candidate', statusField: 'status', columns: ['institution', 'role', 'startDate'],
@@ -1097,6 +1106,42 @@ app.post('/vacatures-beheer/:id', requireAuth, async (req, res) => {
 });
 app.get('/tarief', requireAuth, (req, res) => {
   portalShell(req, res, 'Tariefmodel', renderPricing(esc), '/tarief');
+});
+app.get('/gebruikers', requireAuth, async (req, res) => {
+  const lang = adminLang(req), G = AI18N.t(lang).gebruikers;
+  const users = await User.find().sort({ createdAt: 1 }).lean();
+  const codes = { gemaakt: ['ok', G.gemaakt], bestaat: ['error', G.bestaat], zwak: ['error', G.zwak], weg: ['ok', G.verwijderd], zelf: ['error', G.nietZelf], reset: ['ok', G.resetGedaan] };
+  const m = codes[String(req.query.m || '')];
+  const melding = m ? { type: m[0], tekst: m[1] } : null;
+  portalShell(req, res, G.h, AI18N.renderUsers(users, req.session.userId, lang, esc, melding), '/gebruikers');
+});
+app.post('/gebruikers', requireAuth, async (req, res) => {
+  const naam = String(req.body.name || '').trim().slice(0, 80);
+  const email = String(req.body.email || '').toLowerCase().trim().slice(0, 160);
+  const pw = String(req.body.password || '');
+  const taal = AI18N.TALEN.includes(String(req.body.language || '')) ? String(req.body.language) : 'nl';
+  if (pw.length < 10) return res.redirect('/gebruikers?m=zwak');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return res.redirect('/gebruikers?m=zwak');
+  if (await User.findOne({ email })) return res.redirect('/gebruikers?m=bestaat');
+  try { await User.create({ name: naam, email, language: taal, passwordHash: await bcrypt.hash(pw, 12) }); } catch (e) { return res.redirect('/gebruikers?m=bestaat'); }
+  res.redirect('/gebruikers?m=gemaakt');
+});
+app.post('/gebruikers/taal', requireAuth, async (req, res) => {
+  const taal = AI18N.TALEN.includes(String(req.body.language || '')) ? String(req.body.language) : 'nl';
+  try { await User.findByIdAndUpdate(req.session.userId, { language: taal }); } catch (e) {}
+  req.session.adminLang = taal;
+  res.redirect('/gebruikers');
+});
+app.post('/gebruikers/:id/delete', requireAuth, async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect('/gebruikers');
+  if (String(req.params.id) === String(req.session.userId)) return res.redirect('/gebruikers?m=zelf');
+  try { await User.findByIdAndDelete(req.params.id); } catch (e) {}
+  res.redirect('/gebruikers?m=weg');
+});
+app.post('/gebruikers/:id/reset-2fa', requireAuth, async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.redirect('/gebruikers');
+  try { await User.findByIdAndUpdate(req.params.id, { twoFASecret: null }); } catch (e) {}
+  res.redirect('/gebruikers?m=reset');
 });
 app.get('/versies', requireAuth, (req, res) => {
   portalShell(req, res, CL_UI.h, renderChangelog(PKG.version, esc), '/versies');
