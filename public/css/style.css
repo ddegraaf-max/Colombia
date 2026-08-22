@@ -739,3 +739,11 @@ tr.msg-spam td{border-top-color:#f6dedb}
 .zl-binnenkort{background:#fdf3e0;color:#8a6412}
 .zl-bijna{background:#fdecea;color:#a3332a}
 .inlineform{display:inline-block;margin:0 4px 0 0}
+.tf-mijl td{vertical-align:middle;font-size:14px}
+.tf-mijl-naam{min-width:190px}
+.tf-mijl .tf-input{gap:4px}
+.tf-mijl .tf-input input{width:72px;padding:7px 9px;font-size:13.5px}
+.tf-goed{color:#1f7a4d}
+.tf-matig{color:#a9761d}
+.tf-slecht{color:#a3332a}
+.tf-waarschuwing{display:none;background:#fdf3e0;border:1px solid #f0dcb4;color:#8a6412;padding:11px 15px;border-radius:9px;font-size:13.5px;margin:12px 0 0}

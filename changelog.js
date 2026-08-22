@@ -4,6 +4,16 @@
 
 const VERSIONS = [
   {
+    v: '53.0.0', date: '22-08-2026', title: 'Mijlpaalbetalingen in het tariefmodel',
+    items: [
+      'Nieuw blok in het tariefmodel: vul per mijlpaal in hoeveel procent van je kosten je hebt gemaakt en hoeveel procent van de fee je hebt ontvangen',
+      'Per mijlpaal zie je direct wat een afhakende kandidaat je op dat moment kost',
+      'Vergelijking tussen het huidige risico (alles pas bij plaatsing betaald) en het risico met mijlpaalbetalingen',
+      'Veld om met je werkelijk afgesproken tarief te rekenen in plaats van het geadviseerde',
+      'Waarschuwing als de feepercentages niet optellen tot honderd'
+    ]
+  },
+  {
     v: '52.0.0', date: '22-08-2026', title: 'Gebruikers met eigen taal, veldnamen en klokken',
     items: [
       'Gebruikersbeheer: maak accounts aan voor collega’s, elk met een eigen taal voor het beheerportaal (Nederlands, Engels, Spaans of Pools)',

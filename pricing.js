@@ -18,6 +18,15 @@ const AANNAMES = [
   { n: 'salaris', l: 'Bruto maandsalaris kandidaat', h: 'Voor de vergelijking met de marktnorm', d: 3400, suffix: '€' }
 ];
 
+// Standaardverdeling: bij plaatsing is 100% van de kosten gemaakt. De feeverdeling
+// hieronder is een voorstel om mee te onderhandelen, geen vaststaand gegeven.
+const MIJLPALEN = [
+  { l: 'Start traject', h: 'Na screening en documentcheck', k: 15, f: 0 },
+  { l: 'Diploma erkend', h: 'Besluit van het BIG-register binnen', k: 35, f: 25 },
+  { l: 'Taalniveau gehaald', h: 'Staatsexamen NT2 behaald', k: 80, f: 35 },
+  { l: 'Geplaatst', h: 'Contract getekend, kandidaat start', k: 100, f: 40 }
+];
+
 function renderPricing(esc) {
   const veld = (v) => `<div class="tf-row">
 <label for="p_${v.n}">${esc(v.l)}<span>${esc(v.h)}</span></label>
@@ -55,6 +64,31 @@ function renderPricing(esc) {
 <tr><td><b>Jouw geadviseerde tarief</b></td><td><b data-uit="advies2">—</b></td></tr>
 </tbody></table></div>
 <p class="hint">Ligt jouw tarief boven de marktnorm, dan is dat te verdedigen: je levert een kandidaat die de taal beheerst, BIG-geregistreerd is en gehuisvest wordt. Leg dat verschil wel uit aan tafel.</p></div>
+
+<div class="rcard"><h2>Mijlpaalbetalingen</h2>
+<p class="hint">Je grootste risico is niet de hoogte van je tarief, maar het moment waarop je betaald krijgt. Wordt alles pas bij plaatsing afgerekend, dan draag je het volledige verlies van elke afhaker. Vul hieronder in hoeveel procent van je kosten je op elk moment gemaakt hebt en hoeveel procent van de fee je dan al ontvangen hebt. De laatste kolom laat zien wat een afhaker je op dat moment kost.</p>
+<div class="tf-row tf-werkelijk">
+<label for="p_werkelijk">Tarief waarmee je rekent<span>Laat leeg om het geadviseerde tarief te gebruiken</span></label>
+<div class="tf-input"><i>€</i><input id="p_werkelijk" data-aanname="werkelijk" type="number" min="0" step="500" placeholder="geadviseerd"></div></div>
+<div class="tablewrap"><table class="rtable tf-mijl"><thead><tr>
+<th>Mijlpaal</th><th>Kosten gemaakt</th><th>Fee ontvangen</th><th>Kosten</th><th>Ontvangen</th><th>Verlies bij uitval</th>
+</tr></thead><tbody>
+${MIJLPALEN.map((m, i) => `<tr>
+<td class="tf-mijl-naam"><b>${esc(m.l)}</b><br><span class="tp-sub">${esc(m.h)}</span></td>
+<td><div class="tf-input"><input data-mijl-kosten="${i}" type="number" min="0" max="100" step="5" value="${m.k}"><i>%</i></div></td>
+<td><div class="tf-input"><input data-mijl-fee="${i}" type="number" min="0" max="100" step="5" value="${m.f}"><i>%</i></div></td>
+<td data-mijl-kosteneuro="${i}">—</td>
+<td data-mijl-feeeuro="${i}">—</td>
+<td><b data-mijl-verlies="${i}">—</b></td>
+</tr>`).join('')}
+</tbody></table></div>
+<p class="tf-waarschuwing" data-uit="mijlWaarschuwing"></p>
+<div class="tf-cards">
+<div class="tf-card"><span>Risico nu</span><b data-uit="expNu">—</b><i>alles pas bij plaatsing betaald</i></div>
+<div class="tf-card tf-break"><span>Risico met mijlpalen</span><b data-uit="expMijl">—</b><i>hoogste punt in het traject</i></div>
+<div class="tf-card tf-advies"><span>Verschil per afhaker</span><b data-uit="expDaling">—</b><i>zoveel minder verlies</i></div>
+</div>
+<p class="tf-uitleg" data-uit="mijlUitleg"></p></div>
 
 <div class="rcard"><h2>Afspraken die je hoort te maken</h2>
 <ul class="tf-tips">

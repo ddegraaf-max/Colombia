@@ -55,9 +55,68 @@
           ' — binnen de gebruikelijke marktbandbreedte.'));
     }
     zet('uitleg', uitleg);
+    // Rekent met het werkelijk afgesproken tarief zodra dat is ingevuld.
+    var werkelijk = aanname('werkelijk');
+    rekenMijlpalen(direct, werkelijk > 0 ? werkelijk : advies, werkelijk > 0);
   }
 
-  var alle = document.querySelectorAll('[data-kost],[data-aanname]');
+  // Mijlpaalbetalingen: wat kost een afhaker je op elk moment in het traject?
+  function rekenMijlpalen(direct, advies, eigenTarief) {
+    var rijen = document.querySelectorAll('[data-mijl-kosten]');
+    if (!rijen.length) return;
+
+    var maxVerlies = 0, feeTotaal = 0, hoogstePunt = '';
+    var namen = document.querySelectorAll('.tf-mijl-naam b');
+
+    for (var i = 0; i < rijen.length; i++) {
+      var kPct = num(document.querySelector('[data-mijl-kosten="' + i + '"]'));
+      var fPct = num(document.querySelector('[data-mijl-fee="' + i + '"]'));
+      feeTotaal += fPct;
+
+      var kosten = direct * (kPct / 100);
+      // Op het moment van uitval heb je ontvangen wat tot en met deze mijlpaal is betaald.
+      var ontvangen = 0;
+      for (var j = 0; j <= i; j++) ontvangen += advies * (num(document.querySelector('[data-mijl-fee="' + j + '"]')) / 100);
+      var verlies = kosten - ontvangen;
+
+      var cel = document.querySelector('[data-mijl-kosteneuro="' + i + '"]');
+      if (cel) cel.textContent = euro(kosten);
+      var cel2 = document.querySelector('[data-mijl-feeeuro="' + i + '"]');
+      if (cel2) cel2.textContent = euro(ontvangen);
+      var cel3 = document.querySelector('[data-mijl-verlies="' + i + '"]');
+      if (cel3) {
+        cel3.textContent = verlies > 0 ? euro(verlies) : euro(0);
+        cel3.className = verlies > direct * 0.5 ? 'tf-slecht' : (verlies > 0 ? 'tf-matig' : 'tf-goed');
+      }
+
+      // De laatste mijlpaal is een geslaagde plaatsing, geen uitval.
+      if (i < rijen.length - 1 && verlies > maxVerlies) {
+        maxVerlies = verlies;
+        hoogstePunt = namen[i] ? namen[i].textContent : '';
+      }
+    }
+
+    zet('expNu', euro(direct));
+    zet('expMijl', euro(maxVerlies));
+    var daling = direct - maxVerlies;
+    zet('expDaling', euro(daling));
+
+    var w = document.querySelector('[data-uit="mijlWaarschuwing"]');
+    if (w) {
+      w.textContent = Math.round(feeTotaal) === 100 ? ''
+        : 'Let op: de percentages van de fee tellen op tot ' + Math.round(feeTotaal) + '% in plaats van 100%.';
+      w.style.display = Math.round(feeTotaal) === 100 ? 'none' : 'block';
+    }
+
+    var pct = direct > 0 ? Math.round((daling / direct) * 100) : 0;
+    zet('mijlUitleg', direct > 0
+      ? 'Zonder mijlpalen kost elke afhaker je de volle ' + euro(direct) + '. Met deze verdeling is je grootste blootstelling ' +
+        euro(maxVerlies) + (hoogstePunt ? ' — vlak na "' + hoogstePunt + '"' : '') + '. Dat scheelt ' + euro(daling) +
+        ' per afhaker, oftewel ' + pct + '% minder risico.' + (eigenTarief ? ' (gerekend met je eigen tarief van ' + euro(advies) + ')' : '') + ' Het verlaagt bovendien je werkkapitaalbehoefte, want je krijgt eerder geld binnen.'
+      : '');
+  }
+
+  var alle = document.querySelectorAll('[data-kost],[data-aanname],[data-mijl-kosten],[data-mijl-fee]');
   for (var j = 0; j < alle.length; j++) {
     alle[j].addEventListener('input', reken);
     alle[j].addEventListener('change', reken);
