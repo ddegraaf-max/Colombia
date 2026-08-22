@@ -4,6 +4,15 @@
 
 const VERSIONS = [
   {
+    v: '50.0.0', date: '22-08-2026', title: 'Beveiligingscontrole',
+    items: [
+      'Alle 20 beheerpagina’s, schrijfacties en portaalpagina’s gecontroleerd: zonder login geen toegang',
+      'Testdocumenten staan uit in productie',
+      'HSTS-header toegevoegd: browsers gebruiken voortaan altijd https',
+      'Nieuwsbriefformulier kreeg dezelfde antispam als de andere formulieren: verborgen veld en tijdgebonden token naast de limiet per IP'
+    ]
+  },
+  {
     v: '49.0.0', date: '22-08-2026', title: 'Berichtenbak met bulkacties',
     items: [
       'Berichten aanvinken en in één keer verwijderen of archiveren, in plaats van elk bericht apart openen',

@@ -55,6 +55,8 @@ const ENABLE_TEST_DOCS = process.env.ENABLE_TEST_DOCS === 'true' || !IS_PROD;
 if (!MONGO) { console.error('MONGODB_URI ontbreekt'); process.exit(1); }
 
 app.use((req, res, next) => {
+  // Dwingt browsers een jaar lang https af, ook als iemand http intypt.
+  if (IS_PROD) res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
@@ -135,7 +137,7 @@ function footer(lang = 'pl') {
 <div class="fcol"><h4>${f.quick}</h4><ul>${links}</ul></div>
 <div class="fcol"><h4>${f.officeNL}</h4><p>📍 Torenlaan 5A, 1402 BN<br>Bussum, ${tr.nav.poland}</p><p>☎ <a href="tel:+31646150160">+31 6 46 15 01 60</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursNL}</p>${clocksBlock('Nederland', 'Colombia')}</div>
 <div class="fcol"><h4>${f.officePL}</h4><p>📍 Białka 15, 09-550<br>Szczawin Kościelny</p><p>☎ <a href="tel:+48452823838">+48 45 282 38 38</a></p><p>✉ <a href="mailto:info@honorcareinternational.com">info@honorcareinternational.com</a></p><p>🕘 ${f.hoursPL}</p></div>
-<div class="fcol newsletter"><h4>${f.newsletter}</h4><p>${f.newsletterText}</p><form method="post" action="/newsletter"><div class="nl-row"><input type="email" name="email" placeholder="${f.newsletterPh}" aria-label="${f.newsletterPh}" required><button class="nl-btn" aria-label="OK">→</button></div></form></div>
+<div class="fcol newsletter"><h4>${f.newsletter}</h4><p>${f.newsletterText}</p><form method="post" action="/newsletter"><input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><input type="hidden" name="ft" value="${formToken()}"><div class="nl-row"><input type="email" name="email" placeholder="${f.newsletterPh}" aria-label="${f.newsletterPh}" required><button class="nl-btn" aria-label="OK">→</button></div></form></div>
 </div><div class="footer-legal">${legalText(lang)}</div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Honor Care International — handelsnaam van Creditline B.V. · KvK 59683198. ${f.rights}</span><span><a href="/privacy">${f.privacy}</a> &nbsp;|&nbsp; <a href="/voorwaarden">${f.terms}</a> &nbsp;|&nbsp; <a href="/login" class="adminlink">Beheer</a></span></div></footer>`;
 }
 
@@ -400,7 +402,10 @@ ${footer(lang)}`;
 });
 
 app.post('/newsletter', async (req, res) => {
-  if (tooMany(req, 'newsletter', 3)) { console.log('[antyspam] odrzucono zapis do newslettera'); return res.redirect('/?sub=ok#main'); }
+  // Zelfde drempels als de andere formulieren: verborgen veld, tijdgebonden token en limiet per IP.
+  if (String(req.body.website || '').trim()) return res.redirect('/?sub=ok#main');
+  if (!checkFormToken(req.body.ft)) { console.log('[antispam] nieuwsbriefinschrijving geweigerd (token)'); return res.redirect('/?sub=ok#main'); }
+  if (tooMany(req, 'newsletter', 3)) { console.log('[antispam] nieuwsbriefinschrijving geweigerd (limiet)'); return res.redirect('/?sub=ok#main'); }
   const email = String(req.body.email || '').toLowerCase().trim();
   if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     try { await Newsletter.updateOne({ email }, { $setOnInsert: { email, lang: req.lang, createdAt: new Date() } }, { upsert: true }); } catch (e) {}
