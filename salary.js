@@ -7,6 +7,7 @@
 // gegeven naar de server en er komt geen externe dienst aan te pas.
 
 const { renderVergelijk } = require('./spain');
+const { renderVergelijkCO } = require('./colombia');
 
 const DATA = {
   // FWG-tabel CAO VVT per 1 juli 2026 (36 uur), inclusief de structurele verhoging
@@ -405,6 +406,8 @@ function renderSalary(lang, h) {
 <div class="sal-intro"><p>${esc(t.intro)}</p></div>
 
 ${renderVergelijk(lang, h, DATA)}
+
+${renderVergelijkCO(lang, h, DATA)}
 
 <div class="sal-block"><div class="sal-head"><span class="eyebrow">${esc(t.cao.eyebrow)}</span><h2>${esc(t.cao.h2)}</h2><p>${esc(t.cao.sub)}</p></div>
 <div class="grid">${caoPoints}</div></div>

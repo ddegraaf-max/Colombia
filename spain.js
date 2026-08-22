@@ -266,4 +266,4 @@ function renderVergelijk(lang, h, D) {
 </div>`;
 }
 
-module.exports = { ES, V, renderVergelijk };
+module.exports = { ES, V, jaarNL, renderVergelijk };

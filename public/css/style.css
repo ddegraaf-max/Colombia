@@ -922,3 +922,14 @@ tr.msg-spam td{border-top-color:#f6dedb}
   .langsel{position:static}
   .langmenu{left:auto;right:12px;top:calc(100% - 2px);max-width:calc(100vw - 24px)}
 }
+
+/* Colombia-blok: zelfde opmaak als Spanje, met een status en een blok over de doorlooptijd */
+.sal-verg-co{margin-top:8px}
+.sal-status{display:inline-block;margin-left:10px;padding:4px 11px;border-radius:20px;background:#fdf1d8;color:#8a6414;font-size:11px;font-weight:700;letter-spacing:.6px;vertical-align:middle}
+.sal-duur{margin-top:34px;background:#f2f6fa;border:1px solid #d9e3ee;border-radius:16px;padding:30px 24px}
+.sal-duur h3{text-align:center;font-size:18px;margin:0 0 4px;color:var(--navy)}
+.sal-duur .panel::before{background:linear-gradient(90deg,#3178c6,#6ea8e0)}
+@media(max-width:900px){.sal-duur{padding:24px 16px}.sal-status{display:block;margin:8px auto 0;width:fit-content}}
+/* Lange samengestelde woorden (Vakbekwaamheidsverklaring) passen niet in een smalle kop. */
+h1,h2,h3,h4{overflow-wrap:break-word}
+@media(max-width:640px){.panel h3,.sal-kolom h4,.sal-duur h3{overflow-wrap:anywhere;hyphens:auto}}

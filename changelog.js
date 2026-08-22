@@ -4,6 +4,21 @@
 
 const VERSIONS = [
   {
+    v: '61.0.0', date: '22-08-2026', title: 'Colombia naast Nederland, met een eerlijke doorlooptijd',
+    items: [
+      'Tweede vergelijkingsblok op de salarispagina: wat een auxiliar de enfermería en een enfermero profesional nu in Colombia verdienen, naast het Nederlandse bedrag',
+      'Colombiaanse bedragen in pesos omgerekend tegen 3.566 peso per euro, gerekend met dertien betalingen per jaar inclusief de prima de servicios',
+      'Wettelijk minimumloon 2026 van 1.750.905 peso plus 249.095 peso vervoerstoeslag als ijkpunt genoemd',
+      'Koopkrachttabel corrigeert voor het 55,3% goedkopere leven in Colombia; ook daarna blijft het verschil 39 tot 127 procent',
+      'Eigen blok over wat de route buiten de EU extra vraagt: visum en gecombineerde vergunning met arbeidsmarkttoets, vakbekwaamheidsverklaring, taalcertificaten en de BI-toets',
+      'Doorlooptijd eerlijk benoemd: 18 tot 30 maanden of langer, en de wachtlijst voor de BI-toets zat in mei 2026 vol',
+      'Status ROUTE IN OPBOUW bij het blok, zodat niemand denkt dat dit traject vandaag al loopt',
+      'Ethische verantwoording erbij: Colombia staat niet op de WHO-lijst van kwetsbare landen; in de Amerika\u2019s staat daar alleen Haïti op',
+      'Verpleegkundigen per 1.000 inwoners: 1,3 in Colombia tegen 9 in de OESO en 11,5 in Nederland',
+      'Zeven bronnen bij dit blok, in vier talen'
+    ]
+  },
+  {
     v: '60.0.0', date: '22-08-2026', title: 'Mobiel nagelopen: geen zijwaarts schuiven meer en grotere tikdoelen',
     items: [
       'De hele site gemeten in een echte mobiele browser op 375, 360 en 320 pixels breed, in alle vier de talen',
