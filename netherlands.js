@@ -60,7 +60,8 @@ const T = {
       ],
       solutionTitle: 'Hoe wij het oplossen',
       solution: [
-        'Wij regelen je woning vóór je komt — je stapt niet op het vliegtuig zonder adres.',
+        'Wij regelen je woning samen met je werkgever, vóór je komt — je stapt niet op het vliegtuig zonder adres.',
+        'Je werkt vanaf het begin in een ondersteunende functie, dus je hebt vanaf de eerste maand salaris om de huur van te betalen.',
         'In het begin is dat vaak gedeelde huisvesting met collega’s. Dat drukt de kosten en je staat er niet alleen voor.',
         'De huisvesting voldoet aan de landelijke norm: minimaal ' + DATA.snfM2 + ' woonoppervlak per persoon, met eisen aan privacy, sanitair, hygiëne en brandveiligheid.',
         'Je huur wordt vooraf duidelijk afgesproken — geen verrassingen achteraf.',
@@ -106,7 +107,8 @@ const T = {
       ],
       solutionTitle: 'How we solve it',
       solution: [
-        'We arrange your home before you travel — you never board the plane without an address.',
+        'We arrange your home together with your employer, before you travel — you never board the plane without an address.',
+        'You work in a supporting role from the start, so you have a salary to pay the rent from in your very first month.',
         'At first this is often shared housing with colleagues. It keeps costs down and you are not on your own.',
         'The housing meets the national standard: at least ' + DATA.snfM2 + ' of living space per person, with requirements for privacy, sanitation, hygiene and fire safety.',
         'Your rent is agreed in advance — no surprises afterwards.',
@@ -152,7 +154,8 @@ const T = {
       ],
       solutionTitle: 'Cómo lo resolvemos',
       solution: [
-        'Organizamos tu vivienda antes de que viajes: nunca subes al avión sin dirección.',
+        'Organizamos tu vivienda junto con tu empleador, antes de que viajes: nunca subes al avión sin dirección.',
+        'Trabajas en un puesto de apoyo desde el principio, así que ya el primer mes tienes un salario con el que pagar el alquiler.',
         'Al principio suele ser vivienda compartida con compañeros. Abarata los costes y no estás solo.',
         'El alojamiento cumple la norma nacional: mínimo ' + DATA.snfM2 + ' de superficie habitable por persona, con exigencias de privacidad, sanitarios, higiene y seguridad contra incendios.',
         'El alquiler se acuerda por adelantado: sin sorpresas después.',
@@ -198,7 +201,8 @@ const T = {
       ],
       solutionTitle: 'Jak to rozwiązujemy',
       solution: [
-        'Mieszkanie organizujemy przed Twoim wyjazdem — nie wsiadasz do samolotu bez adresu.',
+        'Mieszkanie organizujemy razem z Twoim pracodawcą, jeszcze przed wyjazdem — nie wsiadasz do samolotu bez adresu.',
+        'Od początku pracujesz na stanowisku wspierającym, więc już od pierwszego miesiąca masz pensję, z której płacisz czynsz.',
         'Na początku to zwykle mieszkanie dzielone z kolegami z pracy. Obniża koszty i nie jesteś sam.',
         'Zakwaterowanie spełnia normę krajową: minimum ' + DATA.snfM2 + ' powierzchni mieszkalnej na osobę, z wymogami prywatności, sanitariatów, higieny i ochrony przeciwpożarowej.',
         'Czynsz ustalamy z góry — żadnych niespodzianek później.',

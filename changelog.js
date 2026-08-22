@@ -4,6 +4,20 @@
 
 const VERSIONS = [
   {
+    v: '57.0.0', date: '22-08-2026', title: 'Huisvesting eerlijk verwoord, werken tijdens het traject overal zichtbaar',
+    items: [
+      'Huisvesting stond op de site als iets wat wij alleen regelen; dat is nu overal: wij coordineren en toetsen, de werkgever of het partnerbureau levert de woning',
+      'Aangepast in vier talen op de homepage, de kandidatenpagina, de huisvestingspagina, de EU-route, de instellingenpagina, de Nederland-pagina, de vragenlijsten en de voorwaarden',
+      'Twee nieuwe vragen bij huisvesting: wie regelt mijn woning en betaal ik de huur zelf',
+      'Werken met salaris tijdens het traject staat nu ook op de homepage, als eigen blok op de kandidatenpagina en als aparte stap in de EU-route',
+      'Traject uitgebreid naar negen fasen: doorgroei naar de verpleegkundige functie is nu een eigen fase in het kandidaatportaal en in de kaartenbank',
+      'Instellingen zien nu expliciet dat huisvesting of hulp daarbij van hen wordt gevraagd',
+      'Academie: cursus A1-A2 staat als eigen instap van de kandidaat, in lijn met de kostenregel uit versie 56',
+      'Vlakken op de site kregen echte opmaak: witte kaarten met gouden accent, schaduw en hover in plaats van kale tekstblokken',
+      'Algemene voorwaarden naar documentversie 1.4'
+    ]
+  },
+  {
     v: '56.0.0', date: '22-08-2026', title: 'Kosten kloppend gemaakt: basis tot A2 doet de kandidaat zelf',
     items: [
       'De site beloofde op acht plekken in vier talen dat het traject volledig kosteloos was; dat klopte niet meer',

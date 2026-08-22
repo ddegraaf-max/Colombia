@@ -10,7 +10,7 @@ const ENTITY = String(process.env.COMPANY_ENTITY || 'Creditline B.V.').trim();
 const UPDATED = '21-08-2026';
 // Documentversie: hoog dit op bij elke inhoudelijke wijziging van de tekst,
 // los van het versienummer van de applicatie.
-const DOC_VERSION = { privacy: '1.2', terms: '1.3' };
+const DOC_VERSION = { privacy: '1.2', terms: '1.4' };
 
 const L = {
   nl: {
@@ -103,9 +103,9 @@ const L = {
           'Ook je taalniveau is bepalend: zonder aantoonbare beheersing van het Nederlands is BIG-registratie niet mogelijk.'
         ]],
         ['Huisvesting', [
-          'Wij regelen huisvesting voordat je naar Nederland komt. In de eerste periode is dat vaak gedeelde huisvesting met collega’s.',
+          'Huisvesting regelen wij samen met je werkgever: de werkgever of het gelicentieerde partnerbureau levert de woning, wij coördineren en controleren die. Je adres is bekend voordat je naar Nederland komt. In de eerste periode is dat vaak gedeelde huisvesting met collega’s.',
           'De huisvesting voldoet aan de landelijke norm van minimaal 12 m² woonoppervlak per persoon, met eisen aan privacy, sanitair, hygiëne en brandveiligheid.',
-          'De huurprijs spreken wij vooraf met je af. Je gaat een eigen huurovereenkomst aan met de verhuurder of huisvester.'
+          'De huurprijs spreken wij vooraf met je af en je betaalt die uit je eigen salaris. Je gaat een eigen huurovereenkomst aan met de verhuurder of huisvester; Honor Care International is geen partij bij die overeenkomst.'
         ]],
         ['Aansprakelijkheid', [
           'Wij doen ons best de informatie op deze website juist en actueel te houden. Cijfers over de arbeidsmarkt, de woningmarkt en wet- en regelgeving zijn afkomstig uit openbare bronnen en kunnen verouderen; aan die informatie kun je geen rechten ontlenen.',
@@ -214,9 +214,9 @@ const L = {
           'Your language level is decisive too: without demonstrable command of Dutch, BIG registration is not possible.'
         ]],
         ['Housing', [
-          'We arrange housing before you travel to the Netherlands. In the first period this is often shared housing with colleagues.',
+          'We arrange housing together with your employer: the employer or the licensed partner agency provides the home, and we coordinate and check it. Your address is known before you travel to the Netherlands. In the first period this is often shared housing with colleagues.',
           'The housing meets the national standard of at least 12 m² of living space per person, with requirements for privacy, sanitation, hygiene and fire safety.',
-          'We agree the rent with you in advance. You enter into your own rental agreement with the landlord or housing provider.'
+          'We agree the rent with you in advance and you pay it from your own salary. You enter into your own rental agreement with the landlord or housing provider; Honor Care International is not a party to that agreement.'
         ]],
         ['Liability', [
           'We do our best to keep the information on this website correct and current. Figures on the labour market, the housing market and legislation come from public sources and may become outdated; no rights can be derived from that information.',
@@ -325,9 +325,9 @@ const L = {
           'Tu nivel de idioma también es determinante: sin un dominio acreditado del neerlandés no es posible el registro BIG.'
         ]],
         ['Alojamiento', [
-          'Organizamos el alojamiento antes de que viajes a los Países Bajos. En la primera etapa suele ser vivienda compartida con compañeros.',
+          'El alojamiento lo organizamos junto con tu empleador: el empleador o la agencia asociada con licencia aporta la vivienda y nosotros la coordinamos y verificamos. Conoces tu dirección antes de viajar a los Países Bajos. En la primera etapa suele ser vivienda compartida con compañeros.',
           'El alojamiento cumple la norma nacional de un mínimo de 12 m² de superficie habitable por persona, con exigencias de privacidad, sanitarios, higiene y seguridad contra incendios.',
-          'El alquiler se acuerda contigo de antemano. Firmas tu propio contrato de arrendamiento con el arrendador o la empresa de alojamiento.'
+          'El alquiler se acuerda contigo de antemano y lo pagas con tu propio salario. Firmas tu propio contrato de arrendamiento con el arrendador o la empresa de alojamiento; Honor Care International no es parte de ese contrato.'
         ]],
         ['Responsabilidad', [
           'Procuramos mantener la información de esta web correcta y actualizada. Las cifras sobre el mercado laboral, el mercado de vivienda y la normativa proceden de fuentes públicas y pueden quedar desfasadas; de esa información no se derivan derechos.',
@@ -436,9 +436,9 @@ const L = {
           'Decydujący jest też poziom językowy: bez udokumentowanej znajomości niderlandzkiego rejestracja BIG nie jest możliwa.'
         ]],
         ['Zakwaterowanie', [
-          'Zakwaterowanie organizujemy przed Twoim przyjazdem do Holandii. W pierwszym okresie jest to zwykle mieszkanie dzielone z kolegami.',
+          'Zakwaterowanie organizujemy razem z Twoim pracodawcą: mieszkanie zapewnia pracodawca lub licencjonowane biuro partnerskie, a my je koordynujemy i sprawdzamy. Adres znasz przed przyjazdem do Holandii. W pierwszym okresie jest to zwykle mieszkanie dzielone z kolegami.',
           'Zakwaterowanie spełnia normę krajową: minimum 12 m² powierzchni mieszkalnej na osobę, z wymogami prywatności, sanitariatów, higieny i ochrony przeciwpożarowej.',
-          'Czynsz ustalamy z Tobą z góry. Zawierasz własną umowę najmu z wynajmującym lub firmą kwaterunkową.'
+          'Czynsz ustalamy z Tobą z góry i płacisz go z własnej pensji. Zawierasz własną umowę najmu z wynajmującym lub firmą kwaterunkową; Honor Care International nie jest stroną tej umowy.'
         ]],
         ['Odpowiedzialność', [
           'Staramy się, aby informacje na tej stronie były poprawne i aktualne. Dane o rynku pracy, rynku mieszkaniowym i przepisach pochodzą ze źródeł publicznych i mogą się zdezaktualizować; nie stanowią podstawy roszczeń.',

@@ -760,3 +760,33 @@ tr.msg-spam td{border-top-color:#f6dedb}
 .inst-rollen{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .eur-role.inst{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2)}
 @media(max-width:900px){.inst-fasen,.inst-rollen{grid-template-columns:1fr}}
+
+/* ===== Inhoudspagina's: vlakken in dezelfde stijl als de rest ===== */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1120px;margin:0 auto}
+.panel{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 24px 24px;box-shadow:0 8px 26px rgba(0,43,85,.05);transition:transform .15s,box-shadow .2s,border-color .2s}
+.panel::before{content:"";position:absolute;left:24px;top:0;width:38px;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:0 0 3px 3px}
+.panel:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,43,85,.1);border-color:#d9cfb8}
+.panel h3{margin:6px 0 10px;font-size:19px;line-height:1.25}
+.panel p{color:var(--muted);font-size:14.5px;line-height:1.7;margin:0}
+@media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.grid{grid-template-columns:1fr;margin:0 12px}}
+
+/* ===== Ontbrekende opmaak aangevuld ===== */
+.fcol h4{color:var(--gold2);font-size:14px;letter-spacing:.5px;margin:0 0 14px;font-family:'Poppins',sans-serif;font-weight:600;text-transform:uppercase}
+.fcol p{margin:0 0 9px;line-height:1.65}
+.fcol ul{list-style:none;padding:0;margin:0}
+.fcol li{margin-bottom:7px}
+.fcol.newsletter p{max-width:280px}
+.pbody{min-height:200px}
+.tname{font-weight:600;color:var(--navy)}
+.tname a{color:var(--navy)}
+.tname a:hover{color:var(--gold)}
+.vac-table td{padding:11px 14px}
+.tf-werkelijk{border-bottom:2px solid var(--line);margin-bottom:6px;padding-bottom:16px}
+.tf-uitkomst .tf-cards{margin-top:4px}
+.nl-housing{scroll-margin-top:100px}
+
+/* ===== Rustiger ritme tussen de secties ===== */
+.page.has-hero{padding-top:46px}
+.page.has-hero>.contact-lead{margin-bottom:40px}
+.eur-block+.eur-block{margin-top:4px}

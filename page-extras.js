@@ -41,14 +41,14 @@ const EXTRAS = {
         ['Wat kost de opleiding mij?', 'De basis tot A2 doe je zelf, bij een taalschool naar keuze en op eigen kosten. Daarna is de opleiding van ons: het traject van A2 naar B1 of B2, inclusief medische terminologie en examentraining, is voor jou kosteloos.']
       ],
       housing: [
-        ['Krijg ik een eigen woning?', 'In het begin meestal niet. Je start vaak in gedeelde huisvesting met collega’s — dat drukt de kosten en je staat er niet alleen voor. Na je inwerkperiode helpen we je op weg naar eigen woonruimte.'],
+        ['Wie regelt mijn woning?', 'Dat doen wij samen met je werkgever. De werkgever of ons gelicentieerde partnerbureau levert de woning, wij coördineren, toetsen die aan de landelijke norm en spreken de huur vooraf met je af. Jij hoeft dus niet zelf de Nederlandse woningmarkt op — en dat is maar goed ook, want die is voor nieuwkomers vrijwel gesloten.'], ['Betaal ik de huur zelf?', 'Ja, uit je eigen salaris. Omdat je vanaf het begin in een ondersteunende functie werkt, heb je vanaf de eerste maand inkomen. De huur is daarmee op te brengen; we spreken het bedrag vooraf af zodat je precies weet waar je aan toe bent.'], ['Krijg ik een eigen woning?', 'In het begin meestal niet. Je start vaak in gedeelde huisvesting met collega’s — dat drukt de kosten en je staat er niet alleen voor. Na je inwerkperiode helpen we je op weg naar eigen woonruimte.'],
         ['Wat betaal ik aan huur?', 'Dat spreken we vooraf met je af, vóórdat je naar Nederland komt. Geen verrassingen achteraf.'],
         ['Kan ik zelf iets huren op de vrije markt?', 'Mag altijd, maar wees realistisch: een vrijesectorwoning kost gemiddeld ruim € 1.800 kale huur per maand en op één advertentie reageren tientallen mensen. Voor een startsalaris in de zorg is dat alleen niet op te brengen.'],
         ['Kan ik me inschrijven voor sociale huur?', 'Ja, en doe dat meteen bij aankomst. Maar reken er niet op voor de korte termijn: in veel gemeenten is de wachttijd zeven tot elf jaar.'],
         ['Voldoet de huisvesting aan normen?', 'Ja. Minimaal 12 m² woonoppervlak per persoon, met eisen aan privacy, sanitair, hygiëne en brandveiligheid.']
       ]
     },
-    housingNote: 'Wonen is in Nederland een serieus punt. Wij regelen je huisvesting, maar we vinden het belangrijk dat je vooraf weet hoe de woningmarkt eruitziet.',
+    housingNote: 'Wonen is in Nederland een serieus punt. Wij regelen je huisvesting samen met je werkgever, maar we vinden het belangrijk dat je vooraf weet hoe de woningmarkt eruitziet.',
     housingLink: 'Bekijk de cijfers over de Nederlandse woningmarkt'
   },
   en: {
@@ -89,14 +89,14 @@ const EXTRAS = {
         ['What does the training cost me?', 'You do the basics up to A2 yourself, at a language school of your choice and at your own expense. After that the training is on us: the route from A2 to B1 or B2, including medical terminology and exam preparation, is free of charge for you.']
       ],
       housing: [
-        ['Will I get my own home?', 'Usually not at first. You often start in shared housing with colleagues — it keeps costs down and you are not on your own. After your settling-in period we help you towards your own place.'],
+        ['Who arranges my home?', 'We do, together with your employer. The employer or our licensed partner agency provides the home; we coordinate, check it against the national standard and agree the rent with you in advance. So you never have to face the Dutch rental market yourself — which is just as well, because it is all but closed to newcomers.'], ['Do I pay the rent myself?', 'Yes, from your own salary. Because you work in a supporting role from the start, you have an income from the very first month. That makes the rent affordable; we agree the amount in advance so you know exactly where you stand.'], ['Will I get my own home?', 'Usually not at first. You often start in shared housing with colleagues — it keeps costs down and you are not on your own. After your settling-in period we help you towards your own place.'],
         ['What will I pay in rent?', 'We agree that with you in advance, before you travel to the Netherlands. No surprises afterwards.'],
         ['Can I rent something myself on the open market?', 'You always may, but be realistic: a private-sector home costs on average over € 1,800 base rent per month and dozens of people respond to a single listing. On a starting salary in care that is not affordable on your own.'],
         ['Can I register for social housing?', 'Yes, and do so as soon as you arrive. But do not count on it in the short term: in many municipalities the waiting time is seven to eleven years.'],
         ['Does the housing meet standards?', 'Yes. At least 12 m² of living space per person, with requirements for privacy, sanitation, hygiene and fire safety.']
       ]
     },
-    housingNote: 'Housing is a serious issue in the Netherlands. We arrange yours, but we think it matters that you know beforehand what the housing market looks like.',
+    housingNote: 'Housing is a serious issue in the Netherlands. We arrange yours together with your employer, but we think it matters that you know beforehand what the housing market looks like.',
     housingLink: 'See the figures on the Dutch housing market'
   },
   es: {
@@ -137,14 +137,14 @@ const EXTRAS = {
         ['¿Cuánto me cuesta la formación?', 'La base hasta A2 la haces por tu cuenta, en la escuela que elijas y a tu cargo. A partir de ahí la formación corre de nuestra cuenta: el trayecto de A2 a B1 o B2, con terminología médica y preparación del examen, es gratuito para ti.']
       ],
       housing: [
-        ['¿Tendré vivienda propia?', 'Al principio normalmente no. Sueles empezar en vivienda compartida con compañeros: abarata costes y no estás solo. Tras el periodo de adaptación te ayudamos a buscar tu propio hogar.'],
+        ['¿Quién organiza mi vivienda?', 'Lo hacemos nosotros junto con tu empleador. El empleador o nuestra agencia asociada con licencia aporta la vivienda; nosotros coordinamos, la verificamos frente a la norma nacional y acordamos el alquiler contigo por adelantado. Así no tienes que enfrentarte al mercado neerlandés del alquiler, que para los recién llegados está prácticamente cerrado.'], ['¿Pago yo el alquiler?', 'Sí, con tu propio salario. Como trabajas en un puesto de apoyo desde el principio, tienes ingresos desde el primer mes. Eso hace asumible el alquiler; acordamos el importe por adelantado para que sepas exactamente a qué atenerte.'], ['¿Tendré vivienda propia?', 'Al principio normalmente no. Sueles empezar en vivienda compartida con compañeros: abarata costes y no estás solo. Tras el periodo de adaptación te ayudamos a buscar tu propio hogar.'],
         ['¿Cuánto pagaré de alquiler?', 'Lo acordamos contigo por adelantado, antes de que viajes a los Países Bajos. Sin sorpresas después.'],
         ['¿Puedo alquilar algo por mi cuenta?', 'Siempre puedes, pero sé realista: una vivienda del mercado libre cuesta de media más de 1.800 € de alquiler base al mes y decenas de personas responden a cada anuncio. Con un salario inicial en sanidad no sale por tu cuenta.'],
         ['¿Puedo inscribirme en vivienda social?', 'Sí, y hazlo nada más llegar. Pero no cuentes con ella a corto plazo: en muchos municipios la espera es de siete a once años.'],
         ['¿La vivienda cumple normas?', 'Sí. Mínimo 12 m² de superficie habitable por persona, con exigencias de privacidad, sanitarios, higiene y seguridad contra incendios.']
       ]
     },
-    housingNote: 'La vivienda es un asunto serio en los Países Bajos. Nosotros organizamos la tuya, pero creemos importante que sepas de antemano cómo está el mercado.',
+    housingNote: 'La vivienda es un asunto serio en los Países Bajos. La organizamos junto con tu empleador, pero creemos importante que sepas de antemano cómo está el mercado.',
     housingLink: 'Ver las cifras del mercado de vivienda neerlandés'
   },
   pl: {
@@ -185,14 +185,14 @@ const EXTRAS = {
         ['Ile kosztuje mnie szkolenie?', 'Podstawy do poziomu A2 robisz sam, w wybranej szkole i na własny koszt. Dalej szkolenie jest po naszej stronie: droga z A2 do B1 lub B2, z terminologią medyczną i przygotowaniem do egzaminu, jest dla Ciebie bezpłatna.']
       ],
       housing: [
-        ['Czy dostanę własne mieszkanie?', 'Na początku zwykle nie. Zaczynasz zwykle w mieszkaniu dzielonym z kolegami — to obniża koszty i nie jesteś sam. Po okresie wdrożenia pomagamy znaleźć własne lokum.'],
+        ['Kto organizuje moje mieszkanie?', 'Robimy to razem z Twoim pracodawcą. Mieszkanie zapewnia pracodawca lub nasze licencjonowane biuro partnerskie, a my koordynujemy, sprawdzamy je pod kątem normy krajowej i z góry ustalamy z Tobą czynsz. Nie musisz więc sam mierzyć się z holenderskim rynkiem najmu — i dobrze, bo dla przyjezdnych jest praktycznie zamknięty.'], ['Czy czynsz płacę sam?', 'Tak, z własnej pensji. Ponieważ od początku pracujesz na stanowisku wspierającym, masz dochód już od pierwszego miesiąca. Dzięki temu czynsz jest do udźwignięcia; kwotę ustalamy z góry, żebyś dokładnie wiedział, na czym stoisz.'], ['Czy dostanę własne mieszkanie?', 'Na początku zwykle nie. Zaczynasz zwykle w mieszkaniu dzielonym z kolegami — to obniża koszty i nie jesteś sam. Po okresie wdrożenia pomagamy znaleźć własne lokum.'],
         ['Ile zapłacę czynszu?', 'Ustalamy to z Tobą z góry, zanim przyjedziesz do Holandii. Bez niespodzianek później.'],
         ['Czy mogę wynająć coś sam na wolnym rynku?', 'Zawsze możesz, ale bądź realistą: mieszkanie na wolnym rynku kosztuje średnio ponad 1800 € czynszu miesięcznie, a na jedno ogłoszenie odpowiadają dziesiątki osób. Przy początkowej pensji w opiece samodzielnie to się nie spina.'],
         ['Czy mogę zapisać się na mieszkanie socjalne?', 'Tak, i zrób to zaraz po przyjeździe. Ale nie licz na nie krótkoterminowo: w wielu gminach czeka się od siedmiu do jedenastu lat.'],
         ['Czy zakwaterowanie spełnia normy?', 'Tak. Minimum 12 m² powierzchni mieszkalnej na osobę, z wymogami prywatności, sanitariatów, higieny i ochrony przeciwpożarowej.']
       ]
     },
-    housingNote: 'Mieszkanie to w Holandii poważny temat. Organizujemy je dla Ciebie, ale uważamy, że powinieneś wcześniej wiedzieć, jak wygląda rynek.',
+    housingNote: 'Mieszkanie to w Holandii poważny temat. Organizujemy je razem z Twoim pracodawcą, ale uważamy, że powinieneś wcześniej wiedzieć, jak wygląda rynek.',
     housingLink: 'Zobacz dane o holenderskim rynku mieszkaniowym'
   }
 };

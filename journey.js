@@ -54,10 +54,17 @@ const PHASES = [
   },
   {
     key: 'start',
-    nl: { t: 'Verhuizing en start', w: 'Je woning is geregeld voordat je komt. Je begint in een ondersteunende functie en gaat over naar de verpleegkundige functie zodra je BIG-registratie rond is. Wij begeleiden je bij de verhuizing, de inschrijving en je eerste periode.', y: 'Verhuizen en beginnen' },
-    en: { t: 'Relocation and start', w: 'Your home is arranged before you travel. You begin in a supporting role and move into the nursing role once your BIG registration is complete. We support you with the move, the registration and your first period.', y: 'Move and start work' },
-    es: { t: 'Mudanza e incorporación', w: 'Tu vivienda está organizada antes de viajar. Empiezas en un puesto de apoyo y pasas al puesto de enfermero cuando tengas el registro BIG. Te acompañamos en la mudanza, el empadronamiento y tu primera etapa.', y: 'Mudarte y empezar' },
-    pl: { t: 'Przeprowadzka i start', w: 'Mieszkanie jest gotowe przed Twoim przyjazdem. Zaczynasz na stanowisku wspierającym i przechodzisz na stanowisko pielęgniarki po uzyskaniu rejestracji BIG. Wspieramy Cię przy przeprowadzce, meldunku i pierwszym okresie.', y: 'Przeprowadź się i zacznij pracę' }
+    nl: { t: 'Verhuizing en start', w: 'Je woning is samen met je werkgever geregeld voordat je komt. Je begint in een ondersteunende functie en gaat over naar de verpleegkundige functie zodra je BIG-registratie rond is. Wij begeleiden je bij de verhuizing, de inschrijving en je eerste periode.', y: 'Verhuizen en beginnen' },
+    en: { t: 'Relocation and start', w: 'Your home is arranged together with your employer before you travel. You begin in a supporting role and move into the nursing role once your BIG registration is complete. We support you with the move, the registration and your first period.', y: 'Move and start work' },
+    es: { t: 'Mudanza e incorporación', w: 'Tu vivienda está organizada junto con tu empleador antes de viajar. Empiezas en un puesto de apoyo y pasas al puesto de enfermero cuando tengas el registro BIG. Te acompañamos en la mudanza, el empadronamiento y tu primera etapa.', y: 'Mudarte y empezar' },
+    pl: { t: 'Przeprowadzka i start', w: 'Mieszkanie jest przygotowane razem z Twoim pracodawcą przed Twoim przyjazdem. Zaczynasz na stanowisku wspierającym i przechodzisz na stanowisko pielęgniarki po uzyskaniu rejestracji BIG. Wspieramy Cię przy przeprowadzce, meldunku i pierwszym okresie.', y: 'Przeprowadź się i zacznij pracę' }
+  },
+  {
+    key: 'doorgroei',
+    nl: { t: 'Doorgroei naar de verpleegkundige functie', w: 'Je hebt het Staatsexamen NT2 gehaald en je BIG-registratie is rond. Je gaat over naar de verpleegkundige functie bij dezelfde werkgever, die je organisatie en bewoners inmiddels kent. Wij blijven bereikbaar voor de nazorg.', y: 'Overstap bespreken met je werkgever' },
+    en: { t: 'Moving up to the nursing role', w: 'You have passed the Staatsexamen NT2 and your BIG registration is complete. You move into the nursing role with the same employer, whose organisation and residents you already know. We stay available for aftercare.', y: 'Discuss the move with your employer' },
+    es: { t: 'Promoción al puesto de enfermero', w: 'Has aprobado el Staatsexamen NT2 y tienes el registro BIG. Pasas al puesto de enfermero con el mismo empleador, cuya organización y residentes ya conoces. Seguimos disponibles para el seguimiento.', y: 'Hablar del cambio con tu empleador' },
+    pl: { t: 'Awans na stanowisko pielęgniarki', w: 'Zdałeś Staatsexamen NT2 i masz rejestrację BIG. Przechodzisz na stanowisko pielęgniarki u tego samego pracodawcy, którego organizację i podopiecznych już znasz. Pozostajemy dostępni w ramach opieki powdrożeniowej.', y: 'Omów przejście z pracodawcą' }
   }
 ];
 

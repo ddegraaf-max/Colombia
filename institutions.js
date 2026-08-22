@@ -34,9 +34,9 @@ const T = {
     rollen: {
       eyebrow: 'DUIDELIJKE ROLVERDELING', h2: 'Wie doet wat',
       sub: 'Honor Care International bemiddelt niet zelf en is geen werkgever. Dat houdt de verhoudingen zuiver en het traject in lijn met de Nederlandse wetgeving.',
-      us: { h: 'Wij doen', items: ['Werving en selectie in Spanje en andere EU-landen', 'Screening en controle van diploma’s en documenten', 'Taalopleiding Nederlands van A2 tot het vereiste niveau', 'Begeleiding bij diploma-erkenning en BIG-registratie', 'Huisvesting en begeleiding na aankomst', 'Eén vast aanspreekpunt voor u en voor de kandidaat'] },
+      us: { h: 'Wij doen', items: ['Werving en selectie in Spanje en andere EU-landen', 'Screening en controle van diploma’s en documenten', 'Taalopleiding Nederlands van A2 tot het vereiste niveau', 'Begeleiding bij diploma-erkenning en BIG-registratie', 'Coördinatie en toetsing van de huisvesting, en begeleiding na aankomst', 'Eén vast aanspreekpunt voor u en voor de kandidaat'] },
       partner: { h: 'Het geregistreerde partnerbureau doet', items: ['De officiële bemiddeling en het werkgeverschap', 'Het arbeidscontract en de arbeidsvoorwaarden', 'Loonbetaling en werkgeversverplichtingen', 'Naleving van de Waadi en de Wtta'] },
-      inst: { h: 'Wij vragen van u', items: ['Een ondersteunende functie waarin de kandidaat kan starten', 'Een vaste begeleider of buddy op de afdeling', 'Ruimte in het rooster voor de taalopleiding', 'Bereidheid de kandidaat te laten doorgroeien zodra de BIG-registratie rond is'] }
+      inst: { h: 'Wij vragen van u', items: ['Een ondersteunende functie waarin de kandidaat kan starten', 'Een vaste begeleider of buddy op de afdeling', 'Ruimte in het rooster voor de taalopleiding', 'Huisvesting, of hulp bij het vinden daarvan — wij coördineren en toetsen die', 'Bereidheid de kandidaat te laten doorgroeien zodra de BIG-registratie rond is'] }
     },
     tijd: {
       eyebrow: 'DOORLOOPTIJD', h2: 'Wat kunt u wanneer verwachten?',
@@ -76,9 +76,9 @@ const T = {
     rollen: {
       eyebrow: 'CLEAR DIVISION OF ROLES', h2: 'Who does what',
       sub: 'Honor Care International does not place workers itself and is not an employer. That keeps the relationships clean and the process compliant with Dutch law.',
-      us: { h: 'We do', items: ['Recruitment and selection in Spain and other EU countries', 'Screening and verification of diplomas and documents', 'Dutch language training from A2 to the required level', 'Support with diploma recognition and BIG registration', 'Housing and guidance after arrival', 'One point of contact for you and for the candidate'] },
+      us: { h: 'We do', items: ['Recruitment and selection in Spain and other EU countries', 'Screening and verification of diplomas and documents', 'Dutch language training from A2 to the required level', 'Support with diploma recognition and BIG registration', 'Coordinating and checking the housing, and guidance after arrival', 'One point of contact for you and for the candidate'] },
       partner: { h: 'The registered partner agency does', items: ['The official placement and the employer role', 'The employment contract and terms of employment', 'Salary payment and employer obligations', 'Compliance with the Waadi and the Wtta'] },
-      inst: { h: 'We ask of you', items: ['A supporting role in which the candidate can start', 'A dedicated mentor or buddy on the ward', 'Room in the rota for language training', 'Willingness to let the candidate move up once BIG registration is complete'] }
+      inst: { h: 'We ask of you', items: ['A supporting role in which the candidate can start', 'A dedicated mentor or buddy on the ward', 'Room in the rota for language training', 'Housing, or help in finding it — we coordinate and check it', 'Willingness to let the candidate move up once BIG registration is complete'] }
     },
     tijd: {
       eyebrow: 'TIMELINE', h2: 'What can you expect, and when?',
@@ -118,9 +118,9 @@ const T = {
     rollen: {
       eyebrow: 'REPARTO CLARO DE FUNCIONES', h2: 'Quién hace qué',
       sub: 'Honor Care International no realiza la intermediación ni es empleador. Eso mantiene limpias las relaciones y el proceso conforme a la ley neerlandesa.',
-      us: { h: 'Nosotros hacemos', items: ['Captación y selección en España y otros países de la UE', 'Evaluación y verificación de títulos y documentos', 'Formación en neerlandés desde A2 hasta el nivel exigido', 'Apoyo con la homologación y el registro BIG', 'Alojamiento y acompañamiento tras la llegada', 'Un único interlocutor para usted y para el candidato'] },
+      us: { h: 'Nosotros hacemos', items: ['Captación y selección en España y otros países de la UE', 'Evaluación y verificación de títulos y documentos', 'Formación en neerlandés desde A2 hasta el nivel exigido', 'Apoyo con la homologación y el registro BIG', 'Coordinación y verificación del alojamiento, y acompañamiento tras la llegada', 'Un único interlocutor para usted y para el candidato'] },
       partner: { h: 'La agencia asociada registrada hace', items: ['La intermediación oficial y la condición de empleador', 'El contrato y las condiciones laborales', 'El pago del salario y las obligaciones del empleador', 'El cumplimiento de la Waadi y la Wtta'] },
-      inst: { h: 'Le pedimos', items: ['Un puesto de apoyo donde el candidato pueda empezar', 'Un mentor fijo en la planta', 'Espacio en el turno para la formación lingüística', 'Disposición a promocionar al candidato cuando tenga el registro BIG'] }
+      inst: { h: 'Le pedimos', items: ['Un puesto de apoyo donde el candidato pueda empezar', 'Un mentor fijo en la planta', 'Espacio en el turno para la formación lingüística', 'Alojamiento, o ayuda para encontrarlo: nosotros lo coordinamos y verificamos', 'Disposición a promocionar al candidato cuando tenga el registro BIG'] }
     },
     tijd: {
       eyebrow: 'PLAZOS', h2: '¿Qué puede esperar y cuándo?',
@@ -160,9 +160,9 @@ const T = {
     rollen: {
       eyebrow: 'JASNY PODZIAŁ RÓL', h2: 'Kto co robi',
       sub: 'Honor Care International nie prowadzi pośrednictwa i nie jest pracodawcą. Dzięki temu relacje pozostają czyste, a proces zgodny z holenderskim prawem.',
-      us: { h: 'My robimy', items: ['Rekrutację i selekcję w Hiszpanii i innych krajach UE', 'Weryfikację dyplomów i dokumentów', 'Naukę niderlandzkiego od A2 do wymaganego poziomu', 'Wsparcie przy uznaniu dyplomu i rejestracji BIG', 'Zakwaterowanie i opiekę po przyjeździe', 'Jeden punkt kontaktu dla Państwa i dla kandydata'] },
+      us: { h: 'My robimy', items: ['Rekrutację i selekcję w Hiszpanii i innych krajach UE', 'Weryfikację dyplomów i dokumentów', 'Naukę niderlandzkiego od A2 do wymaganego poziomu', 'Wsparcie przy uznaniu dyplomu i rejestracji BIG', 'Koordynację i weryfikację zakwaterowania oraz opiekę po przyjeździe', 'Jeden punkt kontaktu dla Państwa i dla kandydata'] },
       partner: { h: 'Zarejestrowane biuro partnerskie robi', items: ['Oficjalne pośrednictwo i rolę pracodawcy', 'Umowę o pracę i warunki zatrudnienia', 'Wypłatę wynagrodzenia i obowiązki pracodawcy', 'Przestrzeganie Waadi i Wtta'] },
-      inst: { h: 'Prosimy Państwa o', items: ['Stanowisko wspierające, na którym kandydat może zacząć', 'Stałego opiekuna na oddziale', 'Miejsce w grafiku na naukę języka', 'Gotowość do awansowania kandydata po uzyskaniu rejestracji BIG'] }
+      inst: { h: 'Prosimy Państwa o', items: ['Stanowisko wspierające, na którym kandydat może zacząć', 'Stałego opiekuna na oddziale', 'Miejsce w grafiku na naukę języka', 'Zakwaterowanie lub pomoc w jego znalezieniu — my je koordynujemy i sprawdzamy', 'Gotowość do awansowania kandydata po uzyskaniu rejestracji BIG'] }
     },
     tijd: {
       eyebrow: 'CZAS TRWANIA', h2: 'Czego i kiedy mogą Państwo oczekiwać?',

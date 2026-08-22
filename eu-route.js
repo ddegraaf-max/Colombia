@@ -8,12 +8,12 @@ const EUROUTE = {
     intro: 'Kom je uit Spanje of een ander EU-land? Dan is de weg naar de Nederlandse zorg korter dan je denkt. Geen visum, geen tewerkstellingsvergunning — binnen de EU tellen jouw diploma en werkervaring gewoon mee. Wat overblijft is de taal, je BIG-registratie en een goede voorbereiding. Daarin begeleiden wij je, van het eerste gesprek tot je eerste werkdag.',
     ask: {
       eyebrow: 'WAT WIJ VRAGEN', h2: 'Wat wij van jou vragen',
-      sub: 'Wij investeren in jouw opleiding, begeleiding en huisvesting. Daar staat een serieuze inzet van jouw kant tegenover. Dit verwachten wij:',
+      sub: 'Wij investeren in jouw opleiding en begeleiding, en regelen samen met je werkgever je huisvesting. Daar staat een serieuze inzet van jouw kant tegenover. Dit verwachten wij:',
       items: [
         ['EU-nationaliteit', 'Je hebt de nationaliteit van Spanje of een ander EU/EER-land. Daardoor heb je geen visum of tewerkstellingsvergunning nodig om in Nederland te werken.'],
         ['Een erkend zorgdiploma', 'Je bent gediplomeerd zorgprofessional — bijvoorbeeld verpleegkundige, arts of tandarts — met een diploma dat binnen de EU is afgegeven.'],
         ['Zelf beginnen met Nederlands', 'Dit is verreweg de grootste stap, en die zet je zelf als eerste. Je haalt op eigen kracht niveau A2 bij een taalschool naar keuze, op eigen kosten. Daarmee laat je zien dat je het meent — en vanaf dat punt nemen wij de opleiding over tot B1 of B2 (NT2).'],
-        ['Bereidheid om te verhuizen', 'Je bent bereid daadwerkelijk naar Nederland te verhuizen en hier te wonen en werken. De huisvesting regelen wij.'],
+        ['Bereidheid om te verhuizen', 'Je bent bereid daadwerkelijk naar Nederland te verhuizen en hier te wonen en werken. De huisvesting regelen wij samen met je werkgever.'],
         ['Volledige en eerlijke documenten', 'Diploma’s, werkervaring, identiteitsbewijs en referenties — compleet, geldig en op tijd aangeleverd.'],
         ['Actieve deelname', 'Je volgt de lessen trouw, blijft bereikbaar voor je coördinator en geeft wijzigingen in je situatie direct door.']
       ]
@@ -24,7 +24,7 @@ const EUROUTE = {
         ['Nederlandse taalopleiding', 'Van A1 tot B1/B2 (NT2), inclusief medische terminologie. Online te volgen vanuit Spanje, naast je werk.'],
         ['Begeleiding bij erkenning en BIG', 'Wij helpen je bij de erkenning van je EU-diploma en je inschrijving in het BIG-register. Voor een deel van de EU-diploma’s geldt een verkorte route; anders beoordeelt de commissie CBGV je dossier — dat duurt maximaal 13 weken na een compleet dossier. Aantoonbare kennis van het Nederlands hoort bij elke route.'],
         ['Voorbereiding op de Nederlandse zorg', 'Hoe het zorgstelsel werkt, wat een Nederlandse werkgever verwacht en hoe de omgang met patiënten en collega’s is.'],
-        ['Huisvesting', 'Een gemeubileerde woning, klaar bij aankomst en dicht bij je werk.'],
+        ['Huisvesting', 'Samen met je werkgever zorgen wij dat er een ingerichte woning klaarstaat bij aankomst, dicht bij je werk. Wij controleren of die aan de norm voldoet en spreken de huur vooraf met je af.'],
         ['Een vast aanspreekpunt', 'Eén coördinator die jouw dossier kent en je begeleidt — ook ná aankomst in Nederland.'],
         ['Kosteloos vanaf A2', 'De basis tot A2 regel je zelf. Alles wat daarna komt — het vervolgtraject naar B1 of B2, de begeleiding bij erkenning en BIG, je huisvesting en de nazorg — kost jou niets. Aan ons betaal je nooit iets.'],
         ['Werken en leren tegelijk', 'Je hoeft niet maandenlang onbetaald thuis te studeren. Zodra je Nederlands goed genoeg is voor de dagelijkse praktijk, start je in een ondersteunende functie in de zorg — met salaris. Je leert de taal verder op de werkvloer en groeit door zodra je BIG-registratie rond is.']
@@ -39,13 +39,15 @@ const EUROUTE = {
         ['Erkenning en BIG-registratie', 'Parallel aan de taalopleiding regelen we de erkenning van je EU-diploma en je BIG-registratie.'],
         ['Kennismaking met de werkgever', 'Het geregistreerde partnerbureau brengt je in contact met een passende zorginstelling.'],
         ['Officiële plaatsing en contract', 'Het partnerbureau sluit het arbeidscontract met je. Zij zijn de erkende bemiddelaar en werkgever — niet Honor Care.'],
-        ['Verhuizing en start', 'Wij regelen huisvesting en praktische zaken en begeleiden je in de eerste periode in Nederland.']
+        ['Verhuizing en start', 'Samen met je werkgever regelen wij de huisvesting en de praktische zaken, en we begeleiden je in de eerste periode in Nederland.'],
+        ['Aan het werk, met salaris', 'Je begint in een ondersteunende functie in de zorg — als zorgassistent of helpende — en verdient vanaf de eerste maand. De taal leer je verder op de werkvloer, waar het veel sneller gaat dan online.'],
+        ['Doorgroei naar de verpleegkundige functie', 'Zodra je het Staatsexamen NT2 hebt gehaald en je BIG-registratie rond is, ga je over naar de verpleegkundige functie bij dezelfde werkgever. Je kent de organisatie dan al.']
       ]
     },
     roles: {
       eyebrow: 'DUIDELIJKE ROLVERDELING', h2: 'Wie doet wat — en waarom dat belangrijk is',
       sub: 'Honor Care International bemiddelt niet zelf en is geen werkgever of uitzendbureau. Wij werven, leiden op en begeleiden; de officiële plaatsing en het dienstverband lopen via ons geregistreerde partnerbureau. Zo blijft het traject volledig in lijn met de Nederlandse wetgeving (Waadi/Wtta).',
-      us: { h: 'Honor Care International doet', items: ['Werving en selectie in Spanje en andere EU-landen', 'Screening, documentcheck en advies', 'Taalopleiding Nederlands (NT2) en medische terminologie', 'Begeleiding bij diploma-erkenning en BIG-registratie', 'Huisvesting, integratie en nazorg', 'Eén vast aanspreekpunt gedurende het hele traject'] },
+      us: { h: 'Honor Care International doet', items: ['Werving en selectie in Spanje en andere EU-landen', 'Screening, documentcheck en advies', 'Taalopleiding Nederlands (NT2) en medische terminologie', 'Begeleiding bij diploma-erkenning en BIG-registratie', 'Coördinatie en toetsing van de huisvesting, integratie en nazorg', 'Eén vast aanspreekpunt gedurende het hele traject'] },
       partner: { h: 'Het geregistreerde partnerbureau doet', items: ['De bemiddeling en matching met de zorginstelling', 'Het arbeidscontract en het werkgeverschap', 'Loon, arbeidsvoorwaarden en werkgeversverplichtingen', 'Naleving van de Waadi/Wtta als erkende bemiddelaar'] },
       note: 'Wij vragen jou als kandidaat nooit om geld voor bemiddeling of plaatsing. Word je door iemand anders wél om betaling gevraagd — vraag dan altijd om opheldering.'
     },
@@ -57,12 +59,12 @@ const EUROUTE = {
     intro: 'Are you from Spain or another EU country? Then the road into Dutch healthcare is shorter than you might think. No visa, no work permit — within the EU your diploma and experience simply count. What remains is the language, your BIG registration and solid preparation. We guide you through all of it, from the first conversation to your first working day.',
     ask: {
       eyebrow: 'WHAT WE ASK', h2: 'What we ask of you',
-      sub: 'We invest in your training, guidance and housing. In return we expect a serious commitment from you:',
+      sub: 'We invest in your training and guidance, and arrange your housing together with your employer. In return we expect a serious commitment from you:',
       items: [
         ['EU nationality', 'You hold the nationality of Spain or another EU/EEA country, so you need no visa or work permit to work in the Netherlands.'],
         ['A recognised healthcare diploma', 'You are a qualified healthcare professional — for example a nurse, doctor or dentist — with a diploma issued within the EU.'],
         ['Starting with Dutch yourself', 'By far the biggest step, and it is the one you take first. You reach level A2 under your own steam, at a language school of your choice and at your own expense. That shows you mean it — and from there we take over the training up to B1 or B2 (NT2).'],
-        ['Willingness to relocate', 'You are genuinely prepared to move to the Netherlands and live and work here. We arrange the housing.'],
+        ['Willingness to relocate', 'You are genuinely prepared to move to the Netherlands and live and work here. We arrange the housing together with your employer.'],
         ['Complete and honest documents', 'Diplomas, work experience, identity documents and references — complete, valid and submitted on time.'],
         ['Active participation', 'You attend your lessons, stay reachable for your coordinator and report any change in your situation straight away.']
       ]
@@ -73,7 +75,7 @@ const EUROUTE = {
         ['Dutch language training', 'From A1 to B1/B2 (NT2), including medical terminology. Available online from Spain, alongside your work.'],
         ['Support with recognition and BIG', 'We help you with the recognition of your EU diploma and your registration in the BIG register. Some EU diplomas follow a shortened route; otherwise the CBGV committee assesses your file, which takes up to 13 weeks once it is complete. Demonstrable Dutch proficiency is part of every route.'],
         ['Preparation for Dutch healthcare', 'How the healthcare system works, what a Dutch employer expects, and how people interact with patients and colleagues.'],
-        ['Housing', 'A furnished home, ready on arrival and close to your workplace.'],
+        ['Housing', 'Together with your employer we make sure a furnished home is ready on arrival, close to your workplace. We check that it meets the standard and agree the rent with you in advance.'],
         ['One point of contact', 'A single coordinator who knows your file and supports you — including after you arrive.'],
         ['Free of charge from A2 onwards', 'You arrange the basics up to A2 yourself. Everything after that — the route to B1 or B2, support with recognition and BIG, your housing and aftercare — costs you nothing. You never pay us anything.'],
         ['Work and learn at the same time', 'You do not have to study unpaid at home for months. As soon as your Dutch is good enough for daily practice you start in a supporting role in healthcare — with a salary. You keep learning the language on the ward and move up once your BIG registration is complete.']
@@ -88,13 +90,15 @@ const EUROUTE = {
         ['Recognition and BIG registration', 'Alongside the language training we arrange recognition of your EU diploma and your BIG registration.'],
         ['Meeting the employer', 'The registered partner agency introduces you to a suitable healthcare institution.'],
         ['Official placement and contract', 'The partner agency signs the employment contract with you. They are the authorised intermediary and employer — not Honor Care.'],
-        ['Relocation and start', 'We arrange housing and practical matters and support you through your first period in the Netherlands.']
+        ['Relocation and start', 'Together with your employer we arrange the housing and the practical matters, and we support you through your first period in the Netherlands.'],
+        ['At work, on a salary', 'You start in a supporting role in healthcare — as a care assistant — and earn from your very first month. You keep learning the language on the ward, where it goes far faster than online.'],
+        ['Moving up to the nursing role', 'Once you have passed the Staatsexamen NT2 and your BIG registration is complete, you move into the nursing role with the same employer. By then you already know the organisation.']
       ]
     },
     roles: {
       eyebrow: 'CLEAR DIVISION OF ROLES', h2: 'Who does what — and why that matters',
       sub: 'Honor Care International does not place workers itself and is neither an employer nor a temporary employment agency. We recruit, train and guide; the official placement and the employment contract run through our registered partner agency. This keeps the entire journey compliant with Dutch law (Waadi/Wtta).',
-      us: { h: 'Honor Care International does', items: ['Recruitment and selection in Spain and other EU countries', 'Screening, document checks and advice', 'Dutch language training (NT2) and medical terminology', 'Support with diploma recognition and BIG registration', 'Housing, integration and aftercare', 'One dedicated point of contact throughout the journey'] },
+      us: { h: 'Honor Care International does', items: ['Recruitment and selection in Spain and other EU countries', 'Screening, document checks and advice', 'Dutch language training (NT2) and medical terminology', 'Support with diploma recognition and BIG registration', 'Coordinating and checking the housing, integration and aftercare', 'One dedicated point of contact throughout the journey'] },
       partner: { h: 'The registered partner agency does', items: ['The placement and matching with the healthcare institution', 'The employment contract and employer responsibility', 'Salary, terms of employment and employer obligations', 'Compliance with the Waadi/Wtta as authorised intermediary'] },
       note: 'We never ask you as a candidate for money in exchange for placement or mediation. If anyone else does ask you to pay, always ask for clarification.'
     },
@@ -106,12 +110,12 @@ const EUROUTE = {
     intro: 'Pochodzisz z Hiszpanii lub innego kraju UE? Droga do holenderskiej ochrony zdrowia jest krótsza, niż myślisz. Bez wizy i bez zezwolenia na pracę — w UE Twój dyplom i doświadczenie liczą się w pełni. Zostaje język, rejestracja BIG i dobre przygotowanie. W tym wszystkim Cię prowadzimy — od pierwszej rozmowy do pierwszego dnia pracy.',
     ask: {
       eyebrow: 'CZEGO OCZEKUJEMY', h2: 'Czego oczekujemy od Ciebie',
-      sub: 'Inwestujemy w Twoje szkolenie, opiekę i zakwaterowanie. W zamian oczekujemy poważnego zaangażowania:',
+      sub: 'Inwestujemy w Twoje szkolenie i opiekę, a zakwaterowanie organizujemy razem z Twoim pracodawcą. W zamian oczekujemy poważnego zaangażowania:',
       items: [
         ['Obywatelstwo UE', 'Masz obywatelstwo Hiszpanii lub innego kraju UE/EOG, dzięki czemu nie potrzebujesz wizy ani zezwolenia na pracę w Holandii.'],
         ['Uznany dyplom medyczny', 'Jesteś wykwalifikowanym profesjonalistą medycznym — np. pielęgniarką, lekarzem lub stomatologiem — z dyplomem wydanym w UE.'],
         ['Samodzielny start z niderlandzkim', 'To zdecydowanie największy krok i robisz go jako pierwszy sam. Poziom A2 osiągasz własnymi siłami, w wybranej szkole i na własny koszt. Tym pokazujesz, że mówisz poważnie — a od tego momentu szkolenie przejmujemy my, do B1 lub B2 (NT2).'],
-        ['Gotowość do przeprowadzki', 'Jesteś realnie gotowy przeprowadzić się do Holandii oraz tu mieszkać i pracować. Zakwaterowanie organizujemy my.'],
+        ['Gotowość do przeprowadzki', 'Jesteś realnie gotowy przeprowadzić się do Holandii oraz tu mieszkać i pracować. Zakwaterowanie organizujemy razem z Twoim pracodawcą.'],
         ['Kompletne i rzetelne dokumenty', 'Dyplomy, doświadczenie zawodowe, dokument tożsamości i referencje — kompletne, ważne i dostarczone na czas.'],
         ['Aktywny udział', 'Regularnie uczestniczysz w zajęciach, jesteś dostępny dla koordynatora i od razu zgłaszasz zmiany w swojej sytuacji.']
       ]
@@ -122,7 +126,7 @@ const EUROUTE = {
         ['Kurs języka niderlandzkiego', 'Od A1 do B1/B2 (NT2) wraz z terminologią medyczną. Online z Hiszpanii, obok Twojej pracy.'],
         ['Wsparcie przy uznaniu dyplomu i BIG', 'Pomagamy w uznaniu dyplomu z UE i rejestracji w rejestrze BIG. Część dyplomów z UE idzie drogą skróconą; w pozostałych przypadkach dokumentację ocenia komisja CBGV — do 13 tygodni od kompletnego wniosku. Udokumentowana znajomość niderlandzkiego jest wymagana w każdej ścieżce.'],
         ['Przygotowanie do pracy w Holandii', 'Jak działa system opieki zdrowotnej, czego oczekuje holenderski pracodawca i jak wygląda kontakt z pacjentem i zespołem.'],
-        ['Zakwaterowanie', 'Umeblowane mieszkanie, gotowe na przyjazd i blisko miejsca pracy.'],
+        ['Zakwaterowanie', 'Razem z Twoim pracodawcą dbamy o to, by na przyjazd czekało umeblowane mieszkanie blisko pracy. Sprawdzamy, czy spełnia normę, i z góry ustalamy z Tobą czynsz.'],
         ['Stały opiekun', 'Jeden koordynator, który zna Twoją sprawę i prowadzi Cię — również po przyjeździe.'],
         ['Bezpłatnie od poziomu A2', 'Podstawy do A2 organizujesz sam. Wszystko dalej — nauka do B1 lub B2, wsparcie przy uznaniu dyplomu i BIG, zakwaterowanie i opieka — nic Cię nie kosztuje. Nam nigdy nic nie płacisz.'],
         ['Praca i nauka jednocześnie', 'Nie musisz miesiącami uczyć się w domu bez wynagrodzenia. Gdy Twój niderlandzki wystarcza do codziennej praktyki, zaczynasz na stanowisku wspierającym w opiece — z pensją. Języka uczysz się dalej na oddziale i awansujesz po uzyskaniu rejestracji BIG.']
@@ -137,13 +141,15 @@ const EUROUTE = {
         ['Uznanie dyplomu i rejestracja BIG', 'Równolegle do nauki załatwiamy uznanie dyplomu z UE i rejestrację BIG.'],
         ['Poznanie pracodawcy', 'Zarejestrowane biuro partnerskie kontaktuje Cię z odpowiednią placówką medyczną.'],
         ['Oficjalne zatrudnienie i umowa', 'Umowę o pracę zawiera z Tobą biuro partnerskie. To ono jest uprawnionym pośrednikiem i pracodawcą — nie Honor Care.'],
-        ['Przeprowadzka i start', 'Organizujemy zakwaterowanie i sprawy praktyczne oraz wspieramy Cię w pierwszym okresie w Holandii.']
+        ['Przeprowadzka i start', 'Razem z Twoim pracodawcą organizujemy zakwaterowanie i sprawy praktyczne oraz wspieramy Cię w pierwszym okresie w Holandii.'],
+        ['Praca z wynagrodzeniem', 'Zaczynasz na stanowisku wspierającym w opiece — jako asystent opieki — i zarabiasz od pierwszego miesiąca. Języka uczysz się dalej na oddziale, gdzie idzie to znacznie szybciej niż online.'],
+        ['Awans na stanowisko pielęgniarki', 'Po zdaniu Staatsexamen NT2 i uzyskaniu rejestracji BIG przechodzisz na stanowisko pielęgniarki u tego samego pracodawcy. Znasz już wtedy organizację.']
       ]
     },
     roles: {
       eyebrow: 'JASNY PODZIAŁ RÓL', h2: 'Kto co robi — i dlaczego to ważne',
       sub: 'Honor Care International nie prowadzi pośrednictwa samodzielnie i nie jest pracodawcą ani agencją pracy tymczasowej. Rekrutujemy, szkolimy i wspieramy; oficjalne zatrudnienie realizuje nasze zarejestrowane biuro partnerskie. Dzięki temu cała ścieżka pozostaje zgodna z holenderskim prawem (Waadi/Wtta).',
-      us: { h: 'Honor Care International robi', items: ['Rekrutację i selekcję w Hiszpanii i innych krajach UE', 'Weryfikację, sprawdzenie dokumentów i doradztwo', 'Kurs niderlandzkiego (NT2) i terminologii medycznej', 'Wsparcie przy uznaniu dyplomu i rejestracji BIG', 'Zakwaterowanie, integrację i opiekę po przyjeździe', 'Jeden stały punkt kontaktu przez całą ścieżkę'] },
+      us: { h: 'Honor Care International robi', items: ['Rekrutację i selekcję w Hiszpanii i innych krajach UE', 'Weryfikację, sprawdzenie dokumentów i doradztwo', 'Kurs niderlandzkiego (NT2) i terminologii medycznej', 'Wsparcie przy uznaniu dyplomu i rejestracji BIG', 'Koordynację i weryfikację zakwaterowania, integrację i opiekę po przyjeździe', 'Jeden stały punkt kontaktu przez całą ścieżkę'] },
       partner: { h: 'Zarejestrowane biuro partnerskie robi', items: ['Pośrednictwo i dopasowanie do placówki medycznej', 'Umowę o pracę i rolę pracodawcy', 'Wynagrodzenie, warunki pracy i obowiązki pracodawcy', 'Przestrzeganie Waadi/Wtta jako uprawniony pośrednik'] },
       note: 'Nigdy nie pobieramy od Ciebie jako kandydata opłat za pośrednictwo ani zatrudnienie. Jeśli ktokolwiek prosi Cię o zapłatę — zawsze żądaj wyjaśnień.'
     },
@@ -155,12 +161,12 @@ const EUROUTE = {
     intro: '¿Eres de España o de otro país de la UE? El camino hacia la sanidad neerlandesa es más corto de lo que imaginas. Sin visado ni permiso de trabajo: dentro de la UE tu título y tu experiencia cuentan plenamente. Queda el idioma, tu registro BIG y una buena preparación. Te acompañamos en todo ello, desde la primera conversación hasta tu primer día de trabajo.',
     ask: {
       eyebrow: 'QUÉ TE PEDIMOS', h2: 'Qué te pedimos',
-      sub: 'Invertimos en tu formación, tu acompañamiento y tu alojamiento. A cambio esperamos un compromiso serio por tu parte:',
+      sub: 'Invertimos en tu formación y tu acompañamiento, y organizamos tu alojamiento junto con tu empleador. A cambio esperamos un compromiso serio por tu parte:',
       items: [
         ['Nacionalidad de la UE', 'Tienes la nacionalidad de España o de otro país de la UE/EEE, por lo que no necesitas visado ni permiso de trabajo para trabajar en los Países Bajos.'],
         ['Un título sanitario reconocido', 'Eres profesional sanitario titulado —por ejemplo enfermero, médico o dentista— con un título expedido en la UE.'],
         ['Empezar tú con el neerlandés', 'Es con diferencia el paso más grande, y es el primero que das tú. Alcanzas el nivel A2 por tu cuenta, en la escuela que elijas y a tu cargo. Así demuestras que va en serio, y a partir de ahí asumimos nosotros la formación hasta B1 o B2 (NT2).'],
-        ['Disposición a mudarte', 'Estás realmente dispuesto a mudarte a los Países Bajos y vivir y trabajar aquí. Del alojamiento nos encargamos nosotros.'],
+        ['Disposición a mudarte', 'Estás realmente dispuesto a mudarte a los Países Bajos y vivir y trabajar aquí. Del alojamiento nos encargamos junto con tu empleador.'],
         ['Documentación completa y veraz', 'Títulos, experiencia laboral, documento de identidad y referencias: completos, válidos y entregados a tiempo.'],
         ['Participación activa', 'Asistes a las clases con constancia, estás localizable para tu coordinador y comunicas de inmediato cualquier cambio en tu situación.']
       ]
@@ -171,7 +177,7 @@ const EUROUTE = {
         ['Formación en neerlandés', 'De A1 a B1/B2 (NT2), con terminología médica. Online desde España, compatible con tu trabajo.'],
         ['Apoyo con la homologación y el BIG', 'Te ayudamos con el reconocimiento de tu título de la UE y tu inscripción en el registro BIG. Algunos títulos de la UE siguen una vía abreviada; en el resto, la comisión CBGV evalúa tu expediente, con un máximo de 13 semanas desde que está completo. Acreditar el neerlandés forma parte de todas las vías.'],
         ['Preparación para la sanidad neerlandesa', 'Cómo funciona el sistema sanitario, qué espera un empleador neerlandés y cómo es el trato con pacientes y compañeros.'],
-        ['Alojamiento', 'Una vivienda amueblada, lista a tu llegada y cerca de tu puesto de trabajo.'],
+        ['Alojamiento', 'Junto con tu empleador nos aseguramos de que a tu llegada haya una vivienda amueblada cerca de tu trabajo. Comprobamos que cumple la norma y acordamos el alquiler contigo por adelantado.'],
         ['Un único interlocutor', 'Un coordinador que conoce tu expediente y te acompaña, también después de tu llegada.'],
         ['Gratuito a partir de A2', 'La base hasta A2 la organizas tú. Todo lo que viene después —el trayecto hasta B1 o B2, el apoyo con la homologación y el BIG, tu alojamiento y el seguimiento— no te cuesta nada. A nosotros nunca nos pagas nada.'],
         ['Trabajar y aprender a la vez', 'No tienes que estudiar meses en casa sin cobrar. En cuanto tu neerlandés basta para el día a día, empiezas en un puesto de apoyo en sanidad, con salario. Sigues aprendiendo el idioma en el trabajo y promocionas cuando tengas el registro BIG.']
@@ -186,13 +192,15 @@ const EUROUTE = {
         ['Homologación y registro BIG', 'En paralelo a la formación gestionamos el reconocimiento de tu título de la UE y tu registro BIG.'],
         ['Conocer al empleador', 'La agencia asociada registrada te pone en contacto con un centro sanitario adecuado.'],
         ['Colocación oficial y contrato', 'La agencia asociada firma contigo el contrato de trabajo. Ella es el intermediario autorizado y el empleador, no Honor Care.'],
-        ['Mudanza e incorporación', 'Organizamos el alojamiento y los trámites prácticos y te acompañamos durante tu primer periodo en los Países Bajos.']
+        ['Mudanza e incorporación', 'Junto con tu empleador organizamos el alojamiento y los trámites prácticos, y te acompañamos durante tu primer periodo en los Países Bajos.'],
+        ['A trabajar, con salario', 'Empiezas en un puesto de apoyo en sanidad, como auxiliar de cuidados, y cobras desde el primer mes. Sigues aprendiendo el idioma en la planta, donde avanza mucho más rápido que en línea.'],
+        ['Promoción al puesto de enfermero', 'En cuanto apruebes el Staatsexamen NT2 y tengas el registro BIG, pasas al puesto de enfermero con el mismo empleador. Para entonces ya conoces la organización.']
       ]
     },
     roles: {
       eyebrow: 'REPARTO CLARO DE FUNCIONES', h2: 'Quién hace qué, y por qué importa',
       sub: 'Honor Care International no realiza la intermediación ni es empleador o empresa de trabajo temporal. Nosotros captamos, formamos y acompañamos; la colocación oficial y el contrato de trabajo se gestionan a través de nuestra agencia asociada registrada. Así todo el recorrido cumple la legislación neerlandesa (Waadi/Wtta).',
-      us: { h: 'Honor Care International hace', items: ['Captación y selección en España y otros países de la UE', 'Evaluación, verificación de documentos y asesoramiento', 'Formación en neerlandés (NT2) y terminología médica', 'Apoyo con la homologación del título y el registro BIG', 'Alojamiento, integración y seguimiento', 'Un interlocutor fijo durante todo el recorrido'] },
+      us: { h: 'Honor Care International hace', items: ['Captación y selección en España y otros países de la UE', 'Evaluación, verificación de documentos y asesoramiento', 'Formación en neerlandés (NT2) y terminología médica', 'Apoyo con la homologación del título y el registro BIG', 'Coordinación y verificación del alojamiento, integración y seguimiento', 'Un interlocutor fijo durante todo el recorrido'] },
       partner: { h: 'La agencia asociada registrada hace', items: ['La intermediación y el emparejamiento con el centro sanitario', 'El contrato de trabajo y la condición de empleador', 'El salario, las condiciones laborales y las obligaciones del empleador', 'El cumplimiento de la Waadi/Wtta como intermediario autorizado'] },
       note: 'Nunca te pedimos dinero como candidato a cambio de intermediación o colocación. Si alguien te pide un pago, pide siempre explicaciones.'
     },
