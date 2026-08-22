@@ -480,6 +480,7 @@ code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
 .eur-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 @media(max-width:900px){.eur-grid,.eur-roles-grid{grid-template-columns:1fr}.eur-roles{padding:30px 20px;border-radius:16px}.eur-cta{padding:30px 20px}.eur-block{margin-bottom:40px}}
 @media(min-width:981px) and (max-width:1560px){.menu{gap:11px;font-size:10.5px;letter-spacing:0}.menu .portal{padding:9px 14px;letter-spacing:.5px}.logo img{width:230px}}
+@media(min-width:981px) and (max-width:1340px){.menu{gap:8px;font-size:9.5px}.menu .portal{padding:8px 11px;letter-spacing:.2px}.logo img{width:196px}}
 
 /* ===== Kandidaatprofiel (portaal) + kaartenbank (beheer) ===== */
 .prof-bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:8px 0 6px}
@@ -790,3 +791,70 @@ tr.msg-spam td{border-top-color:#f6dedb}
 .page.has-hero{padding-top:46px}
 .page.has-hero>.contact-lead{margin-bottom:40px}
 .eur-block+.eur-block{margin-top:4px}
+
+/* Salarispagina en keuzehulp */
+.ph-salaris{background-image:url('/images/szpital.jpg')}
+.sal{max-width:1180px;margin:0 auto;padding:56px 6vw 70px}
+.sal-intro{max-width:820px;margin:0 auto 46px;text-align:center}
+.sal-intro p{font-size:17.5px;line-height:1.7;color:var(--muted);margin:0}
+.sal-block{max-width:1120px;margin:0 auto 56px}
+.sal-head{text-align:center;max-width:780px;margin:0 auto 30px}
+.sal-head h2{font-size:clamp(25px,2.8vw,34px);margin:8px 0 12px}
+.sal-head p{color:var(--muted);font-size:16px;line-height:1.65;margin:0}
+.sal-tablewrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 26px rgba(0,43,85,.05)}
+.sal-table{width:100%;border-collapse:collapse;font-size:15px;min-width:520px}
+.sal-table th{background:var(--navy);color:#fff;text-align:left;padding:14px 18px;font-size:12.5px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.sal-table td{padding:13px 18px;border-top:1px solid var(--line);color:var(--text)}
+.sal-table tbody tr:nth-child(even) td{background:#faf8f4}
+.sal-table .sal-num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sal-table tr.sal-hi td{background:#fdf7e9;font-weight:600}
+.sal-table tr.sal-hi td:first-child{box-shadow:inset 3px 0 0 var(--gold)}
+.sal-ort{min-width:420px}
+.sal-note{max-width:820px;margin:14px auto 0;color:var(--muted);font-size:14px;line-height:1.6;text-align:center}
+.sal-orth{text-align:center;font-size:18px;margin:38px 0 16px;color:var(--navy)}
+
+/* Keuzehulp */
+.sal-tool{background:var(--navy);border-radius:20px;padding:44px 34px;color:#fff}
+.sal-tool .sal-head h2{color:#fff}
+.sal-tool .sal-head p{color:#cfdbe8}
+.sal-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;max-width:960px;margin:0 auto}
+.sal-veld{display:flex;flex-direction:column;gap:7px}
+.sal-veld label{font-size:13px;font-weight:600;color:#cfdbe8;letter-spacing:.2px}
+.sal-veld select{padding:12px 13px;border-radius:8px;border:1px solid rgba(255,255,255,.22);background:#fff;color:var(--text);font-size:15px;font-family:inherit}
+.sal-veld select:focus{outline:2px solid var(--gold2);outline-offset:1px}
+.sal-acties{grid-column:1/-1;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.sal-uitkomst{max-width:960px;margin:34px auto 0;background:#fff;border-radius:16px;padding:32px 28px;color:var(--text);box-shadow:0 18px 44px rgba(0,20,45,.28)}
+.sal-uitkomst h3{margin:0 0 20px;font-size:21px;text-align:center;color:var(--navy)}
+.sal-kolommen{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.sal-kolom{border:1px solid var(--line);border-radius:14px;padding:22px 20px;background:#faf8f4}
+.sal-kolom.sal-straks{background:#fdf7e9;border-color:#e8dcc0}
+.sal-kolom h4{margin:0 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--gold2)}
+.sal-kolom.sal-nu h4{color:var(--muted)}
+.sal-groot{margin:0 0 16px;font-size:30px;font-weight:700;color:var(--navy);line-height:1.15;font-variant-numeric:tabular-nums}
+.sal-groot span{display:block;font-size:12px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.sal-kolom dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:7px 12px;font-size:14px}
+.sal-kolom dt{color:var(--muted)}
+.sal-kolom dd{margin:0;text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.sal-verschil{text-align:center;margin:20px 0 0;font-size:17px;color:var(--navy)}
+.sal-verschil strong{color:var(--muted);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.5px}
+.sal-next{margin-top:24px;padding-top:22px;border-top:1px solid var(--line)}
+.sal-next h4{margin:0 0 8px;font-size:15px;color:var(--navy)}
+.sal-next p{margin:0 0 16px;color:var(--muted);line-height:1.65;font-size:15px}
+.sal-nextbtns{display:flex;gap:12px;flex-wrap:wrap}
+.sal-uitkomst .sal-note{text-align:left;margin:18px 0 0;font-size:13px}
+.sal-bronnen{max-width:820px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 24px}
+.sal-bronnen h3{margin:0 0 12px;font-size:16px;color:var(--navy)}
+.sal-bronnen ul{margin:0 0 12px;padding-left:18px}
+.sal-bronnen li{margin-bottom:6px;font-size:14px;line-height:1.5}
+.sal-bronnen a{color:var(--navy2);text-decoration:underline}
+.sal-bronnen p{margin:0;color:var(--muted);font-size:13.5px}
+.sal-cta{max-width:820px;margin:0 auto;text-align:center;background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:18px;padding:40px 32px;box-shadow:0 14px 40px rgba(0,43,85,.08)}
+.sal-cta h2{font-size:clamp(24px,2.6vw,32px);margin:0 0 10px}
+.sal-cta p{color:var(--muted);margin:0 0 22px;font-size:16px}
+@media(max-width:900px){
+  .sal{padding:40px 5vw 54px}
+  .sal-block{margin-bottom:40px}
+  .sal-tool{padding:32px 20px;border-radius:16px}
+  .sal-kolommen{grid-template-columns:1fr}
+  .sal-uitkomst{padding:24px 18px}
+}

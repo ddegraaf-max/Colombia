@@ -5,7 +5,7 @@
 const EXTRAS = {
   nl: {
     faqTitle: 'Veelgestelde vragen',
-    ctaLabels: { plan: 'PLAN EEN GESPREK', ask: 'STEL EEN VRAAG', route: 'BEKIJK DE EU-ROUTE', numbers: 'BEKIJK DE CIJFERS', account: 'MAAK JE PROFIEL AAN' },
+    ctaLabels: { plan: 'PLAN EEN GESPREK', ask: 'STEL EEN VRAAG', route: 'BEKIJK DE EU-ROUTE', numbers: 'BEKIJK DE CIJFERS', account: 'MAAK JE PROFIEL AAN', salaris: 'BEREKEN JE SALARIS' },
     cta: {
       about: ['Meer weten over hoe wij werken?', 'We leggen graag uit hoe het traject loopt en waar onze rol ophoudt.'],
       institutions: ['Personeelsvraag bespreken?', 'Vertel ons welke functies openstaan; wij kijken of internationale werving past bij uw situatie.'],
@@ -53,7 +53,7 @@ const EXTRAS = {
   },
   en: {
     faqTitle: 'Frequently asked questions',
-    ctaLabels: { plan: 'BOOK A MEETING', ask: 'ASK A QUESTION', route: 'SEE THE EU ROUTE', numbers: 'SEE THE FIGURES', account: 'CREATE YOUR PROFILE' },
+    ctaLabels: { plan: 'BOOK A MEETING', ask: 'ASK A QUESTION', route: 'SEE THE EU ROUTE', numbers: 'SEE THE FIGURES', account: 'CREATE YOUR PROFILE', salaris: 'CALCULATE YOUR SALARY' },
     cta: {
       about: ['Want to know how we work?', 'We are happy to explain how the journey runs and where our role ends.'],
       institutions: ['Discuss your staffing needs?', 'Tell us which roles are open; we will see whether international recruitment fits your situation.'],
@@ -101,7 +101,7 @@ const EXTRAS = {
   },
   es: {
     faqTitle: 'Preguntas frecuentes',
-    ctaLabels: { plan: 'RESERVAR UNA REUNIÓN', ask: 'HACER UNA PREGUNTA', route: 'VER LA RUTA UE', numbers: 'VER LAS CIFRAS', account: 'CREA TU PERFIL' },
+    ctaLabels: { plan: 'RESERVAR UNA REUNIÓN', ask: 'HACER UNA PREGUNTA', route: 'VER LA RUTA UE', numbers: 'VER LAS CIFRAS', account: 'CREA TU PERFIL', salaris: 'CALCULA TU SALARIO' },
     cta: {
       about: ['¿Quieres saber cómo trabajamos?', 'Te explicamos con gusto cómo funciona el recorrido y dónde termina nuestro papel.'],
       institutions: ['¿Hablamos de sus necesidades de personal?', 'Cuéntenos qué puestos tiene abiertos y veremos si la captación internacional encaja.'],
@@ -149,7 +149,7 @@ const EXTRAS = {
   },
   pl: {
     faqTitle: 'Najczęstsze pytania',
-    ctaLabels: { plan: 'UMÓW ROZMOWĘ', ask: 'ZADAJ PYTANIE', route: 'ZOBACZ ŚCIEŻKĘ UE', numbers: 'ZOBACZ DANE', account: 'ZAŁÓŻ PROFIL' },
+    ctaLabels: { plan: 'UMÓW ROZMOWĘ', ask: 'ZADAJ PYTANIE', route: 'ZOBACZ ŚCIEŻKĘ UE', numbers: 'ZOBACZ DANE', account: 'ZAŁÓŻ PROFIL', salaris: 'OBLICZ WYNAGRODZENIE' },
     cta: {
       about: ['Chcesz wiedzieć, jak pracujemy?', 'Chętnie wyjaśnimy przebieg ścieżki i to, gdzie kończy się nasza rola.'],
       institutions: ['Porozmawiajmy o potrzebach kadrowych', 'Powiedz nam, jakie stanowiska są wolne; sprawdzimy, czy rekrutacja międzynarodowa pasuje do Twojej sytuacji.'],
@@ -200,10 +200,10 @@ const EXTRAS = {
 // Welke knoppen onder welke pagina.
 const CTA_BUTTONS = {
   about: [['plan', '/plan', 'gold'], ['route', '/eu-route', 'light']],
-  institutions: [['plan', '/plan', 'gold'], ['ask', '/contact#kontakt', 'light']],
-  candidates: [['account', '/portal', 'gold'], ['route', '/eu-route', 'light']],
+  institutions: [['plan', '/plan', 'gold'], ['salaris', '/salaris', 'light'], ['ask', '/contact#kontakt', 'light']],
+  candidates: [['account', '/portal', 'gold'], ['salaris', '/salaris#keuzehulp', 'light'], ['route', '/eu-route', 'light']],
   academy: [['account', '/portal', 'gold'], ['plan', '/plan', 'light']],
-  housing: [['numbers', '/poland', 'gold'], ['ask', '/contact#kontakt', 'light']]
+  housing: [['numbers', '/poland', 'gold'], ['salaris', '/salaris#keuzehulp', 'light'], ['ask', '/contact#kontakt', 'light']]
 };
 
 function renderExtras(key, lang, esc) {

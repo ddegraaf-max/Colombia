@@ -4,6 +4,21 @@
 
 const VERSIONS = [
   {
+    v: '58.0.0', date: '22-08-2026', title: 'Salarispagina met keuzehulp',
+    items: [
+      'Nieuwe pagina /salaris in vier talen: wat je verdient in de Nederlandse zorg, met de CAO VVT-tabel per 1 juli 2026',
+      'Uitleg dat de CAO ook geldt via het partnerbureau: sinds 1 januari 2026 eist de uitzend-CAO een gelijkwaardig arbeidsvoorwaardenpakket',
+      'Volledige FWG-tabel van schaal 15 tot 50, met de startfuncties uitgelicht',
+      'Onregelmatigheidstoeslag per tijdvak (22% tot 60%), vakantiegeld 8% en eindejaarsuitkering 8,33%',
+      'Keuzehulp: vijf vragen over diploma, ervaring, taalniveau, uren en diensten, en je ziet wat je verdient tijdens het traject en na de BIG-registratie',
+      'De keuzehulp rekent in de browser van de bezoeker; er wordt niets opgeslagen of verstuurd en er komt geen externe dienst aan te pas',
+      'Per taalniveau een passend advies over de volgende stap, met knoppen naar het contactformulier en het profiel',
+      'Bronvermelding onderaan de pagina, zodat elk bedrag te controleren is',
+      'Salaris opgenomen in het menu en de voettekst, met knoppen op de kandidaten-, huisvestings- en instellingenpagina',
+      'Academie-kaart noemde nog online training vanuit Colombia; dat is nu vanuit je eigen land'
+    ]
+  },
+  {
     v: '57.0.0', date: '22-08-2026', title: 'Huisvesting eerlijk verwoord, werken tijdens het traject overal zichtbaar',
     items: [
       'Huisvesting stond op de site als iets wat wij alleen regelen; dat is nu overal: wij coordineren en toetsen, de werkgever of het partnerbureau levert de woning',
