@@ -21,7 +21,7 @@ const EXTRAS = {
         ['Hoe waarborgen jullie eerlijke werving?', 'Wij volgen de WHO-gedragscode voor internationale werving van zorgpersoneel, werken met transparante afspraken en leggen vooraf vast wat je huur en arbeidsvoorwaarden worden.']
       ],
       institutions: [
-        ['Hoe snel kan een kandidaat starten?', 'Dat wordt vooral bepaald door taal en diploma-erkenning, niet door papierwerk rond verblijf. Bij EU-kandidaten vervalt de visumprocedure; de erkenning via het BIG-register duurt na een compleet dossier maximaal 13 weken, en het taaltraject naar B1/B2 kost enkele maanden.'],
+        ['Hoe snel kan een kandidaat starten?', 'Sneller dan u gewend bent, omdat wij in twee fasen werken. Zodra iemand genoeg Nederlands spreekt voor de dagelijkse praktijk start hij bij u in een ondersteunende functie — u heeft dan al extra handen. De doorgroei naar de verpleegkundige functie volgt zodra het taalniveau en de BIG-registratie rond zijn. Bij EU-kandidaten vervalt bovendien de visumprocedure, wat maanden scheelt.'],
         ['Wie is juridisch de werkgever?', 'Ons geregistreerde partnerbureau. Zij sluiten het contract, betalen het loon en dragen de werkgeversverplichtingen. U heeft daarmee één aanspreekpunt dat voldoet aan de Waadi/Wtta.'],
         ['Welk taalniveau hebben kandidaten bij start?', 'Wij leiden op naar minimaal B1, en naar B2 waar de functie daarom vraagt. Aantoonbare taalbeheersing is bovendien een voorwaarde voor BIG-registratie.'],
         ['Wat als een kandidaat toch niet past?', 'Dat bespreken we open en tijdig. Wij hebben er niets aan om iemand te plaatsen die niet op zijn plek is — begeleiding na aankomst is juist bedoeld om dat te voorkomen.']
@@ -31,6 +31,7 @@ const EXTRAS = {
         ['Hoe lang duurt het hele traject?', 'De taal bepaalt het tempo. Reken op enkele maanden intensief studeren naar B1/B2, met de diploma-erkenning die daarnaast loopt. Wij zijn eerlijk over de planning zodra we je niveau kennen.'],
         ['Moet ik al Nederlands spreken?', 'Nee, je kunt op nul beginnen. Maar je moet wel bereid zijn er stevig voor te gaan zitten: zonder aantoonbaar Nederlands is BIG-registratie niet mogelijk.'],
         ['Kan mijn gezin meekomen?', 'Als EU-burger heb je vrij verkeer, dus je gezin mag meeverhuizen. Houd er rekening mee dat passende gezinswoningen schaars zijn; bespreek dit daarom vroeg in het traject.'],
+        ['Kan ik werken terwijl ik de taal leer?', 'Ja, en dat is juist de bedoeling. Zodra je Nederlands voldoende is voor de dagelijkse praktijk, start je in een ondersteunende functie in de zorg — met salaris. Je mag dan nog niet als verpleegkundige werken; dat mag pas na je BIG-registratie. Maar je verdient wel, je leert de taal veel sneller en je kent je team al voordat je doorgroeit.'],
         ['Wie wordt mijn werkgever?', 'Niet Honor Care, maar ons geregistreerde partnerbureau. Zij sluiten het arbeidscontract met je en betalen je loon. Wij blijven je begeleiden.']
       ],
       academy: [
@@ -68,7 +69,7 @@ const EXTRAS = {
         ['How do you ensure ethical recruitment?', 'We follow the WHO code of practice on international recruitment of health personnel, work with transparent agreements and set out your rent and terms of employment in advance.']
       ],
       institutions: [
-        ['How quickly can a candidate start?', 'That is driven mainly by language and diploma recognition, not by residence paperwork. For EU candidates the visa procedure disappears; recognition through the BIG register takes up to 13 weeks once the file is complete, and the language route to B1/B2 takes several months.'],
+        ['How quickly can a candidate start?', 'Faster than you are used to, because we work in two phases. As soon as someone speaks enough Dutch for daily practice they start with you in a supporting role — so you already gain extra hands. The move up to the nursing role follows once the language level and BIG registration are in place. For EU candidates the visa procedure also disappears, saving months.'],
         ['Who is the legal employer?', 'Our registered partner agency. They sign the contract, pay the salary and carry the employer obligations, giving you one point of contact that complies with the Waadi/Wtta.'],
         ['What language level do candidates have on arrival?', 'We train to at least B1, and to B2 where the role requires it. Demonstrable language proficiency is also a condition for BIG registration.'],
         ['What if a candidate turns out not to fit?', 'We discuss that openly and early. Placing someone who is not in the right place helps nobody — post-arrival guidance exists precisely to prevent it.']
@@ -78,6 +79,7 @@ const EXTRAS = {
         ['How long does the whole journey take?', 'The language sets the pace. Expect several months of intensive study towards B1/B2, with diploma recognition running alongside. We are honest about the planning as soon as we know your level.'],
         ['Do I need to speak Dutch already?', 'No, you can start from zero. But you must be willing to work hard at it: without demonstrable Dutch, BIG registration is not possible.'],
         ['Can my family come along?', 'As an EU citizen you have free movement, so your family may move with you. Do bear in mind that suitable family homes are scarce, so raise this early in the process.'],
+        ['Can I work while I learn the language?', 'Yes, and that is exactly the idea. As soon as your Dutch is good enough for daily practice you start in a supporting role in healthcare — with a salary. You may not yet work as a nurse; that is only allowed after your BIG registration. But you do earn, you learn the language far faster and you already know your team before you move up.'],
         ['Who will be my employer?', 'Not Honor Care, but our registered partner agency. They sign your employment contract and pay your salary. We continue to support you.']
       ],
       academy: [
@@ -115,7 +117,7 @@ const EXTRAS = {
         ['¿Cómo garantizáis una captación ética?', 'Seguimos el código de la OMS sobre contratación internacional de personal sanitario, trabajamos con acuerdos transparentes y fijamos de antemano tu alquiler y tus condiciones laborales.']
       ],
       institutions: [
-        ['¿Con qué rapidez puede incorporarse un candidato?', 'Lo determinan sobre todo el idioma y la homologación del título, no los trámites de residencia. Con candidatos de la UE desaparece el visado; el reconocimiento en el registro BIG tarda un máximo de 13 semanas con el expediente completo, y la formación lingüística hasta B1/B2 lleva varios meses.'],
+        ['¿Con qué rapidez puede incorporarse un candidato?', 'Antes de lo habitual, porque trabajamos en dos fases. En cuanto la persona domina el neerlandés suficiente para el día a día, empieza con usted en un puesto de apoyo: ya gana manos. El paso al puesto de enfermero llega cuando el nivel de idioma y el registro BIG están listos. Con candidatos de la UE, además, desaparece el visado, lo que ahorra meses.'],
         ['¿Quién es el empleador legal?', 'Nuestra agencia asociada registrada. Firma el contrato, paga el salario y asume las obligaciones del empleador, de modo que usted tiene un único interlocutor conforme a la Waadi/Wtta.'],
         ['¿Con qué nivel de idioma llegan los candidatos?', 'Formamos hasta B1 como mínimo, y hasta B2 cuando el puesto lo exige. Además, acreditar el idioma es condición para el registro BIG.'],
         ['¿Y si un candidato no encaja?', 'Lo hablamos abiertamente y a tiempo. Colocar a alguien que no está en su sitio no beneficia a nadie; el acompañamiento tras la llegada existe justamente para evitarlo.']
@@ -125,6 +127,7 @@ const EXTRAS = {
         ['¿Cuánto dura todo el recorrido?', 'El idioma marca el ritmo. Cuenta con varios meses de estudio intensivo hasta B1/B2, con la homologación en paralelo. Somos honestos con la planificación en cuanto conocemos tu nivel.'],
         ['¿Tengo que hablar ya neerlandés?', 'No, puedes empezar de cero. Pero debes estar dispuesto a dedicarle esfuerzo: sin neerlandés acreditado no es posible el registro BIG.'],
         ['¿Puede venir mi familia?', 'Como ciudadano de la UE tienes libre circulación, así que tu familia puede mudarse contigo. Ten en cuenta que las viviendas familiares adecuadas son escasas: coméntalo pronto en el proceso.'],
+        ['¿Puedo trabajar mientras aprendo el idioma?', 'Sí, y esa es justamente la idea. En cuanto tu neerlandés basta para el día a día, empiezas en un puesto de apoyo en sanidad, con salario. Todavía no puedes ejercer como enfermero: eso solo es posible tras el registro BIG. Pero cobras, aprendes el idioma mucho más rápido y ya conoces a tu equipo antes de promocionar.'],
         ['¿Quién será mi empleador?', 'No Honor Care, sino nuestra agencia asociada registrada. Ella firma tu contrato y paga tu salario. Nosotros seguimos acompañándote.']
       ],
       academy: [
@@ -162,7 +165,7 @@ const EXTRAS = {
         ['Jak zapewniacie etyczną rekrutację?', 'Stosujemy kodeks WHO dotyczący międzynarodowej rekrutacji personelu medycznego, działamy na przejrzystych zasadach i z góry ustalamy czynsz oraz warunki pracy.']
       ],
       institutions: [
-        ['Jak szybko kandydat może zacząć?', 'Decyduje głównie język i uznanie dyplomu, a nie formalności pobytowe. Przy kandydatach z UE odpada procedura wizowa; uznanie w rejestrze BIG trwa do 13 tygodni od kompletnego wniosku, a nauka do poziomu B1/B2 kilka miesięcy.'],
+        ['Jak szybko kandydat może zacząć?', 'Szybciej, niż Państwo przywykli, bo pracujemy w dwóch etapach. Gdy ktoś zna niderlandzki na poziomie codziennej praktyki, zaczyna u Państwa na stanowisku wspierającym — macie już ręce do pracy. Awans na stanowisko pielęgniarki następuje po osiągnięciu poziomu językowego i rejestracji BIG. Przy kandydatach z UE odpada też procedura wizowa, co oszczędza miesiące.'],
         ['Kto jest prawnym pracodawcą?', 'Nasze zarejestrowane biuro partnerskie. Ono zawiera umowę, wypłaca wynagrodzenie i ponosi obowiązki pracodawcy, więc masz jeden punkt kontaktu zgodny z Waadi/Wtta.'],
         ['Z jakim poziomem języka przyjeżdżają kandydaci?', 'Szkolimy co najmniej do B1, a do B2 tam, gdzie wymaga tego stanowisko. Udokumentowana znajomość języka jest też warunkiem rejestracji BIG.'],
         ['A jeśli kandydat jednak nie pasuje?', 'Rozmawiamy o tym otwarcie i w porę. Umieszczanie kogoś w niewłaściwym miejscu nikomu nie służy — opieka po przyjeździe ma temu właśnie zapobiegać.']
@@ -172,6 +175,7 @@ const EXTRAS = {
         ['Ile trwa cała ścieżka?', 'Tempo wyznacza język. Licz na kilka miesięcy intensywnej nauki do B1/B2, przy równoległym uznaniu dyplomu. Uczciwie przedstawiamy harmonogram, gdy poznamy Twój poziom.'],
         ['Czy muszę już znać niderlandzki?', 'Nie, możesz zacząć od zera. Musisz jednak być gotów solidnie się przyłożyć: bez udokumentowanego niderlandzkiego rejestracja BIG nie jest możliwa.'],
         ['Czy rodzina może przyjechać ze mną?', 'Jako obywatel UE masz swobodę przemieszczania się, więc rodzina może się przeprowadzić. Pamiętaj, że mieszkań rodzinnych brakuje — zgłoś to wcześnie w procesie.'],
+        ['Czy mogę pracować, ucząc się języka?', 'Tak, i o to właśnie chodzi. Gdy Twój niderlandzki wystarcza do codziennej praktyki, zaczynasz na stanowisku wspierającym w opiece — z wynagrodzeniem. Jako pielęgniarka możesz pracować dopiero po rejestracji BIG. Ale zarabiasz, znacznie szybciej uczysz się języka i znasz już zespół, zanim awansujesz.'],
         ['Kto będzie moim pracodawcą?', 'Nie Honor Care, lecz nasze zarejestrowane biuro partnerskie. To ono zawiera z Tobą umowę i wypłaca wynagrodzenie. My nadal Cię wspieramy.']
       ],
       academy: [

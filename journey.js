@@ -54,10 +54,10 @@ const PHASES = [
   },
   {
     key: 'start',
-    nl: { t: 'Verhuizing en start', w: 'Je woning is geregeld voordat je komt. Wij begeleiden je bij de verhuizing, de inschrijving en je eerste periode in Nederland.', y: 'Verhuizen en beginnen' },
-    en: { t: 'Relocation and start', w: 'Your home is arranged before you travel. We support you with the move, the registration and your first period in the Netherlands.', y: 'Move and start work' },
-    es: { t: 'Mudanza e incorporación', w: 'Tu vivienda está organizada antes de viajar. Te acompañamos en la mudanza, el empadronamiento y tu primera etapa.', y: 'Mudarte y empezar' },
-    pl: { t: 'Przeprowadzka i start', w: 'Mieszkanie jest gotowe przed Twoim przyjazdem. Wspieramy Cię przy przeprowadzce, meldunku i pierwszym okresie w Holandii.', y: 'Przeprowadź się i zacznij pracę' }
+    nl: { t: 'Verhuizing en start', w: 'Je woning is geregeld voordat je komt. Je begint in een ondersteunende functie en gaat over naar de verpleegkundige functie zodra je BIG-registratie rond is. Wij begeleiden je bij de verhuizing, de inschrijving en je eerste periode.', y: 'Verhuizen en beginnen' },
+    en: { t: 'Relocation and start', w: 'Your home is arranged before you travel. You begin in a supporting role and move into the nursing role once your BIG registration is complete. We support you with the move, the registration and your first period.', y: 'Move and start work' },
+    es: { t: 'Mudanza e incorporación', w: 'Tu vivienda está organizada antes de viajar. Empiezas en un puesto de apoyo y pasas al puesto de enfermero cuando tengas el registro BIG. Te acompañamos en la mudanza, el empadronamiento y tu primera etapa.', y: 'Mudarte y empezar' },
+    pl: { t: 'Przeprowadzka i start', w: 'Mieszkanie jest gotowe przed Twoim przyjazdem. Zaczynasz na stanowisku wspierającym i przechodzisz na stanowisko pielęgniarki po uzyskaniu rejestracji BIG. Wspieramy Cię przy przeprowadzce, meldunku i pierwszym okresie.', y: 'Przeprowadź się i zacznij pracę' }
   }
 ];
 

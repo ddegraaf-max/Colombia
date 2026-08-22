@@ -4,6 +4,17 @@
 
 const VERSIONS = [
   {
+    v: '54.0.0', date: '22-08-2026', title: 'Nieuwe werkwijze: werken tijdens het leren',
+    items: [
+      'Instellingenpagina herbouwd rond twee fasen: de kandidaat start binnen enkele maanden in een ondersteunende functie en groeit door naar BIG-geregistreerd verpleegkundige',
+      'Expliciete juridische regel op die pagina: tot de BIG-registratie rond is werkt de kandidaat niet als verpleegkundige en voert hij geen voorbehouden handelingen zelfstandig uit',
+      'Drie kolommen met de rolverdeling: wat wij doen, wat het partnerbureau doet en wat wij van de instelling vragen',
+      'EU-route en kandidaten-FAQ vertellen nu dat je met salaris kunt starten in plaats van maandenlang onbetaald thuis te studeren',
+      'Carrousel aangepast: de laatste fase noemt de doorgroei naar de verpleegkundige functie',
+      'Bewust geen tarieven op de site: dat is bij concurrenten ook nergens te vinden en hoort aan tafel thuis'
+    ]
+  },
+  {
     v: '53.0.0', date: '22-08-2026', title: 'Mijlpaalbetalingen in het tariefmodel',
     items: [
       'Nieuw blok in het tariefmodel: vul per mijlpaal in hoeveel procent van je kosten je hebt gemaakt en hoeveel procent van de fee je hebt ontvangen',

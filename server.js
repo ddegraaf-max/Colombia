@@ -14,6 +14,7 @@ const CP = require('./candidate-profile');
 const ZS = require('./zorgscan-panel');
 const { renderNetherlands } = require('./netherlands');
 const { renderExtras } = require('./page-extras');
+const { renderInstitutions, instTitle } = require('./institutions');
 const { renderLegal, legalTitle } = require('./legal');
 const { renderJourney } = require('./journey');
 const { renderChangelog, UI: CL_UI } = require('./changelog');
@@ -430,7 +431,12 @@ function contentPage(req, res, key) {
   res.send(layout(title, body, key, lang, req.path));
 }
 app.get('/about', (req, res) => contentPage(req, res, 'about'));
-app.get('/institutions', (req, res) => contentPage(req, res, 'institutions'));
+app.get('/institutions', (req, res) => {
+  const lang = req.lang, tr = T[lang], titel = instTitle(lang);
+  const body = `<section class="page-hero ph-institutions"><div class="page-hero-inner"><h1>${esc(titel)}</h1><p>${tr.pages.institutions.intro}</p></div></section>` +
+    renderInstitutions(lang, { esc }) + footer(lang);
+  res.send(layout(titel, body, 'institutions', lang, req.path));
+});
 app.get('/candidates-info', (req, res) => contentPage(req, res, 'candidates'));
 app.get('/academy', (req, res) => contentPage(req, res, 'academy'));
 app.get('/housing', (req, res) => contentPage(req, res, 'housing'));

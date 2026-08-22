@@ -26,7 +26,8 @@ const EUROUTE = {
         ['Voorbereiding op de Nederlandse zorg', 'Hoe het zorgstelsel werkt, wat een Nederlandse werkgever verwacht en hoe de omgang met patiënten en collega’s is.'],
         ['Huisvesting', 'Een gemeubileerde woning, klaar bij aankomst en dicht bij je werk.'],
         ['Een vast aanspreekpunt', 'Eén coördinator die jouw dossier kent en je begeleidt — ook ná aankomst in Nederland.'],
-        ['Kosteloos voor jou', 'Aan onze voorbereiding, opleiding en begeleiding zijn voor jou als kandidaat geen kosten verbonden.']
+        ['Kosteloos voor jou', 'Aan onze voorbereiding, opleiding en begeleiding zijn voor jou als kandidaat geen kosten verbonden.'],
+        ['Werken en leren tegelijk', 'Je hoeft niet maandenlang onbetaald thuis te studeren. Zodra je Nederlands goed genoeg is voor de dagelijkse praktijk, start je in een ondersteunende functie in de zorg — met salaris. Je leert de taal verder op de werkvloer en groeit door zodra je BIG-registratie rond is.']
       ]
     },
     steps: {
@@ -74,7 +75,8 @@ const EUROUTE = {
         ['Preparation for Dutch healthcare', 'How the healthcare system works, what a Dutch employer expects, and how people interact with patients and colleagues.'],
         ['Housing', 'A furnished home, ready on arrival and close to your workplace.'],
         ['One point of contact', 'A single coordinator who knows your file and supports you — including after you arrive.'],
-        ['Free of charge for you', 'Our preparation, training and guidance come at no cost to you as a candidate.']
+        ['Free of charge for you', 'Our preparation, training and guidance come at no cost to you as a candidate.'],
+        ['Work and learn at the same time', 'You do not have to study unpaid at home for months. As soon as your Dutch is good enough for daily practice you start in a supporting role in healthcare — with a salary. You keep learning the language on the ward and move up once your BIG registration is complete.']
       ]
     },
     steps: {
@@ -122,7 +124,8 @@ const EUROUTE = {
         ['Przygotowanie do pracy w Holandii', 'Jak działa system opieki zdrowotnej, czego oczekuje holenderski pracodawca i jak wygląda kontakt z pacjentem i zespołem.'],
         ['Zakwaterowanie', 'Umeblowane mieszkanie, gotowe na przyjazd i blisko miejsca pracy.'],
         ['Stały opiekun', 'Jeden koordynator, który zna Twoją sprawę i prowadzi Cię — również po przyjeździe.'],
-        ['Bezpłatnie dla Ciebie', 'Za nasze przygotowanie, szkolenie i opiekę nie ponosisz jako kandydat żadnych kosztów.']
+        ['Bezpłatnie dla Ciebie', 'Za nasze przygotowanie, szkolenie i opiekę nie ponosisz jako kandydat żadnych kosztów.'],
+        ['Praca i nauka jednocześnie', 'Nie musisz miesiącami uczyć się w domu bez wynagrodzenia. Gdy Twój niderlandzki wystarcza do codziennej praktyki, zaczynasz na stanowisku wspierającym w opiece — z pensją. Języka uczysz się dalej na oddziale i awansujesz po uzyskaniu rejestracji BIG.']
       ]
     },
     steps: {
@@ -170,7 +173,8 @@ const EUROUTE = {
         ['Preparación para la sanidad neerlandesa', 'Cómo funciona el sistema sanitario, qué espera un empleador neerlandés y cómo es el trato con pacientes y compañeros.'],
         ['Alojamiento', 'Una vivienda amueblada, lista a tu llegada y cerca de tu puesto de trabajo.'],
         ['Un único interlocutor', 'Un coordinador que conoce tu expediente y te acompaña, también después de tu llegada.'],
-        ['Gratuito para ti', 'Nuestra preparación, formación y acompañamiento no tienen ningún coste para ti como candidato.']
+        ['Gratuito para ti', 'Nuestra preparación, formación y acompañamiento no tienen ningún coste para ti como candidato.'],
+        ['Trabajar y aprender a la vez', 'No tienes que estudiar meses en casa sin cobrar. En cuanto tu neerlandés basta para el día a día, empiezas en un puesto de apoyo en sanidad, con salario. Sigues aprendiendo el idioma en el trabajo y promocionas cuando tengas el registro BIG.']
       ]
     },
     steps: {
