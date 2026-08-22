@@ -253,10 +253,10 @@ const RESEND_KEY = detectResendKey();
 const MAIL_TO = detectMailTo();
 const MAIL_FROM = stripPrefix(process.env.RESEND_FROM) || 'Honor Care International <onboarding@resend.dev>';
 
-// ---- Cloudflare Turnstile (antyspam) — aktywuje się, gdy w env są klucze ----
+// ---- Cloudflare Turnstile (antispam) — wordt actief zodra de sleutels in de omgeving staan ----
 const TURNSTILE_SITE_KEY = stripPrefix(process.env.TURNSTILE_SITE_KEY || '');
 const TURNSTILE_SECRET_KEY = stripPrefix(process.env.TURNSTILE_SECRET_KEY || '');
-function turnstileWidget(lang) { return TURNSTILE_SITE_KEY ? `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script><div class="cf-turnstile" data-sitekey="${esc(TURNSTILE_SITE_KEY)}" data-language="${esc(LANGS.includes(lang) ? lang : 'auto')}" style="margin:2px 0"></div>` : ''; }
+function turnstileWidget(lang) { return TURNSTILE_SITE_KEY ? `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script><div class="cf-turnstile" data-sitekey="${esc(TURNSTILE_SITE_KEY)}" data-language="${esc(LANGS.includes(lang) ? lang : 'auto')}" data-refresh-expired="auto" data-retry="auto" style="margin:2px 0"></div>` : ''; }
 async function verifyTurnstile(req) {
   if (!TURNSTILE_SECRET_KEY) return true; // wyłączone, dopóki nie ma kluczy
   try {
@@ -412,9 +412,9 @@ ${footer(lang)}`;
 
 app.post('/newsletter', async (req, res) => {
   // Zelfde drempels als de andere formulieren: verborgen veld, tijdgebonden token en limiet per IP.
-  if (String(req.body.website || '').trim()) return res.redirect('/?sub=ok#main');
-  if (!checkFormToken(req.body.ft)) { console.log('[antispam] nieuwsbriefinschrijving geweigerd (token)'); return res.redirect('/?sub=ok#main'); }
-  if (tooMany(req, 'newsletter', 3)) { console.log('[antispam] nieuwsbriefinschrijving geweigerd (limiet)'); return res.redirect('/?sub=ok#main'); }
+  if (String(req.body.website || '').trim()) { console.log('[antispam] nieuwsbrief geweigerd: verborgen veld ingevuld'); return res.redirect('/?sub=ok#main'); }
+  if (!checkFormToken(req.body.ft)) { console.log('[antispam] nieuwsbrief geweigerd: ongeldig of verlopen formuliertoken'); return res.redirect('/?sub=ok#main'); }
+  if (tooMany(req, 'newsletter', 3)) { console.log('[antispam] nieuwsbrief geweigerd: te veel inschrijvingen vanaf dit IP-adres'); return res.redirect('/?sub=ok#main'); }
   const email = String(req.body.email || '').toLowerCase().trim();
   if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     try { await Newsletter.updateOne({ email }, { $setOnInsert: { email, lang: req.lang, createdAt: new Date() } }, { upsert: true }); } catch (e) {}
@@ -527,8 +527,15 @@ ${turnstileWidget(lang)}
   res.send(layout(tr.nav.contact, body, 'contact', lang, req.path));
 });
 app.post('/contact', async (req, res) => {
-  if (String(req.body.website || '').trim()) return res.redirect('/contact?ok=1#kontakt'); // honeypot: bots vullen dit verborgen veld in
-  if (!checkFormToken(req.body.ft) || tooMany(req, 'contact') || !(await verifyTurnstile(req))) { console.log('[antyspam] odrzucono zgłoszenie z formularza kontaktowego'); return res.redirect('/contact?ok=1#kontakt'); }
+  // Bots vullen het verborgen veld in en missen het tijdgebonden token; die weigeren we hard.
+  if (String(req.body.website || '').trim()) { console.log('[antispam] contact geweigerd: verborgen veld ingevuld'); return res.redirect('/contact?ok=1#kontakt'); }
+  if (!checkFormToken(req.body.ft)) { console.log('[antispam] contact geweigerd: ongeldig of verlopen formuliertoken'); return res.redirect('/contact?ok=1#kontakt'); }
+  if (tooMany(req, 'contact')) { console.log('[antispam] contact geweigerd: te veel berichten vanaf dit IP-adres'); return res.redirect('/contact?ok=1#kontakt'); }
+  // Turnstile kan falen bij een echte bezoeker (verlopen token, adblocker, streng netwerk).
+  // Zo iemand mag geen lead worden die stilletjes verdwijnt: het bericht gaat door,
+  // maar gemarkeerd zodat je zelf kunt beoordelen.
+  const geverifieerd = await verifyTurnstile(req);
+  if (!geverifieerd) console.log('[antispam] contact NIET geverifieerd door Turnstile — bericht wel doorgestuurd, gemarkeerd');
   const name = String(req.body.name || '').trim();
   const email = String(req.body.email || '').toLowerCase().trim();
   const subject = String(req.body.subject || '').trim();
@@ -537,7 +544,7 @@ app.post('/contact', async (req, res) => {
   if (name && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && message) {
     try { await ContactMessage.create({ name, email, subject, message, lang: req.lang }); } catch (e) {}
     // melding naar Honor Care
-    sendEmail({ to: MAIL_TO, replyTo: email, subject: `Nieuw contactbericht — ${name}`, html: mailWrap('Nieuw contactbericht', [['Naam', name], ['E-mail', email], ['Taal', req.lang.toUpperCase()], ['Onderwerp', subject || '—'], ['Bericht', message]], { lang: 'nl', intro: 'Er is een nieuw bericht binnengekomen via het contactformulier. Je kunt rechtstreeks op deze e-mail antwoorden; het antwoord gaat naar de afzender.', preheader: name + ' — ' + (subject || 'bericht via het contactformulier') }) });
+    sendEmail({ to: MAIL_TO, replyTo: email, subject: (geverifieerd ? '' : '[niet geverifieerd] ') + `Nieuw contactbericht — ${name}`, html: mailWrap('Nieuw contactbericht', [['Naam', name], ['E-mail', email], ['Taal', req.lang.toUpperCase()], ['Onderwerp', subject || '—'], ['Bericht', message]], { lang: 'nl', intro: 'Er is een nieuw bericht binnengekomen via het contactformulier. Je kunt rechtstreeks op deze e-mail antwoorden; het antwoord gaat naar de afzender.', note: geverifieerd ? '' : 'Let op: de spamcontrole van Cloudflare is bij dit bericht niet geslaagd. Dat gebeurt ook bij echte bezoekers met een adblocker of een streng netwerk. Beoordeel het bericht zelf voordat je reageert.', preheader: name + ' — ' + (subject || 'bericht via het contactformulier') }) });
     // bevestiging naar afzender (werkt zodra je domein in Resend geverifieerd is)
     const mt = mailtxt(req.lang);
     sendEmail({ to: email, subject: mt.sub, html: mailWrap(c.thanks, [['Naam', name], ['Onderwerp', subject || '—'], ['Bericht', message]], { lang: req.lang, intro: mt.intro, note: mt.note, cta: { label: mt.cta, url: MT.SITE + '/eu-route' }, preheader: mt.intro.slice(0, 90) }) });
@@ -571,14 +578,17 @@ ${turnstileWidget(req.lang)}
 });
 app.post('/plan', async (req, res) => {
   if (String(req.body.website || '').trim()) return res.redirect('/plan?ok=1');
-  if (!checkFormToken(req.body.ft) || tooMany(req, 'plan') || !(await verifyTurnstile(req))) { console.log('[antyspam] odrzucono prośbę o rozmowę'); return res.redirect('/plan?ok=1'); }
+  if (!checkFormToken(req.body.ft)) { console.log('[antispam] gespreksaanvraag geweigerd: ongeldig of verlopen formuliertoken'); return res.redirect('/plan?ok=1'); }
+  if (tooMany(req, 'plan')) { console.log('[antispam] gespreksaanvraag geweigerd: te veel aanvragen vanaf dit IP-adres'); return res.redirect('/plan?ok=1'); }
+  const geverifieerd = await verifyTurnstile(req);
+  if (!geverifieerd) console.log('[antispam] gespreksaanvraag NIET geverifieerd door Turnstile — wel doorgestuurd, gemarkeerd');
   const name = String(req.body.name || '').trim(), email = String(req.body.email || '').toLowerCase().trim();
   const date = String(req.body.date || ''), time = String(req.body.time || '');
   const topic = String(req.body.topic || '').trim().slice(0, 160), channel = String(req.body.channel || 'Videogesprek');
   const gesprekstaal = LANGS.includes(String(req.body.gesprekstaal || '')) ? String(req.body.gesprekstaal) : req.lang;
   if (name && email && date && topic) {
     try { await Appointment.create({ name, email, date, time, topic, channel, language: gesprekstaal, status: 'Aangevraagd' }); } catch (e) {}
-    sendEmail({ to: MAIL_TO, replyTo: email, subject: `Nieuwe gespreksaanvraag — ${name}`, html: mailWrap('Nieuwe gespreksaanvraag', [['Naam', name], ['E-mail', email], ['Datum', date], ['Tijd', time], ['Kanaal', channel], ['Taal van het gesprek', (LANGMETA[gesprekstaal] || {}).name || gesprekstaal], ['Onderwerp', topic]], { lang: 'nl', intro: 'Er is een gespreksaanvraag binnengekomen via de website. Je kunt rechtstreeks op deze e-mail antwoorden.' }) });
+    sendEmail({ to: MAIL_TO, replyTo: email, subject: (geverifieerd ? '' : '[niet geverifieerd] ') + `Nieuwe gespreksaanvraag — ${name}`, html: mailWrap('Nieuwe gespreksaanvraag', [['Naam', name], ['E-mail', email], ['Datum', date], ['Tijd', time], ['Kanaal', channel], ['Taal van het gesprek', (LANGMETA[gesprekstaal] || {}).name || gesprekstaal], ['Onderwerp', topic]], { lang: 'nl', intro: 'Er is een gespreksaanvraag binnengekomen via de website. Je kunt rechtstreeks op deze e-mail antwoorden.' }) });
     sendEmail({ to: email, subject: book(req).thanks, html: mailWrap(book(req).title, [['Datum', date], ['Tijd', time], ['Kanaal', channel]]) });
   }
   res.redirect('/plan?ok=1');

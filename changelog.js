@@ -4,6 +4,15 @@
 
 const VERSIONS = [
   {
+    v: '55.0.0', date: '22-08-2026', title: 'Geen echte berichten meer kwijtraken',
+    items: [
+      'Een bericht dat Turnstile niet haalt wordt niet langer stilzwijgend weggegooid: het komt gewoon binnen, met [niet geverifieerd] in de onderwerpregel en een toelichting in de mail',
+      'Turnstile ververst zijn token nu automatisch; anders verliep die na vijf minuten terwijl iemand nog aan het typen was',
+      'Elke weigering wordt apart gelogd met de reden: verborgen veld, verlopen token of te veel berichten vanaf een IP-adres',
+      'Logteksten van Pools naar Nederlands'
+    ]
+  },
+  {
     v: '54.0.0', date: '22-08-2026', title: 'Nieuwe werkwijze: werken tijdens het leren',
     items: [
       'Instellingenpagina herbouwd rond twee fasen: de kandidaat start binnen enkele maanden in een ondersteunende functie en groeit door naar BIG-geregistreerd verpleegkundige',
