@@ -4,6 +4,19 @@
 
 const VERSIONS = [
   {
+    v: '60.0.0', date: '22-08-2026', title: 'Mobiel nagelopen: geen zijwaarts schuiven meer en grotere tikdoelen',
+    items: [
+      'De hele site gemeten in een echte mobiele browser op 375, 360 en 320 pixels breed, in alle vier de talen',
+      'Homepagina schoof zijwaarts op de Nederlandse versie: de balk met specialisaties werd 438 pixels breed op een scherm van 375',
+      'Contactpagina schoof zijwaarts in het Pools, Spaans en Engels door het lange e-mailadres',
+      'De uitkomst van de keuzehulp schoof zijwaarts op de Nederlandse versie door de lange woorden in de labels',
+      'Oorzaak van alle drie was dezelfde: kolommen in een rooster krimpen standaard niet onder de breedte van hun langste woord',
+      'Tikdoelen vergroot naar 40 pixels: telefoonnummer en e-mailadres in de balk bovenaan en in de voettekst, bronlinks, taalkeuze en de taalknoppen in het portaal',
+      'Kleine bijschriften bij de grafieken van 11,5 naar 12,5 pixels op mobiel',
+      'Alle 81 interne links in vier talen gecontroleerd: geen gebroken link, elke pagina heeft een titel, een h1, het juiste taalattribuut en alt-teksten'
+    ]
+  },
+  {
     v: '59.0.0', date: '22-08-2026', title: 'Spanje naast Nederland: de vergelijking die de rest niet laat zien',
     items: [
       'Nieuw blok bovenaan de salarispagina: wat een Spaanse auxiliar en enfermero nu verdienen, naast het Nederlandse bedrag',
