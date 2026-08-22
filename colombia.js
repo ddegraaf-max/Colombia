@@ -61,7 +61,7 @@ const V = {
       p: 'Vanuit Spanje geldt vrij verkeer binnen de EU. Vanuit Colombia niet. Dit komt er dan bij:',
       items: [
         ['Visum en werkvergunning', 'Je werkgever vraagt een gecombineerde vergunning voor verblijf en arbeid (GVVA) aan. Daarbij hoort een arbeidsmarkttoets, waarin het UWV meeweegt dat er in Nederland en de EU te weinig zorgpersoneel is.'],
-        ['Vakbekwaamheidsverklaring', 'Het BIG-register vergelijkt je Colombiaanse diploma met de Nederlandse opleiding. Dat is een zwaardere beoordeling dan de erkenning van een EU-diploma.'],
+        ['Verklaring van vakbekwaamheid', 'Het BIG-register vergelijkt je Colombiaanse diploma met de Nederlandse opleiding. Dat is een zwaardere beoordeling dan de erkenning van een EU-diploma.'],
         ['Taalcertificaten en de BI-toets', 'Sinds 1 januari 2024 is de AKV-toets vervangen door taalcertificaten. Daarna volgt de BI-toets, waarin je laat zien dat je op het eindniveau van de Nederlandse opleiding zit.'],
         ['Reken op {duurMin} tot {duurMax} maanden of langer', 'Dat is de realistische doorlooptijd van start tot volledige BIG-registratie. De wachtlijst voor de BI-toets zat in mei 2026 vol, met onvoorspelbare wachttijden. Wie belooft dat het sneller kan, weet het niet of vertelt het niet.']
       ]

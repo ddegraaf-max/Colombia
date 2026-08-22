@@ -417,7 +417,7 @@ ${renderVergelijkCO(lang, h, DATA)}
 <p class="sal-note">${esc(t.table.note)}</p></div>
 
 <div class="sal-block"><div class="sal-head"><span class="eyebrow">${esc(t.extra.eyebrow)}</span><h2>${esc(t.extra.h2)}</h2></div>
-<div class="grid">${extraItems}</div>
+<div class="grid grid-3">${extraItems}</div>
 <h3 class="sal-orth">${esc(t.extra.ortHead)}</h3>
 <div class="sal-tablewrap"><table class="sal-table sal-ort"><thead><tr><th>${esc(t.extra.ortCol1)}</th><th class="sal-num">${esc(t.extra.ortCol2)}</th></tr></thead><tbody>${ortRows}</tbody></table></div></div>
 

@@ -4,6 +4,17 @@
 
 const VERSIONS = [
   {
+    v: '62.0.0', date: '22-08-2026', title: 'Opmaakfouten op de salarispagina en in de titel verholpen',
+    items: [
+      'Kopjes in de kaarten stonden gecentreerd en te klein: de regel voor de blokkop raakte ook de kaarten eronder',
+      'Vier kaarten in een rooster van drie gaven een weesje op de tweede regel; op de salarispagina staan ze nu twee bij twee',
+      'Het blok met vakantiegeld, dertiende maand en toeslagen heeft drie kaarten en staat nu netjes naast elkaar',
+      'De titel op de homepagina brak midden in het woord zorgoplossingen af; koppen breken nu alleen nog met een koppelteken en de titel krimpt mee met het scherm',
+      'Vakbekwaamheidsverklaring hernoemd naar verklaring van vakbekwaamheid, want 25 letters passen niet in een kopje',
+      'Alle pagina’s op acht schermbreedtes nagemeten: geen afgebroken woorden in koppen en geen losse kaarten meer'
+    ]
+  },
+  {
     v: '61.0.0', date: '22-08-2026', title: 'Colombia naast Nederland, met een eerlijke doorlooptijd',
     items: [
       'Tweede vergelijkingsblok op de salarispagina: wat een auxiliar de enfermería en een enfermero profesional nu in Colombia verdienen, naast het Nederlandse bedrag',
