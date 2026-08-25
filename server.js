@@ -14,6 +14,7 @@ const CP = require('./candidate-profile');
 const ZS = require('./zorgscan-panel');
 const { renderNetherlands } = require('./netherlands');
 const { SALARY, renderSalary } = require('./salary');
+const { NONEU, renderNonEuRoute } = require('./noneu-route');
 const { renderExtras } = require('./page-extras');
 const { renderInstitutions, instTitle } = require('./institutions');
 const { renderLegal, legalTitle } = require('./legal');
@@ -99,10 +100,17 @@ function langSwitcher(lang, curPath) {
   return `<details class="langsel"><summary>${LANGMETA[lang].flag} ${LANGMETA[lang].label} ▾</summary><div class="langmenu">${opts}</div></details>`;
 }
 
+function navLabel(k, lang, tr) {
+  if (k === 'euroute') return esc(EUROUTE[lang].navLabel);
+  if (k === 'noneu') return esc(NONEU[lang].navLabel);
+  if (k === 'salaris') return esc(SALARY[lang].navLabel);
+  if (k === 'vacatures') return esc(VAC.tx(lang).navLabel);
+  return tr.nav[k];
+}
 function layout(title, body, active = 'home', lang = 'pl', curPath = '/') {
   const tr = T[lang];
-  const nav = [['home', '/'], ['about', '/about'], ['institutions', '/institutions'], ['candidates', '/candidates-info'], ['academy', '/academy'], ['housing', '/housing'], ['poland', '/poland'], ['euroute', '/eu-route'], ['salaris', '/salaris'], ['vacatures', '/vacatures'], ['contact', '/contact']]
-    .map(([k, href]) => `<a class="${active === k ? 'active' : ''}" href="${href}">${k === 'euroute' ? esc(EUROUTE[lang].navLabel) : (k === 'salaris' ? esc(SALARY[lang].navLabel) : (k === 'vacatures' ? esc(VAC.tx(lang).navLabel) : tr.nav[k]))}</a>`).join('');
+  const nav = [['home', '/'], ['about', '/about'], ['institutions', '/institutions'], ['candidates', '/candidates-info'], ['academy', '/academy'], ['housing', '/housing'], ['poland', '/poland'], ['euroute', '/eu-route'], ['noneu', '/route-buiten-eu'], ['salaris', '/salaris'], ['vacatures', '/vacatures'], ['contact', '/contact']]
+    .map(([k, href]) => `<a class="${active === k ? 'active' : ''}" href="${href}">${navLabel(k, lang, tr)}</a>`).join('');
   return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><meta name="description" content="Honor Care International — ${esc(tr.hero.p).slice(0, 140)}"><link rel="icon" href="/images/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css?v=${ASSET_V}"></head><body>
 <a class="skip" href="#main">→</a>
 <div class="top"><span class="ttag">${tr.topTagline}</span><span class="right"><a href="tel:+31646150160">☎ +31 6 46 15 01 60</a> <i class="t-loc">|</i> <a class="t-wa" href="${WA_LINK}" target="_blank" rel="noopener">${waIcon} WhatsApp</a> <i class="t-loc">|</i> <a class="t-mail" href="mailto:info@honorcareinternational.com">✉ info@honorcareinternational.com</a> <i class="t-loc">|</i> <span class="t-loc">📍 ${tr.location}</span> <i>|</i> ${langSwitcher(lang, curPath)}</span></div>
@@ -137,8 +145,8 @@ const HOWIT = {
 };
 function footer(lang = 'pl') {
   const tr = T[lang], f = tr.footer;
-  const links = [['home', '/'], ['about', '/about'], ['institutions', '/institutions'], ['candidates', '/candidates-info'], ['academy', '/academy'], ['housing', '/housing'], ['poland', '/poland'], ['euroute', '/eu-route'], ['salaris', '/salaris'], ['vacatures', '/vacatures'], ['contact', '/contact']]
-    .map(([k, href]) => `<li><a href="${href}">${k === 'euroute' ? esc(EUROUTE[lang].navLabel) : (k === 'salaris' ? esc(SALARY[lang].navLabel) : (k === 'vacatures' ? esc(VAC.tx(lang).navLabel) : tr.nav[k]))}</a></li>`).join('');
+  const links = [['home', '/'], ['about', '/about'], ['institutions', '/institutions'], ['candidates', '/candidates-info'], ['academy', '/academy'], ['housing', '/housing'], ['poland', '/poland'], ['euroute', '/eu-route'], ['noneu', '/route-buiten-eu'], ['salaris', '/salaris'], ['vacatures', '/vacatures'], ['contact', '/contact']]
+    .map(([k, href]) => `<li><a href="${href}">${navLabel(k, lang, tr)}</a></li>`).join('');
   return `<footer class="footer"><div class="footer-main">
 <div class="fcol"><img class="flogo" src="/images/logo.svg" alt="Honor Care International" width="230" height="52"><p>${f.tagline}</p><div class="social"><a class="wa" href="${WA_LINK}" target="_blank" rel="noopener" aria-label="WhatsApp">${waIcon}</a><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 8H6v4h3v12h5V12h3.6l.4-4h-4V6.3c0-1 .2-1.3 1.2-1.3H18V0h-3.6C10.8 0 9 1.6 9 4.6V8z"/></svg></a><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.5 3 5.5 7V24h-5v-7c0-1.7 0-3.8-2.3-3.8s-2.7 1.8-2.7 3.7V24h-5V8z"/></svg></a><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.5-.1 4.8c-.1 3.2-1.6 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.5.1-4.8C2.4 4 3.9 2.4 7.1 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 12 18.6 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 12 7.7a4.3 4.3 0 0 1 0 8.6zm6.8-11.1a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></a></div></div>
 <div class="fcol"><h4>${f.quick}</h4><ul>${links}</ul></div>
@@ -446,6 +454,11 @@ app.get('/poland', (req, res) => {
   const body = `<section class="page-hero ph-poland"><div class="page-hero-inner"><h1>${tr.nav.poland}</h1><p>${pg.intro}</p></div></section>` +
     renderNetherlands(lang, { esc }) + footer(lang);
   res.send(layout(tr.nav.poland, body, 'poland', lang, req.path));
+});
+app.get('/route-buiten-eu', (req, res) => {
+  const lang = req.lang, e = NONEU[lang] || NONEU.nl;
+  const body = renderNonEuRoute(lang, { esc, icon }) + footer(lang);
+  res.send(layout(e.title, body, 'noneu', lang, req.path));
 });
 app.get('/salaris', (req, res) => {
   const lang = req.lang, s = SALARY[lang] || SALARY.nl;

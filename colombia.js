@@ -85,6 +85,7 @@ const V = {
         ['Ver van huis, ander klimaat', 'Colombia ligt op ruim negen vlieguren. Familiebezoek is duur en het weer hier is voor de meeste mensen een tegenvaller. Weeg dat eerlijk mee.']
       ]
     },
+    routeLink: 'Bekijk de volledige route buiten de EU',
     bronH: 'Bronnen bij deze vergelijking'
   },
 
@@ -137,6 +138,7 @@ const V = {
         ['Far from home, different climate', 'Colombia is more than nine flying hours away. Visiting family is expensive and the weather here disappoints most people. Weigh that honestly.']
       ]
     },
+    routeLink: 'See the full non-EU route',
     bronH: 'Sources for this comparison'
   },
 
@@ -189,6 +191,7 @@ const V = {
         ['Lejos de casa, otro clima', 'Colombia queda a más de nueve horas de vuelo. Visitar a la familia es caro y el clima de aquí decepciona a casi todo el mundo. Tenlo en cuenta con sinceridad.']
       ]
     },
+    routeLink: 'Consulta la ruta completa fuera de la UE',
     bronH: 'Fuentes de esta comparación'
   },
 
@@ -241,6 +244,7 @@ const V = {
         ['Daleko od domu, inny klimat', 'Kolumbia leży ponad dziewięć godzin lotu stąd. Odwiedziny u rodziny są drogie, a tutejsza pogoda rozczarowuje niemal każdego. Weź to uczciwie pod uwagę.']
       ]
     },
+    routeLink: 'Zobacz pełną ścieżkę spoza UE',
     bronH: 'Źródła tego porównania'
   }
 };
@@ -300,7 +304,7 @@ function renderVergelijkCO(lang, h, D) {
 <p class="sal-koopp">${esc(vul(t.koop.p))}</p>
 <div class="sal-tablewrap"><table class="sal-table"><thead><tr><th>${esc(t.koop.col[0])}</th><th class="sal-num">${esc(t.koop.col[1])}</th><th class="sal-num">${esc(t.koop.col[2])}</th><th class="sal-num">${esc(t.koop.col[3])}</th></tr></thead><tbody>${kRijen}</tbody></table></div>
 
-<div class="sal-duur"><h3>${esc(t.duur.h)}</h3><p class="sal-tegenp">${esc(t.duur.p)}</p><div class="grid">${panels(t.duur.items)}</div></div>
+<div class="sal-duur"><h3>${esc(t.duur.h)}</h3><p class="sal-tegenp">${esc(t.duur.p)}</p><div class="grid">${panels(t.duur.items)}</div><p class="sal-routelink"><a class="btn gold" href="/route-buiten-eu">${esc(t.routeLink)}</a></p></div>
 
 <h3 class="sal-orth">${esc(t.nietGeld.h)}</h3>
 <div class="grid">${panels(t.nietGeld.items)}</div>

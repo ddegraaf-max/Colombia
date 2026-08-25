@@ -944,3 +944,24 @@ h1,h2,h3,h4{hyphens:auto}
 @media(max-width:520px){.hero h1{font-size:clamp(26px,7.4vw,34px)}}
 .sal .grid.grid-3{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1040px}
 @media(max-width:960px){.sal .grid.grid-3{grid-template-columns:minmax(0,1fr)}}
+
+/* Route buiten de EU: zelfde opmaak als de EU-route, met een wisselregel bovenaan */
+.ph-noneu{background-image:url('/images/corridor-blur.jpg')}
+.eur-switch{max-width:1120px;margin:0 auto 30px;padding:14px 18px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;color:var(--muted);font-size:15px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.eur-switch a{color:var(--navy2);font-weight:600;text-decoration:underline}
+.eur-switch a:hover{color:var(--gold)}
+.eur-switch .sal-status{margin-left:0}
+@media(max-width:640px){.eur-switch{margin-bottom:24px;font-size:14px}}
+/* Rolkaarten en de wisselregel: niet uitsteken en groot genoeg om aan te tikken */
+.eur-roles-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.eur-role{min-width:0}
+.eur-role li{overflow-wrap:break-word}
+@media(max-width:900px){.eur-roles-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:640px){.eur-switch a{display:inline-block;padding:9px 0;min-height:40px}}
+/* Op een heel smal scherm hield het icoon te weinig ruimte over voor de kop ernaast. */
+@media(max-width:400px){
+  .cf-head{gap:12px;align-items:flex-start}
+  .cf-head>div{min-width:0}
+  .cf-head h2{font-size:22px}
+}
+.sal-routelink{text-align:center;margin:24px 0 0}

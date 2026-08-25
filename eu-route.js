@@ -218,9 +218,11 @@ function renderEuRoute(lang, h) {
   const ask = e.ask.items.map((it, i) => item('ask', `<span class="eur-n">${i + 1}</span>`, it[0], it[1])).join('');
   const give = e.give.items.map(it => item('give', `<span class="eur-ic">${icon(check)}</span>`, it[0], it[1])).join('');
   const steps = e.steps.list.map(st => `<li><h3>${esc(st[0])}</h3><p>${esc(st[1])}</p></li>`).join('');
+  const wissel = { nl: ['Kom je van buiten de EU?', 'Bekijk dan de route buiten de EU'], en: ['Are you from outside the EU?', 'Then see the non-EU route'], es: ['¿Vienes de fuera de la UE?', 'Consulta entonces la ruta fuera de la UE'], pl: ['Pochodzisz spoza UE?', 'Zobacz wtedy ścieżkę spoza UE'] }[lang] || ['Kom je van buiten de EU?', 'Bekijk dan de route buiten de EU'];
   const roleList = arr => arr.map(x => `<li>${esc(x)}</li>`).join('');
   return `<section class="page-hero ph-euroute"><div class="page-hero-inner"><h1>${esc(e.title)}</h1><p>${esc(e.intro)}</p></div></section>
 <section class="page has-hero">
+<p class="eur-switch">${esc(wissel[0])} <a href="/route-buiten-eu">${esc(wissel[1])} &rarr;</a></p>
 <div class="eur-block"><div class="eur-head"><span class="eyebrow">${esc(e.ask.eyebrow)}</span><h2>${esc(e.ask.h2)}</h2><p>${esc(e.ask.sub)}</p></div><div class="eur-grid">${ask}</div></div>
 <div class="eur-block"><div class="eur-head"><span class="eyebrow">${esc(e.give.eyebrow)}</span><h2>${esc(e.give.h2)}</h2></div><div class="eur-grid">${give}</div></div>
 <div class="eur-block"><div class="eur-head"><span class="eyebrow">${esc(e.steps.eyebrow)}</span><h2>${esc(e.steps.h2)}</h2></div><ol class="eur-timeline">${steps}</ol></div>

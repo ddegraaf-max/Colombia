@@ -4,6 +4,21 @@
 
 const VERSIONS = [
   {
+    v: '63.0.0', date: '25-08-2026', title: 'Route buiten de EU volledig uitgewerkt',
+    items: [
+      'Nieuwe pagina /route-buiten-eu in vier talen, met dezelfde opbouw als de EU-route',
+      'Wat wij vragen: erkend diploma, zelf naar A2, een lange adem, legaliseerbare documenten, bereidheid te verhuizen en actieve deelname',
+      'Wat de kandidaat krijgt: taalopleiding vanaf A2, begeleiding bij de verklaring van vakbekwaamheid en de BI-toets, hulp bij het vergunningsdossier, huisvesting, vast aanspreekpunt en werken met salaris tijdens het traject',
+      'Het traject in tien stappen, van kennismaking tot doorgroei naar de verpleegkundige functie',
+      'Eigen tabel met de doorlooptijd per fase: 2 tot 6 weken screening, 4 tot 8 maanden tot A2, 8 tot 14 maanden tot B1 of B2, GVVA binnen 90 dagen, totaal 18 tot 30 maanden of langer',
+      'Rolverdeling aangepast voor deze route: de werkgever vraagt de gecombineerde vergunning aan, wij bereiden voor en begeleiden',
+      'Wisselregel bovenaan beide routepagina’s, zodat een bezoeker meteen de juiste route kiest',
+      'Route buiten de EU opgenomen in het menu en de voettekst, en gekoppeld vanuit het Colombia-blok op de salarispagina',
+      'Rolkaarten en de wisselregel pasten op 320 pixels niet; opgelost, net als een te kleine kop op de Spaanse contactpagina',
+      'Alle 86 interne paden in vier talen opnieuw gecontroleerd en alle koppen op zeven schermbreedtes nagemeten'
+    ]
+  },
+  {
     v: '62.0.0', date: '22-08-2026', title: 'Opmaakfouten op de salarispagina en in de titel verholpen',
     items: [
       'Kopjes in de kaarten stonden gecentreerd en te klein: de regel voor de blokkop raakte ook de kaarten eronder',
