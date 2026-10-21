@@ -25,6 +25,7 @@ const { renderPricing } = require('./pricing');
 const MSG = require('./messages');
 const RET = require('./retention');
 const AI18N = require('./admin-i18n');
+const { renderUnderConstruction } = require('./under-construction');
 // Helpers die de vacaturemodule nodig heeft; zo blijft de opmaak gelijk aan de rest.
 function vacHelpers() {
   return { esc, badge, professions: CP.PROFESSIONS, professionLabel: (c) => CP.ADMIN.profession[c] || c };
@@ -180,6 +181,19 @@ const requireAuth = (req, res, next) => {
   if (!req.session?.userId) return res.redirect('/login');
   return res.redirect(req.session?.twoFAConfigured ? '/verify-2fa' : '/setup-2fa');
 };
+
+// Bouwpagina. Zolang de variabele UNDER_CONSTRUCTION niet op 'false' staat, krijgen
+// bezoekers op elk openbaar pad alleen een korte mededeling, met statuscode 503 zodat
+// zoekmachines de bestaande pagina's bewaren en de bouwpagina niet opnemen.
+// Beheerderslogin, /healthz en een ingelogde beheerderssessie blijven gewoon werken;
+// statische bestanden en /setlang zijn hierboven al afgehandeld.
+const UNDER_CONSTRUCTION = process.env.UNDER_CONSTRUCTION !== 'false';
+const UC_OPEN_PATHS = new Set(['/login', '/setup-2fa', '/verify-2fa', '/logout', '/healthz']);
+app.use((req, res, next) => {
+  if (!UNDER_CONSTRUCTION || UC_OPEN_PATHS.has(req.path) || req.session?.userId) return next();
+  res.status(503).set({ 'Retry-After': '86400', 'Cache-Control': 'no-store' });
+  res.send(renderUnderConstruction({ lang: req.lang, path: req.path, esc, waLink: WA_LINK, waIcon, assetV: ASSET_V, version: PKG.version }));
+});
 
 // Extra beveiliging: inlogbegrenzing tegen brute force (in-memory, per IP + soort).
 const loginAttempts = new Map();
@@ -1222,6 +1236,7 @@ mongoose.connect(MONGO).then(async () => {
   await seed();
   app.listen(PORT, () => {
     console.log('HonorCare Working Docs v' + PKG.version + ' draait op poort ' + PORT);
+    console.log('[bouwpagina] ' + (UNDER_CONSTRUCTION ? 'AAN: bezoekers zien de mededeling, beheer blijft bereikbaar' : 'uit: site is open'));
     const found = Object.keys(process.env).filter(k => /resend|mail/i.test(k));
     console.log('[env] RESEND/MAIL-variabelen die Railway doorgeeft: ' + (found.length ? found.join(', ') : '(GEEN)'));
     console.log('[mail] Resend-sleutel gedetecteerd: ' + (RESEND_KEY ? ('JA ✓ (lengte ' + RESEND_KEY.length + ')') : 'NEE ✗') + ' | MAIL_TO: ' + MAIL_TO + ' | FROM: ' + MAIL_FROM);

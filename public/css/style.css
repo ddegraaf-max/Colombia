@@ -965,3 +965,20 @@ h1,h2,h3,h4{hyphens:auto}
   .cf-head h2{font-size:22px}
 }
 .sal-routelink{text-align:center;margin:24px 0 0}
+
+/* Bouwpagina (UNDER_CONSTRUCTION): één kaart, geen menu */
+body.uc{min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(160deg,rgba(0,28,55,.94),rgba(6,63,112,.86)),url('/images/corridor-blur.jpg') center/cover,var(--navy)}
+.uc-main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 16px}
+.uc-card{width:min(640px,100%);background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:40px 36px;text-align:center}
+.uc-card img{width:min(290px,80%);height:auto;margin:0 auto 26px}
+.uc-card .eyebrow{color:var(--gold);margin-bottom:10px}
+.uc-card h1{font-size:clamp(26px,4vw,38px);margin:0 0 14px;hyphens:auto}
+.uc-card p{color:var(--muted);font-size:16px;max-width:520px;margin:0 auto 26px}
+.uc-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.uc-actions .btn svg{width:18px;height:18px}
+.uc-langs{display:flex;flex-wrap:wrap;gap:0 14px;justify-content:center;margin:26px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:13px}
+.uc-langs a{color:var(--muted);padding:8px 4px;min-height:40px;display:inline-flex;align-items:center}
+.uc-langs a.cur{color:var(--navy);font-weight:600}
+.uc-foot{color:#d9e3ee;font-size:12.5px;text-align:center;padding:14px 16px 22px;line-height:1.9}
+.uc-foot a{color:#d9e3ee;text-decoration:underline;text-underline-offset:3px;padding:6px 2px}
+@media(max-width:640px){.uc-card{padding:30px 20px}.uc-actions .btn{width:100%}}

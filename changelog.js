@@ -4,6 +4,16 @@
 
 const VERSIONS = [
   {
+    v: '64.0.0', date: '21-10-2026', title: 'Website tijdelijk in opbouw',
+    items: [
+      'Bezoekers zien op elke openbare pagina een korte mededeling dat de site in opbouw is, in vier talen, met telefoon, WhatsApp en e-mail',
+      'De mededeling gaat met statuscode 503, zodat zoekmachines de bestaande pagina’s bewaren en de bouwpagina niet opnemen',
+      'Beheerderslogin, het beheerportaal en de statuscontrole blijven gewoon bereikbaar; wie is ingelogd als beheerder ziet de volledige site',
+      'Ook het kandidatenportaal en alle formulieren staan dicht zolang de bouwpagina aan staat',
+      'Aan en uit via de variabele UNDER_CONSTRUCTION in Railway: standaard aan, met de waarde false gaat de site weer open zonder nieuwe code'
+    ]
+  },
+  {
     v: '63.0.0', date: '25-08-2026', title: 'Route buiten de EU volledig uitgewerkt',
     items: [
       'Nieuwe pagina /route-buiten-eu in vier talen, met dezelfde opbouw als de EU-route',
